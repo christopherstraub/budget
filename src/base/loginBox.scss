@@ -1,0 +1,21 @@
+@import './variables';
+
+.login-box {
+  width: 300px;
+  border-radius: 10px;
+  background-color: $clr-login-box;
+
+  & input {
+    margin: 0.5rem 0;
+    padding: 12px 8px;
+    border-radius: 5px;
+    width: 100%;
+    outline: none;
+    border: 0;
+  }
+
+  & input[type='submit'] {
+    margin-top: 1.5rem;
+    background-color: $clr-login-button;
+  }
+}

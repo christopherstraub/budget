@@ -1,0 +1,57 @@
+@import '../../base/variables';
+@import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+*::placeholder {
+  color: $clr-placeholder;
+  font-size: $fs-placeholder;
+}
+
+input[type='text']:focus {
+  color: black;
+}
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-size: $fs-title;
+  color: $clr-title;
+}
+
+.subtitle {
+  font-size: $fs-subtitle;
+  color: $clr-subtitle;
+}
+
+.continue-as-guest {
+  font-size: $fs-continue-as-guest;
+  color: $clr-continue-as-guest;
+}
+
+.placeholder {
+  background-color: $clr-input-box;
+  font-size: $fs-placeholder;
+  color: $clr-placeholder;
+}
+
+.background {
+  background: no-repeat center url('../../images/background1.jpg') fixed;
+  background-size: cover;
+  background-color: rgba(0, 116, 145, 0.9);
+}
+
+.App {
+  font-family: 'Open Sans', sans-serif;
+  color: $clr-body;
+  min-height: 100vh;
+}
+
+.logo {
+  font-family: 'Lobster', cursive;
+  font-size: $fs-logo;
+  color: $clr-title;
+  &:hover {
+    cursor: pointer;
+  }
+}
