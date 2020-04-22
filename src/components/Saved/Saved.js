@@ -6,8 +6,7 @@ const Saved = () => {
   return (
     <div className="window-box">
       <h1 className="window-title tc mb4">
-        Josh, you have <span className="number-saved-budgets b">3</span> saved
-        budgets.
+        Josh, you have <span className="clr-blue b">3</span> saved budgets.
       </h1>
       <ul className="ul">
         <li className="mv2">
