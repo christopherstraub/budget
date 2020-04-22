@@ -22,8 +22,8 @@ const SignIn = () => {
           placeholder="Password"
         />
         <input className="subtitle b white" type="submit" value="Sign in" />
-        <p className="subtitle pointer mt2 mb5">Sign up</p>
-        <p className="continue-as-guest pointer">Continue as guest</p>
+        <p className="subtitle pointer mt2 mb5 dim">Sign up</p>
+        <p className="continue-as-guest pointer dim">Continue as guest</p>
       </div>
     </div>
   );

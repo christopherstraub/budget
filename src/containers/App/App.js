@@ -19,6 +19,7 @@ class App extends Component {
           <Header />
           <Homepage />
           <SignIn />
+          {/* <SignUp /> */}
         </div>
       </div>
     );
