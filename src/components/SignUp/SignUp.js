@@ -5,7 +5,7 @@ import '../../base/loginBox.scss';
 const SignUp = () => {
   return (
     <div className="flex justify-center">
-      <div className="login-box tc pt4 pb3 ph5">
+      <div className="login-box tc pt5 ph5 pb3">
         <h2 className="logo tc mb5">CSBudget</h2>
         <input
           className="placeholder"
