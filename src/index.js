@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+
 import 'tachyons';
+import './index.scss';
 
 import App from './containers/App/App';
 

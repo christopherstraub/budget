@@ -1,0 +1,13 @@
+@import '../../base/variables';
+
+.btn--create-new-budget {
+  font-family: 'Roboto Mono', monospace;
+  background-color: $clr-green;
+  border: 0;
+}
+
+.btn--edit-budget {
+  font-family: 'Roboto Mono', monospace;
+  background-color: $clr-blue;
+  border: 0;
+}

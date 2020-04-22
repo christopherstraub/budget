@@ -1,0 +1,33 @@
+@import './variables';
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-size: $fs-title;
+  color: $clr-title;
+}
+
+.subtitle {
+  font-size: $fs-subtitle;
+  color: $clr-subtitle;
+}
+
+.window-title {
+  font-size: $fs-window-title;
+  color: $clr-window-title;
+}
+
+.window-body {
+  font-size: $fs-window-body;
+  color: $clr-window-body;
+}
+
+.placeholder {
+  background-color: $clr-input-box;
+  font-size: $fs-placeholder;
+  color: $clr-placeholder;
+}
+
+.button-text {
+  font-size: $fs-button-text;
+  color: $clr-button-text;
+}

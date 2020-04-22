@@ -1,0 +1,29 @@
+@import './variables';
+
+.ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.button {
+  border-radius: 10px;
+  font-weight: 300;
+  padding: 0px 12px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+*::placeholder {
+  color: $clr-placeholder;
+  font-size: $fs-placeholder;
+}
+
+input[type='text'] {
+  color: black;
+  border: 1px solid $clr-placeholder;
+  &:focus {
+    border-color: black;
+  }
+}

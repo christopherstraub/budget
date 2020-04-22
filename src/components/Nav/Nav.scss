@@ -1,0 +1,10 @@
+@import '../../base/variables';
+
+.navi__item {
+  margin: 0 1.5rem;
+  color: $clr-nav-item;
+  font-size: $fs-nav-item;
+  &::selection {
+    background: transparent;
+  }
+}

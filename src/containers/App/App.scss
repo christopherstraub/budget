@@ -3,40 +3,13 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&display=swap');
 
-ul {
-  list-style-type: none;
-}
+// Reset.
+@import '../../base/reset.scss';
 
-*::placeholder {
-  color: $clr-placeholder;
-  font-size: $fs-placeholder;
-}
-
-input[type='text'] {
-  color: black;
-  border: 1px solid $clr-placeholder;
-  &:focus {
-    border-color: black;
-  }
-}
-
-.title {
-  font-family: 'Roboto', sans-serif;
-  font-size: $fs-title;
-  color: $clr-title;
-}
-
-.subtitle {
-  font-size: $fs-subtitle;
-  color: $clr-subtitle;
-}
-
-.placeholder {
-  background-color: $clr-input-box;
-  font-size: $fs-placeholder;
-  color: $clr-placeholder;
-}
+// Functional classes.
+@import '../../base/functional.scss';
 
 .background {
   background: no-repeat center url('../../images/background1.jpg') fixed;
@@ -57,6 +30,16 @@ input[type='text'] {
   }
 }
 
+.window-box {
+  max-height: 80vh;
+  overflow-y: auto;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: $clr-window-box;
+  border-radius: 5px;
+}
+
 .App {
   font-family: 'Open Sans', sans-serif;
   color: $clr-body;
@@ -74,6 +57,34 @@ input[type='text'] {
     .subtitle {
       color: $clr-subtitle-dark;
     }
+  }
+}
+
+// Media quieries.
+
+// Responsive nav and header.
+@media only screen and (max-width: 1100px) {
+  .navi {
+    padding-top: 10rem;
+  }
+  .header__logo {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .navi {
+    align-items: center;
+    flex-direction: column;
+  }
+  .navi__item {
+    font-size: $fs-nav-item-mobile;
+    margin: 0.5rem 0;
+  }
+
+  .active-window {
+    padding-top: 2rem;
   }
 }
 
