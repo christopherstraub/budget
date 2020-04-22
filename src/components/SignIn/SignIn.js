@@ -6,7 +6,7 @@ const SignIn = () => {
   return (
     <div className="flex justify-center">
       <div className="login-box tc pt5 ph5 pb3">
-        <h2 className="logo login tc mb5">CSBudget</h2>
+        <h1 className="logo login tc mb5">CSBudget</h1>
         <input
           className="placeholder"
           type="text"
