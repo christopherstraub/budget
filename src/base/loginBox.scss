@@ -22,4 +22,13 @@
       background-color: $clr-login-button-active;
     }
   }
+  & .login-button-text {
+    font-size: $fs-subtitle;
+    color: $clr-login-button-text;
+  }
+
+  & .continue-as-guest {
+    font-size: $fs-continue-as-guest;
+    color: $clr-continue-as-guest;
+  }
 }
