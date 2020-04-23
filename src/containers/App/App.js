@@ -4,6 +4,7 @@ import Landing from '../../components/Landing/Landing';
 import Saved from '../../components/Saved/Saved';
 import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
+import Create from '../../components/Create/Create';
 
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
