@@ -11,8 +11,13 @@
 // Functional classes.
 @import '../../base/functional.scss';
 
+// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
+// Does not include background-size.
 .background {
-  background: no-repeat center url('../../images/background1.jpg') fixed;
+  // background-image: url('../../images/bg1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   background-size: cover;
   background-color: rgba(0, 116, 145, 0.9);
 }
