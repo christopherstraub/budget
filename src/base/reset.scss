@@ -8,14 +8,11 @@
 .button {
   border-radius: 10px;
   font-weight: 300;
-
+  font-family: 'Roboto Mono', monospace;
+  border: 0;
   &:focus {
     outline: 0;
   }
-}
-
-.input {
-  outline: 0;
 }
 
 *::placeholder {
@@ -26,6 +23,7 @@
 input[type='text'] {
   color: black;
   border: 1px solid $clr-placeholder;
+  outline: 0;
   &:focus {
     border-color: black;
   }

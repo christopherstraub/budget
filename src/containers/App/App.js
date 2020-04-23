@@ -9,7 +9,7 @@ import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'profile',
+  route: 'saved',
   loggedIn: true,
   inputCategory: '',
   inputName: '',
@@ -66,7 +66,7 @@ class App extends Component {
       <div className="background">
         <div className="App">
           <Header loggedIn={loggedIn} />
-          <div className="ph4 pv6">
+          <div className="ph4 pv5">
             {route === 'signin' || route === 'signup' ? (
               <Landing route={route} />
             ) : route === 'saved' ? (

@@ -39,8 +39,8 @@
   background-color: $clr-window-box;
   border-radius: 5px;
 }
-
 .App {
+  word-wrap: break-word;
   font-family: 'Open Sans', sans-serif;
   color: $clr-body;
   min-height: 100vh;
@@ -83,6 +83,3 @@
     margin: 0.5rem 0;
   }
 }
-
-// Small devices.
-@import '../../base/max768.scss';
