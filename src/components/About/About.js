@@ -6,8 +6,8 @@ const About = () => {
       <p className="window-body">
         <span className="i">CSBudget</span> is software to make your life
         better. <span className="i">CSBudget</span> is maintained by Christopher
-        Straub and distributed under the MIT License. Feel free to get in touch
-        with Christopher
+        Straub and distributed under the MIT License. Get in touch with
+        Christopher
         <span className="clr-blue i"> here</span>.
       </p>
     </div>
