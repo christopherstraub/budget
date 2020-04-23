@@ -5,6 +5,7 @@
 $clr-logo-dark: black;
 $clr-title-dark: black;
 $clr-subtitle-dark: rgba(0, 0, 0, 0.85);
+$clr-nav-item-dark: black;
 
 // Default text.
 $clr-body: red;
@@ -15,6 +16,7 @@ $clr-logo: white;
 $fs-logo: 5rem;
 
 // Title.
+$ff-title: 'Roboto', sans-serif;
 $clr-title: white;
 $fs-title: 4.2rem;
 
@@ -57,8 +59,9 @@ $clr-button-text: white;
 $fs-button-text: 1.8rem;
 
 // Nav.
+$ff-nav-item: 'Roboto Mono', monospace;
 $clr-nav-item: white;
-$fs-nav-item: 2.2rem;
+$fs-nav-item: 2.4rem;
 $fs-nav-item-mobile: 2.5rem;
 
 // Create component.

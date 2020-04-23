@@ -9,19 +9,21 @@ import Create from '../../components/Create/Create';
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
 import Background3 from '../../images/bg3.jpg';
+import Background4 from '../../images/bg4.jpg';
 
 import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'signin',
-  isLoggedIn: false,
+  route: 'profile',
+  isLoggedIn: true,
   inputCategory: '',
   inputName: '',
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
     { name: 'MACHU PICCHU', url: Background2, useDarkMode: true },
     { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
+    { name: 'SPACE', url: Background4, useDarkMode: false },
   ],
   user: {
     id: '',
@@ -80,16 +82,24 @@ class App extends Component {
   };
 
   handleBackgroundChange = (event) => {
-    event.persist();
-    console.log(event.target.childNodes);
+    // Only filter through backgrounds if selected background is different
+    // from current background.
+    if (this.state.user.background.name !== event.target.textContent) {
+      const selectedBackground = this.state.backgrounds.filter(
+        (background) => background.name === event.target.textContent
+      );
+      const userCopy = { ...this.state.user };
+      userCopy.background = selectedBackground[0];
+      this.setState({ user: userCopy });
+    }
   };
 
   render() {
-    const { route, isLoggedIn, user } = this.state;
+    const { route, isLoggedIn, backgrounds, user } = this.state;
     return (
       <div
         className="background"
-        style={{ backgroundImage: `url(${this.state.backgrounds[0].url})` }}
+        style={{ backgroundImage: `url(${this.state.user.background.url})` }}
       >
         <div className={`App ${user.background.useDarkMode ? 'dark' : null}`}>
           <Header
@@ -107,7 +117,10 @@ class App extends Component {
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
-              <Profile handleBackgroundChange={this.handleBackgroundChange} />
+              <Profile
+                handleBackgroundChange={this.handleBackgroundChange}
+                backgrounds={backgrounds}
+              />
             ) : null}
           </div>
         </div>

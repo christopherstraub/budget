@@ -1,7 +1,7 @@
 @import './variables';
 
 .title {
-  font-family: 'Roboto', sans-serif;
+  font-family: $ff-title;
   font-size: $fs-title;
   color: $clr-title;
 }
