@@ -5,25 +5,33 @@ import Saved from '../../components/Saved/Saved';
 import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 
+import Background1 from '../../images/bg1.jpg';
+import Background2 from '../../images/bg2.jpg';
+import Background3 from '../../images/bg3.jpg';
+
 import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'saved',
-  loggedIn: true,
+  route: 'signin',
+  isLoggedIn: false,
   inputCategory: '',
   inputName: '',
   backgrounds: [
-    { name: 'ALPINE MOUNTAINS', url: '', useDarkMode: false },
-    { name: 'MACHU PICCHU', url: '', useDarkMode: true },
-    { name: 'YOSEMITE VALLEY', url: '', useDarkMode: true },
+    { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
+    { name: 'MACHU PICCHU', url: Background2, useDarkMode: true },
+    { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
   ],
   user: {
     id: '',
     name: '',
     email: '',
     joined: '',
-    background: '',
+    background: {
+      name: 'ALPINE MOUNTAINS',
+      url: Background1,
+      useDarkMode: false,
+    },
     budgets: [
       {
         date: { month: 'April', year: '2020' }, //This needs fixing, use a more dynamic date format or something
@@ -60,21 +68,45 @@ class App extends Component {
     this.state = initialState;
   }
 
+  handleRouteChange = (route) => {
+    this.setState({ route });
+    // If we get user, log them in
+    if (route !== 'signin' && route !== 'signup')
+      this.setState({ isLoggedIn: true });
+    else {
+      this.setState({ isLoggedIn: false });
+    }
+  };
+
+  handleBackgroundChange = (event) => {
+    event.persist();
+    console.log(event.target.childNodes);
+  };
+
   render() {
-    const { route, loggedIn } = this.state;
+    const { route, isLoggedIn, user } = this.state;
     return (
-      <div className="background">
-        <div className="App">
-          <Header loggedIn={loggedIn} />
+      <div
+        className="background"
+        style={{ backgroundImage: `url(${this.state.backgrounds[0].url})` }}
+      >
+        <div className={`App ${user.background.useDarkMode ? 'dark' : null}`}>
+          <Header
+            isLoggedIn={isLoggedIn}
+            handleRouteChange={this.handleRouteChange}
+          />
           <div className="ph4 pv5">
             {route === 'signin' || route === 'signup' ? (
-              <Landing route={route} />
+              <Landing
+                route={route}
+                handleRouteChange={this.handleRouteChange}
+              />
             ) : route === 'saved' ? (
               <Saved />
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
-              <Profile />
+              <Profile handleBackgroundChange={this.handleBackgroundChange} />
             ) : null}
           </div>
         </div>

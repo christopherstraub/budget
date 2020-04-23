@@ -3,11 +3,13 @@ import Nav from '../../components/Nav/Nav';
 
 import './Header.scss';
 
-const Header = ({ loggedIn }) => {
+const Header = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <header>
       <h1 className="logo header__logo pointer absolute">CSBudget</h1>
-      {loggedIn ? <Nav loggedIn={loggedIn} /> : null}
+      {isLoggedIn ? (
+        <Nav isLoggedIn={isLoggedIn} handleRouteChange={handleRouteChange} />
+      ) : null}
     </header>
   );
 };
