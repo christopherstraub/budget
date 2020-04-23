@@ -27,7 +27,11 @@ const initialState = {
     name: '',
     email: '',
     joined: '',
-    background: { name: 'ALPINE MOUNTAINS', url: '', useDarkMode: false },
+    background: {
+      name: 'ALPINE MOUNTAINS',
+      url: Background1,
+      useDarkMode: false,
+    },
     budgets: [
       {
         date: { month: 'April', year: '2020' }, //This needs fixing, use a more dynamic date format or something
@@ -74,6 +78,11 @@ class App extends Component {
     }
   };
 
+  handleBackgroundChange = (event) => {
+    event.persist();
+    console.log(event.target.childNodes);
+  };
+
   render() {
     const { route, isLoggedIn, user } = this.state;
     return (
@@ -97,7 +106,7 @@ class App extends Component {
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
-              <Profile />
+              <Profile handleBackgroundChange={this.handleBackgroundChange} />
             ) : null}
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Profile = () => {
+const Profile = ({ handleBackgroundChange }) => {
   return (
     <div className="window-box mw7">
       <p className="window-body tc">Josh</p>
@@ -14,11 +14,16 @@ const Profile = () => {
           name="name"
           placeholder="Name"
         />
-        <button className="button btn--bg-green button-text">SAVE</button>
+        <button className="button btn--bg-green button-text pv1 ph3">
+          SAVE
+        </button>
       </div>
       <div className="mt2">
         <p className="window-body dib mr3">Change background: </p>
-        <button className="button btn--bg-blue button-text mr3 mb3 pv1 ph3">
+        <button
+          onClick={handleBackgroundChange}
+          className="button btn--bg-blue button-text mr3 mb3 pv1 ph3"
+        >
           ALPINE MOUNTAINS
         </button>
         <button className="button btn--bg-blue button-text mr3 mb3 pv1 ph3">

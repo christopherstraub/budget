@@ -8,21 +8,21 @@ const SignUp = ({ handleRouteChange }) => {
       <div className="login-box tc pt5 ph5 pb3">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
-          className="input--login-box placeholder"
+          className="pa3 mv2 br3 w-100 placeholder"
           type="text"
           id="name"
           name="name"
           placeholder="Name"
         />
         <input
-          className="input--login-box placeholder"
+          className="pa3 mv2 br3 w-100 placeholder"
           type="text"
           id="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="input--login-box placeholder"
+          className="pa3 mv2 br3 w-100 placeholder"
           type="text"
           id="password"
           name="password"
@@ -30,7 +30,7 @@ const SignUp = ({ handleRouteChange }) => {
         />
         <input
           // onClick={() => handleRouteChange('signup')} ATTEMPT TO SIGN UP USER
-          className="input--login-box login-button-text b white"
+          className="pa3 mv2 br3 w-100 login-button-text b white"
           type="submit"
           value="Sign up"
         />
