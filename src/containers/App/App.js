@@ -3,12 +3,13 @@ import Header from '../../components/Header/Header';
 import Landing from '../../components/Landing/Landing';
 import Saved from '../../components/Saved/Saved';
 import About from '../../components/About/About';
+import Profile from '../../components/Profile/Profile';
 
 import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'about',
+  route: 'profile',
   loggedIn: true,
   inputCategory: '',
   inputName: '',
@@ -65,13 +66,15 @@ class App extends Component {
       <div className="background">
         <div className="App">
           <Header loggedIn={loggedIn} />
-          <div className="active-window ph4 pv6">
+          <div className="ph4 pv6">
             {route === 'signin' || route === 'signup' ? (
               <Landing route={route} />
             ) : route === 'saved' ? (
               <Saved />
             ) : route === 'about' ? (
               <About />
+            ) : route === 'profile' ? (
+              <Profile />
             ) : null}
           </div>
         </div>
