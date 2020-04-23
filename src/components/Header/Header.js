@@ -1,9 +1,13 @@
 import React from 'react';
+import Nav from '../../components/Nav/Nav';
 
-const Header = () => {
+import './Header.scss';
+
+const Header = ({ loggedIn }) => {
   return (
     <header>
-      <h2 className="logo pl5 pt3 pointer">CSBudget</h2>
+      <h1 className="logo header__logo pointer absolute">CSBudget</h1>
+      {loggedIn ? <Nav loggedIn={loggedIn} /> : null}
     </header>
   );
 };
