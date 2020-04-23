@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../../base/loginBox.scss';
 
-const SignUp = () => {
+const SignUp = ({ handleRouteChange }) => {
   return (
     <div className="flex justify-center">
       <div className="login-box tc pt5 ph5 pb3">
@@ -29,12 +29,23 @@ const SignUp = () => {
           placeholder="Password"
         />
         <input
+          // onClick={() => handleRouteChange('signup')} ATTEMPT TO SIGN UP USER
           className="input--login-box login-button-text b white"
           type="submit"
           value="Sign up"
         />
-        <p className="login-button-text pointer mt2 mb5 dim">Sign in</p>
-        <p className="continue-as-guest pointer dim">Continue as guest</p>
+        <p
+          onClick={() => handleRouteChange('signin')}
+          className="login-button-text pointer mt2 mb5 dim"
+        >
+          Sign in
+        </p>
+        <p
+          onClick={() => handleRouteChange('create')}
+          className="continue-as-guest pointer dim"
+        >
+          Continue as guest
+        </p>
       </div>
     </div>
   );

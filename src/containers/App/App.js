@@ -9,8 +9,8 @@ import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'saved',
-  loggedIn: true,
+  route: 'signin',
+  loggedIn: false,
   inputCategory: '',
   inputName: '',
   backgrounds: [
@@ -60,15 +60,27 @@ class App extends Component {
     this.state = initialState;
   }
 
+  handleRouteChange = (route) => {
+    this.setState({ route });
+    // If we get user, log them in
+    if (true) this.setState({ loggedIn: true });
+  };
+
   render() {
     const { route, loggedIn } = this.state;
     return (
       <div className="background">
         <div className="App">
-          <Header loggedIn={loggedIn} />
+          <Header
+            loggedIn={loggedIn}
+            handleRouteChange={this.handleRouteChange}
+          />
           <div className="ph4 pv5">
             {route === 'signin' || route === 'signup' ? (
-              <Landing route={route} />
+              <Landing
+                route={route}
+                handleRouteChange={this.handleRouteChange}
+              />
             ) : route === 'saved' ? (
               <Saved />
             ) : route === 'about' ? (
