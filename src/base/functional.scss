@@ -2,49 +2,58 @@
 
 .title {
   font-family: $ff-title;
-  font-size: $fs-title;
   color: $clr-title;
+  font-size: $fs-title;
 }
 
 .subtitle {
-  font-size: $fs-subtitle;
   color: $clr-subtitle;
+  font-size: $fs-subtitle;
 }
 
 .login-button-text {
-  font-size: $fs-subtitle;
   color: $clr-login-button-text;
+  font-size: $fs-login-button-text;
 }
 
 .continue-as-guest {
-  font-size: $fs-continue-as-guest;
   color: $clr-continue-as-guest;
+  font-size: $fs-continue-as-guest;
 }
 
 .window-title {
-  font-size: $fs-window-title;
   color: $clr-window-title;
+  font-size: $fs-window-title;
 }
 
 .window-body {
-  font-size: $fs-window-body;
   color: $clr-window-body;
+  font-size: $fs-window-body;
 }
 
 .placeholder {
   background-color: $clr-input-box;
-  font-size: $fs-placeholder;
   color: $clr-placeholder;
+  font-size: $fs-placeholder;
 }
 
-.button-text {
-  font-size: $fs-button-text;
-  color: $clr-button-text;
+.number {
+  color: $clr-number;
+  font-size: $fs-number;
+}
+
+.number-label {
+  color: $clr-number-label;
+  font-size: $fs-number-label;
 }
 
 // Colors
 .clr-blue {
   color: $clr-blue;
+}
+
+.clr-green {
+  color: $clr-green;
 }
 
 .btn--bg-green {

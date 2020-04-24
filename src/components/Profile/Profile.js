@@ -3,7 +3,7 @@ import React from 'react';
 const Profile = ({ handleBackgroundChange, backgrounds }) => {
   return (
     <div className="window-box mw7">
-      <p className="window-title tc">Josh</p>
+      <h1 className="window-title tc">Josh</h1>
       <p className="window-body tc">3 saved budgets</p>
       <p className="window-body">Change name:</p>
       <div className="flex">
@@ -14,9 +14,7 @@ const Profile = ({ handleBackgroundChange, backgrounds }) => {
           name="name"
           placeholder="Name"
         />
-        <button className="button btn--bg-green button-text pv1 ph3">
-          SAVE
-        </button>
+        <button className="button btn--bg-green pv1 ph3">SAVE</button>
       </div>
       <div className="mt2">
         <p className="window-body dib mr3">Change background: </p>
@@ -25,7 +23,7 @@ const Profile = ({ handleBackgroundChange, backgrounds }) => {
           <button
             key={index}
             onClick={handleBackgroundChange}
-            className="button btn--bg-blue button-text mr3 mb3 pv1 ph3"
+            className="button btn--bg-blue mr3 mb3 pv1 ph3"
           >
             {background.name}
           </button>

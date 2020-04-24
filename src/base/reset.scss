@@ -9,6 +9,8 @@
   border-radius: 10px;
   font-weight: 300;
   font-family: 'Roboto Mono', monospace;
+  color: $clr-button-text;
+  font-size: $fs-button-text;
   border: 0;
   &:focus {
     outline: 0;

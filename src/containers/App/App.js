@@ -15,8 +15,8 @@ import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'signup',
-  isLoggedIn: false,
+  route: 'create',
+  isLoggedIn: true,
   inputCategory: '',
   inputName: '',
   backgrounds: [

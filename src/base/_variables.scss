@@ -1,5 +1,4 @@
-// Change body color back to white
-// FUlly comment this ifle
+// Change body color back to white (remove unused variables afterwards)
 
 // Dark mode.
 $clr-logo-dark: black;
@@ -44,6 +43,7 @@ $clr-login-box: rgba(0, 116, 145, 0.9);
 $clr-login-button: rgba(0, 0, 0, 0.5);
 $clr-login-button-active: rgba(0, 0, 0, 0.4);
 $clr-login-button-text: white;
+$fs-login-button-text: 2.2rem;
 $clr-continue-as-guest: rgba(255, 255, 255, 0.7);
 $fs-continue-as-guest: 1.5rem;
 
@@ -65,6 +65,9 @@ $fs-nav-item: 2.4rem;
 $fs-nav-item-mobile: 2.5rem;
 
 // Create component.
-$fs-number: 5rem;
+$clr-number: white;
+$fs-number: 3.5rem;
+$clr-number-label: white;
+$fs-number-label: 2rem;
 $fs-entry-title: 2.5rem;
 $fs-entry: 2rem;
