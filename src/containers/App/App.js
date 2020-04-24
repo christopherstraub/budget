@@ -15,8 +15,8 @@ import './App.scss';
 
 const initialState = {
   //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'profile',
-  isLoggedIn: true,
+  route: 'signup',
+  isLoggedIn: false,
   inputCategory: '',
   inputName: '',
   backgrounds: [
@@ -112,6 +112,8 @@ class App extends Component {
                 route={route}
                 handleRouteChange={this.handleRouteChange}
               />
+            ) : route === 'create' ? (
+              <Create />
             ) : route === 'saved' ? (
               <Saved />
             ) : route === 'about' ? (

@@ -6,7 +6,12 @@ const Nav = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <nav>
       <ul className="navi ul flex justify-center pt5">
-        <li className="navi__item pointer br-pill dim">CREATE</li>
+        <li
+          onClick={() => handleRouteChange('create')}
+          className="navi__item pointer br-pill dim"
+        >
+          CREATE
+        </li>
         <li
           onClick={() => handleRouteChange('saved')}
           className="navi__item pointer br-pill dim"
