@@ -43,6 +43,12 @@
   background-color: $clr-window-box;
   border-radius: 5px;
 }
+
+.edit::after {
+  content: url('../../images/pencil.svg');
+  margin-left: 0.75rem;
+}
+
 .App {
   word-wrap: break-word;
   font-family: 'Open Sans', sans-serif;
