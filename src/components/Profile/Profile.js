@@ -8,7 +8,7 @@ const Profile = ({ handleBackgroundChange, backgrounds }) => {
       <p className="window-body">Change name:</p>
       <div className="flex">
         <input
-          className="placeholder br3 pv1 ph3 mr3 w-100"
+          className="placeholder br2 pv1 ph3 mr3 w-100"
           type="text"
           id="name"
           name="name"

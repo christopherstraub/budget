@@ -5,7 +5,7 @@ const Create = () => {
     <div className="window-box mw7">
       <h1 className="window-title edit tc">April 2020</h1>
       <h1
-        className="subtitle flex justify-center items-center mb5 edit"
+        className="white o-80 flex justify-center items-center mb5 edit"
         style={{ fontSize: '1.8rem' }}
       >
         Click field to edit
@@ -19,7 +19,14 @@ const Create = () => {
       <h2 className="number-label">Actual Balance</h2>
       <h1 className="number tc mb4">$1,500.00</h1>
       <h2 className="number-label">Difference</h2>
-      <h1 className="number tc mb4 clr-green b">$1,000.00</h1>
+      <h1 className="number tc mb4 clr-red b">$1,000.00</h1>
+      <input
+        className="placeholder br2 pv1 ph3 mr3 w-100"
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Enter category to add"
+      />
     </div>
   );
 };
