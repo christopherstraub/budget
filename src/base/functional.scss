@@ -51,6 +51,16 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.entry-title {
+  color: $clr-entry-title;
+  font-size: $fs-entry-title;
+}
+
+.entry {
+  color: $clr-entry;
+  font-size: $fs-entry;
+}
+
 // Colors
 .clr-blue {
   color: $clr-blue;

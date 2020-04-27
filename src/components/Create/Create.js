@@ -22,9 +22,9 @@ const Create = () => {
         <h2 className="number-label">Balance Difference</h2>
         <h1 className="number tc clr-red">($1,000.00)</h1>
         <h2 className="number-label">Projected Cost</h2>
-        <h1 className="number edit tc mb4">$3,000.00</h1>
+        <h1 className="number tc mb4">$3,000.00</h1>
         <h2 className="number-label">Actual Cost</h2>
-        <h1 className="number edit tc mb4">$3,500.00</h1>
+        <h1 className="number tc mb4">$3,500.00</h1>
         <h2 className="number-label">Cost Difference</h2>
         <h1 className="number tc clr-green">$1,500.00</h1>
       </div>
@@ -40,6 +40,26 @@ const Create = () => {
             placeholder="Enter category to add"
           />
           <button className="button btn--bg-blue pv1 ph3">ADD</button>
+        </div>
+        <div class="container bg-white mt4">
+          <div class="row mb2">
+            <div class="col-6 entry-title">Category</div>
+            <div class="col entry-title">Projected Cost</div>
+            <div class="col entry-title">Actual Cost</div>
+            <div class="col entry-title">Difference</div>
+          </div>
+          <div class="row">
+            <div class="col-6 entry">Rent or mortgage</div>
+            <div class="col entry">$1,500.00</div>
+            <div class="col entry">$1,500.00</div>
+            <div class="col entry">$0.00</div>
+          </div>
+          <div class="row">
+            <div class="col-6 entry">Phone</div>
+            <div class="col entry">$45.00</div>
+            <div class="col entry">$60.00</div>
+            <div class="col entry">-$15.00</div>
+          </div>
         </div>
       </div>
     </div>

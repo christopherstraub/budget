@@ -33,7 +33,7 @@ $clr-red: rgb(214, 55, 55); //testing
 $clr-dark-red: rgba(155, 0, 0, 1); //For negative entry numbers.
 
 // Default input box.
-$clr-input-box: rgba(250, 250, 250, 0.8);
+$clr-input-box: white;
 
 // Default placeholder.
 $clr-placeholder: rgba(125, 125, 125, 1);
@@ -70,5 +70,7 @@ $clr-number: white;
 $fs-number: 2.8rem;
 $clr-number-label: white;
 $fs-number-label: 2rem;
-$fs-entry-title: 2.5rem;
-$fs-entry: 2rem;
+$clr-entry-title: black;
+$fs-entry-title: 2.2rem;
+$clr-entry: black;
+$fs-entry: 1.8rem;
