@@ -6,7 +6,7 @@ const Landing = ({ route, handleRouteChange }) => {
   return (
     <div>
       <section className="pt6">
-        <h1 className="title tc mb3">Budgeting has never been this easy.</h1>
+        <h1 className="title tc mb3">Budgeting doesn't have to be hard.</h1>
         <h2 className="subtitle tc mb5">
           Sign up or sign in to save your work and come back any time.
         </h2>

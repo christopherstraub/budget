@@ -8,7 +8,7 @@ const About = () => {
         better. <span className="i">CSBudget</span> is maintained by Christopher
         Straub and distributed under the MIT License. You can get in touch with
         Christopher
-        <span className="clr-blue i"> here</span>.
+        <span className="clr-blue"> here</span>.
       </p>
     </div>
   );
