@@ -3,7 +3,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 // Reset.
 @import '../../base/reset.scss';
@@ -35,12 +37,12 @@
 }
 
 .window-box {
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
   width: fit-content;
-  margin: 0 auto;
+  // margin: 0 auto;
   padding: 2rem;
-  border-radius: 5px;
+  border-radius: 2.5px;
 
   background: #0f2027; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -99,7 +101,7 @@
   }
 }
 
-@media only screen and (max-width: 625px) {
+@media only screen and (max-width: 768px) {
   .navi {
     align-items: center;
     flex-direction: column;
