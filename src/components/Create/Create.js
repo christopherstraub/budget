@@ -2,7 +2,7 @@ import React from 'react';
 
 const Create = () => {
   return (
-    <div className="flex items-start justify-center mr7">
+    <div className="flex items-start justify-center">
       <div className="window-box mw6">
         <h1 className="window-title edit tc">April 2020</h1>
         <h1
@@ -28,38 +28,65 @@ const Create = () => {
         <h2 className="number-label">Cost Difference</h2>
         <h1 className="number tc clr-green">$1,500.00</h1>
       </div>
-      <div className="window-box">
+      <div className="window-box flex-grow-1 mh3">
         <h1 className="window-title tc mb5">Entries</h1>
 
-        <div className="flex">
+        <div className="flex justify-center">
           <input
-            className="placeholder br2 pv1 ph3 mr3 w-100"
+            className="placeholder br2 pv3 ph3 mr3 w-50"
             type="text"
             id="name"
             name="name"
             placeholder="Enter category to add"
           />
-          <button className="button btn--bg-blue pv1 ph3">ADD</button>
+          <button className="button btn--bg-blue ph4 dim">ADD CATEGORY</button>
         </div>
-        <div class="container bg-white mt4">
-          <div class="row mb2">
-            <div class="col-6 entry-title">Category</div>
-            <div class="col entry-title">Projected Cost</div>
-            <div class="col entry-title">Actual Cost</div>
-            <div class="col entry-title">Difference</div>
-          </div>
-          <div class="row">
-            <div class="col-6 entry">Rent or mortgage</div>
-            <div class="col entry">$1,500.00</div>
-            <div class="col entry">$1,500.00</div>
-            <div class="col entry">$0.00</div>
-          </div>
-          <div class="row">
-            <div class="col-6 entry">Phone</div>
-            <div class="col entry">$45.00</div>
-            <div class="col entry">$60.00</div>
-            <div class="col entry">-$15.00</div>
-          </div>
+        <table className="bg-white mt4 table table-striped table-bordered table-hover text-break">
+          <thead className="entry-title">
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col" style={{ width: '165px' }}>
+                Projected Cost
+              </th>
+              <th scope="col" style={{ width: '165px' }}>
+                Actual Cost
+              </th>
+              <th scope="col" style={{ width: '165px' }}>
+                Difference
+              </th>
+            </tr>
+          </thead>
+          <tbody className="entry">
+            <tr>
+              <td>Rent or mortgage</td>
+              <td className="tr">$100,999,999.00</td>
+              <td className="tr">$1,500.00</td>
+              <td className="tr">$0.00</td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td className="tr">$9,999,999.00</td>
+              <td className="tr">$60.00</td>
+              <td className="tr">-$15.00</td>
+            </tr>
+            <tr>
+              <td>Rent or mortgage</td>
+              <td className="tr">$9,999,999.00</td>
+              <td className="tr">$1,500.00</td>
+              <td className="tr">$0.00</td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td className="tr">$9,999,999.00</td>
+              <td className="tr">$60.00</td>
+              <td className="tr">-$15.00</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="flex justify-center pt5">
+          <button className="button btn--bg-green pv3 ph4 dim">
+            SAVE BUDGET
+          </button>
         </div>
       </div>
     </div>

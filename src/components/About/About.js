@@ -9,7 +9,7 @@ const About = () => {
           better. <span className="i">CSBudget</span> is maintained by
           Christopher Straub and distributed under the MIT License. You can get
           in touch with Christopher
-          <span className="clr-blue"> here</span>.
+          <span className="clr-blue dim pointer"> here</span>.
         </p>
       </div>
     </div>
@@ -17,3 +17,5 @@ const About = () => {
 };
 
 export default About;
+
+// CCUSTOM BUTTON ANIM

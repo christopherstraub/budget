@@ -15,7 +15,7 @@ const Profile = ({ handleBackgroundChange, backgrounds }) => {
             name="name"
             placeholder="Name"
           />
-          <button className="button btn--bg-green pv1 ph3">SAVE</button>
+          <button className="button btn--bg-green ph3 dim">SAVE</button>
         </div>
         <div className="mt2">
           <p className="window-body dib mr3">Change background: </p>
@@ -24,7 +24,7 @@ const Profile = ({ handleBackgroundChange, backgrounds }) => {
             <button
               key={index}
               onClick={handleBackgroundChange}
-              className="button btn--bg-blue mr3 mb3 pv1 ph3"
+              className="button btn--bg-blue mr3 mb3 pv1 ph3 dim"
             >
               {background.name}
             </button>
