@@ -31,58 +31,63 @@ const Create = () => {
       <div className="window-box flex-grow-1 mh3">
         <h1 className="window-title tc mb5">Entries</h1>
 
-        <div className="flex justify-center">
+        <div className="add-entry flex justify-center">
           <input
-            className="placeholder br2 pv3 ph3 mr3 w-25"
+            className="placeholder br2 pv3 ph3 mr3 w-33"
             type="text"
             id="name"
             name="name"
             placeholder="Category of entry"
           />
-          <button className="button btn--bg-blue ph4 dim">ADD ENTRY</button>
+          <button className="button btn--bg-blue pv3 ph4 dim">ADD ENTRY</button>
         </div>
-        <table className="bg-white mt4 table table-striped table-bordered table-hover text-break">
-          <thead className="entry-title">
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col" style={{ width: '189px' }}>
-                Projected Cost
-              </th>
-              <th scope="col" style={{ width: '189px' }}>
-                Actual Cost
-              </th>
-              <th scope="col" style={{ width: '189px' }}>
-                Difference
-              </th>
-            </tr>
-          </thead>
-          <tbody className="entry">
-            <tr>
-              <td>Rent or mortgage</td>
-              <td className="tr">$100,999,999.00</td>
-              <td className="tr">$1,500.00</td>
-              <td className="tr">$0.00</td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td className="tr">$9,999,999.00</td>
-              <td className="tr">$60.00</td>
-              <td className="tr">-$15.00</td>
-            </tr>
-            <tr>
-              <td>Rent or mortgage</td>
-              <td className="tr">$9,999,999.00</td>
-              <td className="tr">$1,500.00</td>
-              <td className="tr">$0.00</td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td className="tr">$9,999,999.00</td>
-              <td className="tr">$60.00</td>
-              <td className="tr">-$15.00</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="bg-white mt4 table table-striped table-bordered table-hover">
+            <thead className="entry-title">
+              <tr>
+                <th scope="col" style={{ minWidth: '220px' }}>
+                  Category
+                </th>
+                <th scope="col" style={{ width: '189px' }}>
+                  Projected Cost
+                </th>
+                <th scope="col" style={{ width: '189px' }}>
+                  Actual Cost
+                </th>
+                <th scope="col" style={{ width: '189px' }}>
+                  Difference
+                </th>
+              </tr>
+            </thead>
+            <tbody className="entry">
+              <tr>
+                <td className="text-break">Rent or mortgage</td>
+                <td className="tr">$39,999.00</td>
+                <td className="tr">$1,500.00</td>
+                <td className="tr">$0.00</td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td className="tr">$3,999.00</td>
+                <td className="tr">$99,000.00</td>
+                <td className="tr">-$15.00</td>
+              </tr>
+              <tr>
+                <td>Rent or mortgage</td>
+                <td className="tr">$9,999,999.00</td>
+                <td className="tr">$1,500.00</td>
+                <td className="tr">$0.00</td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td className="tr">$9,999,999.00</td>
+                <td className="tr">$609999999999999.00</td>
+                <td className="tr">-$15.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div className="flex justify-center pt5">
           <button className="button btn--bg-green pv3 ph4 dim">
             SAVE BUDGET

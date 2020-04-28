@@ -120,6 +120,14 @@
     font-size: $fs-nav-item-mobile;
     margin: 0.5rem 0;
   }
-}
 
-//Responsive create page.
+  //Responsive entry category input and button.
+  .add-entry {
+    & > input {
+      min-width: 250px;
+      margin-bottom: 1rem;
+    }
+    align-items: center;
+    flex-direction: column;
+  }
+}
