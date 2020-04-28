@@ -90,14 +90,24 @@
 
 // Media queries.
 
-// Responsive nav and header.
 @media only screen and (max-width: 1100px) {
+  // Responsive nav and header.
   .navi {
     padding-top: 10rem;
   }
   .header__logo {
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  // Responsive create page.
+  .Create {
+    flex-wrap: wrap;
+    column-gap: 20px;
+    & > .window-box {
+      margin-right: 0;
+      margin-left: 0;
+    }
   }
 }
 
@@ -111,3 +121,5 @@
     margin: 0.5rem 0;
   }
 }
+
+//Responsive create page.

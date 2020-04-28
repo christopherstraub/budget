@@ -2,8 +2,8 @@ import React from 'react';
 
 const Create = () => {
   return (
-    <div className="flex items-start justify-center">
-      <div className="window-box mw6">
+    <div className="Create flex items-start justify-center">
+      <div className="window-box mw7 mh3 mb5">
         <h1 className="window-title edit tc">April 2020</h1>
         <h1
           className="white o-80 flex justify-center items-center mb4 edit"
@@ -12,7 +12,7 @@ const Create = () => {
           Click field to edit
         </h1>
         <h2 className="number-label">Projected Monthly Income</h2>
-        <h1 className="number edit tc mb4">$3,000.00</h1>
+        <h1 className="number edit tc mb4">$9,999,999,000.00</h1>
         <h2 className="number-label">Actual Monthly Income</h2>
         <h1 className="number edit tc mb4">$3,500.00</h1>
         <h2 className="number-label">Projected Balance</h2>
@@ -33,25 +33,25 @@ const Create = () => {
 
         <div className="flex justify-center">
           <input
-            className="placeholder br2 pv3 ph3 mr3 w-50"
+            className="placeholder br2 pv3 ph3 mr3 w-25"
             type="text"
             id="name"
             name="name"
-            placeholder="Enter category to add"
+            placeholder="Category of entry"
           />
-          <button className="button btn--bg-blue ph4 dim">ADD CATEGORY</button>
+          <button className="button btn--bg-blue ph4 dim">ADD ENTRY</button>
         </div>
         <table className="bg-white mt4 table table-striped table-bordered table-hover text-break">
           <thead className="entry-title">
             <tr>
               <th scope="col">Category</th>
-              <th scope="col" style={{ width: '165px' }}>
+              <th scope="col" style={{ width: '189px' }}>
                 Projected Cost
               </th>
-              <th scope="col" style={{ width: '165px' }}>
+              <th scope="col" style={{ width: '189px' }}>
                 Actual Cost
               </th>
-              <th scope="col" style={{ width: '165px' }}>
+              <th scope="col" style={{ width: '189px' }}>
                 Difference
               </th>
             </tr>
