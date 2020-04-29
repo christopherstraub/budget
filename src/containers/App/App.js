@@ -14,9 +14,10 @@ import Background4 from '../../images/bg4.jpg';
 import './App.scss';
 
 const initialState = {
-  //Valid routes: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
-  route: 'create',
-  isLoggedIn: true,
+  // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
+  route: 'saved',
+  // Valid messages: 'budget-deleted'
+  message: 'budget-deleted',
   input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
@@ -24,6 +25,7 @@ const initialState = {
     { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
     { name: 'SPACE', url: Background4, useDarkMode: false },
   ],
+  isLoggedIn: true,
   user: {
     id: 1,
     name: 'Carola',
@@ -177,8 +179,18 @@ class App extends Component {
     this.setState({ input: inputCopy });
   };
 
+  handleDeleteBudget = (id) => {
+    const userCopy = { ...this.state.user };
+    const filteredBudgets = userCopy.budgets.filter(
+      (budget) => budget.id !== id
+    );
+    userCopy.budgets = filteredBudgets;
+    this.setState({ user: userCopy });
+    this.setState({ route: 'saved' });
+  };
+
   render() {
-    const { route, isLoggedIn, input, backgrounds, user } = this.state;
+    const { route, message, input, backgrounds, isLoggedIn, user } = this.state;
 
     user.joined = new Date();
     console.log(user.joined);
@@ -207,9 +219,10 @@ class App extends Component {
                 handleCategoryInputChange={this.handleCategoryInputChange}
                 handleAddEntry={this.handleAddEntry}
                 inputCategory={input.category}
+                handleDeleteBudget={this.handleDeleteBudget}
               />
             ) : route === 'saved' ? (
-              <Saved user={user} />
+              <Saved user={user} message={message} />
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (

@@ -26,7 +26,7 @@ const Profile = ({
           />
           <button
             onClick={handleNameChange}
-            className="button btn--bg-green pv1 ph3"
+            className="button bg--green pv1 ph3"
           >
             SAVE
           </button>
@@ -38,7 +38,7 @@ const Profile = ({
             <button
               key={index}
               onClick={handleBackgroundChange}
-              className="button btn--bg-blue mr3 mb3 pv1 ph3"
+              className="button bg--blue mr3 mb3 pv1 ph3"
             >
               {background.name}
             </button>

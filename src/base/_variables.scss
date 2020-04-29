@@ -24,13 +24,13 @@ $clr-subtitle: rgba(255, 255, 255, 0.85);
 $fs-subtitle: 2.2rem;
 
 // Colors
-$clr-blue: rgba(32, 167, 242, 1);
-$clr-green: rgba(31, 178, 37, 1);
-$clr-dark-green: rgba(13, 119, 17, 1); //For positive entry numbers
-$clr-magenta: rgba(159, 57, 194, 1);
-$clr-orange: rgba(180, 117, 23, 1);
-$clr-red: rgb(214, 55, 55); //testing
-$clr-dark-red: rgba(155, 0, 0, 1); //For negative entry numbers.
+$clr-blue: rgb(15, 160, 238);
+$clr-green: rgb(0, 170, 0);
+$clr-dark-green: rgb(13, 119, 17); //For positive entry numbers
+$clr-magenta: rgb(159, 57, 194);
+$clr-orange: rgb(180, 117, 23);
+$clr-red: rgb(210, 0, 0);
+$clr-dark-red: rgb(155, 0, 0); //For negative entry numbers.
 
 // Default input box.
 $clr-input-box: white;

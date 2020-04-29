@@ -30,6 +30,7 @@ const Create = ({
   handleCategoryInputChange,
   handleAddEntry,
   inputCategory,
+  handleDeleteBudget,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
   console.log(formattedBudget.entries);
@@ -37,12 +38,12 @@ const Create = ({
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5">
         <h1 className="window-title edit tc">{budget.title}</h1>
-        <h1
+        <h3
           className="white o-80 flex justify-center items-center mb4 edit"
           style={{ fontSize: '1.8rem' }}
         >
           Click field to edit
-        </h1>
+        </h3>
         <h2 className="number-label">Projected Monthly Income</h2>
         <h1 className="number edit tc mb4">
           {formattedBudget.projectedMonthlyIncome}
@@ -69,7 +70,9 @@ const Create = ({
         </h1>
       </div>
       <div className="window-box flex-grow-1 mh3">
-        <h1 className="window-title tc mb5">Entries</h1>
+        <h1 className="window-title tc mb5">
+          Entries ({budget.entries.length})
+        </h1>
 
         <div className="add-entry flex justify-center">
           <input
@@ -81,10 +84,7 @@ const Create = ({
             placeholder="Category of entry"
             value={inputCategory}
           />
-          <button
-            onClick={handleAddEntry}
-            className="button btn--bg-blue pv3 ph4"
-          >
+          <button onClick={handleAddEntry} className="button bg--blue pv3 ph4">
             ADD ENTRY
           </button>
         </div>
@@ -108,7 +108,7 @@ const Create = ({
             </thead>
             <tbody className="entry">
               {formattedBudget.entries.map((entry, index) => (
-                <tr>
+                <tr key={index}>
                   <td className="text-break">
                     {budget.entries[index].category}
                   </td>
@@ -122,9 +122,21 @@ const Create = ({
           </table>
         </div>
 
-        <div className="flex justify-center pt5">
-          <button className="button btn--bg-green pv3 ph4">SAVE BUDGET</button>
+        <div className="flex justify-center pt5 pb3">
+          <button className="button bg--green pv3 ph4">SAVE BUDGET</button>
+          <button
+            onDoubleClick={() => handleDeleteBudget(budget.id)}
+            className="button bg--dark-red pv3 ph4 ml-auto"
+          >
+            DELETE BUDGET
+          </button>
         </div>
+        <p
+          className="white o-80 flex justify-end items-center"
+          style={{ fontSize: '1.8rem' }}
+        >
+          Double click to delete
+        </p>
       </div>
     </div>
   );
