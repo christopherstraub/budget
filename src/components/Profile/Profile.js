@@ -12,7 +12,9 @@ const Profile = ({
     <div className="flex justify-center">
       <div className="window-box mw7">
         <h1 className="window-title tc">{user.name}</h1>
-        <p className="window-body tc">{user.budgets.length} saved budgets</p>
+        <p className="window-body tc o-80">
+          {user.budgets.length} saved budgets
+        </p>
         <p className="window-body">Change name:</p>
         <div className="flex">
           <input
@@ -31,7 +33,7 @@ const Profile = ({
             SAVE
           </button>
         </div>
-        <div className="mt2">
+        <div className="mt4">
           <p className="window-body dib mr3">Change background: </p>
 
           {backgrounds.map((background, index) => (

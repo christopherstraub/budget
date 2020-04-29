@@ -15,9 +15,9 @@ import './App.scss';
 
 const initialState = {
   // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
-  route: 'saved',
+  route: 'profile',
   // Valid messages: 'budget-deleted'
-  message: 'budget-deleted',
+  message: '',
   input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
@@ -28,7 +28,7 @@ const initialState = {
   isLoggedIn: true,
   user: {
     id: 1,
-    name: 'Carola',
+    name: 'Chris',
     email: 'ccstraub@gmail.com',
     joined: null,
     background: {
@@ -92,10 +92,61 @@ const initialState = {
           },
         ],
       },
-      { title: 'May 2020' },
-      { title: 'June 2020' },
-      { title: 'June 2020' },
-      { title: 'August 2021' },
+      {
+        id: 2,
+        title: 'May 2020',
+        // title: { month: new Date().getMonth(), year: new Date().getFullYear() },
+        projectedMonthlyIncome: 5000,
+        actualMonthlyIncome: 5500,
+        getProjectedBalance() {
+          return this.projectedMonthlyIncome - this.getProjectedCost();
+        },
+        getActualBalance() {
+          return this.actualMonthlyIncome - this.getActualCost();
+        },
+        getDifferenceBalance() {
+          return this.getActualBalance() - this.getProjectedBalance();
+        },
+        getProjectedCost() {
+          const projectedCosts = this.entries.map(
+            (entry) => entry.projectedCost
+          );
+          return projectedCosts.reduce((acc, value) => acc + value);
+        },
+        getActualCost() {
+          const actualCosts = this.entries.map((entry) => entry.actualCost);
+          return actualCosts.reduce((acc, value) => acc + value);
+        },
+        getDifferenceCost() {
+          return this.getProjectedCost() - this.getActualCost();
+        },
+        entries: [
+          {
+            category: 'Mortgage or rent',
+            projectedCost: 1500,
+            actualCost: 1500,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+          {
+            category: 'Phone',
+            projectedCost: 80,
+            actualCost: 60,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+          {
+            category: 'Car',
+            projectedCost: 100,
+            actualCost: 150,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+        ],
+      },
     ],
   },
 };
@@ -107,7 +158,7 @@ class App extends Component {
   }
 
   handleRouteChange = (route) => {
-    this.setState({ route });
+    if (this.state.route !== route) this.setState({ route, message: '' });
     // If we get user, log them in
     if (route !== 'signin' && route !== 'signup')
       this.setState({ isLoggedIn: true });
@@ -185,8 +236,11 @@ class App extends Component {
       (budget) => budget.id !== id
     );
     userCopy.budgets = filteredBudgets;
-    this.setState({ user: userCopy });
-    this.setState({ route: 'saved' });
+    this.setState({
+      user: userCopy,
+      route: 'saved',
+      message: 'budget-deleted',
+    });
   };
 
   render() {

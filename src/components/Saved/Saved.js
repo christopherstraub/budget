@@ -3,10 +3,10 @@ import React from 'react';
 const Saved = ({ user, message }) => {
   return (
     <div className="flex justify-center">
-      <div className="window-box mw7">
-        {/* {message === 'budget-deleted' ? (
-          <h1 className="window-body tc mb4">Successfully deleted budget.</h1>
-        ) : null} */}
+      <div className="window-box mw8">
+        {message === 'budget-deleted' ? (
+          <h1 className="window-body tc mb4 o-80">Budget deleted.</h1>
+        ) : null}
         <h1 className="window-title tc mb4">
           {user.name}, you have{' '}
           <span className="clr-blue b">{user.budgets.length}</span> saved
@@ -20,7 +20,10 @@ const Saved = ({ user, message }) => {
             </li>
           ))}
           <li>
-            <button className="button bg--green pv1 ph3 mt4">
+            <button
+              // onClick={handleCreateNewBudget}
+              className="button bg--green pv1 ph3 mt4"
+            >
               CREATE NEW BUDGET
             </button>
           </li>
