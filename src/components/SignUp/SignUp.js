@@ -30,7 +30,7 @@ const SignUp = ({ handleRouteChange }) => {
         />
         <input
           // onClick={() => handleRouteChange('signup')} ATTEMPT TO SIGN UP USER
-          className="pa3 mv2 br3 w-100 login-button-text b white"
+          className="pa3 mv2 br3 w-100 login-button-text white"
           type="submit"
           value="Sign up"
         />

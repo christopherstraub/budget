@@ -1,45 +1,64 @@
 @import './variables';
 
 .title {
-  font-family: 'Roboto', sans-serif;
-  font-size: $fs-title;
+  font-family: $ff-title;
   color: $clr-title;
+  font-size: $fs-title;
 }
 
 .subtitle {
-  font-size: $fs-subtitle;
   color: $clr-subtitle;
+  font-size: $fs-subtitle;
 }
 
 .login-button-text {
-  font-size: $fs-subtitle;
   color: $clr-login-button-text;
+  font-size: $fs-login-button-text;
 }
 
 .continue-as-guest {
-  font-size: $fs-continue-as-guest;
   color: $clr-continue-as-guest;
+  font-size: $fs-continue-as-guest;
 }
 
 .window-title {
-  font-size: $fs-window-title;
   color: $clr-window-title;
+  font-size: $fs-window-title;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .window-body {
-  font-size: $fs-window-body;
   color: $clr-window-body;
+  font-size: $fs-window-body;
 }
 
 .placeholder {
   background-color: $clr-input-box;
-  font-size: $fs-placeholder;
   color: $clr-placeholder;
+  font-size: $fs-placeholder;
 }
 
-.button-text {
-  font-size: $fs-button-text;
-  color: $clr-button-text;
+.number {
+  color: $clr-number;
+  font-size: $fs-number;
+  text-shadow: 4px 2px 2px #302e2e;
+  font-family: 'Lato', sans-serif;
+}
+
+.number-label {
+  color: $clr-number-label;
+  font-size: $fs-number-label;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.entry-title {
+  color: $clr-entry-title;
+  font-size: $fs-entry-title;
+}
+
+.entry {
+  color: $clr-entry;
+  font-size: $fs-entry;
 }
 
 // Colors
@@ -47,10 +66,22 @@
   color: $clr-blue;
 }
 
-.btn--bg-green {
+.clr-green {
+  color: $clr-green;
+}
+
+.clr-red {
+  color: $clr-red;
+}
+
+.bg--green {
   background-color: $clr-green;
 }
 
-.btn--bg-blue {
+.bg--blue {
   background-color: $clr-blue;
+}
+
+.bg--dark-red {
+  background-color: $clr-dark-red;
 }

@@ -5,12 +5,12 @@ import SignUp from '../SignUp/SignUp';
 const Landing = ({ route, handleRouteChange }) => {
   return (
     <div>
-      <header className="pt6">
-        <h1 className="title tc mb3">Budgeting has never been this easy.</h1>
+      <section className="pt6">
+        <h1 className="title tc mb3">Budgeting doesn't have to be hard.</h1>
         <h2 className="subtitle tc mb5">
-          Sign in to save your work and come back any time.
+          Sign up or sign in to save your work and come back any time.
         </h2>
-      </header>
+      </section>
       {route === 'signin' ? (
         <SignIn handleRouteChange={handleRouteChange} />
       ) : route === 'signup' ? (

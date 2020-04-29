@@ -1,36 +1,34 @@
 import React from 'react';
 
-const Saved = () => {
+const Saved = ({ user, messageCode, displayMessage }) => {
   return (
-    <div className="window-box mw7">
-      <h1 className="window-title tc mb4">
-        Josh, you have <span className="clr-blue b">3</span> saved budgets.
-      </h1>
-      <ul className="ul tc">
-        <li className="mv2">
-          <p className="window-body dib mr3">April 2020</p>
-          <button className="button btn--bg-blue button-text pv1 ph3">
-            EDIT
-          </button>
-        </li>
-        <li className="mv2">
-          <p className="window-body dib mr3">May 2020</p>
-          <button className="button btn--bg-blue button-text pv1 ph3">
-            EDIT
-          </button>
-        </li>
-        <li className="mv2">
-          <p className="window-body dib mr3">June 2020</p>
-          <button className="button btn--bg-blue button-text pv1 ph3">
-            EDIT
-          </button>
-        </li>
-        <li>
-          <button className="button btn--bg-green button-text pv1 ph3 mt4">
-            CREATE NEW BUDGET
-          </button>
-        </li>
-      </ul>
+    <div className="flex justify-center">
+      <div className="window-box mw8">
+        {messageCode === 'budget-deleted'
+          ? displayMessage('Budget deleted.')
+          : null}
+        <h1 className="window-title tc mb4">
+          {user.name}, you have
+          <span className="clr-blue b"> {user.budgets.length}</span> saved
+          budgets.
+        </h1>
+        <ul className="ul tc">
+          {user.budgets.map((budget, index) => (
+            <li key={index} className="mv2">
+              <p className="window-body dib mr3">{budget.title}</p>
+              <button className="button bg--blue pv1 ph3">VIEW</button>
+            </li>
+          ))}
+          <li>
+            <button
+              // onClick={handleCreateNewBudget}
+              className="button bg--green pv1 ph3 mt4"
+            >
+              CREATE NEW BUDGET
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

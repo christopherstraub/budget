@@ -3,7 +3,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 // Reset.
 @import '../../base/reset.scss';
@@ -35,16 +37,35 @@
 }
 
 .window-box {
-  max-height: 80vh;
+  overflow-wrap: break-word;
+  max-height: 85vh;
   overflow-y: auto;
   width: fit-content;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: $clr-window-box;
-  border-radius: 5px;
+  // margin: 0 auto;
+  padding: 3rem 2rem;
+  border-radius: 2.5px;
+
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+.edit::after {
+  content: url('../../images/pencil.svg');
+  margin-left: 0.75rem;
+}
+
 .App {
-  word-wrap: break-word;
   font-family: 'Open Sans', sans-serif;
   color: $clr-body;
   min-height: 100vh;
@@ -61,13 +82,16 @@
     .subtitle {
       color: $clr-subtitle-dark;
     }
+    .navi__item {
+      color: $clr-nav-item-dark;
+    }
   }
 }
 
-// Media quieries.
+// Media queries.
 
-// Responsive nav and header.
 @media only screen and (max-width: 1100px) {
+  // Responsive nav and header.
   .navi {
     padding-top: 10rem;
   }
@@ -75,9 +99,19 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  // Responsive create page.
+  .Create {
+    flex-wrap: wrap;
+    column-gap: 20px;
+    & > .window-box {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .navi {
     align-items: center;
     flex-direction: column;
@@ -85,5 +119,15 @@
   .navi__item {
     font-size: $fs-nav-item-mobile;
     margin: 0.5rem 0;
+  }
+
+  //Responsive entry category input and button.
+  .add-entry {
+    & > input {
+      min-width: 250px;
+      margin-bottom: 1rem;
+    }
+    align-items: center;
+    flex-direction: column;
   }
 }
