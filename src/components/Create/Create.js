@@ -15,14 +15,22 @@ const formatBudget = (budget, formatter) => {
     projectedCost: formatter.format(budget.getProjectedCost()),
     actualCost: formatter.format(budget.getActualCost()),
     differenceCost: formatter.format(budget.getDifferenceCost()),
-    entries: budget.entries.map((entry) => {
+  };
+};
+
+const formatEntries = (entries, formatter) => {
+  if (entries.length === 0) {
+    return [{ projectedCost: 0, actualCost: 0, difference: 0 }];
+  } else {
+    return entries.map((entry) => {
       return {
+        category: entry.category,
         projectedCost: formatter.format(entry.projectedCost),
         actualCost: formatter.format(entry.actualCost),
         difference: formatter.format(entry.getDifference()),
       };
-    }),
-  };
+    });
+  }
 };
 
 const Create = ({
@@ -33,7 +41,15 @@ const Create = ({
   handleDeleteBudget,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
-  console.log(formattedBudget.entries);
+
+  console.log(Boolean(budget.entries));
+
+  const formattedEntries = formatEntries(
+    budget.entries,
+    formatterUnitedStatesDollar
+  );
+  console.log(formattedEntries);
+
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5">
@@ -71,7 +87,7 @@ const Create = ({
       </div>
       <div className="window-box flex-grow-1 mh3">
         <h1 className="window-title tc mb5">
-          Entries ({budget.entries.length})
+          Entries ({formattedEntries.length})
         </h1>
 
         <div className="add-entry flex justify-center">
@@ -107,11 +123,9 @@ const Create = ({
               </tr>
             </thead>
             <tbody className="entry">
-              {formattedBudget.entries.map((entry, index) => (
+              {formattedEntries.map((entry, index) => (
                 <tr key={index}>
-                  <td className="text-break">
-                    {budget.entries[index].category}
-                  </td>
+                  <td className="text-break">{entry.category}</td>
                   <td className="tr">{entry.projectedCost}</td>
 
                   <td className="tr">{entry.actualCost}</td>

@@ -15,7 +15,7 @@ import './App.scss';
 
 const initialState = {
   // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
-  route: 'profile',
+  route: 'create',
   // Valid messageCodes codes: 'budget-deleted', 'name-changed', 'background-changed'
   messageCodeCode: '',
   input: { category: '', name: '' },
@@ -53,14 +53,20 @@ const initialState = {
           return this.getActualBalance() - this.getProjectedBalance();
         },
         getProjectedCost() {
-          const projectedCosts = this.entries.map(
-            (entry) => entry.projectedCost
-          );
-          return projectedCosts.reduce((acc, value) => acc + value);
+          if (this.entries.length === 0) return 0;
+          else {
+            const projectedCosts = this.entries.map(
+              (entry) => entry.projectedCost
+            );
+            return projectedCosts.reduce((acc, value) => acc + value);
+          }
         },
         getActualCost() {
-          const actualCosts = this.entries.map((entry) => entry.actualCost);
-          return actualCosts.reduce((acc, value) => acc + value);
+          if (this.entries.length === 0) return 0;
+          else {
+            const actualCosts = this.entries.map((entry) => entry.actualCost);
+            return actualCosts.reduce((acc, value) => acc + value);
+          }
         },
         getDifferenceCost() {
           return this.getProjectedCost() - this.getActualCost();
@@ -243,6 +249,41 @@ class App extends Component {
     });
   };
 
+  createBudget = () => {
+    return {
+      id: this.state.users.budgets.length,
+      title: `${new Date().getMonth()}`,
+      projectedMonthlyIncome: 0,
+      actualMonthlyIncome: 0,
+      getProjectedBalance() {
+        return this.projectedMonthlyIncome - this.getProjectedCost();
+      },
+      getActualBalance() {
+        return this.actualMonthlyIncome - this.getActualCost();
+      },
+      getDifferenceBalance() {
+        return this.getActualBalance() - this.getProjectedBalance();
+      },
+      getProjectedCost() {
+        const projectedCosts = this.entries.map((entry) => entry.projectedCost);
+        return projectedCosts.reduce((acc, value) => acc + value);
+      },
+      getActualCost() {
+        const actualCosts = this.entries.map((entry) => entry.actualCost);
+        return actualCosts.reduce((acc, value) => acc + value);
+      },
+      getDifferenceCost() {
+        return this.getProjectedCost() - this.getActualCost();
+      },
+    };
+  };
+
+  handleAddBudget = () => {
+    const userCopy = { ...this.state.user };
+    userCopy.budgets.push(this.createBudget());
+    this.setState({ user: userCopy });
+  };
+
   displayMessage = (message) => (
     <h2 className="window-body tc mb4 o-80">{message}</h2>
   );
@@ -258,9 +299,10 @@ class App extends Component {
     } = this.state;
 
     user.joined = new Date();
-    console.log(user.joined);
 
     const currentBudgetIndex = 0;
+
+    console.log(user.budgets);
 
     return (
       <div
