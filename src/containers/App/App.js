@@ -14,11 +14,10 @@ import Background4 from '../../images/bg4.jpg';
 import './App.scss';
 
 const initialState = {
-  //route options: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
+  //Valid routes: ['signin', 'signup', 'create', 'saved', 'profile', 'about']
   route: 'create',
   isLoggedIn: true,
-  inputCategory: '',
-  inputName: '',
+  input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
     { name: 'MACHU PICCHU', url: Background2, useDarkMode: true },
@@ -27,9 +26,9 @@ const initialState = {
   ],
   user: {
     id: 1,
-    name: 'Chris',
+    name: 'Carola',
     email: 'ccstraub@gmail.com',
-    joined: new Date(),
+    joined: null,
     background: {
       name: 'ALPINE MOUNTAINS',
       url: Background1,
@@ -43,26 +42,26 @@ const initialState = {
         projectedMonthlyIncome: 5000,
         actualMonthlyIncome: 5500,
         getProjectedBalance() {
-          return this.projectedMonthlyIncome - this.getTotalProjectedCost();
+          return this.projectedMonthlyIncome - this.getProjectedCost();
         },
         getActualBalance() {
-          return this.actualMonthlyIncome - this.getTotalActualCost();
+          return this.actualMonthlyIncome - this.getActualCost();
         },
         getDifferenceBalance() {
           return this.getActualBalance() - this.getProjectedBalance();
         },
-        getTotalProjectedCost() {
+        getProjectedCost() {
           const projectedCosts = this.entries.map(
             (entry) => entry.projectedCost
           );
           return projectedCosts.reduce((acc, value) => acc + value);
         },
-        getTotalActualCost() {
+        getActualCost() {
           const actualCosts = this.entries.map((entry) => entry.actualCost);
           return actualCosts.reduce((acc, value) => acc + value);
         },
-        getTotalDifferenceCost() {
-          return this.getTotalActualCost() - this.getTotalProjectedCost();
+        getDifferenceCost() {
+          return this.getProjectedCost() - this.getActualCost();
         },
         entries: [
           {
@@ -75,7 +74,7 @@ const initialState = {
           },
           {
             category: 'Phone',
-            projectedCost: 45,
+            projectedCost: 80,
             actualCost: 60,
             getDifference() {
               return this.projectedCost - this.actualCost;
@@ -94,6 +93,7 @@ const initialState = {
       { title: 'May 2020' },
       { title: 'June 2020' },
       { title: 'June 2020' },
+      { title: 'August 2021' },
     ],
   },
 };
@@ -127,13 +127,63 @@ class App extends Component {
     }
   };
 
+  handleNameInputChange = (event) => {
+    const inputCopy = { ...this.state.input };
+    inputCopy.name = event.target.value;
+    this.setState({ input: inputCopy });
+  };
+
+  handleNameChange = () => {
+    // Update name if name input is different from current name
+    // and name input is not empty
+    if (
+      this.state.user.name !== this.state.input.name &&
+      this.state.input.name !== ''
+    ) {
+      const userCopy = { ...this.state.user };
+      userCopy.name = this.state.input.name;
+      this.setState({ user: userCopy });
+      // Reset input field.
+      const inputCopy = { ...this.state.input };
+      inputCopy.name = '';
+      this.setState({ input: inputCopy });
+    }
+  };
+
+  handleCategoryInputChange = (event) => {
+    const inputCopy = { ...this.state.input };
+    inputCopy.category = event.target.value;
+    this.setState({ input: inputCopy });
+  };
+
+  createEntry = () => {
+    return {
+      category: this.state.input.category,
+      projectedCost: 0,
+      actualCost: 0,
+      getDifference() {
+        return this.projectedCost - this.actualCost;
+      },
+    };
+  };
+
+  handleAddEntry = () => {
+    const userCopy = { ...this.state.user };
+    userCopy.budgets[0].entries.push(this.createEntry());
+    this.setState({ user: userCopy });
+    // Reset input field.
+    const inputCopy = { ...this.state.input };
+    inputCopy.category = '';
+    this.setState({ input: inputCopy });
+  };
+
   render() {
-    const { route, isLoggedIn, backgrounds, user } = this.state;
+    const { route, isLoggedIn, input, backgrounds, user } = this.state;
 
-    console.log(user.budgets[0].getTotalProjectedCost());
-    console.log(user.budgets[0].getTotalActualCost());
+    user.joined = new Date();
+    console.log(user.joined);
 
-    console.log(user.budgets[0].entries[2].getDifference());
+    const currentBudgetIndex = 0;
 
     return (
       <div
@@ -152,7 +202,12 @@ class App extends Component {
                 handleRouteChange={this.handleRouteChange}
               />
             ) : route === 'create' ? (
-              <Create />
+              <Create
+                budget={user.budgets[currentBudgetIndex]}
+                handleCategoryInputChange={this.handleCategoryInputChange}
+                handleAddEntry={this.handleAddEntry}
+                inputCategory={input.category}
+              />
             ) : route === 'saved' ? (
               <Saved user={user} />
             ) : route === 'about' ? (
@@ -161,6 +216,10 @@ class App extends Component {
               <Profile
                 handleBackgroundChange={this.handleBackgroundChange}
                 backgrounds={backgrounds}
+                user={user}
+                handleNameInputChange={this.handleNameInputChange}
+                handleNameChange={this.handleNameChange}
+                inputName={input.name}
               />
             ) : null}
           </div>

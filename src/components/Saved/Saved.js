@@ -10,18 +10,14 @@ const Saved = ({ user }) => {
           budgets.
         </h1>
         <ul className="ul tc">
-          {user.budgets.map((budget, index) => {
-            return (
-              <li key={index} className="mv2">
-                <p className="window-body dib mr3">{budget.title}</p>
-                <button className="button btn--bg-blue pv1 ph3 dim">
-                  EDIT
-                </button>
-              </li>
-            );
-          })}
+          {user.budgets.map((budget, index) => (
+            <li key={index} className="mv2">
+              <p className="window-body dib mr3">{budget.title}</p>
+              <button className="button btn--bg-blue pv1 ph3">EDIT</button>
+            </li>
+          ))}
           <li>
-            <button className="button btn--bg-green pv1 ph3 mt4 dim">
+            <button className="button btn--bg-green pv1 ph3 mt4">
               CREATE NEW BUDGET
             </button>
           </li>

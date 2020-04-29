@@ -1,10 +1,42 @@
 import React from 'react';
 
-const Create = () => {
+const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+const formatBudget = (budget, formatter) => {
+  return {
+    projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
+    actualMonthlyIncome: formatter.format(budget.actualMonthlyIncome),
+    projectedBalance: formatter.format(budget.getProjectedBalance()),
+    actualBalance: formatter.format(budget.getActualBalance()),
+    differenceBalance: formatter.format(budget.getDifferenceBalance()),
+    projectedCost: formatter.format(budget.getProjectedCost()),
+    actualCost: formatter.format(budget.getActualCost()),
+    differenceCost: formatter.format(budget.getDifferenceCost()),
+    entries: budget.entries.map((entry) => {
+      return {
+        projectedCost: formatter.format(entry.projectedCost),
+        actualCost: formatter.format(entry.actualCost),
+        difference: formatter.format(entry.getDifference()),
+      };
+    }),
+  };
+};
+
+const Create = ({
+  budget,
+  handleCategoryInputChange,
+  handleAddEntry,
+  inputCategory,
+}) => {
+  const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
+  console.log(formattedBudget.entries);
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5">
-        <h1 className="window-title edit tc">April 2020</h1>
+        <h1 className="window-title edit tc">{budget.title}</h1>
         <h1
           className="white o-80 flex justify-center items-center mb4 edit"
           style={{ fontSize: '1.8rem' }}
@@ -12,34 +44,49 @@ const Create = () => {
           Click field to edit
         </h1>
         <h2 className="number-label">Projected Monthly Income</h2>
-        <h1 className="number edit tc mb4">$9,999,999,000.00</h1>
+        <h1 className="number edit tc mb4">
+          {formattedBudget.projectedMonthlyIncome}
+        </h1>
         <h2 className="number-label">Actual Monthly Income</h2>
-        <h1 className="number edit tc mb4">$3,500.00</h1>
+        <h1 className="number edit tc mb4">
+          {formattedBudget.actualMonthlyIncome}
+        </h1>
         <h2 className="number-label">Projected Balance</h2>
-        <h1 className="number tc mb4">$9,500.00</h1>
+        <h1 className="number tc mb4">{formattedBudget.projectedBalance}</h1>
         <h2 className="number-label">Actual Balance</h2>
-        <h1 className="number tc mb4">$1,500.00</h1>
+        <h1 className="number tc mb4">{formattedBudget.actualBalance}</h1>
         <h2 className="number-label">Balance Difference</h2>
-        <h1 className="number tc clr-red">($1,000.00)</h1>
+        <h1 className="number tc clr-red">
+          {formattedBudget.differenceBalance}
+        </h1>
         <h2 className="number-label">Projected Cost</h2>
-        <h1 className="number tc mb4">$3,000.00</h1>
+        <h1 className="number tc mb4">{formattedBudget.projectedCost}</h1>
         <h2 className="number-label">Actual Cost</h2>
-        <h1 className="number tc mb4">$3,500.00</h1>
+        <h1 className="number tc mb4">{formattedBudget.actualCost}</h1>
         <h2 className="number-label">Cost Difference</h2>
-        <h1 className="number tc clr-green">$1,500.00</h1>
+        <h1 className="number tc clr-green">
+          {formattedBudget.differenceCost}
+        </h1>
       </div>
       <div className="window-box flex-grow-1 mh3">
         <h1 className="window-title tc mb5">Entries</h1>
 
         <div className="add-entry flex justify-center">
           <input
+            onChange={handleCategoryInputChange}
             className="placeholder br2 pv3 ph3 mr3 w-33"
             type="text"
             id="name"
             name="name"
             placeholder="Category of entry"
+            value={inputCategory}
           />
-          <button className="button btn--bg-blue pv3 ph4 dim">ADD ENTRY</button>
+          <button
+            onClick={handleAddEntry}
+            className="button btn--bg-blue pv3 ph4"
+          >
+            ADD ENTRY
+          </button>
         </div>
         <div className="table-responsive">
           <table className="bg-white mt4 table table-striped table-bordered table-hover">
@@ -60,38 +107,23 @@ const Create = () => {
               </tr>
             </thead>
             <tbody className="entry">
-              <tr>
-                <td className="text-break">Rent or mortgage</td>
-                <td className="tr">$39,999.00</td>
-                <td className="tr">$1,500.00</td>
-                <td className="tr">$0.00</td>
-              </tr>
-              <tr>
-                <td>Phone</td>
-                <td className="tr">$3,999.00</td>
-                <td className="tr">$99,000.00</td>
-                <td className="tr">-$15.00</td>
-              </tr>
-              <tr>
-                <td>Rent or mortgage</td>
-                <td className="tr">$9,999,999.00</td>
-                <td className="tr">$1,500.00</td>
-                <td className="tr">$0.00</td>
-              </tr>
-              <tr>
-                <td>Phone</td>
-                <td className="tr">$9,999,999.00</td>
-                <td className="tr">$609999999999999.00</td>
-                <td className="tr">-$15.00</td>
-              </tr>
+              {formattedBudget.entries.map((entry, index) => (
+                <tr>
+                  <td className="text-break">
+                    {budget.entries[index].category}
+                  </td>
+                  <td className="tr">{entry.projectedCost}</td>
+
+                  <td className="tr">{entry.actualCost}</td>
+                  <td className="tr">{entry.difference}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
 
         <div className="flex justify-center pt5">
-          <button className="button btn--bg-green pv3 ph4 dim">
-            SAVE BUDGET
-          </button>
+          <button className="button btn--bg-green pv3 ph4">SAVE BUDGET</button>
         </div>
       </div>
     </div>
