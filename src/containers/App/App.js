@@ -16,8 +16,8 @@ import './App.scss';
 const initialState = {
   // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
   route: 'saved',
-  // Valid messageCodes codes: 'budget-deleted', 'name-changed', 'background-changed'
-  messageCodeCode: '',
+  // Valid messageCodes codes: 'budget-deleted', 'budget-added', 'name-changed', 'background-changed'
+  messageCode: '',
   input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
@@ -166,7 +166,7 @@ class App extends Component {
   }
 
   handleRouteChange = (route) => {
-    if (this.state.route !== route) this.setState({ route, messageCode: '' });
+    if (this.state.route !== route) this.setState({ route, messageCode: null });
     // If we get user, log them in
     if (route !== 'signin' && route !== 'signup')
       this.setState({ isLoggedIn: true });
@@ -300,12 +300,17 @@ class App extends Component {
     };
   };
 
+  handleViewBudget = () => {
+    console.log('VIEWING BUDGET');
+  };
+
   handleAddBudget = () => {
     const userCopy = { ...this.state.user };
     userCopy.budgets.push(this.createBudget());
     console.log(userCopy.budgets);
     this.setState({
       user: userCopy,
+      messageCode: 'budget-added',
     });
   };
 
@@ -359,6 +364,7 @@ class App extends Component {
                 user={user}
                 messageCode={messageCode}
                 handleAddBudget={this.handleAddBudget}
+                handleViewBudget={this.handleViewBudget}
               />
             ) : route === 'about' ? (
               <About />
