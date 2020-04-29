@@ -1,25 +1,25 @@
 import React from 'react';
 
-const Saved = () => {
+const Saved = ({ user }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw7">
         <h1 className="window-title tc mb4">
-          Josh, you have <span className="clr-blue b">3</span> saved budgets.
+          {user.name}, you have{' '}
+          <span className="clr-blue b">{user.budgets.length}</span> saved
+          budgets.
         </h1>
         <ul className="ul tc">
-          <li className="mv2">
-            <p className="window-body dib mr3">April 2020</p>
-            <button className="button btn--bg-blue pv1 ph3 dim">EDIT</button>
-          </li>
-          <li className="mv2">
-            <p className="window-body dib mr3">May 2020</p>
-            <button className="button btn--bg-blue pv1 ph3 dim">EDIT</button>
-          </li>
-          <li className="mv2">
-            <p className="window-body dib mr3">June 2020</p>
-            <button className="button btn--bg-blue pv1 ph3 dim">EDIT</button>
-          </li>
+          {user.budgets.map((budget, index) => {
+            return (
+              <li key={index} className="mv2">
+                <p className="window-body dib mr3">{budget.title}</p>
+                <button className="button btn--bg-blue pv1 ph3 dim">
+                  EDIT
+                </button>
+              </li>
+            );
+          })}
           <li>
             <button className="button btn--bg-green pv1 ph3 mt4 dim">
               CREATE NEW BUDGET

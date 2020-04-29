@@ -26,10 +26,10 @@ const initialState = {
     { name: 'SPACE', url: Background4, useDarkMode: false },
   ],
   user: {
-    id: '',
-    name: '',
-    email: '',
-    joined: '',
+    id: 1,
+    name: 'Chris',
+    email: 'ccstraub@gmail.com',
+    joined: new Date(),
     background: {
       name: 'ALPINE MOUNTAINS',
       url: Background1,
@@ -37,30 +37,63 @@ const initialState = {
     },
     budgets: [
       {
-        date: { month: 'April', year: '2020' }, //This needs fixing, use a more dynamic date format or something
-        projectedMonthlyIncome: '3000',
-        actualMonthlyIncome: '3500',
-        projectedBalance: '',
-        actualBalance: '',
-        differenceBalance: '',
-        totalProjectedCost: '3000',
-        totalActualCost: '3000',
-        totalDifferenceCost: '3000',
+        id: 1,
+        title: 'April 2020',
+        // title: { month: new Date().getMonth(), year: new Date().getFullYear() },
+        projectedMonthlyIncome: 5000,
+        actualMonthlyIncome: 5500,
+        getProjectedBalance() {
+          return this.projectedMonthlyIncome - this.getTotalProjectedCost();
+        },
+        getActualBalance() {
+          return this.actualMonthlyIncome - this.getTotalActualCost();
+        },
+        getDifferenceBalance() {
+          return this.getActualBalance() - this.getProjectedBalance();
+        },
+        getTotalProjectedCost() {
+          const projectedCosts = this.entries.map(
+            (entry) => entry.projectedCost
+          );
+          return projectedCosts.reduce((acc, value) => acc + value);
+        },
+        getTotalActualCost() {
+          const actualCosts = this.entries.map((entry) => entry.actualCost);
+          return actualCosts.reduce((acc, value) => acc + value);
+        },
+        getTotalDifferenceCost() {
+          return this.getTotalActualCost() - this.getTotalProjectedCost();
+        },
         entries: [
           {
             category: 'Mortgage or rent',
-            projectedCost: '1500',
-            actualCost: '1500',
-            difference: '',
+            projectedCost: 1500,
+            actualCost: 1500,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
           },
           {
             category: 'Phone',
-            projectedCost: '45',
-            actualCost: '60',
-            difference: '',
+            projectedCost: 45,
+            actualCost: 60,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+          {
+            category: 'Car',
+            projectedCost: 100,
+            actualCost: 150,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
           },
         ],
       },
+      { title: 'May 2020' },
+      { title: 'June 2020' },
+      { title: 'June 2020' },
     ],
   },
 };
@@ -96,6 +129,12 @@ class App extends Component {
 
   render() {
     const { route, isLoggedIn, backgrounds, user } = this.state;
+
+    console.log(user.budgets[0].getTotalProjectedCost());
+    console.log(user.budgets[0].getTotalActualCost());
+
+    console.log(user.budgets[0].entries[2].getDifference());
+
     return (
       <div
         className="background"
@@ -115,7 +154,7 @@ class App extends Component {
             ) : route === 'create' ? (
               <Create />
             ) : route === 'saved' ? (
-              <Saved />
+              <Saved user={user} />
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
