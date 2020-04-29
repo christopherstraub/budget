@@ -11,11 +11,13 @@ import Background2 from '../../images/bg2.jpg';
 import Background3 from '../../images/bg3.jpg';
 import Background4 from '../../images/bg4.jpg';
 
+import cloneDeep from 'lodash/cloneDeep';
+
 import './App.scss';
 
 const initialState = {
   // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
-  route: 'saved',
+  route: 'create',
   // Valid messageCodes codes: 'budget-deleted', 'budget-added', 'name-changed', 'background-changed'
   messageCode: '',
   input: { category: '', name: '' },
@@ -41,8 +43,8 @@ const initialState = {
     budgets: [
       {
         id: 1,
-        title: 'April 2020',
-        // title: { month: new Date().getMonth(), year: new Date().getFullYear() },
+        name: 'April 2020',
+        // name: { month: new Date().getMonth(), year: new Date().getFullYear() },
         projectedMonthlyIncome: 5000,
         actualMonthlyIncome: 5500,
         getProjectedBalance() {
@@ -182,6 +184,7 @@ class App extends Component {
       const selectedBackground = this.state.backgrounds.filter(
         (background) => background.name === event.target.textContent
       );
+
       const userCopy = { ...this.state.user };
       userCopy.background = selectedBackground[0];
       this.setState({ user: userCopy, messageCode: 'background-changed' });
@@ -234,14 +237,18 @@ class App extends Component {
   };
 
   handleAddEntry = () => {
-    const userCopy = { ...this.state.user };
+    const userCopy = cloneDeep(this.state.user);
+
     userCopy.budgets[this.state.currentBudgetIndex].entries.push(
       this.createEntry()
     );
     this.setState({ user: userCopy });
+
     // Reset input field.
     const inputCopy = { ...this.state.input };
     inputCopy.category = '';
+    console.log(this.state.input);
+    console.log(inputCopy);
     this.setState({ input: inputCopy });
   };
 
@@ -250,7 +257,7 @@ class App extends Component {
   };
 
   handleDeleteBudget = (id) => {
-    const userCopy = { ...this.state.user };
+    const userCopy = cloneDeep(this.state.user);
     // if (userCopy.budgets.length === 1) this.handleAddBudget();
     const filteredBudgets = userCopy.budgets.filter(
       (budget) => budget.id !== id
@@ -262,14 +269,12 @@ class App extends Component {
       messageCode: 'budget-deleted',
       userClickedDeleteBudget: false,
     });
-    console.log('importante', userCopy.budgets);
-    console.log('importante', Boolean(userCopy.budgets.length));
   };
 
   createBudget = () => {
     return {
       id: Math.round(Math.random() * 1000), //temp assignment of id
-      title: `${new Date().getMonth()}`,
+      name: `${new Date().getMonth()}`,
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
       getProjectedBalance() {
@@ -309,13 +314,28 @@ class App extends Component {
   };
 
   handleAddBudget = () => {
-    const userCopy = { ...this.state.user };
+    const userCopy = cloneDeep(this.state.user);
+
     userCopy.budgets.push(this.createBudget());
     console.log(userCopy.budgets);
     this.setState({
       user: userCopy,
       messageCode: 'budget-added',
     });
+  };
+
+  handleFocusOut = (text, id) => {
+    const userCopy = cloneDeep(this.state.user);
+
+    const updatedBudgets = userCopy.budgets.map((budget) => {
+      if (budget.id === id) {
+        budget.name = text;
+        return budget;
+      } else return budget;
+    });
+
+    userCopy.budgets = updatedBudgets;
+    this.setState({ user: userCopy });
   };
 
   render() {
@@ -359,6 +379,8 @@ class App extends Component {
                 }
                 userClickedDeleteBudget={userClickedDeleteBudget}
                 handleDeleteBudget={this.handleDeleteBudget}
+                handleFocus={this.handleFocus}
+                handleFocusOut={this.handleFocusOut}
               />
             ) : route === 'saved' ? (
               <Saved

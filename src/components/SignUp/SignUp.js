@@ -8,21 +8,21 @@ const SignUp = ({ handleRouteChange }) => {
       <div className="login-box tc pt5 ph5 pb3">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="name"
           name="name"
           placeholder="Name"
         />
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="password"
           name="password"

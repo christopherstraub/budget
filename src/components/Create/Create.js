@@ -1,4 +1,5 @@
 import React from 'react';
+import EditableLabel from 'react-inline-editing';
 
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -41,17 +42,29 @@ const Create = ({
   handleUserClickedDeleteBudget,
   userClickedDeleteBudget,
   handleDeleteBudget,
+  handleFocus,
+  handleFocusOut,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
   const formattedEntries = formatEntries(
     budget.entries,
     formatterUnitedStatesDollar
   );
-
+  console.log(budget);
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5">
-        <h1 className="window-title edit tc">{budget.title}</h1>
+        <EditableLabel
+          text={budget.name}
+          labelClassName="window-title edit flex justify-center text-break"
+          inputClassName="placeholder br2 pv1 ph3 mr3 w-100 tc"
+          inputMaxLength="50"
+          inputPlaceHolder="Budget name"
+          onFocus={handleFocus}
+          onFocusOut={(text) => handleFocusOut(text, budget.id)}
+          // emptyEdit= TEST EMPTY EDIT
+        />
+        <h1 className="window-title edit tc">{budget.name}</h1>
         <h3
           className="white o-80 flex justify-center items-center mb4 edit"
           style={{ fontSize: '1.8rem' }}
@@ -84,10 +97,13 @@ const Create = ({
         </h1>
       </div>
       <div className="window-box flex-grow-1 mh3">
-        <h1 className="window-title tc mb5">
-          Entries ({budget.entries.length})
-        </h1>
-
+        <h1 className="window-title tc">Entries ({budget.entries.length})</h1>
+        <h3
+          className="white o-80 flex justify-center items-center mb5"
+          style={{ fontSize: '1.8rem' }}
+        >
+          Click any cell to edit
+        </h3>
         <div className="add-entry flex justify-center">
           <input
             onChange={handleCategoryInputChange}
