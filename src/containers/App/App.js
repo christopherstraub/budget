@@ -252,8 +252,9 @@ class App extends Component {
     this.setState({ input: inputCopy });
   };
 
-  handleUserClickedDeleteBudget = () => {
-    this.setState({ userClickedDeleteBudget: true });
+  handleUserClickedDeleteBudget = (userClicked) => {
+    if (userClicked) this.setState({ userClickedDeleteBudget: true });
+    else this.setState({ userClickedDeleteBudget: false });
   };
 
   handleDeleteBudget = (id) => {
@@ -379,7 +380,6 @@ class App extends Component {
                 }
                 userClickedDeleteBudget={userClickedDeleteBudget}
                 handleDeleteBudget={this.handleDeleteBudget}
-                handleFocus={this.handleFocus}
                 handleFocusOut={this.handleFocusOut}
               />
             ) : route === 'saved' ? (

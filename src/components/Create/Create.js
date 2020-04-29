@@ -42,7 +42,6 @@ const Create = ({
   handleUserClickedDeleteBudget,
   userClickedDeleteBudget,
   handleDeleteBudget,
-  handleFocus,
   handleFocusOut,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
@@ -57,14 +56,11 @@ const Create = ({
         <EditableLabel
           text={budget.name}
           labelClassName="window-title edit flex justify-center text-break"
-          inputClassName="placeholder br2 pv1 ph3 mr3 w-100 tc"
+          inputClassName="window-body tc mb2 ph2"
           inputMaxLength="50"
           inputPlaceHolder="Budget name"
-          onFocus={handleFocus}
           onFocusOut={(text) => handleFocusOut(text, budget.id)}
-          // emptyEdit= TEST EMPTY EDIT
         />
-        <h1 className="window-title edit tc">{budget.name}</h1>
         <h3
           className="white o-80 flex justify-center items-center mb4 edit"
           style={{ fontSize: '1.8rem' }}
@@ -155,13 +151,14 @@ const Create = ({
           {userClickedDeleteBudget ? (
             <button
               onClick={() => handleDeleteBudget(budget.id)}
+              onBlur={() => handleUserClickedDeleteBudget(false)}
               className="button bg--dark-red pv3 ph4 ml-auto"
             >
               CONFIRM DELETE
             </button>
           ) : (
             <button
-              onClick={() => handleUserClickedDeleteBudget()}
+              onClick={() => handleUserClickedDeleteBudget(true)}
               className="button bg--dark-red pv3 ph4 ml-auto"
             >
               DELETE BUDGET

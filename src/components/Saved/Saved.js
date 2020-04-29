@@ -20,7 +20,9 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
             ? null
             : user.budgets.map((budget, index) => (
                 <li key={index} className="mv2">
-                  <p className="window-body dib mr3">{budget.name}</p>
+                  <p className="window-body dib mr3 text-break">
+                    {budget.name}
+                  </p>
                   <button
                     onClick={() => handleViewBudget(index)}
                     className="button bg--blue pv1 ph3"
