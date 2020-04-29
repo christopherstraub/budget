@@ -20,7 +20,7 @@ const formatBudget = (budget, formatter) => {
 
 const formatEntries = (entries, formatter) => {
   if (entries.length === 0) {
-    return [{ projectedCost: 0, actualCost: 0, difference: 0 }];
+    return [];
   } else {
     return entries.map((entry) => {
       return {
@@ -38,17 +38,15 @@ const Create = ({
   handleCategoryInputChange,
   handleAddEntry,
   inputCategory,
+  handleUserClickedDeleteBudget,
+  userClickedDeleteBudget,
   handleDeleteBudget,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
-
-  console.log(Boolean(budget.entries));
-
   const formattedEntries = formatEntries(
     budget.entries,
     formatterUnitedStatesDollar
   );
-  console.log(formattedEntries);
 
   return (
     <div className="Create flex items-start justify-center">
@@ -87,7 +85,7 @@ const Create = ({
       </div>
       <div className="window-box flex-grow-1 mh3">
         <h1 className="window-title tc mb5">
-          Entries ({formattedEntries.length})
+          Entries ({budget.entries.length})
         </h1>
 
         <div className="add-entry flex justify-center">
@@ -127,7 +125,6 @@ const Create = ({
                 <tr key={index}>
                   <td className="text-break">{entry.category}</td>
                   <td className="tr">{entry.projectedCost}</td>
-
                   <td className="tr">{entry.actualCost}</td>
                   <td className="tr">{entry.difference}</td>
                 </tr>
@@ -138,19 +135,23 @@ const Create = ({
 
         <div className="flex justify-center pt5 pb3">
           <button className="button bg--green pv3 ph4">SAVE BUDGET</button>
-          <button
-            onDoubleClick={() => handleDeleteBudget(budget.id)}
-            className="button bg--dark-red pv3 ph4 ml-auto"
-          >
-            DELETE BUDGET
-          </button>
+
+          {userClickedDeleteBudget ? (
+            <button
+              onClick={() => handleDeleteBudget(budget.id)}
+              className="button bg--dark-red pv3 ph4 ml-auto"
+            >
+              CONFIRM DELETE
+            </button>
+          ) : (
+            <button
+              onClick={() => handleUserClickedDeleteBudget()}
+              className="button bg--dark-red pv3 ph4 ml-auto"
+            >
+              DELETE BUDGET
+            </button>
+          )}
         </div>
-        <p
-          className="white o-80 flex justify-end items-center"
-          style={{ fontSize: '1.8rem' }}
-        >
-          Double click to delete
-        </p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import Message from '../Message/Message';
 
-const Saved = ({ user, messageCode }) => {
+const Saved = ({ user, messageCode, handleAddBudget }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw8">
@@ -22,7 +22,7 @@ const Saved = ({ user, messageCode }) => {
           ))}
           <li>
             <button
-              // onClick={handleCreateNewBudget}
+              onClick={handleAddBudget}
               className="button bg--green pv1 ph3 mt4"
             >
               CREATE NEW BUDGET
