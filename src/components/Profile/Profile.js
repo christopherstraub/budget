@@ -1,4 +1,5 @@
 import React from 'react';
+import Message from '../Message/Message';
 
 const Profile = ({
   handleBackgroundChange,
@@ -8,16 +9,15 @@ const Profile = ({
   handleNameChange,
   inputName,
   messageCode,
-  displayMessage,
 }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw7">
-        {messageCode === 'name-changed'
-          ? displayMessage('Name changed.')
-          : messageCode === 'background-changed'
-          ? displayMessage('Background changed.')
-          : null}
+        {messageCode === 'name-changed' ? (
+          <Message message="Name changed." />
+        ) : messageCode === 'background-changed' ? (
+          <Message message="Background changed." />
+        ) : null}
         <h1 className="window-title tc">{user.name}</h1>
         <p className="window-body tc o-80">
           {user.budgets.length} saved budgets

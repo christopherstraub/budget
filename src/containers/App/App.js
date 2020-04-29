@@ -284,10 +284,6 @@ class App extends Component {
     this.setState({ user: userCopy });
   };
 
-  displayMessage = (message) => (
-    <h2 className="window-body tc mb4 o-80">{message}</h2>
-  );
-
   render() {
     const {
       route,
@@ -329,11 +325,7 @@ class App extends Component {
                 handleDeleteBudget={this.handleDeleteBudget}
               />
             ) : route === 'saved' ? (
-              <Saved
-                user={user}
-                messageCode={messageCode}
-                displayMessage={this.displayMessage}
-              />
+              <Saved user={user} messageCode={messageCode} />
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
@@ -345,7 +337,6 @@ class App extends Component {
                 handleNameChange={this.handleNameChange}
                 inputName={input.name}
                 messageCode={messageCode}
-                displayMessage={this.displayMessage}
               />
             ) : null}
           </div>
