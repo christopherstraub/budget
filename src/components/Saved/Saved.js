@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Saved = ({ user, message }) => {
+const Saved = ({ user, messageCode, displayMessage }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw8">
-        {message === 'budget-deleted' ? (
-          <h1 className="window-body tc mb4 o-80">Budget deleted.</h1>
-        ) : null}
+        {messageCode === 'budget-deleted'
+          ? displayMessage('Budget deleted.')
+          : null}
         <h1 className="window-title tc mb4">
-          {user.name}, you have{' '}
-          <span className="clr-blue b">{user.budgets.length}</span> saved
+          {user.name}, you have
+          <span className="clr-blue b"> {user.budgets.length}</span> saved
           budgets.
         </h1>
         <ul className="ul tc">

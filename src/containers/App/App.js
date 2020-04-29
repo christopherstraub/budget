@@ -16,8 +16,8 @@ import './App.scss';
 const initialState = {
   // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
   route: 'profile',
-  // Valid messages: 'budget-deleted'
-  message: '',
+  // Valid messageCodes codes: 'budget-deleted', 'name-changed', 'background-changed'
+  messageCodeCode: '',
   input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
@@ -158,7 +158,7 @@ class App extends Component {
   }
 
   handleRouteChange = (route) => {
-    if (this.state.route !== route) this.setState({ route, message: '' });
+    if (this.state.route !== route) this.setState({ route, messageCode: '' });
     // If we get user, log them in
     if (route !== 'signin' && route !== 'signup')
       this.setState({ isLoggedIn: true });
@@ -176,7 +176,7 @@ class App extends Component {
       );
       const userCopy = { ...this.state.user };
       userCopy.background = selectedBackground[0];
-      this.setState({ user: userCopy });
+      this.setState({ user: userCopy, messageCode: 'background-changed' });
     }
   };
 
@@ -195,7 +195,7 @@ class App extends Component {
     ) {
       const userCopy = { ...this.state.user };
       userCopy.name = this.state.input.name;
-      this.setState({ user: userCopy });
+      this.setState({ user: userCopy, messageCode: 'name-changed' });
       // Reset input field.
       const inputCopy = { ...this.state.input };
       inputCopy.name = '';
@@ -239,12 +239,23 @@ class App extends Component {
     this.setState({
       user: userCopy,
       route: 'saved',
-      message: 'budget-deleted',
+      messageCode: 'budget-deleted',
     });
   };
 
+  displayMessage = (message) => (
+    <h2 className="window-body tc mb4 o-80">{message}</h2>
+  );
+
   render() {
-    const { route, message, input, backgrounds, isLoggedIn, user } = this.state;
+    const {
+      route,
+      messageCode,
+      input,
+      backgrounds,
+      isLoggedIn,
+      user,
+    } = this.state;
 
     user.joined = new Date();
     console.log(user.joined);
@@ -276,7 +287,11 @@ class App extends Component {
                 handleDeleteBudget={this.handleDeleteBudget}
               />
             ) : route === 'saved' ? (
-              <Saved user={user} message={message} />
+              <Saved
+                user={user}
+                messageCode={messageCode}
+                displayMessage={this.displayMessage}
+              />
             ) : route === 'about' ? (
               <About />
             ) : route === 'profile' ? (
@@ -287,6 +302,8 @@ class App extends Component {
                 handleNameInputChange={this.handleNameInputChange}
                 handleNameChange={this.handleNameChange}
                 inputName={input.name}
+                messageCode={messageCode}
+                displayMessage={this.displayMessage}
               />
             ) : null}
           </div>
