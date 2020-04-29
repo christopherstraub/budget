@@ -235,7 +235,9 @@ class App extends Component {
 
   handleAddEntry = () => {
     const userCopy = { ...this.state.user };
-    userCopy.budgets[0].entries.push(this.createEntry());
+    userCopy.budgets[this.state.currentBudgetIndex].entries.push(
+      this.createEntry()
+    );
     this.setState({ user: userCopy });
     // Reset input field.
     const inputCopy = { ...this.state.input };
@@ -249,7 +251,7 @@ class App extends Component {
 
   handleDeleteBudget = (id) => {
     const userCopy = { ...this.state.user };
-    if (userCopy.budgets.length === 1) this.handleAddBudget();
+    // if (userCopy.budgets.length === 1) this.handleAddBudget();
     const filteredBudgets = userCopy.budgets.filter(
       (budget) => budget.id !== id
     );
@@ -260,11 +262,13 @@ class App extends Component {
       messageCode: 'budget-deleted',
       userClickedDeleteBudget: false,
     });
+    console.log('importante', userCopy.budgets);
+    console.log('importante', Boolean(userCopy.budgets.length));
   };
 
   createBudget = () => {
     return {
-      id: this.state.user.budgets[this.state.user.budgets.length - 1].id + 1,
+      id: Math.round(Math.random() * 1000), //temp assignment of id
       title: `${new Date().getMonth()}`,
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
@@ -300,8 +304,8 @@ class App extends Component {
     };
   };
 
-  handleViewBudget = () => {
-    console.log('VIEWING BUDGET');
+  handleViewBudget = (index) => {
+    this.setState({ currentBudgetIndex: index, route: 'create' });
   };
 
   handleAddBudget = () => {
@@ -327,9 +331,6 @@ class App extends Component {
     } = this.state;
 
     user.joined = new Date();
-
-    console.log('USER BUDGETS', user.budgets);
-    console.log(currentBudgetIndex);
 
     return (
       <div
