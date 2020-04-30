@@ -25,8 +25,13 @@ import './App.scss';
 
 const initialState = {
   route: 'create',
-  messageCode: 'invalid-input',
-  input: { category: '', name: '' },
+  messageCode: '',
+  input: {
+    category: '',
+    name: '',
+    projectedMonthlyIncome: '',
+    actualMonthlyIncome: '',
+  },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
     { name: 'MACHU PICCHU', url: Background2, useDarkMode: true },
@@ -51,8 +56,8 @@ const initialState = {
         id: 1,
         name: 'April 2020',
         // name: { month: new Date().getMonth(), year: new Date().getFullYear() },
-        projectedMonthlyIncome: 5000,
-        actualMonthlyIncome: 5500,
+        projectedMonthlyIncome: 0,
+        actualMonthlyIncome: 0,
         getProjectedBalance() {
           return this.projectedMonthlyIncome - this.getProjectedCost();
         },
@@ -183,9 +188,9 @@ class App extends Component {
     }
   };
 
+  // Only filter through backgrounds if selected background is different
+  // from current background.
   handleBackgroundChange = (event) => {
-    // Only filter through backgrounds if selected background is different
-    // from current background.
     if (this.state.user.background.name !== event.target.textContent) {
       const selectedBackground = this.state.backgrounds.filter(
         (background) => background.name === event.target.textContent
@@ -345,42 +350,80 @@ class App extends Component {
     this.setState({ user: userCopy });
   };
 
+  handleFocusBudgetMonthlyIncome = (text, type) => {
+    switch (type) {
+      case 'projected': {
+        const inputCopy = { ...this.state.input };
+        inputCopy.projectedMonthlyIncome = text;
+        this.setState({ input: inputCopy });
+        break;
+      }
+      case 'actual': {
+        console.log(text);
+        break;
+      }
+      default:
+        return null;
+    }
+  };
+
   handleFocusOutBudgetMonthlyIncome = (text, id, type) => {
-    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
-    console.log(filteredText);
+    if (text !== this.state.input.projectedMonthlyIncome) {
+      const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
 
-    if (type === 'projected' && !isNaN(filteredText)) {
-      console.log('hereeegeee');
-      const userCopy = cloneDeep(this.state.user);
+      switch (type) {
+        case 'projected': {
+          if (isNaN(filteredText))
+            this.setState({ messageCode: 'invalid-input' });
+          else {
+            const userCopy = cloneDeep(this.state.user);
 
-      const updatedBudgets = userCopy.budgets.map((budget) => {
-        if (budget.id === id) {
-          budget.projectedMonthlyIncome = filteredText;
-          return budget;
-        } else return budget;
-      });
+            const updatedBudgets = userCopy.budgets.map((budget) => {
+              if (budget.id === id) {
+                budget.projectedMonthlyIncome =
+                  filteredText === ''
+                    ? 0
+                    : Math.round(parseFloat(filteredText) * 100) / 100;
+                return budget;
+              } else return budget;
+            });
 
-      userCopy.budgets = updatedBudgets;
-      this.setState({
-        user: userCopy,
-        messageCode: 'income-updated',
-      });
-    } else if (type === 'actual' && !isNaN(filteredText)) {
-      const userCopy = cloneDeep(this.state.user);
+            userCopy.budgets = updatedBudgets;
+            this.setState({
+              user: userCopy,
+              messageCode: 'income-updated',
+            });
+          }
+          break;
+        }
+        case 'actual': {
+          if (isNaN(filteredText))
+            this.setState({ messageCode: 'invalid-input' });
+          else {
+            const userCopy = cloneDeep(this.state.user);
 
-      const updatedBudgets = userCopy.budgets.map((budget) => {
-        if (budget.id === id) {
-          budget.actualMonthlyIncome = filteredText;
-          return budget;
-        } else return budget;
-      });
+            const updatedBudgets = userCopy.budgets.map((budget) => {
+              if (budget.id === id) {
+                budget.actualMonthlyIncome =
+                  filteredText === ''
+                    ? 0
+                    : Math.round(parseFloat(filteredText) * 100) / 100;
+                return budget;
+              } else return budget;
+            });
 
-      userCopy.budgets = updatedBudgets;
-      this.setState({
-        user: userCopy,
-        messageCode: 'income-updated',
-      });
-    } else this.setState({ messageCode: 'invalid-input' });
+            userCopy.budgets = updatedBudgets;
+            this.setState({
+              user: userCopy,
+              messageCode: 'income-updated',
+            });
+          }
+          break;
+        }
+        default:
+          return null;
+      }
+    }
   };
 
   render() {
@@ -425,6 +468,9 @@ class App extends Component {
                 userClickedDeleteBudget={userClickedDeleteBudget}
                 handleDeleteBudget={this.handleDeleteBudget}
                 handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                handleFocusBudgetMonthlyIncome={
+                  this.handleFocusBudgetMonthlyIncome
+                }
                 handleFocusOutBudgetMonthlyIncome={
                   this.handleFocusOutBudgetMonthlyIncome
                 }

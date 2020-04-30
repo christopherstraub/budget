@@ -22,7 +22,6 @@
 }
 
 .window-title {
-  font-family: $ff-window-title;
   color: $clr-window-title;
   font-size: $fs-window-title;
 }
@@ -38,6 +37,16 @@
   font-size: $fs-placeholder;
 }
 
+.overview-box-title {
+  color: $clr-overview-box-title;
+  font-size: $fs-overview-box-title;
+}
+
+.entries-box-title {
+  color: $clr-entries-box-title;
+  font-size: $fs-entries-box-title;
+}
+
 .number {
   font-family: ff-number;
   color: $clr-number;
@@ -46,9 +55,9 @@
 }
 
 .number-label {
+  font-family: $ff-number-label;
   color: $clr-number-label;
   font-size: $fs-number-label;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .entry-title {

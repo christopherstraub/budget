@@ -46,6 +46,7 @@ const Create = ({
   userClickedDeleteBudget,
   handleDeleteBudget,
   handleFocusOutBudgetName,
+  handleFocusBudgetMonthlyIncome,
   handleFocusOutBudgetMonthlyIncome,
   messageCode,
 }) => {
@@ -54,11 +55,12 @@ const Create = ({
     budget.entries,
     formatterUnitedStatesDollar
   );
+
   console.log(budget);
-  console.log('THIS', formattedBudget.projectedMonthlyIncome);
+
   return (
     <div className="Create flex items-start justify-center">
-      <div className="window-box mw7 mh3 mb5">
+      <div className="window-box mw7 mh3 mb5 relative">
         {messageCode === 'income-updated' ? (
           <Message message="Income updated." />
         ) : messageCode === 'invalid-input' ? (
@@ -67,62 +69,71 @@ const Create = ({
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="window-title edit flex justify-center text-break"
-          inputClassName="window-body tc mb2 ph2"
+          labelClassName="overview-box-title flex justify-start text-break"
+          inputClassName="window-body mb2 ph2 br3 mb4"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
           onFocusOut={(text) => handleFocusOutBudgetName(text, budget.id)}
         />
-        <h3
-          className="white o-80 flex justify-center items-center mb4 edit"
-          style={{ fontSize: '1.8rem' }}
-        >
+        <p className="window-body o-80 flex justify-center items-center mb4 edit">
           Click field to edit
-        </h3>
-        <h2 className="number-label">Projected Monthly Income</h2>
+        </p>
+        <h2 className="number-label edit flex items-center">
+          Projected Monthly Income
+        </h2>
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
-          labelClassName="number mb4 edit flex justify-center text-break"
-          inputClassName="window-body tc mb2 ph2"
+          labelClassName="number mb4 flex justify-center text-break"
+          inputClassName="window-body tc mt2 mb4 ph2 br3"
           inputMaxLength={50}
           inputPlaceHolder="Projected monthly income"
+          onFocus={(text) => handleFocusBudgetMonthlyIncome(text, 'projected')}
           onFocusOut={(text) =>
             handleFocusOutBudgetMonthlyIncome(text, budget.id, 'projected')
           }
         />
-        <h2 className="number-label">Actual Monthly Income</h2>
-        <h1 className="number edit tc mb4">
-          {formattedBudget.actualMonthlyIncome}
-        </h1>
+        <h2 className="number-label edit flex items-center">
+          Actual Monthly Income
+        </h2>
+        <EditableLabel
+          text={formattedBudget.actualMonthlyIncome}
+          labelClassName="number mb4 flex justify-center text-break"
+          inputClassName="window-body tc mt2 mb4 ph2 br3"
+          inputMaxLength={50}
+          inputPlaceHolder="Actual monthly income"
+          onFocus={(text) => handleFocusBudgetMonthlyIncome(text, 'actual')}
+          onFocusOut={(text) =>
+            handleFocusOutBudgetMonthlyIncome(text, budget.id, 'actual')
+          }
+        />
         <h2 className="number-label">Projected Balance</h2>
-        <h1 className="number tc mb4">{formattedBudget.projectedBalance}</h1>
+        <h1 className="number mb4 tc">{formattedBudget.projectedBalance}</h1>
         <h2 className="number-label">Actual Balance</h2>
-        <h1 className="number tc mb4">{formattedBudget.actualBalance}</h1>
+        <h1 className="number mb4 tc">{formattedBudget.actualBalance}</h1>
         <h2 className="number-label">Balance Difference</h2>
-        <h1 className="number tc clr-red">
+        <h1 className="number mb4 tc clr-red">
           {formattedBudget.differenceBalance}
         </h1>
         <h2 className="number-label">Projected Cost</h2>
-        <h1 className="number tc mb4">{formattedBudget.projectedCost}</h1>
+        <h1 className="number mb4 tc">{formattedBudget.projectedCost}</h1>
         <h2 className="number-label">Actual Cost</h2>
-        <h1 className="number tc mb4">{formattedBudget.actualCost}</h1>
+        <h1 className="number mb4 tc">{formattedBudget.actualCost}</h1>
         <h2 className="number-label">Cost Difference</h2>
         <h1 className="number tc clr-green">
           {formattedBudget.differenceCost}
         </h1>
       </div>
       <div className="window-box flex-grow-1 mh3">
-        <h1 className="window-title tc">Entries ({budget.entries.length})</h1>
-        <h3
-          className="white o-80 flex justify-center items-center mb5"
-          style={{ fontSize: '1.8rem' }}
-        >
+        <h1 className="entries-box-title  tc">
+          Entries ({budget.entries.length})
+        </h1>
+        <h3 className="white window-body o-80 flex justify-center items-center mb5">
           Click any cell to edit
         </h3>
         <div className="add-entry flex justify-center">
           <input
             onChange={handleCategoryInputChange}
-            className="placeholder br2 pv3 ph3 mr3 w-33"
+            className="placeholder br3 pv3 ph3 mr3 w-33"
             type="text"
             id="name"
             name="name"
