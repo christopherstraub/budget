@@ -22,9 +22,9 @@
 }
 
 .window-title {
+  font-family: $ff-window-title;
   color: $clr-window-title;
   font-size: $fs-window-title;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .window-body {
@@ -39,10 +39,10 @@
 }
 
 .number {
+  font-family: ff-number;
   color: $clr-number;
   font-size: $fs-number;
   text-shadow: 4px 2px 2px #302e2e;
-  font-family: 'Lato', sans-serif;
 }
 
 .number-label {
@@ -59,6 +59,18 @@
 .entry {
   color: $clr-entry;
   font-size: $fs-entry;
+}
+
+.message {
+  font-family: $ff-message;
+  color: $clr-blue;
+  font-size: $fs-message;
+}
+
+.message-invalid {
+  font-family: $ff-message;
+  color: red;
+  font-size: $fs-message;
 }
 
 // Colors

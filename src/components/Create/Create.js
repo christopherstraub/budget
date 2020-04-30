@@ -1,4 +1,7 @@
 import React from 'react';
+
+import Message from '../Message/Message';
+
 import EditableLabel from 'react-inline-editing';
 
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
@@ -42,7 +45,9 @@ const Create = ({
   handleUserClickedDeleteBudget,
   userClickedDeleteBudget,
   handleDeleteBudget,
-  handleFocusOut,
+  handleFocusOutBudgetName,
+  handleFocusOutBudgetMonthlyIncome,
+  messageCode,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
   const formattedEntries = formatEntries(
@@ -50,16 +55,23 @@ const Create = ({
     formatterUnitedStatesDollar
   );
   console.log(budget);
+  console.log('THIS', formattedBudget.projectedMonthlyIncome);
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5">
+        {messageCode === 'income-updated' ? (
+          <Message message="Income updated." />
+        ) : messageCode === 'invalid-input' ? (
+          <Message message="Income invalid." invalid={true} />
+        ) : null}
         <EditableLabel
+          value="test"
           text={budget.name}
           labelClassName="window-title edit flex justify-center text-break"
           inputClassName="window-body tc mb2 ph2"
-          inputMaxLength="50"
+          inputMaxLength={50}
           inputPlaceHolder="Budget name"
-          onFocusOut={(text) => handleFocusOut(text, budget.id)}
+          onFocusOut={(text) => handleFocusOutBudgetName(text, budget.id)}
         />
         <h3
           className="white o-80 flex justify-center items-center mb4 edit"
@@ -68,9 +80,16 @@ const Create = ({
           Click field to edit
         </h3>
         <h2 className="number-label">Projected Monthly Income</h2>
-        <h1 className="number edit tc mb4">
-          {formattedBudget.projectedMonthlyIncome}
-        </h1>
+        <EditableLabel
+          text={formattedBudget.projectedMonthlyIncome}
+          labelClassName="number mb4 edit flex justify-center text-break"
+          inputClassName="window-body tc mb2 ph2"
+          inputMaxLength={50}
+          inputPlaceHolder="Projected monthly income"
+          onFocusOut={(text) =>
+            handleFocusOutBudgetMonthlyIncome(text, budget.id, 'projected')
+          }
+        />
         <h2 className="number-label">Actual Monthly Income</h2>
         <h1 className="number edit tc mb4">
           {formattedBudget.actualMonthlyIncome}

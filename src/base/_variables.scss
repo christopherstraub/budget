@@ -29,7 +29,7 @@ $clr-green: rgb(0, 170, 0);
 $clr-dark-green: rgb(13, 119, 17); //For positive entry numbers
 $clr-magenta: rgb(159, 57, 194);
 $clr-orange: rgb(180, 117, 23);
-$clr-red: rgb(210, 0, 0);
+$clr-red: red;
 $clr-dark-red: rgb(155, 0, 0); //For negative entry numbers.
 
 // Default input box.
@@ -50,6 +50,7 @@ $fs-continue-as-guest: 1.5rem;
 
 // Default window.
 $clr-window-box: rgba(58, 67, 72, 0.9);
+$ff-window-title: 'Montserrat', sans-serif;
 $clr-window-title: white;
 $fs-window-title: 2.6rem;
 $clr-window-body: white;
@@ -66,6 +67,7 @@ $fs-nav-item: 2.4rem;
 $fs-nav-item-mobile: 2.5rem;
 
 // Create component.
+$ff-number: 'Lato', sans-serif;
 $clr-number: white;
 $fs-number: 2.8rem;
 $clr-number-label: white;
@@ -74,3 +76,7 @@ $clr-entry-title: black;
 $fs-entry-title: 2rem;
 $clr-entry: black;
 $fs-entry: 1.8rem;
+
+// Message component.
+$ff-message: 'Roboto';
+$fs-message: 2rem;

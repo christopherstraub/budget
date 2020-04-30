@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Header from '../../components/Header/Header';
 import Landing from '../../components/Landing/Landing';
 import Saved from '../../components/Saved/Saved';
@@ -15,11 +16,16 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import './App.scss';
 
+// VALID ROUTES
+// 'signin', 'signup', 'create', 'saved', 'profile', 'about'
+
+// VALID MESSAGE CODES
+// 'income-updated', 'invalid-input', 'budget-deleted', 'budget-created',
+// 'name-changed', 'background-changed'
+
 const initialState = {
-  // Valid routes: 'signin', 'signup', 'create', 'saved', 'profile', 'about'
   route: 'create',
-  // Valid messageCodes codes: 'budget-deleted', 'budget-added', 'name-changed', 'background-changed'
-  messageCode: '',
+  messageCode: 'invalid-input',
   input: { category: '', name: '' },
   backgrounds: [
     { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
@@ -321,11 +327,11 @@ class App extends Component {
     console.log(userCopy.budgets);
     this.setState({
       user: userCopy,
-      messageCode: 'budget-added',
+      messageCode: 'budget-created',
     });
   };
 
-  handleFocusOut = (text, id) => {
+  handleFocusOutBudgetName = (text, id) => {
     const userCopy = cloneDeep(this.state.user);
 
     const updatedBudgets = userCopy.budgets.map((budget) => {
@@ -337,6 +343,44 @@ class App extends Component {
 
     userCopy.budgets = updatedBudgets;
     this.setState({ user: userCopy });
+  };
+
+  handleFocusOutBudgetMonthlyIncome = (text, id, type) => {
+    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+    console.log(filteredText);
+
+    if (type === 'projected' && !isNaN(filteredText)) {
+      console.log('hereeegeee');
+      const userCopy = cloneDeep(this.state.user);
+
+      const updatedBudgets = userCopy.budgets.map((budget) => {
+        if (budget.id === id) {
+          budget.projectedMonthlyIncome = filteredText;
+          return budget;
+        } else return budget;
+      });
+
+      userCopy.budgets = updatedBudgets;
+      this.setState({
+        user: userCopy,
+        messageCode: 'income-updated',
+      });
+    } else if (type === 'actual' && !isNaN(filteredText)) {
+      const userCopy = cloneDeep(this.state.user);
+
+      const updatedBudgets = userCopy.budgets.map((budget) => {
+        if (budget.id === id) {
+          budget.actualMonthlyIncome = filteredText;
+          return budget;
+        } else return budget;
+      });
+
+      userCopy.budgets = updatedBudgets;
+      this.setState({
+        user: userCopy,
+        messageCode: 'income-updated',
+      });
+    } else this.setState({ messageCode: 'invalid-input' });
   };
 
   render() {
@@ -380,7 +424,11 @@ class App extends Component {
                 }
                 userClickedDeleteBudget={userClickedDeleteBudget}
                 handleDeleteBudget={this.handleDeleteBudget}
-                handleFocusOut={this.handleFocusOut}
+                handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                handleFocusOutBudgetMonthlyIncome={
+                  this.handleFocusOutBudgetMonthlyIncome
+                }
+                messageCode={messageCode}
               />
             ) : route === 'saved' ? (
               <Saved

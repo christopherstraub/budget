@@ -7,8 +7,8 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
       <div className="window-box mw8">
         {messageCode === 'budget-deleted' ? (
           <Message message="Budget deleted." />
-        ) : messageCode === 'budget-added' ? (
-          <Message message="Budget added." />
+        ) : messageCode === 'budget-created' ? (
+          <Message message="Budget created." />
         ) : null}
         <h1 className="window-title tc mb4">
           {user.name}, you have
