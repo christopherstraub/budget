@@ -38,12 +38,11 @@
 
 .window-box {
   overflow-wrap: break-word;
-  max-height: 85vh;
+  max-height: 82vh;
   overflow-y: auto;
   width: fit-content;
-  // margin: 0 auto;
   padding: 3rem 2rem;
-  border-radius: 2.5px;
+  border-radius: 5px;
 
   background: #0f2027; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -103,10 +102,8 @@
   // Responsive create page.
   .Create {
     flex-wrap: wrap;
-    column-gap: 20px;
     & > .window-box {
-      margin-right: 0;
-      margin-left: 0;
+      margin: 0 0 5rem;
     }
   }
 }

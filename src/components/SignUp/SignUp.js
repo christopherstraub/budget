@@ -5,24 +5,24 @@ import '../../base/loginBox.scss';
 const SignUp = ({ handleRouteChange }) => {
   return (
     <div className="flex justify-center">
-      <div className="login-box tc pt5 ph5 pb3">
+      <div className="login-box tc pt5 ph5 pb4">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="name"
           name="name"
           placeholder="Name"
         />
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="pa3 mv2 br3 w-100 placeholder"
+          className="placeholder pa3 mv2 br3 w-100"
           type="text"
           id="password"
           name="password"
@@ -34,18 +34,18 @@ const SignUp = ({ handleRouteChange }) => {
           type="submit"
           value="Sign up"
         />
-        <p
+        <h2
           onClick={() => handleRouteChange('signin')}
-          className="login-button-text pointer mt2 mb5 dim"
+          className="login-button-text pointer mt3 mb6 dim"
         >
           Sign in
-        </p>
-        <p
+        </h2>
+        <h3
           onClick={() => handleRouteChange('create')}
           className="continue-as-guest pointer dim"
         >
           Continue as guest
-        </p>
+        </h3>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import Message from '../Message/Message';
 
 const Profile = ({
   handleBackgroundChange,
@@ -8,25 +9,24 @@ const Profile = ({
   handleNameChange,
   inputName,
   messageCode,
-  displayMessage,
 }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw7">
-        {messageCode === 'name-changed'
-          ? displayMessage('Name changed.')
-          : messageCode === 'background-changed'
-          ? displayMessage('Background changed.')
-          : null}
+        {messageCode === 'changed-name' ? (
+          <Message message="Name changed." />
+        ) : messageCode === 'changed-background' ? (
+          <Message message="Background changed." />
+        ) : null}
         <h1 className="window-title tc">{user.name}</h1>
-        <p className="window-body tc o-80">
+        <h2 className="window-body tc o-80">
           {user.budgets.length} saved budgets
-        </p>
-        <p className="window-body">Change name:</p>
+        </h2>
+        <h2 className="window-body">Change name:</h2>
         <div className="flex">
           <input
             onChange={handleNameInputChange}
-            className="placeholder br2 pv1 ph3 mr3 w-100"
+            className="placeholder br3 pv1 ph3 mr3 w-100"
             type="text"
             id="name"
             name="name"
@@ -41,7 +41,7 @@ const Profile = ({
           </button>
         </div>
         <div className="mt4">
-          <p className="window-body dib mr3">Change background: </p>
+          <h2 className="window-body dib mr3">Change background: </h2>
 
           {backgrounds.map((background, index) => (
             <button
@@ -53,9 +53,9 @@ const Profile = ({
             </button>
           ))}
 
-          <p className="window-body tc mt5">
+          <h2 className="window-body tc mt5">
             Member since {user.joined.toLocaleDateString()}
-          </p>
+          </h2>
         </div>
       </div>
     </div>

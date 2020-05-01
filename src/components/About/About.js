@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw8">
-        <p className="window-body">
+        <p className="window-body mb0">
           <span className="i">CSBudget</span> is software to make your life
           better. <span className="i">CSBudget</span> is maintained by
           Christopher Straub and distributed under the MIT License. You can get
