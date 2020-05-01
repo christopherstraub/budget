@@ -10,7 +10,7 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
         ) : messageCode === 'created-budget' ? (
           <Message message="Budget created." />
         ) : null}
-        <h1 className="window-title tc mb5">
+        <h1 className="window-title tc mb4">
           {user.name}, you have
           <span className="clr-blue b"> {user.budgets.length}</span> saved
           budgets.
@@ -31,7 +31,7 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
         <div className="flex justify-center">
           <button
             onClick={handleAddBudget}
-            className="button bg--green pa3 mt4"
+            className="button bg--green pv3 ph4 mt4"
           >
             CREATE NEW BUDGET
           </button>

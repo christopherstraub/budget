@@ -238,7 +238,7 @@ const Create = ({
           </table>
         </div>
 
-        <div className="flex justify-center pt5 pb3">
+        <div className="flex pt4">
           <button className="button bg--green pv3 ph4">SAVE BUDGET</button>
 
           {userClickedDeleteBudget ? (

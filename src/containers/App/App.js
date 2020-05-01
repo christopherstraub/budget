@@ -25,7 +25,7 @@ import './App.scss';
 // 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'create',
+  route: 'saved',
   messageCode: '',
   input: {
     category: '',
@@ -45,7 +45,7 @@ const initialState = {
   user: {
     id: 1,
     name: 'Chris',
-    email: 'ccstraub@gmail.com',
+    email: 'chris@gmail.com',
     joined: null,
     background: {
       name: 'ALPINE MOUNTAINS',
@@ -281,7 +281,7 @@ class App extends Component {
     });
   };
 
-  handleFocusOutBudgetName = (text, id) => {
+  handleFocusOutBudgetName = (text) => {
     const userCopy = cloneDeep(this.state.user);
 
     userCopy.budgets[this.state.currentBudgetIndex].name =
