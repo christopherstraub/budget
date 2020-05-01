@@ -61,11 +61,6 @@ const Create = ({
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5 relative">
-        {messageCode === 'updated-income' ? (
-          <Message message="Projected monthly income updated." />
-        ) : messageCode === 'invalid-income' ? (
-          <Message message="Income invalid." invalid={true} />
-        ) : null}
         <EditableLabel
           value="test"
           text={budget.name}
@@ -73,7 +68,7 @@ const Create = ({
           inputClassName="window-body mb2 ph2 br3 mb4"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
-          onFocusOut={(text) => handleFocusOutBudgetName(text, budget.id)}
+          onFocusOut={handleFocusOutBudgetName}
         />
         <p className="window-body o-80 flex justify-center items-center mb4 edit">
           Click field to edit
@@ -90,6 +85,15 @@ const Create = ({
           onFocus={handleFocusProjectedMonthlyIncome}
           onFocusOut={handleFocusOutProjectedMonthlyIncome}
         />
+        {messageCode === 'updated-projected-monthly-income' ? (
+          <Message
+            message={`Updated to ${formattedBudget.projectedMonthlyIncome}.`}
+          />
+        ) : messageCode === 'invalid-projected-monthly-income' ? (
+          <Message
+            message={`Invalid input. Income still ${formattedBudget.projectedMonthlyIncome}.`}
+          />
+        ) : null}
         <h2 className="number-label edit flex items-center">
           Actual Monthly Income
         </h2>
@@ -102,6 +106,15 @@ const Create = ({
           onFocus={handleFocusActualMonthlyIncome}
           onFocusOut={handleFocusOutActualMonthlyIncome}
         />
+        {messageCode === 'updated-actual-monthly-income' ? (
+          <Message
+            message={`Updated to ${formattedBudget.actualMonthlyIncome}.`}
+          />
+        ) : messageCode === 'invalid-actual-monthly-income' ? (
+          <Message
+            message={`Invalid input. Income still ${formattedBudget.actualMonthlyIncome}.`}
+          />
+        ) : null}
         <h2 className="number-label">Projected Balance</h2>
         <h1 className="number mb4 tc">{formattedBudget.projectedBalance}</h1>
         <h2 className="number-label">Actual Balance</h2>
@@ -176,7 +189,7 @@ const Create = ({
 
           {userClickedDeleteBudget ? (
             <button
-              onClick={() => handleDeleteBudget(budget.id)}
+              onClick={handleDeleteBudget}
               onBlur={() => handleUserClickedDeleteBudget(false)}
               className="button bg--dark-red pv3 ph4 ml-auto"
             >

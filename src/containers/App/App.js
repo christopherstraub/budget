@@ -20,8 +20,9 @@ import './App.scss';
 // 'signin', 'signup', 'create', 'saved', 'profile', 'about'
 
 // VALID MESSAGE CODES
-// 'updated-income', 'invalid-input', 'deleted-budget', 'created-budget',
-// 'changed-name', 'changed-background'
+// 'updated-projected-monthly-income', 'updated-actual-monthly-income',
+// 'invalid-projected-monthly-income', 'invalid-actual-monthly-income',
+// 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
   route: 'create',
@@ -268,11 +269,11 @@ class App extends Component {
     else this.setState({ userClickedDeleteBudget: false });
   };
 
-  handleDeleteBudget = (id) => {
+  handleDeleteBudget = () => {
     const userCopy = cloneDeep(this.state.user);
-    // if (userCopy.budgets.length === 1) this.handleAddBudget();
+
     const filteredBudgets = userCopy.budgets.filter(
-      (budget) => budget.id !== id
+      (budget, index) => index !== this.state.currentBudgetIndex
     );
     userCopy.budgets = filteredBudgets;
     this.setState({
@@ -329,7 +330,6 @@ class App extends Component {
     const userCopy = cloneDeep(this.state.user);
 
     userCopy.budgets.push(this.createBudget());
-    console.log(userCopy.budgets);
     this.setState({
       user: userCopy,
       messageCode: 'created-budget',
@@ -339,14 +339,9 @@ class App extends Component {
   handleFocusOutBudgetName = (text, id) => {
     const userCopy = cloneDeep(this.state.user);
 
-    const updatedBudgets = userCopy.budgets.map((budget) => {
-      if (budget.id === id) {
-        budget.name = text;
-        return budget;
-      } else return budget;
-    });
+    userCopy.budgets[this.state.currentBudgetIndex].name =
+      text === '' ? userCopy.budgets[this.state.currentBudgetIndex].name : text;
 
-    userCopy.budgets = updatedBudgets;
     this.setState({ user: userCopy });
   };
 
@@ -365,7 +360,8 @@ class App extends Component {
   handleFocusOutProjectedMonthlyIncome = (text) => {
     const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText)) this.setState({ messageCode: 'invalid-income' });
+    if (isNaN(filteredText))
+      this.setState({ messageCode: 'invalid-projected-monthly-income' });
     else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.currentBudgetIndex]
@@ -377,14 +373,18 @@ class App extends Component {
       userCopy.budgets[this.state.currentBudgetIndex].projectedMonthlyIncome =
         Math.round(filteredText * 100) / 100;
 
-      this.setState({ user: userCopy, messageCode: 'updated-income' });
+      this.setState({
+        user: userCopy,
+        messageCode: 'updated-projected-monthly-income',
+      });
     }
   };
 
   handleFocusOutActualMonthlyIncome = (text) => {
     const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText)) this.setState({ messageCode: 'invalid-income' });
+    if (isNaN(filteredText))
+      this.setState({ messageCode: 'invalid-actual-monthly-income' });
     else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.currentBudgetIndex].actualMonthlyIncome
@@ -395,7 +395,10 @@ class App extends Component {
       userCopy.budgets[this.state.currentBudgetIndex].actualMonthlyIncome =
         Math.round(filteredText * 100) / 100;
 
-      this.setState({ user: userCopy, messageCode: 'updated-income' });
+      this.setState({
+        user: userCopy,
+        messageCode: 'updated-actual-monthly-income',
+      });
     }
   };
 
