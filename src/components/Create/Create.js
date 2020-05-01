@@ -46,8 +46,10 @@ const Create = ({
   userClickedDeleteBudget,
   handleDeleteBudget,
   handleFocusOutBudgetName,
-  handleFocusBudgetMonthlyIncome,
-  handleFocusOutBudgetMonthlyIncome,
+  handleFocusActualMonthlyIncome,
+  handleFocusProjectedMonthlyIncome,
+  handleFocusOutProjectedMonthlyIncome,
+  handleFocusOutActualMonthlyIncome,
   messageCode,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
@@ -56,13 +58,11 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
-  console.log(budget);
-
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5 relative">
         {messageCode === 'updated-income' ? (
-          <Message message="Income updated." />
+          <Message message="Projected monthly income updated." />
         ) : messageCode === 'invalid-income' ? (
           <Message message="Income invalid." invalid={true} />
         ) : null}
@@ -87,10 +87,8 @@ const Create = ({
           inputClassName="window-body tc mt2 mb4 ph2 br3"
           inputMaxLength={50}
           inputPlaceHolder="Projected monthly income"
-          onFocus={(text) => handleFocusBudgetMonthlyIncome(text, 'projected')}
-          onFocusOut={(text) =>
-            handleFocusOutBudgetMonthlyIncome(text, budget.id, 'projected')
-          }
+          onFocus={handleFocusProjectedMonthlyIncome}
+          onFocusOut={handleFocusOutProjectedMonthlyIncome}
         />
         <h2 className="number-label edit flex items-center">
           Actual Monthly Income
@@ -101,10 +99,8 @@ const Create = ({
           inputClassName="window-body tc mt2 mb4 ph2 br3"
           inputMaxLength={50}
           inputPlaceHolder="Actual monthly income"
-          onFocus={(text) => handleFocusBudgetMonthlyIncome(text, 'actual')}
-          onFocusOut={(text) =>
-            handleFocusOutBudgetMonthlyIncome(text, budget.id, 'actual')
-          }
+          onFocus={handleFocusActualMonthlyIncome}
+          onFocusOut={handleFocusOutActualMonthlyIncome}
         />
         <h2 className="number-label">Projected Balance</h2>
         <h1 className="number mb4 tc">{formattedBudget.projectedBalance}</h1>

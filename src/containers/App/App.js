@@ -25,7 +25,7 @@ import './App.scss';
 
 const initialState = {
   route: 'create',
-  messageCode: 'invalid-income',
+  messageCode: '',
   input: {
     category: '',
     name: '',
@@ -356,88 +356,47 @@ class App extends Component {
     this.setState({ input: inputCopy });
   };
 
-  handleFocusActualMonthlyIncome = (text) => {};
+  handleFocusActualMonthlyIncome = (text) => {
+    const inputCopy = { ...this.state.input };
+    inputCopy.actualMonthlyIncome = text;
+    this.setState({ input: inputCopy });
+  };
 
-  handleFocusBudgetMonthlyIncome = (text, type) => {
-    switch (type) {
-      case 'projected': {
-        const inputCopy = { ...this.state.input };
-        inputCopy.projectedMonthlyIncome = text;
-        this.setState({ input: inputCopy });
-        break;
-      }
-      case 'actual': {
-        console.log(text);
-        break;
-      }
-      default:
-        return null;
+  handleFocusOutProjectedMonthlyIncome = (text) => {
+    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+
+    if (isNaN(filteredText)) this.setState({ messageCode: 'invalid-income' });
+    else if (
+      Math.round(filteredText * 100) / 100 ===
+      this.state.user.budgets[this.state.currentBudgetIndex]
+        .projectedMonthlyIncome
+    ) {
+      this.setState({ messageCode: '' });
+    } else {
+      const userCopy = cloneDeep(this.state.user);
+      userCopy.budgets[this.state.currentBudgetIndex].projectedMonthlyIncome =
+        Math.round(filteredText * 100) / 100;
+
+      this.setState({ user: userCopy, messageCode: 'updated-income' });
     }
   };
 
-  handleFocusOutBudgetMonthlyIncome = (text, id, type) => {
-    console.log(text === this.state.input.projectedMonthlyIncome);
-    console.log(text);
-    console.log(this.state.input.projectedMonthlyIncome.toString());
-
+  handleFocusOutActualMonthlyIncome = (text) => {
     const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
 
-    if (text !== this.state.input.projectedMonthlyIncome) {
-      console.log('tuvieja');
+    if (isNaN(filteredText)) this.setState({ messageCode: 'invalid-income' });
+    else if (
+      Math.round(filteredText * 100) / 100 ===
+      this.state.user.budgets[this.state.currentBudgetIndex].actualMonthlyIncome
+    ) {
+      this.setState({ messageCode: '' });
+    } else {
+      const userCopy = cloneDeep(this.state.user);
+      userCopy.budgets[this.state.currentBudgetIndex].actualMonthlyIncome =
+        Math.round(filteredText * 100) / 100;
 
-      switch (type) {
-        case 'projected': {
-          if (isNaN(filteredText))
-            this.setState({ messageCode: 'invalid-income' });
-          else {
-            const userCopy = cloneDeep(this.state.user);
-
-            const updatedBudgets = userCopy.budgets.map((budget) => {
-              if (budget.id === id) {
-                budget.projectedMonthlyIncome =
-                  filteredText === ''
-                    ? 0
-                    : Math.round(parseFloat(filteredText) * 100) / 100;
-                return budget;
-              } else return budget;
-            });
-
-            userCopy.budgets = updatedBudgets;
-            this.setState({
-              user: userCopy,
-              messageCode: 'updated-income',
-            });
-          }
-          break;
-        }
-        case 'actual': {
-          if (isNaN(filteredText))
-            this.setState({ messageCode: 'invalid-income' });
-          else {
-            const userCopy = cloneDeep(this.state.user);
-
-            const updatedBudgets = userCopy.budgets.map((budget) => {
-              if (budget.id === id) {
-                budget.actualMonthlyIncome =
-                  filteredText === ''
-                    ? 0
-                    : Math.round(parseFloat(filteredText) * 100) / 100;
-                return budget;
-              } else return budget;
-            });
-
-            userCopy.budgets = updatedBudgets;
-            this.setState({
-              user: userCopy,
-              messageCode: 'updated-income',
-            });
-          }
-          break;
-        }
-        default:
-          return null;
-      }
-    } else if (!isNaN(filteredText)) this.setState({ messageCode: '' });
+      this.setState({ user: userCopy, messageCode: 'updated-income' });
+    }
   };
 
   render() {
@@ -482,11 +441,17 @@ class App extends Component {
                 userClickedDeleteBudget={userClickedDeleteBudget}
                 handleDeleteBudget={this.handleDeleteBudget}
                 handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-                handleFocusBudgetMonthlyIncome={
-                  this.handleFocusBudgetMonthlyIncome
+                handleFocusProjectedMonthlyIncome={
+                  this.handleFocusProjectedMonthlyIncome
                 }
-                handleFocusOutBudgetMonthlyIncome={
-                  this.handleFocusOutBudgetMonthlyIncome
+                handleFocusActualMonthlyIncome={
+                  this.handleFocusActualMonthlyIncome
+                }
+                handleFocusOutProjectedMonthlyIncome={
+                  this.handleFocusOutProjectedMonthlyIncome
+                }
+                handleFocusOutActualMonthlyIncome={
+                  this.handleFocusOutActualMonthlyIncome
                 }
                 messageCode={messageCode}
               />
