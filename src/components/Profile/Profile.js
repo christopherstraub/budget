@@ -13,9 +13,9 @@ const Profile = ({
   return (
     <div className="flex justify-center">
       <div className="window-box mw7">
-        {messageCode === 'name-changed' ? (
+        {messageCode === 'changed-name' ? (
           <Message message="Name changed." />
-        ) : messageCode === 'background-changed' ? (
+        ) : messageCode === 'changed-background' ? (
           <Message message="Background changed." />
         ) : null}
         <h1 className="window-title tc">{user.name}</h1>

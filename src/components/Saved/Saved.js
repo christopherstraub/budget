@@ -5,9 +5,9 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
   return (
     <div className="flex justify-center">
       <div className="window-box mw8">
-        {messageCode === 'budget-deleted' ? (
+        {messageCode === 'deleted-budget' ? (
           <Message message="Budget deleted." />
-        ) : messageCode === 'budget-created' ? (
+        ) : messageCode === 'created-budget' ? (
           <Message message="Budget created." />
         ) : null}
         <h1 className="window-title tc mb4">

@@ -20,12 +20,12 @@ import './App.scss';
 // 'signin', 'signup', 'create', 'saved', 'profile', 'about'
 
 // VALID MESSAGE CODES
-// 'income-updated', 'invalid-input', 'budget-deleted', 'budget-created',
-// 'name-changed', 'background-changed'
+// 'updated-income', 'invalid-input', 'deleted-budget', 'created-budget',
+// 'changed-name', 'changed-background'
 
 const initialState = {
   route: 'create',
-  messageCode: '',
+  messageCode: 'invalid-income',
   input: {
     category: '',
     name: '',
@@ -198,7 +198,7 @@ class App extends Component {
 
       const userCopy = { ...this.state.user };
       userCopy.background = selectedBackground[0];
-      this.setState({ user: userCopy, messageCode: 'background-changed' });
+      this.setState({ user: userCopy, messageCode: 'changed-background' });
     }
   };
 
@@ -217,7 +217,7 @@ class App extends Component {
     ) {
       const userCopy = { ...this.state.user };
       userCopy.name = this.state.input.name;
-      this.setState({ user: userCopy, messageCode: 'name-changed' });
+      this.setState({ user: userCopy, messageCode: 'changed-name' });
       // Reset input field.
       const inputCopy = { ...this.state.input };
       inputCopy.name = '';
@@ -278,7 +278,7 @@ class App extends Component {
     this.setState({
       user: userCopy,
       route: 'saved',
-      messageCode: 'budget-deleted',
+      messageCode: 'deleted-budget',
       userClickedDeleteBudget: false,
     });
   };
@@ -332,7 +332,7 @@ class App extends Component {
     console.log(userCopy.budgets);
     this.setState({
       user: userCopy,
-      messageCode: 'budget-created',
+      messageCode: 'created-budget',
     });
   };
 
@@ -349,6 +349,14 @@ class App extends Component {
     userCopy.budgets = updatedBudgets;
     this.setState({ user: userCopy });
   };
+
+  handleFocusProjectedMonthlyIncome = (text) => {
+    const inputCopy = { ...this.state.input };
+    inputCopy.projectedMonthlyIncome = text;
+    this.setState({ input: inputCopy });
+  };
+
+  handleFocusActualMonthlyIncome = (text) => {};
 
   handleFocusBudgetMonthlyIncome = (text, type) => {
     switch (type) {
@@ -368,13 +376,19 @@ class App extends Component {
   };
 
   handleFocusOutBudgetMonthlyIncome = (text, id, type) => {
+    console.log(text === this.state.input.projectedMonthlyIncome);
+    console.log(text);
+    console.log(this.state.input.projectedMonthlyIncome.toString());
+
+    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+
     if (text !== this.state.input.projectedMonthlyIncome) {
-      const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+      console.log('tuvieja');
 
       switch (type) {
         case 'projected': {
           if (isNaN(filteredText))
-            this.setState({ messageCode: 'invalid-input' });
+            this.setState({ messageCode: 'invalid-income' });
           else {
             const userCopy = cloneDeep(this.state.user);
 
@@ -391,14 +405,14 @@ class App extends Component {
             userCopy.budgets = updatedBudgets;
             this.setState({
               user: userCopy,
-              messageCode: 'income-updated',
+              messageCode: 'updated-income',
             });
           }
           break;
         }
         case 'actual': {
           if (isNaN(filteredText))
-            this.setState({ messageCode: 'invalid-input' });
+            this.setState({ messageCode: 'invalid-income' });
           else {
             const userCopy = cloneDeep(this.state.user);
 
@@ -415,7 +429,7 @@ class App extends Component {
             userCopy.budgets = updatedBudgets;
             this.setState({
               user: userCopy,
-              messageCode: 'income-updated',
+              messageCode: 'updated-income',
             });
           }
           break;
@@ -423,7 +437,7 @@ class App extends Component {
         default:
           return null;
       }
-    }
+    } else if (!isNaN(filteredText)) this.setState({ messageCode: '' });
   };
 
   render() {

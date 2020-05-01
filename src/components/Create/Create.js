@@ -61,9 +61,9 @@ const Create = ({
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5 relative">
-        {messageCode === 'income-updated' ? (
+        {messageCode === 'updated-income' ? (
           <Message message="Income updated." />
-        ) : messageCode === 'invalid-input' ? (
+        ) : messageCode === 'invalid-income' ? (
           <Message message="Income invalid." invalid={true} />
         ) : null}
         <EditableLabel
