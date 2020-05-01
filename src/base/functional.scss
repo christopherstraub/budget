@@ -48,7 +48,7 @@
 }
 
 .number {
-  font-family: ff-number;
+  font-family: $ff-number;
   color: $clr-number;
   font-size: $fs-number;
   text-shadow: 4px 2px 2px #302e2e;
@@ -85,10 +85,6 @@
 // Colors
 .clr-blue {
   color: $clr-blue;
-}
-
-.clr-green {
-  color: $clr-green;
 }
 
 .clr-red {
