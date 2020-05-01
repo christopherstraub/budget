@@ -10,11 +10,23 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
         ) : messageCode === 'created-budget' ? (
           <Message message="Budget created." />
         ) : null}
-        <h1 className="window-title tc mb4">
-          {user.name}, you have
-          <span className="clr-blue b"> {user.budgets.length}</span> saved
-          budgets.
-        </h1>
+
+        {user.budgets.length === 0 ? (
+          <h1 className="window-title tc mb4">
+            {user.name}, you don't have any saved budgets. Try creating one!
+          </h1>
+        ) : user.budgets.length === 1 ? (
+          <h1 className="window-title tc mb4">
+            {user.name}, here is your saved budget.
+          </h1>
+        ) : (
+          <h1 className="window-title tc mb4">
+            {user.name}, here are your
+            <span className="clr-blue b"> {user.budgets.length}</span> saved
+            budgets.
+          </h1>
+        )}
+
         <ul className="ul">
           {user.budgets.length === 0
             ? null
@@ -22,7 +34,7 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
                 <li
                   key={index}
                   onClick={() => handleViewBudget(index)}
-                  className="overview-box-title tc text-break dim pointer"
+                  className="overview-box-title text-break dim pointer mv4"
                 >
                   {budget.name}
                 </li>

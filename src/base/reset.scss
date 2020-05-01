@@ -19,6 +19,9 @@
   &:hover {
     opacity: 0.6;
   }
+  &::selection {
+    background-color: transparent;
+  }
 }
 
 *::placeholder {

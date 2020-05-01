@@ -114,6 +114,9 @@ const initialState = {
           },
         ],
       },
+      { name: 'May 2020' },
+      { name: 'May 2020' },
+      { name: 'May 2020' },
     ],
   },
 };

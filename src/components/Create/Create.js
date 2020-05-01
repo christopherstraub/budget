@@ -86,7 +86,7 @@ const Create = ({
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="overview-box-title flex justify-start text-break mb4"
+          labelClassName="overview-box-title flex justify-start text-break pointer mb4"
           inputClassName="window-body ph2 br3 mb5 w-100"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
@@ -100,7 +100,7 @@ const Create = ({
         </h2>
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
             budget.projectedMonthlyIncome
           )}`}
           inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
@@ -123,7 +123,7 @@ const Create = ({
         </h2>
         <EditableLabel
           text={formattedBudget.actualMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
             budget.actualMonthlyIncome
           )}`}
           inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
