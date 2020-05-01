@@ -26,7 +26,7 @@ const Profile = ({
         <div className="flex">
           <input
             onChange={handleNameInputChange}
-            className="placeholder br3 pv1 ph3 mr3 w-100"
+            className="input br3 pv1 ph3 mr3 w-100"
             type="text"
             id="name"
             name="name"

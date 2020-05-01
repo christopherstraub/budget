@@ -7,9 +7,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-// Reset.
-@import '../../base/reset.scss';
-
 // Functional classes.
 @import '../../base/functional.scss';
 
@@ -23,57 +20,13 @@
   background-color: rgba(0, 116, 145, 0.9);
 }
 
-.logo {
-  justify-self: self-start;
-  font-family: $ff-logo;
-  font-size: $fs-logo;
-  color: $clr-logo;
-  &:hover {
-    cursor: default;
-  }
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.window-box {
-  overflow-wrap: break-word;
-  max-height: 82vh;
-  overflow-y: auto;
-  width: fit-content;
-  padding: 3rem 2rem;
-  border-radius: 5px;
-
-  background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.edit::after {
-  content: url('../../images/pencil.svg');
-  margin-left: 0.75rem;
-}
-
 .App {
   font-family: 'Open Sans', sans-serif;
   color: $clr-body;
   min-height: 100vh;
   &.dark {
-    .logo {
+    .logo.header__logo {
       color: $clr-logo-dark;
-      &.login {
-        color: $clr-logo;
-      }
     }
     .title {
       color: $clr-title-dark;

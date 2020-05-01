@@ -5,7 +5,7 @@ import './Nav.scss';
 const Nav = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <nav>
-      <ul className="navi ul flex justify-center pt5">
+      <ul className="navi list flex justify-center pt5">
         <li
           onClick={() => handleRouteChange('create')}
           className="navi__item pointer br-pill dim"

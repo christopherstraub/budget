@@ -6,7 +6,12 @@ import './Header.scss';
 const Header = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <header>
-      <h1 className="logo header__logo pointer absolute">CSBudget</h1>
+      <h1
+        onClick={() => handleRouteChange('create')}
+        className="logo header__logo pointer absolute"
+      >
+        CSBudget
+      </h1>
       {isLoggedIn ? (
         <Nav isLoggedIn={isLoggedIn} handleRouteChange={handleRouteChange} />
       ) : null}

@@ -27,14 +27,14 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
           </h1>
         )}
 
-        <ul className="ul">
+        <ul className="list pl0">
           {user.budgets.length === 0
             ? null
             : user.budgets.map((budget, index) => (
                 <li
                   key={index}
                   onClick={() => handleViewBudget(index)}
-                  className="overview-box-title text-break dim pointer mv4"
+                  className="overview-box-title tc text-break dim pointer mv4"
                 >
                   {budget.name}
                 </li>

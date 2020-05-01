@@ -86,7 +86,7 @@ const Create = ({
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="overview-box-title flex justify-start text-break pointer mb4"
+          labelClassName="overview-box-title flex justify-start text-break pointer mb4 edit"
           inputClassName="window-body ph2 br3 mb5 w-100"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
@@ -196,7 +196,7 @@ const Create = ({
         <div className="add-entry flex justify-center">
           <input
             onChange={handleCategoryInputChange}
-            className="placeholder br3 pv2 ph3 mr3 w-33"
+            className="input br3 pv2 ph3 mr3 w-33"
             type="text"
             id="name"
             name="name"
