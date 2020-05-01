@@ -9,7 +9,19 @@ const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-const formatBudget = (budget, formatter) => {
+const formatNegativeValues = (formattedBudget) => {
+  const entries = Object.entries(formattedBudget);
+
+  const formattedNegativeValues = entries.map((entry) =>
+    entry[1].startsWith('-')
+      ? [entry[0], entry[1].replace('-', '(').concat(')')]
+      : entry
+  );
+
+  return Object.fromEntries(formattedNegativeValues);
+};
+
+const formatCurrency = (budget, formatter) => {
   return {
     projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
     actualMonthlyIncome: formatter.format(budget.actualMonthlyIncome),
@@ -20,6 +32,10 @@ const formatBudget = (budget, formatter) => {
     actualCost: formatter.format(budget.getActualCost()),
     differenceCost: formatter.format(budget.getDifferenceCost()),
   };
+};
+
+const formatBudget = (budget, formatter) => {
+  return formatNegativeValues(formatCurrency(budget, formatter));
 };
 
 const formatEntries = (entries, formatter) => {
@@ -58,6 +74,8 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
+  console.log(formattedBudget);
+
   return (
     <div className="Create flex items-start justify-center">
       <div className="window-box mw7 mh3 mb5 relative">
@@ -65,7 +83,7 @@ const Create = ({
           value="test"
           text={budget.name}
           labelClassName="overview-box-title flex justify-start text-break"
-          inputClassName="window-body mb2 ph2 br3 mb4"
+          inputClassName="window-body mb2 ph2 br3 mb4 w-100"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
           onFocusOut={handleFocusOutBudgetName}
@@ -79,7 +97,7 @@ const Create = ({
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
           labelClassName="number mb4 flex justify-center text-break"
-          inputClassName="window-body tc mt2 mb4 ph2 br3"
+          inputClassName="window-body tc mt2 mb4 ph2 br3 w-100"
           inputMaxLength={50}
           inputPlaceHolder="Projected monthly income"
           onFocus={handleFocusProjectedMonthlyIncome}
@@ -87,7 +105,7 @@ const Create = ({
         />
         {messageCode === 'updated-projected-monthly-income' ? (
           <Message
-            message={`Updated to ${formattedBudget.projectedMonthlyIncome}.`}
+            message={`Income updated to ${formattedBudget.projectedMonthlyIncome}.`}
           />
         ) : messageCode === 'invalid-projected-monthly-income' ? (
           <Message
@@ -100,7 +118,7 @@ const Create = ({
         <EditableLabel
           text={formattedBudget.actualMonthlyIncome}
           labelClassName="number mb4 flex justify-center text-break"
-          inputClassName="window-body tc mt2 mb4 ph2 br3"
+          inputClassName="window-body tc mt2 mb4 ph2 br3 w-100"
           inputMaxLength={50}
           inputPlaceHolder="Actual monthly income"
           onFocus={handleFocusActualMonthlyIncome}
@@ -108,7 +126,7 @@ const Create = ({
         />
         {messageCode === 'updated-actual-monthly-income' ? (
           <Message
-            message={`Updated to ${formattedBudget.actualMonthlyIncome}.`}
+            message={`Income updated to ${formattedBudget.actualMonthlyIncome}.`}
           />
         ) : messageCode === 'invalid-actual-monthly-income' ? (
           <Message
