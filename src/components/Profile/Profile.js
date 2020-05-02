@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Message from '../Message/Message';
+import WindowBox from '../WindowBox/WindowBox';
 
 const Profile = ({
   handleBackgroundChange,
@@ -12,14 +14,14 @@ const Profile = ({
 }) => {
   return (
     <div className="flex justify-center">
-      <div className="window-box mw7">
+      <WindowBox classList="mw8">
         {messageCode === 'changed-name' ? (
           <Message message="Name changed." />
         ) : messageCode === 'changed-background' ? (
           <Message message="Background changed." />
         ) : null}
-        <h1 className="window-title tc">{user.name}</h1>
-        <h2 className="window-body tc o-80">
+        <h1 className="window-title tc text-break">{user.name}</h1>
+        <h2 className="window-body tc o-80 text-break">
           {user.budgets.length} saved budgets
         </h2>
         <h2 className="window-body">Change name:</h2>
@@ -57,7 +59,7 @@ const Profile = ({
             Member since {user.joined.toLocaleDateString()}
           </h2>
         </div>
-      </div>
+      </WindowBox>
     </div>
   );
 };

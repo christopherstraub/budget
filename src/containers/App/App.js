@@ -7,12 +7,12 @@ import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 import Create from '../../components/Create/Create';
 
+import cloneDeep from 'lodash/cloneDeep';
+
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
 import Background3 from '../../images/bg3.jpg';
 import Background4 from '../../images/bg4.jpg';
-
-import cloneDeep from 'lodash/cloneDeep';
 
 import './App.scss';
 
@@ -25,7 +25,7 @@ import './App.scss';
 // 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'create',
+  route: 'about',
   messageCode: '',
   input: {
     category: '',
@@ -303,6 +303,7 @@ class App extends Component {
   };
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
+    //need to handle parentheses
     const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))

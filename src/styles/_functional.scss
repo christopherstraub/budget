@@ -115,14 +115,7 @@
   }
 }
 
-.window-box {
-  overflow-wrap: break-word;
-  max-height: 82vh;
-  overflow-y: auto;
-  width: fit-content;
-  padding: 3rem 2rem;
-  border-radius: 5px;
-
+.bg--gradient {
   background: #0f2027; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,

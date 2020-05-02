@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Message from '../Message/Message';
+import WindowBox from '../WindowBox/WindowBox';
 
 import EditableLabel from 'react-inline-editing';
 
@@ -55,7 +56,7 @@ const formatEntries = (entries, formatter) => {
   }
 };
 
-const classIfNegative = (value) => {
+const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
@@ -80,10 +81,9 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
-  console.log(formattedBudget);
   return (
-    <div className="Create flex items-start justify-center">
-      <div className="window-box mh3" style={{ width: '36rem' }}>
+    <div className="Create flex justify-center items-start">
+      <WindowBox classList="mh3" style={{ width: '34rem' }}>
         <EditableLabel
           value="test"
           text={budget.name}
@@ -99,7 +99,7 @@ const Create = ({
         <h2 className="number-label edit">Projected Monthly Income</h2>
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classListIfNegative(
             budget.projectedMonthlyIncome
           )}`}
           inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
@@ -122,7 +122,7 @@ const Create = ({
         </h2>
         <EditableLabel
           text={formattedBudget.actualMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classListIfNegative(
             budget.actualMonthlyIncome
           )}`}
           inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
@@ -142,7 +142,7 @@ const Create = ({
         ) : null}
         <h2 className="number-label">Projected Balance</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getProjectedBalance()
           )}`}
         >
@@ -150,7 +150,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Actual Balance</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getActualBalance()
           )}`}
         >
@@ -158,7 +158,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Balance Difference</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getDifferenceBalance()
           )}`}
         >
@@ -166,7 +166,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Projected Cost</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getProjectedCost()
           )}`}
         >
@@ -174,18 +174,23 @@ const Create = ({
         </h1>
         <h2 className="number-label">Actual Cost</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(budget.getActualCost())}`}
+          className={`number tr mb5 ${classListIfNegative(
+            budget.getActualCost()
+          )}`}
         >
           {formattedBudget.actualCost}
         </h1>
         <h2 className="number-label">Cost Difference</h2>
         <h1
-          className={`number tr ${classIfNegative(budget.getDifferenceCost())}`}
+          className={`number tr ${classListIfNegative(
+            budget.getDifferenceCost()
+          )}`}
         >
           {formattedBudget.differenceCost}
         </h1>
-      </div>
-      <div className="window-box flex-grow-1 mh3">
+      </WindowBox>
+
+      <WindowBox classList="flex-grow-1 mh3">
         <h1 className="entries-box-title tc mb5">
           Entries ({budget.entries.length})
         </h1>
@@ -251,7 +256,7 @@ const Create = ({
             </button>
           )}
         </div>
-      </div>
+      </WindowBox>
     </div>
   );
 };

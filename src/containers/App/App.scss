@@ -49,7 +49,7 @@
   // Responsive create page.
   .Create {
     flex-wrap: wrap;
-    & > .window-box {
+    > .bg--gradient:first-child {
       margin-bottom: 5rem;
     }
   }
@@ -68,7 +68,7 @@
 
   //Responsive entry category input and button.
   .add-entry {
-    & > input {
+    > .input {
       min-width: 250px;
       margin-bottom: 1rem;
     }
@@ -78,7 +78,7 @@
 
   // Responsive create page.
   .Create {
-    & > .window-box {
+    > .bg--gradient {
       margin-left: 0;
       margin-right: 0;
     }
