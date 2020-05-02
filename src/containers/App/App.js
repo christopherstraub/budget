@@ -25,7 +25,7 @@ import './App.scss';
 // 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'saved',
+  route: 'create',
   messageCode: '',
   input: {
     category: '',
@@ -57,7 +57,7 @@ const initialState = {
         id: 1,
         name: 'April 2020',
         // name: { month: new Date().getMonth(), year: new Date().getFullYear() },
-        projectedMonthlyIncome: 0,
+        projectedMonthlyIncome: 3500,
         actualMonthlyIncome: 0,
         getProjectedBalance() {
           return this.projectedMonthlyIncome - this.getProjectedCost();
@@ -89,8 +89,8 @@ const initialState = {
         },
         entries: [
           {
-            category: 'Mortgage or rent',
-            projectedCost: 1500,
+            category: 'Mortgage',
+            projectedCost: 100,
             actualCost: 1500,
             getDifference() {
               return this.projectedCost - this.actualCost;
@@ -114,9 +114,6 @@ const initialState = {
           },
         ],
       },
-      { name: 'May 2020' },
-      { name: 'May 2020' },
-      { name: 'May 2020' },
     ],
   },
 };

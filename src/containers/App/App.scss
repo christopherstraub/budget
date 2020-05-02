@@ -1,24 +1,8 @@
-@import '../../base/variables';
+@import '../../styles/variables';
 @import '~bootstrap/scss/bootstrap';
-@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
 // Functional classes.
-@import '../../base/functional.scss';
-
-// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
-// Does not include background-size.
-.background {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: rgba(0, 116, 145, 0.9);
-}
+@import '../../styles/functional';
 
 .App {
   font-family: 'Open Sans', sans-serif;
@@ -40,6 +24,16 @@
   }
 }
 
+// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
+// Does not include background-size.
+.background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: rgba(0, 116, 145, 0.9);
+}
+
 // Media queries.
 
 @media only screen and (max-width: 1100px) {
@@ -56,7 +50,7 @@
   .Create {
     flex-wrap: wrap;
     & > .window-box {
-      margin: 0 0 5rem;
+      margin-bottom: 5rem;
     }
   }
 }
@@ -68,6 +62,7 @@
   }
   .navi__item {
     font-size: $fs-nav-item-mobile;
+
     margin: 0.5rem 0;
   }
 
@@ -79,5 +74,13 @@
     }
     align-items: center;
     flex-direction: column;
+  }
+
+  // Responsive create page.
+  .Create {
+    & > .window-box {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

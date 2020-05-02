@@ -4,6 +4,8 @@ import Message from '../Message/Message';
 
 import EditableLabel from 'react-inline-editing';
 
+import './Create.scss';
+
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -79,15 +81,14 @@ const Create = ({
   );
 
   console.log(formattedBudget);
-
   return (
     <div className="Create flex items-start justify-center">
-      <div className="window-box mw7 mh3">
+      <div className="window-box mh3" style={{ width: '36rem' }}>
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="overview-box-title flex justify-start text-break pointer mb4 edit"
-          inputClassName="window-body ph2 br3 mb5 w-100"
+          labelClassName="overview-box-title flex justify-center text-break pointer mb4 edit"
+          inputClassName="input-title tc ph2 br3 w-100 mb-input-title"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
           onFocusOut={handleFocusOutBudgetName}
@@ -95,15 +96,13 @@ const Create = ({
         <h3 className="window-body o-80 flex justify-center items-center mb4 edit">
           Edit
         </h3>
-        <h2 className="number-label edit flex items-center">
-          Projected Monthly Income
-        </h2>
+        <h2 className="number-label edit">Projected Monthly Income</h2>
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
           labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
             budget.projectedMonthlyIncome
           )}`}
-          inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
+          inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
           inputMaxLength={50}
           inputPlaceHolder="Projected monthly income"
           onFocus={handleFocusProjectedMonthlyIncome}
@@ -126,7 +125,7 @@ const Create = ({
           labelClassName={`number mb5 flex justify-end text-break pointer ${classIfNegative(
             budget.actualMonthlyIncome
           )}`}
-          inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
+          inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
           inputMaxLength={50}
           inputPlaceHolder="Actual monthly income"
           onFocus={handleFocusActualMonthlyIncome}
@@ -190,7 +189,7 @@ const Create = ({
         <h1 className="entries-box-title tc mb5">
           Entries ({budget.entries.length})
         </h1>
-        <h3 className="white window-body o-80 flex justify-center items-center mb5">
+        <h3 className="window-body o-80 flex justify-center items-center mb4">
           Click cell to edit
         </h3>
         <div className="add-entry flex justify-center">
@@ -211,27 +210,21 @@ const Create = ({
           <table className="bg-white mt4 table table-striped table-bordered table-hover">
             <thead className="entry-title">
               <tr>
-                <th scope="col" style={{ minWidth: '220px' }}>
-                  Category
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Projected Cost
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Actual Cost
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Difference
-                </th>
+                <th scope="col">Category</th>
+                <th scope="col">Projected Cost</th>
+                <th scope="col">Actual Cost</th>
+                <th scope="col">Difference</th>
               </tr>
             </thead>
-            <tbody className="entry">
+            <tbody>
               {formattedEntries.map((entry, index) => (
                 <tr key={index}>
-                  <td className="text-break">{entry.category}</td>
-                  <td className="tr">{entry.projectedCost}</td>
-                  <td className="tr">{entry.actualCost}</td>
-                  <td className="tr">{entry.difference}</td>
+                  <td className="entry text-break">{entry.category}</td>
+                  <td className="entry text-break tr ">
+                    {entry.projectedCost}
+                  </td>
+                  <td className="entry text-break tr">{entry.actualCost}</td>
+                  <td className="entry text-break tr">{entry.difference}</td>
                 </tr>
               ))}
             </tbody>

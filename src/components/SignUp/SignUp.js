@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../base/loginBox.scss';
+import '../../styles/loginBox.scss';
 
 const SignUp = ({ handleRouteChange }) => {
   return (

@@ -1,4 +1,5 @@
 @import './variables';
+@import './mixins';
 
 // Text.
 .title {
@@ -157,17 +158,7 @@
 }
 
 .input {
-  color: $clr-input;
-  font-size: $fs-input;
-  background-color: $clr-input-box;
-  border: 1px solid $clr-placeholder;
-  outline: 0;
-  &:focus {
-    border-color: $clr-input;
-  }
-  &::placeholder {
-    color: $clr-placeholder;
-  }
+  @include input;
 }
 
 .edit::after {
