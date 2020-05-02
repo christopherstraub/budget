@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../base/loginBox.scss';
+import '../../styles/loginBox.scss';
 
 const SignUp = ({ handleRouteChange }) => {
   return (
@@ -8,21 +8,21 @@ const SignUp = ({ handleRouteChange }) => {
       <div className="login-box tc pt5 ph5 pb4">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
-          className="placeholder pa3 mv2 br3 w-100"
+          className="input pa3 mv2 br3 w-100"
           type="text"
           id="name"
           name="name"
           placeholder="Name"
         />
         <input
-          className="placeholder pa3 mv2 br3 w-100"
+          className="input pa3 mv2 br3 w-100"
           type="text"
           id="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="placeholder pa3 mv2 br3 w-100"
+          className="input pa3 mv2 br3 w-100"
           type="text"
           id="password"
           name="password"
@@ -30,7 +30,7 @@ const SignUp = ({ handleRouteChange }) => {
         />
         <input
           // onClick={() => handleRouteChange('signup')} ATTEMPT TO SIGN UP USER
-          className="pa3 mv2 br3 w-100 login-button-text white"
+          className="pa3 mv2 br3 w-100 login-button-text white outline-0"
           type="submit"
           value="Sign up"
         />

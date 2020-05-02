@@ -1,79 +1,16 @@
-@import '../../base/variables';
+@import '../../styles/variables';
 @import '~bootstrap/scss/bootstrap';
-@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-
-// Reset.
-@import '../../base/reset.scss';
 
 // Functional classes.
-@import '../../base/functional.scss';
-
-// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
-// Does not include background-size.
-.background {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: rgba(0, 116, 145, 0.9);
-}
-
-.logo {
-  justify-self: self-start;
-  font-family: $ff-logo;
-  font-size: $fs-logo;
-  color: $clr-logo;
-  &:hover {
-    cursor: default;
-  }
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.window-box {
-  overflow-wrap: break-word;
-  max-height: 82vh;
-  overflow-y: auto;
-  width: fit-content;
-  padding: 3rem 2rem;
-  border-radius: 5px;
-
-  background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.edit::after {
-  content: url('../../images/pencil.svg');
-  margin-left: 0.75rem;
-}
+@import '../../styles/functional';
 
 .App {
   font-family: 'Open Sans', sans-serif;
   color: $clr-body;
   min-height: 100vh;
   &.dark {
-    .logo {
+    .logo.header__logo {
       color: $clr-logo-dark;
-      &.login {
-        color: $clr-logo;
-      }
     }
     .title {
       color: $clr-title-dark;
@@ -85,6 +22,16 @@
       color: $clr-nav-item-dark;
     }
   }
+}
+
+// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
+// Does not include background-size.
+.background {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: rgba(0, 116, 145, 0.9);
 }
 
 // Media queries.
@@ -102,8 +49,8 @@
   // Responsive create page.
   .Create {
     flex-wrap: wrap;
-    & > .window-box {
-      margin: 0 0 5rem;
+    > .bg--gradient:first-child {
+      margin-bottom: 5rem;
     }
   }
 }
@@ -115,16 +62,25 @@
   }
   .navi__item {
     font-size: $fs-nav-item-mobile;
+
     margin: 0.5rem 0;
   }
 
   //Responsive entry category input and button.
   .add-entry {
-    & > input {
+    > .input {
       min-width: 250px;
       margin-bottom: 1rem;
     }
     align-items: center;
     flex-direction: column;
+  }
+
+  // Responsive create page.
+  .Create {
+    > .bg--gradient {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

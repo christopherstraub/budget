@@ -1,5 +1,7 @@
 @import './variables';
+@import './mixins';
 
+// Text.
 .title {
   font-family: $ff-title;
   color: $clr-title;
@@ -29,12 +31,6 @@
 .window-body {
   color: $clr-window-body;
   font-size: $fs-window-body;
-}
-
-.placeholder {
-  background-color: $clr-input-box;
-  color: $clr-placeholder;
-  font-size: $fs-placeholder;
 }
 
 .overview-box-title {
@@ -82,7 +78,7 @@
   font-size: $fs-message;
 }
 
-// Colors
+// Colors.
 .clr-blue {
   color: $clr-blue;
 }
@@ -101,4 +97,64 @@
 
 .bg--dark-red {
   background-color: $clr-dark-red;
+}
+
+// Components.
+.logo {
+  font-family: $ff-logo;
+  color: $clr-logo;
+  font-size: $fs-logo;
+  &::selection {
+    background-color: transparent;
+  }
+  &:hover {
+    cursor: default;
+  }
+  &.header__logo:hover {
+    cursor: pointer;
+  }
+}
+
+.bg--gradient {
+  background: #0f2027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2c5364,
+    #203a43,
+    #0f2027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.button {
+  border-radius: 5px;
+  font-weight: 300;
+  font-family: 'Roboto Mono', monospace;
+  color: $clr-button-text;
+  font-size: $fs-button-text;
+  border: 0;
+  // transition: opacity 0.1s ease;
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+  &::selection {
+    background-color: transparent;
+  }
+}
+
+.input {
+  @include input;
+}
+
+.edit::after {
+  content: url('../images/pencil.svg');
+  margin-left: 0.75rem;
 }

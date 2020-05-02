@@ -1,8 +1,11 @@
 import React from 'react';
 
 import Message from '../Message/Message';
+import WindowBox from '../WindowBox/WindowBox';
 
 import EditableLabel from 'react-inline-editing';
+
+import './Create.scss';
 
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -53,7 +56,7 @@ const formatEntries = (entries, formatter) => {
   }
 };
 
-const classIfNegative = (value) => {
+const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
@@ -78,16 +81,14 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
-  console.log(formattedBudget);
-
   return (
-    <div className="Create flex items-start justify-center">
-      <div className="window-box mw7 mh3">
+    <div className="Create flex justify-center items-start">
+      <WindowBox classList="mh3" style={{ width: '34rem' }}>
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="overview-box-title flex justify-start text-break mb4"
-          inputClassName="window-body ph2 br3 mb5 w-100"
+          labelClassName="overview-box-title flex justify-center text-break pointer mb4 edit"
+          inputClassName="input-title tc ph2 br3 w-100 mb-input-title"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
           onFocusOut={handleFocusOutBudgetName}
@@ -95,15 +96,13 @@ const Create = ({
         <h3 className="window-body o-80 flex justify-center items-center mb4 edit">
           Edit
         </h3>
-        <h2 className="number-label edit flex items-center">
-          Projected Monthly Income
-        </h2>
+        <h2 className="number-label edit">Projected Monthly Income</h2>
         <EditableLabel
           text={formattedBudget.projectedMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classListIfNegative(
             budget.projectedMonthlyIncome
           )}`}
-          inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
+          inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
           inputMaxLength={50}
           inputPlaceHolder="Projected monthly income"
           onFocus={handleFocusProjectedMonthlyIncome}
@@ -123,10 +122,10 @@ const Create = ({
         </h2>
         <EditableLabel
           text={formattedBudget.actualMonthlyIncome}
-          labelClassName={`number mb5 flex justify-end text-break ${classIfNegative(
+          labelClassName={`number mb5 flex justify-end text-break pointer ${classListIfNegative(
             budget.actualMonthlyIncome
           )}`}
-          inputClassName="window-body tr mt2 mb5 ph2 br3 w-100"
+          inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
           inputMaxLength={50}
           inputPlaceHolder="Actual monthly income"
           onFocus={handleFocusActualMonthlyIncome}
@@ -143,7 +142,7 @@ const Create = ({
         ) : null}
         <h2 className="number-label">Projected Balance</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getProjectedBalance()
           )}`}
         >
@@ -151,7 +150,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Actual Balance</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getActualBalance()
           )}`}
         >
@@ -159,7 +158,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Balance Difference</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getDifferenceBalance()
           )}`}
         >
@@ -167,7 +166,7 @@ const Create = ({
         </h1>
         <h2 className="number-label">Projected Cost</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(
+          className={`number tr mb5 ${classListIfNegative(
             budget.getProjectedCost()
           )}`}
         >
@@ -175,28 +174,33 @@ const Create = ({
         </h1>
         <h2 className="number-label">Actual Cost</h2>
         <h1
-          className={`number tr mb5 ${classIfNegative(budget.getActualCost())}`}
+          className={`number tr mb5 ${classListIfNegative(
+            budget.getActualCost()
+          )}`}
         >
           {formattedBudget.actualCost}
         </h1>
         <h2 className="number-label">Cost Difference</h2>
         <h1
-          className={`number tr ${classIfNegative(budget.getDifferenceCost())}`}
+          className={`number tr ${classListIfNegative(
+            budget.getDifferenceCost()
+          )}`}
         >
           {formattedBudget.differenceCost}
         </h1>
-      </div>
-      <div className="window-box flex-grow-1 mh3">
+      </WindowBox>
+
+      <WindowBox classList="flex-grow-1 mh3">
         <h1 className="entries-box-title tc mb5">
           Entries ({budget.entries.length})
         </h1>
-        <h3 className="white window-body o-80 flex justify-center items-center mb5">
+        <h3 className="window-body o-80 flex justify-center items-center mb4">
           Click cell to edit
         </h3>
         <div className="add-entry flex justify-center">
           <input
             onChange={handleCategoryInputChange}
-            className="placeholder br3 pv2 ph3 mr3 w-33"
+            className="input br3 pv2 ph3 mr3 w-33"
             type="text"
             id="name"
             name="name"
@@ -211,27 +215,21 @@ const Create = ({
           <table className="bg-white mt4 table table-striped table-bordered table-hover">
             <thead className="entry-title">
               <tr>
-                <th scope="col" style={{ minWidth: '220px' }}>
-                  Category
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Projected Cost
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Actual Cost
-                </th>
-                <th scope="col" style={{ width: '189px' }}>
-                  Difference
-                </th>
+                <th scope="col">Category</th>
+                <th scope="col">Projected Cost</th>
+                <th scope="col">Actual Cost</th>
+                <th scope="col">Difference</th>
               </tr>
             </thead>
-            <tbody className="entry">
+            <tbody>
               {formattedEntries.map((entry, index) => (
                 <tr key={index}>
-                  <td className="text-break">{entry.category}</td>
-                  <td className="tr">{entry.projectedCost}</td>
-                  <td className="tr">{entry.actualCost}</td>
-                  <td className="tr">{entry.difference}</td>
+                  <td className="entry text-break">{entry.category}</td>
+                  <td className="entry text-break tr ">
+                    {entry.projectedCost}
+                  </td>
+                  <td className="entry text-break tr">{entry.actualCost}</td>
+                  <td className="entry text-break tr">{entry.difference}</td>
                 </tr>
               ))}
             </tbody>
@@ -258,7 +256,7 @@ const Create = ({
             </button>
           )}
         </div>
-      </div>
+      </WindowBox>
     </div>
   );
 };
