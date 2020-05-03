@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CustomScrollbars from '../CustomScrollbars/CustomScrollbars';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 const WindowBox = (props) => {
   return (
@@ -9,7 +10,9 @@ const WindowBox = (props) => {
       style={props.style ? props.style : null}
     >
       <CustomScrollbars backgroundColor="bg--blue">
-        <div className="pa4">{props.children}</div>
+        <ErrorBoundary>
+          <div className="pa4">{props.children}</div>
+        </ErrorBoundary>
       </CustomScrollbars>
     </div>
   );
