@@ -15,17 +15,16 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
 
         {user.budgets.length === 0 ? (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, you don't have any saved budgets. Try creating one!
+            {user.name}, you don't have any budgets.
           </h1>
         ) : user.budgets.length === 1 ? (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here is your saved budget.
+            {user.name}, here is your budget.
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
             {user.name}, here are your
-            <span className="clr-blue b"> {user.budgets.length}</span> saved
-            budgets.
+            <span className="clr-blue b"> {user.budgets.length}</span> budgets.
           </h1>
         )}
 

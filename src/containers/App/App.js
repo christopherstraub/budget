@@ -125,7 +125,15 @@ class App extends Component {
   }
 
   handleRouteChange = (route) => {
-    if (this.state.route !== route) this.setState({ route, messageCode: null });
+    if (route === 'create' && this.state.user.budgets.length === 0) {
+      this.handleAddBudget();
+      this.setState({ route: 'create' });
+    }
+    if (
+      this.state.route !== route &&
+      !(route === 'create' && this.state.user.budgets.length === 0)
+    )
+      this.setState({ route, messageCode: null });
     // If we get user, log them in
     if (route !== 'signin' && route !== 'signup')
       this.setState({ isLoggedIn: true });
