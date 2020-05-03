@@ -25,7 +25,7 @@ import './App.scss';
 // 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'saved',
+  route: 'create',
   messageCode: '',
   input: {
     category: '',
