@@ -100,23 +100,12 @@ const Create = ({
 
   return (
     <div className="Create flex justify-center items-start">
-      <WindowBox classList="mh3" style={{ minWidth: '34rem' }}>
+      <WindowBox classList="mh3" style={{ width: '34rem', minWidth: '34rem' }}>
         <Overview budget={budget} overview={overview} />
       </WindowBox>
 
       <WindowBox classList="flex-grow-1 mh3">
-        <Entries
-          budget={budget}
-          entries={entries}
-          // budget={budget}
-          // formattedEntries={formattedEntries}
-          // handleCategoryInputChange={handleCategoryInputChange}
-          // handleAddEntry={handleAddEntry}
-          // inputCategory={inputCategory}
-          // handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
-          // userClickedDeleteBudget={userClickedDeleteBudget}
-          // handleDeleteBudget={handleDeleteBudget}
-        />
+        <Entries budget={budget} entries={entries} />
       </WindowBox>
     </div>
   );

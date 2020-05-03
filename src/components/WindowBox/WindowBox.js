@@ -11,7 +11,7 @@ const WindowBox = (props) => {
     >
       <CustomScrollbars backgroundColor="bg--blue">
         <ErrorBoundary>
-          <div className="pa4">{props.children}</div>
+          <div className="pv5 ph4">{props.children}</div>
         </ErrorBoundary>
       </CustomScrollbars>
     </div>

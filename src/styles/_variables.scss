@@ -64,7 +64,7 @@ $clr-nav-item: white;
 $fs-nav-item: 2.4rem;
 $fs-nav-item-mobile: 2.5rem;
 
-// Create component.
+// Overview.
 $clr-overview-box-title: white;
 $fs-overview-box-title: 3.8rem;
 $clr-entries-box-title: white;
@@ -73,8 +73,10 @@ $ff-number: 'Lato', sans-serif;
 $clr-number: white;
 $fs-number: 3rem;
 $ff-number-label: 'Montserrat', sans-serif;
-$clr-number-label: white;
+$clr-number-label: rgba(255, 255, 255, 0.8);
 $fs-number-label: 2rem;
+
+// Entries.
 $clr-entry-title: black;
 $fs-entry-title: 2rem;
 $clr-entry: black;

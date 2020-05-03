@@ -8,9 +8,9 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
     <div className="flex justify-center">
       <WindowBox classList="mw8 w-100">
         {messageCode === 'deleted-budget' ? (
-          <Message message="Budget deleted." />
-        ) : messageCode === 'created-budget' ? (
-          <Message message="Budget created." />
+          <div className="mb4">
+            <Message message="Budget deleted." />
+          </div>
         ) : null}
 
         {user.budgets.length === 0 ? (
@@ -45,11 +45,16 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
         <div className="flex justify-center">
           <button
             onClick={handleAddBudget}
-            className="button bg--green pv3 ph4 mt4"
+            className="button bg--green pv3 ph4"
           >
             CREATE NEW BUDGET
           </button>
         </div>
+        {messageCode === 'created-budget' ? (
+          <div className="mt4">
+            <Message message="Budget created." />
+          </div>
+        ) : null}
       </WindowBox>
     </div>
   );
