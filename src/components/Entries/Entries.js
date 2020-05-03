@@ -1,15 +1,6 @@
 import React from 'react';
 
-const Entries = ({
-  budget,
-  formattedEntries,
-  handleCategoryInputChange,
-  handleAddEntry,
-  inputCategory,
-  handleUserClickedDeleteBudget,
-  userClickedDeleteBudget,
-  handleDeleteBudget,
-}) => {
+const Entries = ({ budget, entries }) => {
   return (
     <>
       <h1 className="entries-box-title tc mb5">
@@ -20,15 +11,18 @@ const Entries = ({
       </h3>
       <div className="add-entry flex justify-center">
         <input
-          onChange={handleCategoryInputChange}
+          onChange={entries.handleCategoryInputChange}
           className="input br3 pv2 ph3 mr3 w-33"
           type="text"
           id="name"
           name="name"
           placeholder="Category of entry"
-          value={inputCategory}
+          value={entries.inputCategory}
         />
-        <button onClick={handleAddEntry} className="button bg--blue pv2 ph4">
+        <button
+          onClick={entries.handleAddEntry}
+          className="button bg--blue pv2 ph4"
+        >
           ADD ENTRY
         </button>
       </div>
@@ -43,7 +37,7 @@ const Entries = ({
             </tr>
           </thead>
           <tbody>
-            {formattedEntries.map((entry, index) => (
+            {entries.formattedEntries.map((entry, index) => (
               <tr key={index}>
                 <td className="entry text-break">{entry.category}</td>
                 <td className="entry text-break tr ">{entry.projectedCost}</td>
@@ -58,17 +52,17 @@ const Entries = ({
       <div className="flex pt4">
         <button className="button bg--green pv3 ph4">SAVE BUDGET</button>
 
-        {userClickedDeleteBudget ? (
+        {entries.userClickedDeleteBudget ? (
           <button
-            onClick={handleDeleteBudget}
-            onBlur={() => handleUserClickedDeleteBudget(false)}
+            onClick={entries.handleDeleteBudget}
+            onBlur={() => entries.handleUserClickedDeleteBudget(false)}
             className="button bg--dark-red pv3 ph4 ml-auto"
           >
             CONFIRM DELETE
           </button>
         ) : (
           <button
-            onClick={() => handleUserClickedDeleteBudget(true)}
+            onClick={() => entries.handleUserClickedDeleteBudget(true)}
             className="button bg--dark-red pv3 ph4 ml-auto"
           >
             DELETE BUDGET

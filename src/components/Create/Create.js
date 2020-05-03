@@ -57,18 +57,18 @@ const formatEntries = (entries, formatter) => {
 
 const Create = ({
   budget,
-  handleCategoryInputChange,
-  handleAddEntry,
-  inputCategory,
-  handleUserClickedDeleteBudget,
-  userClickedDeleteBudget,
-  handleDeleteBudget,
   handleFocusOutBudgetName,
   handleFocusActualMonthlyIncome,
   handleFocusProjectedMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
   messageCode,
+  handleCategoryInputChange,
+  handleAddEntry,
+  inputCategory,
+  handleUserClickedDeleteBudget,
+  userClickedDeleteBudget,
+  handleDeleteBudget,
 }) => {
   const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
   const formattedEntries = formatEntries(
@@ -76,33 +76,44 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
+  const overview = {
+    formattedBudget,
+    handleFocusOutBudgetName,
+    handleFocusActualMonthlyIncome,
+    handleFocusProjectedMonthlyIncome,
+    handleFocusOutProjectedMonthlyIncome,
+    handleFocusOutActualMonthlyIncome,
+    messageCode,
+  };
+
+  const entries = {
+    formattedEntries,
+    handleCategoryInputChange,
+    handleAddEntry,
+    inputCategory,
+    handleUserClickedDeleteBudget,
+    userClickedDeleteBudget,
+    handleDeleteBudget,
+  };
+
   return (
     <div className="Create flex justify-center items-start">
       <WindowBox classList="mh3" style={{ minWidth: '34rem' }}>
-        <Overview
-          budget={budget}
-          formattedBudget={formattedBudget}
-          handleFocusOutBudgetName={handleFocusOutBudgetName}
-          handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
-          handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
-          handleFocusOutProjectedMonthlyIncome={
-            handleFocusOutProjectedMonthlyIncome
-          }
-          handleFocusOutActualMonthlyIncome={handleFocusOutActualMonthlyIncome}
-          messageCode={messageCode}
-        />
+        <Overview budget={budget} overview={overview} />
       </WindowBox>
 
       <WindowBox classList="flex-grow-1 mh3">
         <Entries
           budget={budget}
-          formattedEntries={formattedEntries}
-          handleCategoryInputChange={handleCategoryInputChange}
-          handleAddEntry={handleAddEntry}
-          inputCategory={inputCategory}
-          handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
-          userClickedDeleteBudget={userClickedDeleteBudget}
-          handleDeleteBudget={handleDeleteBudget}
+          entries={entries}
+          // budget={budget}
+          // formattedEntries={formattedEntries}
+          // handleCategoryInputChange={handleCategoryInputChange}
+          // handleAddEntry={handleAddEntry}
+          // inputCategory={inputCategory}
+          // handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
+          // userClickedDeleteBudget={userClickedDeleteBudget}
+          // handleDeleteBudget={handleDeleteBudget}
         />
       </WindowBox>
     </div>
