@@ -5,12 +5,16 @@ const About = () => {
   return (
     <div className="flex justify-center">
       <WindowBox classList="mw8">
-        <p className="window-title mb0 tc">
-          <span className="i">CSBudget</span> is maintained by Christopher
-          Straub and distributed under the MIT License. You can get in touch
-          with Christopher
-          <span className="clr-blue dim pointer"> here</span>.
-        </p>
+        <div>
+          <p className="window-title">
+            <span className="i">CSBudget</span> is maintained by Christopher
+            Straub and distributed under the MIT License.
+          </p>
+          <p className="window-title mb0">
+            You can get in touch with Christopher
+            <span className="clr-blue dim pointer"> here</span>.
+          </p>
+        </div>
       </WindowBox>
     </div>
   );

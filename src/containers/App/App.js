@@ -25,7 +25,7 @@ import './App.scss';
 // 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'about',
+  route: 'create',
   messageCode: '',
   input: {
     category: '',
@@ -303,8 +303,11 @@ class App extends Component {
   };
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
-    //need to handle parentheses
-    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+    let filteredText = text;
+    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
+      filteredText = filteredText.replace('(', '-').replace(')', '');
+
+    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
       this.setState({ messageCode: 'invalid-projected-monthly-income' });
@@ -327,7 +330,11 @@ class App extends Component {
   };
 
   handleFocusOutActualMonthlyIncome = (text) => {
-    const filteredText = text.replace(/,/g, '').replace(/\$/g, '');
+    let filteredText = text;
+    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
+      filteredText = filteredText.replace('(', '-').replace(')', '');
+
+    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
       this.setState({ messageCode: 'invalid-actual-monthly-income' });
@@ -372,7 +379,10 @@ class App extends Component {
             isLoggedIn={isLoggedIn}
             handleRouteChange={this.handleRouteChange}
           />
-          <div className="ph4 pv5">
+          <div
+            className="pv5"
+            style={{ paddingLeft: '32rem', paddingRight: '32rem' }}
+          >
             {route === 'signin' || route === 'signup' ? (
               <Landing
                 route={route}

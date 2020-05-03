@@ -83,7 +83,7 @@ const Create = ({
 
   return (
     <div className="Create flex justify-center items-start">
-      <WindowBox classList="mh3" style={{ width: '34rem' }}>
+      <WindowBox classList="mh3" style={{ minWidth: '34rem' }}>
         <EditableLabel
           value="test"
           text={budget.name}
