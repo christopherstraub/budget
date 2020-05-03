@@ -13,7 +13,7 @@ const Profile = ({
   messageCode,
 }) => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pv5 ph4">
       <WindowBox classList="mw8">
         {messageCode === 'changed-name' ? (
           <Message message="Name changed." />
@@ -22,7 +22,7 @@ const Profile = ({
         ) : null}
         <h1 className="window-title tc text-break">{user.name}</h1>
         <h2 className="window-body tc o-80 text-break">
-          {user.budgets.length} saved budgets
+          {user.budgets.length} budgets
         </h2>
         <h2 className="window-body">Change name:</h2>
         <div className="flex">
@@ -43,7 +43,7 @@ const Profile = ({
           </button>
         </div>
         <div className="mt4">
-          <h2 className="window-body dib mr3">Change background: </h2>
+          <h2 className="window-body dib mr3">Background: </h2>
 
           {backgrounds.map((background, index) => (
             <button

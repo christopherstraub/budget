@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Header from '../../components/Header/Header';
 import Landing from '../../components/Landing/Landing';
-import Saved from '../../components/Saved/Saved';
+import Budgets from '../../components/Budgets/Budgets';
 import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 import Create from '../../components/Create/Create';
@@ -17,15 +17,16 @@ import Background4 from '../../images/bg4.jpg';
 import './App.scss';
 
 // VALID ROUTES
-// 'signin', 'signup', 'create', 'saved', 'profile', 'about'
+// 'signin', 'signup', 'create', 'budgets', 'profile', 'about'
 
 // VALID MESSAGE CODES
 // 'updated-projected-monthly-income', 'updated-actual-monthly-income',
 // 'invalid-projected-monthly-income', 'invalid-actual-monthly-income',
-// 'deleted-budget', 'created-budget', 'changed-name', 'changed-background'
+// 'deleted-budget', 'created-budget', 'saved-budgets',
+// 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'create',
+  route: 'budgets',
   messageCode: '',
   input: {
     category: '',
@@ -240,7 +241,7 @@ class App extends Component {
     userCopy.budgets = filteredBudgets;
     this.setState({
       user: userCopy,
-      route: 'saved',
+      route: 'budgets',
       messageCode: 'deleted-budget',
       userClickedDeleteBudget: false,
     });
@@ -296,6 +297,10 @@ class App extends Component {
       user: userCopy,
       messageCode: 'created-budget',
     });
+  };
+
+  handleSaveBudgets = () => {
+    this.setState({ messageCode: 'saved-budgets' });
   };
 
   handleFocusOutBudgetName = (text) => {
@@ -396,63 +401,54 @@ class App extends Component {
             isLoggedIn={isLoggedIn}
             handleRouteChange={this.handleRouteChange}
           />
-          <div
-            className="pv5"
-            style={{ paddingLeft: '32rem', paddingRight: '32rem' }}
-          >
-            {route === 'signin' || route === 'signup' ? (
-              <Landing
-                route={route}
-                handleRouteChange={this.handleRouteChange}
-              />
-            ) : route === 'create' ? (
-              <Create
-                budget={user.budgets[currentBudgetIndex]}
-                handleCategoryInputChange={this.handleCategoryInputChange}
-                handleAddEntry={this.handleAddEntry}
-                handleDeleteEntry={this.handleDeleteEntry}
-                inputCategory={input.category}
-                handleUserClickedDeleteBudget={
-                  this.handleUserClickedDeleteBudget
-                }
-                userClickedDeleteBudget={userClickedDeleteBudget}
-                handleDeleteBudget={this.handleDeleteBudget}
-                handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-                handleFocusProjectedMonthlyIncome={
-                  this.handleFocusProjectedMonthlyIncome
-                }
-                handleFocusActualMonthlyIncome={
-                  this.handleFocusActualMonthlyIncome
-                }
-                handleFocusOutProjectedMonthlyIncome={
-                  this.handleFocusOutProjectedMonthlyIncome
-                }
-                handleFocusOutActualMonthlyIncome={
-                  this.handleFocusOutActualMonthlyIncome
-                }
-                messageCode={messageCode}
-              />
-            ) : route === 'saved' ? (
-              <Saved
-                user={user}
-                messageCode={messageCode}
-                handleAddBudget={this.handleAddBudget}
-                handleViewBudget={this.handleViewBudget}
-              />
-            ) : route === 'about' ? (
-              <About />
-            ) : route === 'profile' ? (
-              <Profile
-                handleBackgroundChange={this.handleBackgroundChange}
-                backgrounds={backgrounds}
-                user={user}
-                handleNameInputChange={this.handleNameInputChange}
-                handleNameChange={this.handleNameChange}
-                inputName={input.name}
-                messageCode={messageCode}
-              />
-            ) : null}
-          </div>
+          {route === 'signin' || route === 'signup' ? (
+            <Landing route={route} handleRouteChange={this.handleRouteChange} />
+          ) : route === 'create' ? (
+            <Create
+              budget={user.budgets[currentBudgetIndex]}
+              handleCategoryInputChange={this.handleCategoryInputChange}
+              handleAddEntry={this.handleAddEntry}
+              handleDeleteEntry={this.handleDeleteEntry}
+              inputCategory={input.category}
+              handleUserClickedDeleteBudget={this.handleUserClickedDeleteBudget}
+              userClickedDeleteBudget={userClickedDeleteBudget}
+              handleDeleteBudget={this.handleDeleteBudget}
+              handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+              handleFocusProjectedMonthlyIncome={
+                this.handleFocusProjectedMonthlyIncome
+              }
+              handleFocusActualMonthlyIncome={
+                this.handleFocusActualMonthlyIncome
+              }
+              handleFocusOutProjectedMonthlyIncome={
+                this.handleFocusOutProjectedMonthlyIncome
+              }
+              handleFocusOutActualMonthlyIncome={
+                this.handleFocusOutActualMonthlyIncome
+              }
+              messageCode={messageCode}
+            />
+          ) : route === 'budgets' ? (
+            <Budgets
+              user={user}
+              messageCode={messageCode}
+              handleAddBudget={this.handleAddBudget}
+              handleViewBudget={this.handleViewBudget}
+              handleSaveBudgets={this.handleSaveBudgets}
+            />
+          ) : route === 'profile' ? (
+            <Profile
+              handleBackgroundChange={this.handleBackgroundChange}
+              backgrounds={backgrounds}
+              user={user}
+              handleNameInputChange={this.handleNameInputChange}
+              handleNameChange={this.handleNameChange}
+              inputName={input.name}
+              messageCode={messageCode}
+            />
+          ) : route === 'about' ? (
+            <About />
+          ) : null}
         </div>
       </div>
     );

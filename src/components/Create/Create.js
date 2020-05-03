@@ -99,7 +99,7 @@ const Create = ({
   };
 
   return (
-    <div className="Create flex justify-center items-start">
+    <div className="Create flex justify-center items-start pv5 ph8">
       <WindowBox classList="mh3" style={{ width: '34rem', minWidth: '34rem' }}>
         <Overview budget={budget} overview={overview} />
       </WindowBox>

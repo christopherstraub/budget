@@ -20,7 +20,12 @@ const Overview = ({ budget, overview }) => {
         inputPlaceHolder="Budget name"
         onFocusOut={overview.handleFocusOutBudgetName}
       />
-      <h3 className="window-body o-80 flex justify-center items-center mb4 edit">
+      <h3
+        className="window-body o-80 flex justify-center items-center mb4 edit"
+        style={{
+          textShadow: '2px 1px 1px #302e2e',
+        }}
+      >
         Edit
       </h3>
       <h2 className="number-label edit lh-title">Projected Monthly Income</h2>

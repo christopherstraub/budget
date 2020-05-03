@@ -22,7 +22,7 @@ const SignIn = ({ handleRouteChange }) => {
           placeholder="Password"
         />
         <input
-          // onClick={() => handleRouteChange('signin')} ATTEMPT TO SIGN IN USER
+          onClick={() => handleRouteChange('create')}
           className="pa3 mv2 br3 w-100 login-button-text outline-0"
           type="submit"
           value="Sign in"

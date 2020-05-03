@@ -1,6 +1,6 @@
 import React from 'react';
 
-import garbage from '../../images/garbage.svg';
+import garbage from '../../images/trash.svg';
 
 const Entries = ({ budget, entries }) => {
   return (
@@ -8,13 +8,18 @@ const Entries = ({ budget, entries }) => {
       <h1 className="entries-box-title tc mb5">
         Entries ({budget.entries.length})
       </h1>
-      <h3 className="window-body o-80 flex justify-center items-center mb4">
+      <h3
+        className="window-body o-80 flex justify-center items-center mb4"
+        style={{
+          textShadow: '2px 1px 1px #302e2e',
+        }}
+      >
         Click cell to edit
       </h3>
       <div className="add-entry flex justify-center">
         <input
           onChange={entries.handleCategoryInputChange}
-          className="input br3 pv2 ph3 mr3 w-33"
+          className="input br3 pv2 ph3 mr3 w-100"
           type="text"
           id="name"
           name="name"
@@ -23,7 +28,7 @@ const Entries = ({ budget, entries }) => {
         />
         <button
           onClick={entries.handleAddEntry}
-          className="button bg--blue pv2 ph4"
+          className="button bg--blue pv2 ph4 w-33"
         >
           ADD ENTRY
         </button>
@@ -46,6 +51,7 @@ const Entries = ({ budget, entries }) => {
                     onClick={() => entries.handleDeleteEntry(index)}
                     className="pointer mr3"
                     src={garbage}
+                    alt="trash"
                   />
                   {entry.category}
                 </td>

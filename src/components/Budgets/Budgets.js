@@ -3,9 +3,15 @@ import React from 'react';
 import Message from '../Message/Message';
 import WindowBox from '../WindowBox/WindowBox';
 
-const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
+const Budgets = ({
+  user,
+  messageCode,
+  handleViewBudget,
+  handleAddBudget,
+  handleSaveBudgets,
+}) => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pv5 ph4">
       <WindowBox classList="mw8 w-100">
         {messageCode === 'deleted-budget' ? (
           <div className="mb4">
@@ -14,12 +20,12 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
         ) : null}
 
         {user.budgets.length === 0 ? (
-          <h1 className="window-title tc mb4 text-break">
+          <h1 className="window-title tc mb5 text-break">
             {user.name}, you don't have any budgets.
           </h1>
         ) : user.budgets.length === 1 ? (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here is your budget.
+            {user.name}, here's your budget.
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
@@ -41,17 +47,29 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
                 </li>
               ))}
         </ul>
-        <div className="flex justify-center">
+        <div className="flex flex-column items-center">
           <button
             onClick={handleAddBudget}
-            className="button bg--green pv3 ph4"
+            className="button bg--blue pv3 ph4 mb4"
+            style={{ width: 'max-content' }}
           >
             CREATE NEW BUDGET
+          </button>
+          <button
+            onClick={handleSaveBudgets}
+            className="button bg--green pv3 ph4"
+            style={{ width: 'max-content' }}
+          >
+            SAVE BUDGETS
           </button>
         </div>
         {messageCode === 'created-budget' ? (
           <div className="mt4">
             <Message message="Budget created." />
+          </div>
+        ) : messageCode === 'saved-budgets' ? (
+          <div className="mt4">
+            <Message message="Budgets saved." />
           </div>
         ) : null}
       </WindowBox>
@@ -59,4 +77,4 @@ const Saved = ({ user, messageCode, handleViewBudget, handleAddBudget }) => {
   );
 };
 
-export default Saved;
+export default Budgets;

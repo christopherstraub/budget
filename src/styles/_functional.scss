@@ -1,6 +1,11 @@
 @import './variables';
 @import './mixins';
 
+.ph8 {
+  padding-left: 32rem;
+  padding-right: 32rem;
+}
+
 // Text.
 .title {
   font-family: $ff-title;
@@ -47,7 +52,6 @@
   font-family: $ff-number;
   color: $clr-number;
   font-size: $fs-number;
-  text-shadow: 4px 2px 2px #302e2e;
 }
 
 .number-label {
@@ -108,11 +112,10 @@
   &::selection {
     background-color: transparent;
   }
-  &:hover {
-    cursor: default;
-  }
-  &.header__logo:hover {
-    cursor: pointer;
+  &.login {
+    &:hover {
+      cursor: default;
+    }
   }
 }
 

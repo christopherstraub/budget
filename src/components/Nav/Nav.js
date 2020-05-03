@@ -5,7 +5,7 @@ import './Nav.scss';
 const Nav = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <nav>
-      <ul className="navi list flex justify-center pt5">
+      <ul className="navi list pl0 flex justify-center pt5">
         <li
           onClick={() => handleRouteChange('create')}
           className="navi__item pointer br-pill dim"
@@ -13,10 +13,10 @@ const Nav = ({ isLoggedIn, handleRouteChange }) => {
           CREATE
         </li>
         <li
-          onClick={() => handleRouteChange('saved')}
+          onClick={() => handleRouteChange('budgets')}
           className="navi__item pointer br-pill dim"
         >
-          SAVED
+          BUDGETS
         </li>
         <li
           onClick={() => handleRouteChange('profile')}

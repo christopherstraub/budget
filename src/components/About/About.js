@@ -3,7 +3,7 @@ import WindowBox from '../WindowBox/WindowBox';
 
 const About = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pv5 ph4">
       <WindowBox classList="mw8">
         <div>
           <p className="window-title">
