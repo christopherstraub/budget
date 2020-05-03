@@ -1,5 +1,7 @@
 import React from 'react';
 
+import garbage from '../../images/garbage.svg';
+
 const Entries = ({ budget, entries }) => {
   return (
     <>
@@ -39,7 +41,14 @@ const Entries = ({ budget, entries }) => {
           <tbody>
             {entries.formattedEntries.map((entry, index) => (
               <tr key={index}>
-                <td className="entry text-break">{entry.category}</td>
+                <td className="entry text-break">
+                  <img
+                    onClick={() => entries.handleDeleteEntry(index)}
+                    className="pointer mr3"
+                    src={garbage}
+                  />
+                  {entry.category}
+                </td>
                 <td className="entry text-break tr ">{entry.projectedCost}</td>
                 <td className="entry text-break tr">{entry.actualCost}</td>
                 <td className="entry text-break tr">{entry.difference}</td>

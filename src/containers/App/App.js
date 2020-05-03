@@ -209,6 +209,15 @@ class App extends Component {
     this.setState({ input: inputCopy });
   };
 
+  handleDeleteEntry = (index) => {
+    const userCopy = cloneDeep(this.state.user);
+    const filteredEntries = userCopy.budgets[
+      this.state.currentBudgetIndex
+    ].entries.filter((entry, i) => i !== index);
+    userCopy.budgets[this.state.currentBudgetIndex].entries = filteredEntries;
+    this.setState({ user: userCopy });
+  };
+
   handleUserClickedDeleteBudget = (userClicked) => {
     if (userClicked) this.setState({ userClickedDeleteBudget: true });
     else this.setState({ userClickedDeleteBudget: false });
@@ -218,7 +227,7 @@ class App extends Component {
     const userCopy = cloneDeep(this.state.user);
 
     const filteredBudgets = userCopy.budgets.filter(
-      (budget, index) => index !== this.state.currentBudgetIndex
+      (budget, i) => i !== this.state.currentBudgetIndex
     );
     userCopy.budgets = filteredBudgets;
     this.setState({
@@ -393,6 +402,7 @@ class App extends Component {
                 budget={user.budgets[currentBudgetIndex]}
                 handleCategoryInputChange={this.handleCategoryInputChange}
                 handleAddEntry={this.handleAddEntry}
+                handleDeleteEntry={this.handleDeleteEntry}
                 inputCategory={input.category}
                 handleUserClickedDeleteBudget={
                   this.handleUserClickedDeleteBudget
