@@ -12,7 +12,18 @@ const About = () => {
           </p>
           <p className="window-title mb0">
             You can get in touch with Christopher
-            <span className="clr-blue dim pointer"> here</span>.
+            <a
+              href="
+http://www.chrisstraub.com/
+            "
+              className="clr-blue dim"
+              target="_blank"
+              style={{ textDecoration: 'none' }}
+            >
+              {' '}
+              here
+            </a>
+            .
           </p>
         </div>
       </WindowBox>
@@ -21,5 +32,4 @@ const About = () => {
 };
 
 export default About;
-
 // CCUSTOM BUTTON ANIM

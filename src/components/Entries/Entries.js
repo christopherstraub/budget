@@ -3,6 +3,14 @@ import React from 'react';
 import Message from '../Message/Message';
 
 import EditableLabel from 'react-inline-editing';
+import {
+  useTable,
+  useGroupBy,
+  useFilters,
+  useSortBy,
+  useExpanded,
+  usePagination,
+} from 'react-table';
 
 import trash from '../../images/trash.svg';
 
