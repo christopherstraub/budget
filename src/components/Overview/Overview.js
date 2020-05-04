@@ -8,7 +8,16 @@ const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
-const Overview = ({ budget, overview, messageCode }) => {
+const Overview = ({
+  budget,
+  messageCode,
+  formattedBudget,
+  handleFocusOutBudgetName,
+  handleFocusActualMonthlyIncome,
+  handleFocusProjectedMonthlyIncome,
+  handleFocusOutProjectedMonthlyIncome,
+  handleFocusOutActualMonthlyIncome,
+}) => {
   return (
     <>
       <EditableLabel
@@ -19,7 +28,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Budget name"
-        onFocusOut={overview.handleFocusOutBudgetName}
+        onFocusOut={handleFocusOutBudgetName}
       />
       <h3
         className="window-body o-80 flex justify-center items-center mb4 edit"
@@ -31,53 +40,55 @@ const Overview = ({ budget, overview, messageCode }) => {
       </h3>
       <h2 className="number-label edit lh-title">Projected Monthly Income</h2>
       <EditableLabel
-        text={overview.formattedBudget.projectedMonthlyIncome}
+        text={formattedBudget.projectedMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.projectedMonthlyIncome
-        )}`}
+        )} ${
+          budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : null
+        }`}
         inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
         inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
-        onFocus={overview.handleFocusProjectedMonthlyIncome}
-        onFocusOut={overview.handleFocusOutProjectedMonthlyIncome}
+        onFocus={handleFocusProjectedMonthlyIncome}
+        onFocusOut={handleFocusOutProjectedMonthlyIncome}
       />
       {messageCode === 'updated-projected-monthly-income' ? (
-        <div className="mb4" style={{ marginTop: '-1rem' }}>
+        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
-            message={`Income updated to ${overview.formattedBudget.projectedMonthlyIncome}.`}
+            message={`Income updated to ${formattedBudget.projectedMonthlyIncome}.`}
           />
         </div>
       ) : messageCode === 'invalid-projected-monthly-income' ? (
-        <div className="mb4" style={{ marginTop: '-1rem' }}>
+        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
-            message={`Input invalid. Income still ${overview.formattedBudget.projectedMonthlyIncome}.`}
+            message={`Input invalid. Income still ${formattedBudget.projectedMonthlyIncome}.`}
           />
         </div>
       ) : null}
       <h2 className="number-label edit lh-title">Actual Monthly Income</h2>
       <EditableLabel
-        text={overview.formattedBudget.actualMonthlyIncome}
+        text={formattedBudget.actualMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.actualMonthlyIncome
-        )}`}
+        )} ${budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null}`}
         inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
         inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
-        onFocus={overview.handleFocusActualMonthlyIncome}
-        onFocusOut={overview.handleFocusOutActualMonthlyIncome}
+        onFocus={handleFocusActualMonthlyIncome}
+        onFocusOut={handleFocusOutActualMonthlyIncome}
       />
       {messageCode === 'updated-actual-monthly-income' ? (
-        <div className="mb4" style={{ marginTop: '-1rem' }}>
+        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
-            message={`Income updated to ${overview.formattedBudget.actualMonthlyIncome}.`}
+            message={`Income updated to ${formattedBudget.actualMonthlyIncome}.`}
           />
         </div>
       ) : messageCode === 'invalid-actual-monthly-income' ? (
-        <div className="mb4" style={{ marginTop: '-1rem' }}>
+        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
-            message={`Input invalid. Income still ${overview.formattedBudget.actualMonthlyIncome}.`}
+            message={`Input invalid. Income still ${formattedBudget.actualMonthlyIncome}.`}
           />
         </div>
       ) : null}
@@ -88,7 +99,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.projectedBalance}
+        {formattedBudget.projectedBalance}
       </h1>
       <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
@@ -97,7 +108,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.actualBalance}
+        {formattedBudget.actualBalance}
       </h1>
       <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
@@ -106,7 +117,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.differenceBalance}
+        {formattedBudget.differenceBalance}
       </h1>
       <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
@@ -115,7 +126,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.projectedCost}
+        {formattedBudget.projectedCost}
       </h1>
       <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
@@ -124,7 +135,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.actualCost}
+        {formattedBudget.actualCost}
       </h1>
       <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
@@ -133,7 +144,7 @@ const Overview = ({ budget, overview, messageCode }) => {
         )}`}
         style={{ lineHeight: '1.5' }}
       >
-        {overview.formattedBudget.differenceCost}
+        {formattedBudget.differenceCost}
       </h1>
     </>
   );

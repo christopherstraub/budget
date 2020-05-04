@@ -6,7 +6,21 @@ import EditableLabel from 'react-inline-editing';
 
 import trash from '../../images/trash.svg';
 
-const Entries = ({ budget, entries, messageCode }) => {
+const Entries = ({
+  budget,
+  messageCode,
+  formattedEntries,
+  inputCategory,
+  handleCategoryInputChange,
+  handleAddEntry,
+  handleDeleteEntry,
+  handleFocusOutCategory,
+  handleFocusOutProjectedCost,
+  handleFocusOutActualCost,
+  handleUserClickedDeleteBudget,
+  userClickedDeleteBudget,
+  handleDeleteBudget,
+}) => {
   return (
     <>
       <h1 className="entries-box-title tc mb5">
@@ -22,16 +36,16 @@ const Entries = ({ budget, entries, messageCode }) => {
       </h3>
       <div className="add-entry flex justify-center">
         <input
-          onChange={entries.handleCategoryInputChange}
+          onChange={handleCategoryInputChange}
           className="input br3 pv2 ph3 mr3 w-100"
           type="text"
           id="name"
           name="name"
           placeholder="Category of entry"
-          value={entries.inputCategory}
+          value={inputCategory}
         />
         <button
-          onClick={entries.handleAddEntry}
+          onClick={handleAddEntry}
           className="button bg--blue pv2 ph4 w-33"
         >
           ADD ENTRY
@@ -54,11 +68,11 @@ const Entries = ({ budget, entries, messageCode }) => {
             </tr>
           </thead>
           <tbody>
-            {entries.formattedEntries.map((entry, index) => (
+            {formattedEntries.map((entry, index) => (
               <tr key={index}>
                 <td className="entry flex items-center text-break">
                   <img
-                    onClick={() => entries.handleDeleteEntry(index)}
+                    onClick={() => handleDeleteEntry(index)}
                     className="pointer mr3"
                     src={trash}
                     alt="trash"
@@ -70,35 +84,39 @@ const Entries = ({ budget, entries, messageCode }) => {
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Category"
-                    onFocusOut={(text) =>
-                      entries.handleFocusOutCategory(text, index)
-                    }
+                    onFocusOut={(text) => handleFocusOutCategory(text, index)}
                   />
                 </td>
                 <td className="entry text-break tr w-20">
                   <EditableLabel
                     text={entry.projectedCost}
-                    labelClassName="entry text-break pointer w-100 mb0 lh-title"
+                    labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
+                      budget.entries[index].projectedCost === 0
+                        ? 'empty-number-field'
+                        : null
+                    }`}
                     inputClassName="input-entry tr ph2 br3 w-100"
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Projected cost"
                     onFocusOut={(text) =>
-                      entries.handleFocusOutProjectedCost(text, index)
+                      handleFocusOutProjectedCost(text, index)
                     }
                   />
                 </td>
                 <td className="entry text-break tr w-20">
                   <EditableLabel
                     text={entry.actualCost}
-                    labelClassName="entry text-break pointer w-100 mb0 lh-title"
+                    labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
+                      budget.entries[index].actualCost === 0
+                        ? 'empty-number-field'
+                        : null
+                    }`}
                     inputClassName="input-entry tr ph2 br3 w-100"
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Actual cost"
-                    onFocusOut={(text) =>
-                      entries.handleFocusOutActualCost(text, index)
-                    }
+                    onFocusOut={(text) => handleFocusOutActualCost(text, index)}
                   />
                 </td>
                 <td className="entry text-break tr w-20">{entry.difference}</td>
@@ -118,17 +136,17 @@ const Entries = ({ budget, entries, messageCode }) => {
         ) : messageCode === 'invalid-actual-cost' ? (
           <Message message="Actual cost invalid." />
         ) : null}
-        {entries.userClickedDeleteBudget ? (
+        {userClickedDeleteBudget ? (
           <button
-            onClick={entries.handleDeleteBudget}
-            onBlur={() => entries.handleUserClickedDeleteBudget(false)}
+            onClick={handleDeleteBudget}
+            onBlur={() => handleUserClickedDeleteBudget(false)}
             className="button bg--dark-red pv3 ph4 ml-auto"
           >
             CONFIRM DELETE
           </button>
         ) : (
           <button
-            onClick={() => entries.handleUserClickedDeleteBudget(true)}
+            onClick={() => handleUserClickedDeleteBudget(true)}
             className="button bg--dark-red pv3 ph4 ml-auto"
           >
             DELETE BUDGET

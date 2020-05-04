@@ -162,3 +162,11 @@
   content: url('../images/pencil.svg');
   margin-left: 0.75rem;
 }
+
+.empty-number-field {
+  visibility: hidden;
+  &::after {
+    visibility: visible;
+    content: '$0.00';
+  }
+}

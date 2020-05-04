@@ -23,7 +23,7 @@ const SignIn = ({ handleRouteChange }) => {
         />
         <input
           onClick={() => handleRouteChange('create')}
-          className="login-button-text outline-0 br3 pa3 mv2 w-100"
+          className="submit login-button-text outline-0 br3 pa3 mv2 w-100"
           type="submit"
           value="Sign in"
         />

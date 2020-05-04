@@ -80,29 +80,6 @@ const Create = ({
     formatterUnitedStatesDollar
   );
 
-  const overview = {
-    formattedBudget,
-    handleFocusOutBudgetName,
-    handleFocusActualMonthlyIncome,
-    handleFocusProjectedMonthlyIncome,
-    handleFocusOutProjectedMonthlyIncome,
-    handleFocusOutActualMonthlyIncome,
-  };
-
-  const entries = {
-    formattedEntries,
-    inputCategory,
-    handleCategoryInputChange,
-    handleAddEntry,
-    handleDeleteEntry,
-    handleFocusOutCategory,
-    handleFocusOutProjectedCost,
-    handleFocusOutActualCost,
-    handleUserClickedDeleteBudget,
-    userClickedDeleteBudget,
-    handleDeleteBudget,
-  };
-
   return (
     <div className="Create flex justify-center items-start pv5 ph8">
       <WindowBox
@@ -111,13 +88,34 @@ const Create = ({
       >
         <Overview
           budget={budget}
-          overview={overview}
           messageCode={messageCode}
+          formattedBudget={formattedBudget}
+          handleFocusOutBudgetName={handleFocusOutBudgetName}
+          handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
+          handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
+          handleFocusOutProjectedMonthlyIncome={
+            handleFocusOutProjectedMonthlyIncome
+          }
+          handleFocusOutActualMonthlyIncome={handleFocusOutActualMonthlyIncome}
         />
       </WindowBox>
 
       <WindowBox classList="flex-grow-1 mh3">
-        <Entries budget={budget} entries={entries} messageCode={messageCode} />
+        <Entries
+          budget={budget}
+          messageCode={messageCode}
+          formattedEntries={formattedEntries}
+          inputCategory={inputCategory}
+          handleCategoryInputChange={handleCategoryInputChange}
+          handleAddEntry={handleAddEntry}
+          handleDeleteEntry={handleDeleteEntry}
+          handleFocusOutCategory={handleFocusOutCategory}
+          handleFocusOutProjectedCost={handleFocusOutProjectedCost}
+          handleFocusOutActualCost={handleFocusOutActualCost}
+          handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
+          userClickedDeleteBudget={userClickedDeleteBudget}
+          handleDeleteBudget={handleDeleteBudget}
+        />
       </WindowBox>
     </div>
   );

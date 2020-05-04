@@ -195,11 +195,13 @@ class App extends Component {
   };
 
   handleDeleteEntry = (index) => {
+    console.log(index);
     const userCopy = cloneDeep(this.state.user);
     const filteredEntries = userCopy.budgets[
       this.state.currentBudgetIndex
     ].entries.filter((entry, i) => i !== index);
     userCopy.budgets[this.state.currentBudgetIndex].entries = filteredEntries;
+    console.log(filteredEntries);
     this.setState({ user: userCopy });
   };
 
@@ -294,18 +296,6 @@ class App extends Component {
       text === '' ? userCopy.budgets[this.state.currentBudgetIndex].name : text;
 
     this.setState({ user: userCopy });
-  };
-
-  handleFocusProjectedMonthlyIncome = (text) => {
-    const inputCopy = { ...this.state.input };
-    inputCopy.projectedMonthlyIncome = text;
-    this.setState({ input: inputCopy });
-  };
-
-  handleFocusActualMonthlyIncome = (text) => {
-    const inputCopy = { ...this.state.input };
-    inputCopy.actualMonthlyIncome = text;
-    this.setState({ input: inputCopy });
   };
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
