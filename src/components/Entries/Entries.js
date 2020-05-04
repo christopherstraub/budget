@@ -34,12 +34,7 @@ const Entries = ({
       <h1 className="entries-box-title tc mb5">
         Entries ({budget.entries.length})
       </h1>
-      <h3
-        className="window-body o-80 flex justify-center items-center mb4"
-        style={{
-          textShadow: '2px 1px 1px #302e2e',
-        }}
-      >
+      <h3 className="window-body o-80 flex justify-center items-center mb4 text-shadow">
         Click cell to edit
       </h3>
       <div className="add-entry flex justify-center">

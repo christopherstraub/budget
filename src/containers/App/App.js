@@ -28,7 +28,7 @@ import './App.scss';
 // 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'about',
+  route: 'signin',
   messageCode: null,
   input: {
     category: '',
@@ -42,7 +42,7 @@ const initialState = {
     { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
     { name: 'SPACE', url: Background4, useDarkMode: false },
   ],
-  isLoggedIn: true,
+  isLoggedIn: false,
   currentBudgetIndex: 0,
   userClickedDeleteBudget: false,
   user: {

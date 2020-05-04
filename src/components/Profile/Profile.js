@@ -25,12 +25,7 @@ const Profile = ({
           </div>
         ) : null}
         <h1 className="window-title tc text-break">{user.name}</h1>
-        <h2
-          className="window-body tc o-80 text-break mb5"
-          style={{
-            textShadow: '2px 1px 1px #302e2e',
-          }}
-        >
+        <h2 className="window-body tc o-80 text-break mb5 text-shadow">
           {user.budgets.length} budget{user.budgets.length !== 1 ? 's' : null}
         </h2>
         <h2 className="window-body mb3">Change name:</h2>
