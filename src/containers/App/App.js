@@ -26,7 +26,7 @@ import './App.scss';
 // 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'budgets',
+  route: 'profile',
   messageCode: '',
   input: {
     category: '',

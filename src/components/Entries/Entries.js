@@ -65,8 +65,6 @@ const Entries = ({ budget, entries }) => {
       </div>
 
       <div className="flex pt4">
-        <button className="button bg--green pv3 ph4">SAVE BUDGET</button>
-
         {entries.userClickedDeleteBudget ? (
           <button
             onClick={entries.handleDeleteBudget}

@@ -14,18 +14,27 @@ const Profile = ({
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classList="mw8">
+      <WindowBox classList="tc">
         {messageCode === 'changed-name' ? (
-          <Message message="Name changed." />
+          <div className="mb4">
+            <Message message="Name changed." />
+          </div>
         ) : messageCode === 'changed-background' ? (
-          <Message message="Background changed." />
+          <div className="mb4">
+            <Message message="Background changed." />
+          </div>
         ) : null}
         <h1 className="window-title tc text-break">{user.name}</h1>
-        <h2 className="window-body tc o-80 text-break">
-          {user.budgets.length} budgets
+        <h2
+          className="window-body tc o-80 text-break mb5"
+          style={{
+            textShadow: '2px 1px 1px #302e2e',
+          }}
+        >
+          {user.budgets.length} budget{user.budgets.length !== 1 ? 's' : null}
         </h2>
-        <h2 className="window-body">Change name:</h2>
-        <div className="flex">
+        <h2 className="window-body mb3">Change name:</h2>
+        <div className="flex justify-center">
           <input
             onChange={handleNameInputChange}
             className="input br3 pv1 ph3 mr3 w-100"
@@ -37,19 +46,19 @@ const Profile = ({
           />
           <button
             onClick={handleNameChange}
-            className="button bg--green pv1 ph3"
+            className="button bg--green pv2 ph4"
           >
             SAVE
           </button>
         </div>
         <div className="mt4">
-          <h2 className="window-body dib mr3">Background: </h2>
+          <h2 className="window-body mb3">Background: </h2>
 
           {backgrounds.map((background, index) => (
             <button
               key={index}
               onClick={handleBackgroundChange}
-              className="button bg--blue mr3 mb3 pv1 ph3"
+              className="button bg--blue mr3 mb3 pv2 ph3"
             >
               {background.name}
             </button>

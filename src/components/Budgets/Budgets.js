@@ -47,17 +47,17 @@ const Budgets = ({
                 </li>
               ))}
         </ul>
-        <div className="flex flex-column items-center">
+        <div className="flex justify-center pt3">
           <button
             onClick={handleAddBudget}
-            className="button bg--blue pv3 ph4 mb4"
+            className="button bg--blue pv2 ph4 w-33 mr2"
             style={{ width: 'max-content' }}
           >
             CREATE NEW BUDGET
           </button>
           <button
             onClick={handleSaveBudgets}
-            className="button bg--green pv3 ph4"
+            className="button bg--green pv2 ph4 w-33 ml2"
             style={{ width: 'max-content' }}
           >
             SAVE BUDGETS
