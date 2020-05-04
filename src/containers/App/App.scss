@@ -46,9 +46,11 @@
     transform: translateX(-50%);
   }
 
-  // Responsive create page.
+  // Responsive Create component.
   .Create {
     flex-wrap: wrap;
+    padding-right: 2rem;
+    padding-left: 2rem;
     > .bg--gradient:first-child {
       margin-bottom: 5rem;
     }
@@ -62,21 +64,10 @@
   }
   .navi__item {
     font-size: $fs-nav-item-mobile;
-
     margin: 0.5rem 0;
   }
 
-  //Responsive entry category input and button.
-  .add-entry {
-    > .input {
-      min-width: 250px;
-      margin-bottom: 1rem;
-    }
-    align-items: center;
-    flex-direction: column;
-  }
-
-  // Responsive create page.
+  // Responsive Create component.
   .Create {
     > .bg--gradient {
       margin-left: 0;

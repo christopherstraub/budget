@@ -5,14 +5,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 export default class CustomScrollbars extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
-    this.state = { backgroundColor: props.backgroundColor };
+    this.state = { bgColor: props.bgcolor };
     this.renderThumb = this.renderThumb.bind(this);
   }
 
   renderThumb({ style, ...props }) {
     return (
       <div
-        className={`${this.state.backgroundColor} o-30 br-pill`}
+        className={`${this.state.bgColor} o-30 br-pill`}
         style={{ ...style }}
         {...props}
       />

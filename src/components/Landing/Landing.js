@@ -4,7 +4,7 @@ import SignUp from '../SignUp/SignUp';
 
 const Landing = ({ route, handleRouteChange }) => {
   return (
-    <div>
+    <div className="pv5 ph4">
       <section className="pt6">
         <h1 className="title tc mb3">Budgeting doesn't have to be hard.</h1>
         <h2 className="subtitle tc mb5">

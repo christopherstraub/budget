@@ -8,22 +8,22 @@ const SignIn = ({ handleRouteChange }) => {
       <div className="login-box tc pt5 ph5 pb4">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
-          className="input pa3 mv2 br3 w-100"
+          className="input br3 pa3 mv2 w-100"
           type="text"
           id="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="input pa3 mv2 br3 w-100"
+          className="input br3 pa3 mv2 w-100"
           type="text"
           id="password"
           name="password"
           placeholder="Password"
         />
         <input
-          // onClick={() => handleRouteChange('signin')} ATTEMPT TO SIGN IN USER
-          className="pa3 mv2 br3 w-100 login-button-text outline-0"
+          onClick={() => handleRouteChange('create')}
+          className="submit login-button-text outline-0 br3 pa3 mv2 w-100"
           type="submit"
           value="Sign in"
         />

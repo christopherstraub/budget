@@ -36,7 +36,7 @@ $clr-dark-red: rgb(155, 0, 0); //For negative entry numbers.
 $clr-input: black;
 $clr-input-box: white;
 $fs-input: 1.8rem;
-$clr-placeholder: rgba(125, 125, 125, 1);
+$clr-placeholder: rgb(125, 125, 125);
 
 // Login box.
 $clr-login-box: rgba(0, 116, 145, 0.9);
@@ -62,19 +62,21 @@ $fs-button-text: 1.8rem;
 $ff-nav-item: 'Lato', sans-serif;
 $clr-nav-item: white;
 $fs-nav-item: 2.4rem;
-$fs-nav-item-mobile: 2.5rem;
+$fs-nav-item-mobile: 3rem;
 
-// Create component.
+// Overview.
 $clr-overview-box-title: white;
 $fs-overview-box-title: 3.8rem;
 $clr-entries-box-title: white;
 $fs-entries-box-title: 3.8rem;
 $ff-number: 'Lato', sans-serif;
 $clr-number: white;
-$fs-number: 3rem;
+$fs-number: 2.7rem;
 $ff-number-label: 'Montserrat', sans-serif;
-$clr-number-label: white;
+$clr-number-label: rgba(255, 255, 255, 0.8);
 $fs-number-label: 2rem;
+
+// Entries.
 $clr-entry-title: black;
 $fs-entry-title: 2rem;
 $clr-entry: black;

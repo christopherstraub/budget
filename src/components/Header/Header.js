@@ -7,8 +7,10 @@ const Header = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <header>
       <h1
-        onClick={() => handleRouteChange('create')}
-        className="logo header__logo pointer absolute"
+        onClick={() =>
+          isLoggedIn ? handleRouteChange('create') : handleRouteChange('signup')
+        }
+        className="logo header__logo absolute pointer"
       >
         CSBudget
       </h1>

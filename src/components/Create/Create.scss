@@ -1,19 +1,15 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
-.mb-input-title {
-  margin-bottom: 1.6rem;
+.mb-input-income {
+  margin-bottom: 1.4rem;
 }
 
-.mb-input-number {
-  margin-bottom: 3.1rem;
-}
-
-.input-title {
+.input-overview-box-title {
   @include input($fs-overview-box-title);
 }
 
-.input-number {
+.input-income {
   @include input($fs-number);
 }
 
