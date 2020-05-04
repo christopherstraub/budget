@@ -5,10 +5,10 @@ import WindowBox from '../WindowBox/WindowBox';
 
 const Budgets = ({
   user,
-  messageCode,
-  handleViewBudget,
   handleAddBudget,
+  handleViewBudget,
   handleSaveBudgets,
+  messageCode,
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">

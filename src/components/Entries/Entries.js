@@ -1,8 +1,12 @@
 import React from 'react';
 
-import garbage from '../../images/trash.svg';
+import Message from '../Message/Message';
 
-const Entries = ({ budget, entries }) => {
+import EditableLabel from 'react-inline-editing';
+
+import trash from '../../images/trash.svg';
+
+const Entries = ({ budget, entries, messageCode }) => {
   return (
     <>
       <h1 className="entries-box-title tc mb5">
@@ -38,33 +42,82 @@ const Entries = ({ budget, entries }) => {
           <thead className="entry-title">
             <tr>
               <th scope="col">Category</th>
-              <th scope="col">Projected Cost</th>
-              <th scope="col">Actual Cost</th>
-              <th scope="col">Difference</th>
+              <th scope="col" className="w-20">
+                Projected Cost
+              </th>
+              <th scope="col" className="w-20">
+                Actual Cost
+              </th>
+              <th scope="col" className="w-20">
+                Difference
+              </th>
             </tr>
           </thead>
           <tbody>
             {entries.formattedEntries.map((entry, index) => (
               <tr key={index}>
-                <td className="entry text-break">
+                <td className="entry flex items-center text-break">
                   <img
                     onClick={() => entries.handleDeleteEntry(index)}
                     className="pointer mr3"
-                    src={garbage}
+                    src={trash}
                     alt="trash"
                   />
-                  {entry.category}
+                  <EditableLabel
+                    text={entry.category}
+                    labelClassName="entry text-break pointer mb0 lh-title"
+                    inputClassName="input-entry ph2 br3 w-100"
+                    inputHeight="1.5em"
+                    inputMaxLength={50}
+                    inputPlaceHolder="Category"
+                    onFocusOut={(text) =>
+                      entries.handleFocusOutCategory(text, index)
+                    }
+                  />
                 </td>
-                <td className="entry text-break tr ">{entry.projectedCost}</td>
-                <td className="entry text-break tr">{entry.actualCost}</td>
-                <td className="entry text-break tr">{entry.difference}</td>
+                <td className="entry text-break tr w-20">
+                  <EditableLabel
+                    text={entry.projectedCost}
+                    labelClassName="entry text-break pointer w-100 mb0 lh-title"
+                    inputClassName="input-entry tr ph2 br3 w-100"
+                    inputHeight="1.5em"
+                    inputMaxLength={50}
+                    inputPlaceHolder="Projected cost"
+                    onFocusOut={(text) =>
+                      entries.handleFocusOutProjectedCost(text, index)
+                    }
+                  />
+                </td>
+                <td className="entry text-break tr w-20">
+                  <EditableLabel
+                    text={entry.actualCost}
+                    labelClassName="entry text-break pointer w-100 mb0 lh-title"
+                    inputClassName="input-entry tr ph2 br3 w-100"
+                    inputHeight="1.5em"
+                    inputMaxLength={50}
+                    inputPlaceHolder="Actual cost"
+                    onFocusOut={(text) =>
+                      entries.handleFocusOutActualCost(text, index)
+                    }
+                  />
+                </td>
+                <td className="entry text-break tr w-20">{entry.difference}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className="flex pt4">
+      <div className="flex items-center pt4">
+        {messageCode === 'updated-projected-cost' ? (
+          <Message message="Projected cost updated." />
+        ) : messageCode === 'invalid-projected-cost' ? (
+          <Message message="Projected cost invalid." />
+        ) : messageCode === 'updated-actual-cost' ? (
+          <Message message="Actual cost updated." />
+        ) : messageCode === 'invalid-actual-cost' ? (
+          <Message message="Actual cost invalid." />
+        ) : null}
         {entries.userClickedDeleteBudget ? (
           <button
             onClick={entries.handleDeleteBudget}

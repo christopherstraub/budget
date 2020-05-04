@@ -63,10 +63,13 @@ const Create = ({
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
   messageCode,
+  inputCategory,
   handleCategoryInputChange,
   handleAddEntry,
   handleDeleteEntry,
-  inputCategory,
+  handleFocusOutCategory,
+  handleFocusOutProjectedCost,
+  handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
   userClickedDeleteBudget,
   handleDeleteBudget,
@@ -84,15 +87,17 @@ const Create = ({
     handleFocusProjectedMonthlyIncome,
     handleFocusOutProjectedMonthlyIncome,
     handleFocusOutActualMonthlyIncome,
-    messageCode,
   };
 
   const entries = {
     formattedEntries,
+    inputCategory,
     handleCategoryInputChange,
     handleAddEntry,
     handleDeleteEntry,
-    inputCategory,
+    handleFocusOutCategory,
+    handleFocusOutProjectedCost,
+    handleFocusOutActualCost,
     handleUserClickedDeleteBudget,
     userClickedDeleteBudget,
     handleDeleteBudget,
@@ -100,12 +105,19 @@ const Create = ({
 
   return (
     <div className="Create flex justify-center items-start pv5 ph8">
-      <WindowBox classList="mh3" style={{ width: '34rem', minWidth: '34rem' }}>
-        <Overview budget={budget} overview={overview} />
+      <WindowBox
+        classList="mh3"
+        style={{ minWidth: '34rem', maxWidth: '34rem' }}
+      >
+        <Overview
+          budget={budget}
+          overview={overview}
+          messageCode={messageCode}
+        />
       </WindowBox>
 
       <WindowBox classList="flex-grow-1 mh3">
-        <Entries budget={budget} entries={entries} />
+        <Entries budget={budget} entries={entries} messageCode={messageCode} />
       </WindowBox>
     </div>
   );

@@ -8,14 +8,15 @@ const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
-const Overview = ({ budget, overview }) => {
+const Overview = ({ budget, overview, messageCode }) => {
   return (
     <>
       <EditableLabel
         value="test"
         text={budget.name}
         labelClassName="overview-box-title flex justify-center text-break pointer mb4 edit"
-        inputClassName="input-title tc ph2 br3 w-100 mb-input-title"
+        inputClassName="input-overview-box-title tc br3 ph2 mb4 w-100"
+        inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Budget name"
         onFocusOut={overview.handleFocusOutBudgetName}
@@ -34,22 +35,23 @@ const Overview = ({ budget, overview }) => {
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.projectedMonthlyIncome
         )}`}
-        inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
+        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
+        inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
         onFocus={overview.handleFocusProjectedMonthlyIncome}
         onFocusOut={overview.handleFocusOutProjectedMonthlyIncome}
       />
-      {overview.messageCode === 'updated-projected-monthly-income' ? (
-        <div style={{ marginTop: '-2rem' }}>
+      {messageCode === 'updated-projected-monthly-income' ? (
+        <div className="mb4" style={{ marginTop: '-1rem' }}>
           <Message
             message={`Income updated to ${overview.formattedBudget.projectedMonthlyIncome}.`}
           />
         </div>
-      ) : overview.messageCode === 'invalid-projected-monthly-income' ? (
-        <div style={{ marginTop: '-2rem' }}>
+      ) : messageCode === 'invalid-projected-monthly-income' ? (
+        <div className="mb4" style={{ marginTop: '-1rem' }}>
           <Message
-            message={`Invalid input. Income still ${overview.formattedBudget.projectedMonthlyIncome}.`}
+            message={`Input invalid. Income still ${overview.formattedBudget.projectedMonthlyIncome}.`}
           />
         </div>
       ) : null}
@@ -59,28 +61,29 @@ const Overview = ({ budget, overview }) => {
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.actualMonthlyIncome
         )}`}
-        inputClassName="input-number tr mt2 ph2 br3 w-100 mb-input-number"
+        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
+        inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
         onFocus={overview.handleFocusActualMonthlyIncome}
         onFocusOut={overview.handleFocusOutActualMonthlyIncome}
       />
-      {overview.messageCode === 'updated-actual-monthly-income' ? (
-        <div style={{ marginTop: '-2rem' }}>
+      {messageCode === 'updated-actual-monthly-income' ? (
+        <div className="mb4" style={{ marginTop: '-1rem' }}>
           <Message
             message={`Income updated to ${overview.formattedBudget.actualMonthlyIncome}.`}
           />
         </div>
-      ) : overview.messageCode === 'invalid-actual-monthly-income' ? (
-        <div style={{ marginTop: '-2rem' }}>
+      ) : messageCode === 'invalid-actual-monthly-income' ? (
+        <div className="mb4" style={{ marginTop: '-1rem' }}>
           <Message
-            message={`Invalid input. Income still ${overview.formattedBudget.actualMonthlyIncome}.`}
+            message={`Input invalid. Income still ${overview.formattedBudget.actualMonthlyIncome}.`}
           />
         </div>
       ) : null}
       <h2 className="number-label lh-copy">Projected Balance</h2>
       <h1
-        className={`number tr mb4 ${classListIfNegative(
+        className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedBalance()
         )}`}
         style={{ lineHeight: '1.5' }}
@@ -89,7 +92,7 @@ const Overview = ({ budget, overview }) => {
       </h1>
       <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
-        className={`number tr mb4 ${classListIfNegative(
+        className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualBalance()
         )}`}
         style={{ lineHeight: '1.5' }}
@@ -98,7 +101,7 @@ const Overview = ({ budget, overview }) => {
       </h1>
       <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
-        className={`number tr mb4 ${classListIfNegative(
+        className={`number tr text-break mb4 ${classListIfNegative(
           budget.getDifferenceBalance()
         )}`}
         style={{ lineHeight: '1.5' }}
@@ -107,7 +110,7 @@ const Overview = ({ budget, overview }) => {
       </h1>
       <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
-        className={`number tr mb4 ${classListIfNegative(
+        className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedCost()
         )}`}
         style={{ lineHeight: '1.5' }}
@@ -116,7 +119,7 @@ const Overview = ({ budget, overview }) => {
       </h1>
       <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
-        className={`number tr mb4 ${classListIfNegative(
+        className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualCost()
         )}`}
         style={{ lineHeight: '1.5' }}
@@ -125,7 +128,7 @@ const Overview = ({ budget, overview }) => {
       </h1>
       <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
-        className={`number tr ${classListIfNegative(
+        className={`number tr text-break ${classListIfNegative(
           budget.getDifferenceCost()
         )}`}
         style={{ lineHeight: '1.5' }}

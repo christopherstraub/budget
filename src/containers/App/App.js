@@ -22,12 +22,14 @@ import './App.scss';
 // VALID MESSAGE CODES
 // 'updated-projected-monthly-income', 'updated-actual-monthly-income',
 // 'invalid-projected-monthly-income', 'invalid-actual-monthly-income',
+// 'updated-projected-cost', 'updated-actual-cost',
+// 'invalid-projected-cost', 'invalid-actual-cost',
 // 'deleted-budget', 'created-budget', 'saved-budgets',
 // 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'profile',
-  messageCode: '',
+  route: 'create',
+  messageCode: null,
   input: {
     category: '',
     name: '',
@@ -55,10 +57,11 @@ const initialState = {
     },
     budgets: [
       {
-        id: 1,
-        name: 'April 2020',
-        // name: { month: new Date().getMonth(), year: new Date().getFullYear() },
-        projectedMonthlyIncome: 3500,
+        id: Math.round(Math.random() * 1000), //temp assignment of id
+        name: `${new Date(2020, 4, 4).toLocaleString('default', {
+          month: 'long',
+        })} ${new Date(2020, 4, 4).getFullYear()}`,
+        projectedMonthlyIncome: 0,
         actualMonthlyIncome: 0,
         getProjectedBalance() {
           return this.projectedMonthlyIncome - this.getProjectedCost();
@@ -88,32 +91,7 @@ const initialState = {
         getDifferenceCost() {
           return this.getProjectedCost() - this.getActualCost();
         },
-        entries: [
-          {
-            category: 'Mortgage',
-            projectedCost: 100,
-            actualCost: 1500,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            category: 'Phone',
-            projectedCost: 80,
-            actualCost: 60,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            category: 'Car',
-            projectedCost: 100,
-            actualCost: 150,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-        ],
+        entries: [],
       },
     ],
   },
@@ -213,8 +191,6 @@ class App extends Component {
     // Reset input field.
     const inputCopy = { ...this.state.input };
     inputCopy.category = '';
-    console.log(this.state.input);
-    console.log(inputCopy);
     this.setState({ input: inputCopy });
   };
 
@@ -248,9 +224,17 @@ class App extends Component {
   };
 
   createBudget = () => {
+    const date = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() + 1,
+      new Date().getDate()
+    );
+
     return {
       id: Math.round(Math.random() * 1000), //temp assignment of id
-      name: `${new Date().getMonth()}`,
+      name: `${date.toLocaleString('default', {
+        month: 'long',
+      })} ${date.getFullYear()}`,
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
       getProjectedBalance() {
@@ -326,6 +310,7 @@ class App extends Component {
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
     let filteredText = text;
+
     if (filteredText.startsWith('(') && filteredText.endsWith(')'))
       filteredText = filteredText.replace('(', '-').replace(')', '');
 
@@ -338,7 +323,7 @@ class App extends Component {
       this.state.user.budgets[this.state.currentBudgetIndex]
         .projectedMonthlyIncome
     ) {
-      this.setState({ messageCode: '' });
+      this.setState({ messageCode: null });
     } else {
       const userCopy = cloneDeep(this.state.user);
       userCopy.budgets[this.state.currentBudgetIndex].projectedMonthlyIncome =
@@ -353,6 +338,7 @@ class App extends Component {
 
   handleFocusOutActualMonthlyIncome = (text) => {
     let filteredText = text;
+
     if (filteredText.startsWith('(') && filteredText.endsWith(')'))
       filteredText = filteredText.replace('(', '-').replace(')', '');
 
@@ -364,7 +350,7 @@ class App extends Component {
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.currentBudgetIndex].actualMonthlyIncome
     ) {
-      this.setState({ messageCode: '' });
+      this.setState({ messageCode: null });
     } else {
       const userCopy = cloneDeep(this.state.user);
       userCopy.budgets[this.state.currentBudgetIndex].actualMonthlyIncome =
@@ -373,6 +359,76 @@ class App extends Component {
       this.setState({
         user: userCopy,
         messageCode: 'updated-actual-monthly-income',
+      });
+    }
+  };
+
+  handleFocusOutCategory = (text, index) => {
+    const userCopy = cloneDeep(this.state.user);
+
+    userCopy.budgets[this.state.currentBudgetIndex].entries[index].category =
+      text === ''
+        ? userCopy.budgets[this.state.currentBudgetIndex].entries[index]
+            .category
+        : text;
+
+    this.setState({ user: userCopy });
+  };
+
+  handleFocusOutProjectedCost = (text, index) => {
+    let filteredText = text;
+
+    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
+      filteredText = filteredText.replace('(', '-').replace(')', '');
+
+    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
+
+    if (isNaN(filteredText))
+      this.setState({ messageCode: 'invalid-projected-cost' });
+    else if (
+      Math.round(filteredText * 100) / 100 ===
+      this.state.user.budgets[this.state.currentBudgetIndex].entries[index]
+        .projectedCost
+    ) {
+      this.setState({ messageCode: null });
+    } else {
+      const userCopy = cloneDeep(this.state.user);
+      userCopy.budgets[this.state.currentBudgetIndex].entries[
+        index
+      ].projectedCost = Math.round(filteredText * 100) / 100;
+
+      this.setState({
+        user: userCopy,
+        messageCode: 'updated-projected-cost',
+      });
+    }
+  };
+
+  handleFocusOutActualCost = (text, index) => {
+    let filteredText = text;
+
+    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
+      filteredText = filteredText.replace('(', '-').replace(')', '');
+
+    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
+
+    if (isNaN(filteredText))
+      this.setState({ messageCode: 'invalid-actual-cost' });
+    else if (
+      Math.round(filteredText * 100) / 100 ===
+      this.state.user.budgets[this.state.currentBudgetIndex].entries[index]
+        .actualCost
+    ) {
+      this.setState({ messageCode: null });
+    } else {
+      const userCopy = cloneDeep(this.state.user);
+      userCopy.budgets[this.state.currentBudgetIndex].entries[
+        index
+      ].actualCost = Math.round(filteredText * 100) / 100;
+
+      this.setState({
+        user: userCopy,
+        messageCode: 'updated-actual-cost',
       });
     }
   };
@@ -389,8 +445,6 @@ class App extends Component {
       user,
     } = this.state;
 
-    user.joined = new Date();
-
     return (
       <div
         className="background"
@@ -406,13 +460,6 @@ class App extends Component {
           ) : route === 'create' ? (
             <Create
               budget={user.budgets[currentBudgetIndex]}
-              handleCategoryInputChange={this.handleCategoryInputChange}
-              handleAddEntry={this.handleAddEntry}
-              handleDeleteEntry={this.handleDeleteEntry}
-              inputCategory={input.category}
-              handleUserClickedDeleteBudget={this.handleUserClickedDeleteBudget}
-              userClickedDeleteBudget={userClickedDeleteBudget}
-              handleDeleteBudget={this.handleDeleteBudget}
               handleFocusOutBudgetName={this.handleFocusOutBudgetName}
               handleFocusProjectedMonthlyIncome={
                 this.handleFocusProjectedMonthlyIncome
@@ -427,23 +474,33 @@ class App extends Component {
                 this.handleFocusOutActualMonthlyIncome
               }
               messageCode={messageCode}
+              inputCategory={input.category}
+              handleCategoryInputChange={this.handleCategoryInputChange}
+              handleAddEntry={this.handleAddEntry}
+              handleDeleteEntry={this.handleDeleteEntry}
+              handleFocusOutCategory={this.handleFocusOutCategory}
+              handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
+              handleFocusOutActualCost={this.handleFocusOutActualCost}
+              handleUserClickedDeleteBudget={this.handleUserClickedDeleteBudget}
+              userClickedDeleteBudget={userClickedDeleteBudget}
+              handleDeleteBudget={this.handleDeleteBudget}
             />
           ) : route === 'budgets' ? (
             <Budgets
               user={user}
-              messageCode={messageCode}
-              handleAddBudget={this.handleAddBudget}
               handleViewBudget={this.handleViewBudget}
+              handleAddBudget={this.handleAddBudget}
               handleSaveBudgets={this.handleSaveBudgets}
+              messageCode={messageCode}
             />
           ) : route === 'profile' ? (
             <Profile
-              handleBackgroundChange={this.handleBackgroundChange}
-              backgrounds={backgrounds}
               user={user}
+              inputName={input.name}
               handleNameInputChange={this.handleNameInputChange}
               handleNameChange={this.handleNameChange}
-              inputName={input.name}
+              handleBackgroundChange={this.handleBackgroundChange}
+              backgrounds={backgrounds}
               messageCode={messageCode}
             />
           ) : route === 'about' ? (

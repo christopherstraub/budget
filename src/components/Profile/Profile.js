@@ -4,12 +4,12 @@ import Message from '../Message/Message';
 import WindowBox from '../WindowBox/WindowBox';
 
 const Profile = ({
-  handleBackgroundChange,
-  backgrounds,
   user,
+  inputName,
   handleNameInputChange,
   handleNameChange,
-  inputName,
+  handleBackgroundChange,
+  backgrounds,
   messageCode,
 }) => {
   return (
@@ -65,7 +65,7 @@ const Profile = ({
           ))}
 
           <h2 className="window-body tc mt5">
-            Member since {user.joined.toLocaleDateString()}
+            Member since {new Date().toLocaleDateString()}
           </h2>
         </div>
       </WindowBox>
