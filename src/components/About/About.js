@@ -7,8 +7,8 @@ const About = () => {
       <WindowBox classList="mw8">
         <div>
           <p className="window-title">
-            <span className="i">CSBudget</span> is maintained by Christopher
-            Straub and distributed under the MIT License.
+            <span className="clr-accent-light i">CSBudget</span> is maintained
+            by Christopher Straub and distributed under the MIT License.
           </p>
           <p className="window-title mb0">
             You can get in touch with Christopher
@@ -16,7 +16,7 @@ const About = () => {
               href="
 http://www.chrisstraub.com/
             "
-              className="clr-blue dim"
+              className="anchor link"
               target="_blank"
               style={{ textDecoration: 'none' }}
             >

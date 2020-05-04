@@ -30,7 +30,11 @@ const Budgets = ({
         ) : (
           <h1 className="window-title tc mb4 text-break">
             {user.name}, here are your
-            <span className="clr-blue b"> {user.budgets.length}</span> budgets.
+            <span className="clr-accent-light b">
+              {' '}
+              {user.budgets.length}
+            </span>{' '}
+            budgets.
           </h1>
         )}
 

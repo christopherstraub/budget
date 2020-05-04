@@ -1,13 +1,11 @@
-// Change body color back to white (remove unused variables afterwards)
-
 // Dark mode.
 $clr-logo-dark: black;
+$clr-nav-item-dark: black;
 $clr-title-dark: black;
 $clr-subtitle-dark: rgba(0, 0, 0, 0.85);
-$clr-nav-item-dark: black;
 
 // Default text.
-$clr-body: red;
+$clr-body: white;
 
 // Logo.
 $ff-logo: 'Lobster', cursive;
@@ -24,13 +22,12 @@ $clr-subtitle: rgba(255, 255, 255, 0.85);
 $fs-subtitle: 2.2rem;
 
 // Colors
-$clr-blue: rgb(15, 160, 238);
-$clr-green: rgb(0, 170, 0);
-$clr-dark-green: rgb(13, 119, 17); //For positive entry numbers
+$clr-accent-dark: #386fa4;
+$clr-accent-light: #84d2f6;
+$clr-green: #0a691e;
 $clr-magenta: rgb(159, 57, 194);
-$clr-orange: rgb(180, 117, 23);
 $clr-red: red;
-$clr-dark-red: rgb(155, 0, 0); //For negative entry numbers.
+$clr-dark-red: rgb(155, 0, 0);
 
 // Input.
 $clr-input: black;
@@ -77,9 +74,9 @@ $clr-number-label: rgba(255, 255, 255, 0.8);
 $fs-number-label: 2rem;
 
 // Entries.
-$clr-entry-title: black;
+$clr-entry-title: #444444;
 $fs-entry-title: 2rem;
-$clr-entry: black;
+$clr-entry: #444444;
 $fs-entry: 1.8rem;
 
 // Message component.

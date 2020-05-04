@@ -12,18 +12,22 @@
     .logo.header__logo {
       color: $clr-logo-dark;
     }
+    .navi__item {
+      color: $clr-nav-item-dark;
+    }
     .title {
       color: $clr-title-dark;
     }
     .subtitle {
       color: $clr-subtitle-dark;
     }
-    .navi__item {
-      color: $clr-nav-item-dark;
-    }
   }
 }
-
+a {
+  &:hover {
+    color: $clr-accent-dark;
+  }
+}
 // Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
 // Does not include background-size.
 .background {
@@ -35,6 +39,13 @@
 }
 
 // Media queries.
+
+@media only screen and (max-width: 1300px) {
+  .Create {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}
 
 @media only screen and (max-width: 1100px) {
   // Responsive nav and header.
