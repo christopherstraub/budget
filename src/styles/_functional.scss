@@ -127,6 +127,22 @@
   }
 }
 
+.input {
+  @include input;
+}
+
+.input-overview-title {
+  @include input($fs-overview-title);
+}
+
+.input-income {
+  @include input($fs-number);
+}
+
+.input-entry {
+  @include input($fs-entry);
+}
+
 .anchor {
   color: $clr-accent-light;
   &:hover {
@@ -134,19 +150,19 @@
   }
 }
 
-.input {
-  @include input;
-}
-
-.edit::after {
-  content: url('../images/pencil.svg');
-  margin-left: 0.75rem;
-}
-
 .empty-number-field {
   visibility: hidden;
   &::after {
     visibility: visible;
     content: '$0.00';
+  }
+}
+
+.default {
+  &:hover {
+    cursor: default;
+  }
+  &::selection {
+    background-color: transparent;
   }
 }

@@ -4,8 +4,6 @@ import WindowBox from '../WindowBox/WindowBox';
 import Overview from '../Overview/Overview';
 import Entries from '../Entries/Entries';
 
-import './Create.scss';
-
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -82,29 +80,12 @@ const Create = ({
 
   return (
     <div className="Create flex justify-center items-start pv5 ph7">
-      <WindowBox
-        classList="mh3"
-        style={{ minWidth: '34rem', maxWidth: '34rem' }}
-      >
-        <Overview
-          budget={budget}
-          messageCode={messageCode}
-          formattedBudget={formattedBudget}
-          handleFocusOutBudgetName={handleFocusOutBudgetName}
-          handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
-          handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
-          handleFocusOutProjectedMonthlyIncome={
-            handleFocusOutProjectedMonthlyIncome
-          }
-          handleFocusOutActualMonthlyIncome={handleFocusOutActualMonthlyIncome}
-        />
-      </WindowBox>
-
       <WindowBox classList="flex-grow-1 mh3">
         <Entries
           budget={budget}
           messageCode={messageCode}
           formattedEntries={formattedEntries}
+          handleFocusOutBudgetName={handleFocusOutBudgetName}
           inputCategory={inputCategory}
           handleCategoryInputChange={handleCategoryInputChange}
           handleAddEntry={handleAddEntry}
@@ -115,6 +96,22 @@ const Create = ({
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
           userClickedDeleteBudget={userClickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
+        />
+      </WindowBox>
+      <WindowBox
+        classList="mh3"
+        style={{ minWidth: '34rem', maxWidth: '34rem' }}
+      >
+        <Overview
+          budget={budget}
+          messageCode={messageCode}
+          formattedBudget={formattedBudget}
+          handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
+          handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
+          handleFocusOutProjectedMonthlyIncome={
+            handleFocusOutProjectedMonthlyIncome
+          }
+          handleFocusOutActualMonthlyIncome={handleFocusOutActualMonthlyIncome}
         />
       </WindowBox>
     </div>

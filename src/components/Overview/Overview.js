@@ -12,7 +12,6 @@ const Overview = ({
   budget,
   messageCode,
   formattedBudget,
-  handleFocusOutBudgetName,
   handleFocusActualMonthlyIncome,
   handleFocusProjectedMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
@@ -20,20 +19,14 @@ const Overview = ({
 }) => {
   return (
     <>
-      <EditableLabel
-        value="test"
-        text={budget.name}
-        labelClassName="overview-title flex justify-center text-break pointer mb4 edit text-shadow"
-        inputClassName="input-overview-title tc br3 ph2 mb4 w-100"
-        inputHeight="1.5em"
-        inputMaxLength={50}
-        inputPlaceHolder="Budget name"
-        onFocusOut={handleFocusOutBudgetName}
-      />
-      <h3 className="window-body o-80 flex justify-center items-center mb4 edit">
+      <h3 className="window-body o-80 tc mb4 text-shadow">
         Edit
+        <span className="material-icons ml2 default">edit</span>
       </h3>
-      <h2 className="number-label edit lh-title">Projected Monthly Income</h2>
+      <h2 className="number-label lh-title">
+        Projected Monthly Income
+        <span className="material-icons ml2 default">edit</span>
+      </h2>
       <EditableLabel
         text={formattedBudget.projectedMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
@@ -41,8 +34,8 @@ const Overview = ({
         )} ${
           budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : null
         }`}
-        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
-        inputHeight="1.5em"
+        inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
+        inputHeight="1.3em"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
         onFocus={handleFocusProjectedMonthlyIncome}
@@ -61,14 +54,17 @@ const Overview = ({
           />
         </div>
       ) : null}
-      <h2 className="number-label edit lh-title">Actual Monthly Income</h2>
+      <h2 className="number-label lh-title">
+        Actual Monthly Income
+        <span className="material-icons ml2">edit</span>
+      </h2>
       <EditableLabel
         text={formattedBudget.actualMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.actualMonthlyIncome
         )} ${budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null}`}
-        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
-        inputHeight="1.5em"
+        inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
+        inputHeight="1.3em"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
         onFocus={handleFocusActualMonthlyIncome}
