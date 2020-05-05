@@ -1,36 +1,34 @@
-// Change body color back to white (remove unused variables afterwards)
-
 // Dark mode.
 $clr-logo-dark: black;
+$clr-nav-item-dark: black;
 $clr-title-dark: black;
 $clr-subtitle-dark: rgba(0, 0, 0, 0.85);
-$clr-nav-item-dark: black;
 
-// Default text.
-$clr-body: red;
+// Defaults.
+$clr-body: white;
+$ff-body: 'Open Sans', sans-serif;
 
 // Logo.
-$ff-logo: 'Lobster', cursive;
 $clr-logo: white;
 $fs-logo: 5rem;
+$ff-logo: 'Lobster', cursive;
 
 // Title.
-$ff-title: 'Roboto', sans-serif;
 $clr-title: white;
 $fs-title: 4.2rem;
+$ff-title: 'Roboto', sans-serif;
 
 // Subtitle:
 $clr-subtitle: rgba(255, 255, 255, 0.85);
 $fs-subtitle: 2.2rem;
 
-// Colors
-$clr-blue: rgb(15, 160, 238);
-$clr-green: rgb(0, 170, 0);
-$clr-dark-green: rgb(13, 119, 17); //For positive entry numbers
+// Colors.
+$clr-accent-dark: #386fa4;
+$clr-accent-light: #84d2f6;
+$clr-green: #0a691e;
 $clr-magenta: rgb(159, 57, 194);
-$clr-orange: rgb(180, 117, 23);
 $clr-red: red;
-$clr-dark-red: rgb(155, 0, 0); //For negative entry numbers.
+$clr-dark-red: rgb(155, 0, 0);
 
 // Input.
 $clr-input: black;
@@ -53,35 +51,39 @@ $clr-window-title: white;
 $fs-window-title: 2.4rem;
 $clr-window-body: white;
 $fs-window-body: 2.2rem;
+$ff-window-body: 'Montserrat', sans-serif;
 
 // Default button.
 $clr-button-text: white;
 $fs-button-text: 1.8rem;
 
 // Nav.
-$ff-nav-item: 'Lato', sans-serif;
 $clr-nav-item: white;
 $fs-nav-item: 2.4rem;
+$ff-nav-item: 'Lato', sans-serif;
 $fs-nav-item-mobile: 3rem;
 
 // Overview.
-$clr-overview-box-title: white;
-$fs-overview-box-title: 3.8rem;
-$clr-entries-box-title: white;
-$fs-entries-box-title: 3.8rem;
-$ff-number: 'Lato', sans-serif;
+$clr-overview-title: white;
+$fs-overview-title: 3.8rem;
+$clr-entries-title: white;
+$fs-entries-title: 3.8rem;
 $clr-number: white;
 $fs-number: 2.7rem;
-$ff-number-label: 'Montserrat', sans-serif;
-$clr-number-label: rgba(255, 255, 255, 0.8);
+$ff-number: 'Lato', sans-serif;
+$clr-number-label: #c4c4c4;
 $fs-number-label: 2rem;
+$ff-number-label: 'Montserrat', sans-serif;
 
 // Entries.
-$clr-entry-title: black;
+$clr-entry-title: #444444;
 $fs-entry-title: 2rem;
-$clr-entry: black;
+$clr-entry: #444444;
 $fs-entry: 1.8rem;
 
-// Message component.
-$ff-message: 'Roboto';
+// Message.
 $fs-message: 2rem;
+$ff-message: 'Roboto';
+
+// Text shadow.
+$text-shadow: 2px 1px 1px #302e2e;

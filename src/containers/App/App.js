@@ -51,9 +51,9 @@ const initialState = {
     email: 'chris@gmail.com',
     joined: null,
     background: {
-      name: 'ALPINE MOUNTAINS',
-      url: Background1,
-      useDarkMode: false,
+      name: 'YOSEMITE VALLEY',
+      url: Background3,
+      useDarkMode: true,
     },
     budgets: [
       {

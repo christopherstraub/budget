@@ -5,7 +5,7 @@ import '../../styles/loginBox.scss';
 const SignIn = ({ handleRouteChange }) => {
   return (
     <div className="flex justify-center">
-      <div className="login-box tc pt5 ph5 pb4">
+      <div className="login-box br3 tc pt5 ph5 pb4">
         <h1 className="logo login tc mb4">CSBudget</h1>
         <input
           className="input br3 pa3 mv2 w-100"
@@ -23,7 +23,7 @@ const SignIn = ({ handleRouteChange }) => {
         />
         <input
           onClick={() => handleRouteChange('create')}
-          className="submit login-button-text outline-0 br3 pa3 mv2 w-100"
+          className="submit login-button-text outline-0 br3 pa3 mt4 mb2 w-100"
           type="submit"
           value="Sign in"
         />

@@ -8,88 +8,76 @@
 
 // Text.
 .title {
-  font-family: $ff-title;
-  color: $clr-title;
-  font-size: $fs-title;
+  @include text($clr-title, $fs-title, $ff-title);
 }
 
 .subtitle {
-  color: $clr-subtitle;
-  font-size: $fs-subtitle;
+  @include text($clr-subtitle, $fs-subtitle);
 }
 
 .login-button-text {
-  color: $clr-login-button-text;
-  font-size: $fs-login-button-text;
+  @include text($clr-login-button-text, $fs-login-button-text);
 }
 
 .continue-as-guest {
-  color: $clr-continue-as-guest;
-  font-size: $fs-continue-as-guest;
+  @include text($clr-continue-as-guest, $fs-continue-as-guest);
 }
 
 .window-title {
-  color: $clr-window-title;
-  font-size: $fs-window-title;
+  @include text($clr-window-title, $fs-window-title);
 }
 
 .window-body {
-  color: $clr-window-body;
-  font-size: $fs-window-body;
+  @include text($clr-window-body, $fs-window-body, $ff-window-body);
 }
 
-.overview-box-title {
-  color: $clr-overview-box-title;
-  font-size: $fs-overview-box-title;
+.overview-title {
+  @include text($clr-overview-title, $fs-overview-title);
 }
 
-.entries-box-title {
-  color: $clr-entries-box-title;
-  font-size: $fs-entries-box-title;
+.entries-title {
+  @include text($clr-entries-title, $fs-entries-title);
 }
 
 .number {
-  font-family: $ff-number;
-  color: $clr-number;
-  font-size: $fs-number;
+  @include text($clr-number, $fs-number, $ff-number);
 }
 
 .number-label {
-  font-family: $ff-number-label;
-  color: $clr-number-label;
-  font-size: $fs-number-label;
-  text-shadow: 2px 1px 1px #302e2e;
+  @include text($clr-number-label, $fs-number-label, $ff-number-label);
 }
 
 .entry-title {
-  color: $clr-entry-title;
-  font-size: $fs-entry-title;
+  @include text($clr-entry-title, $fs-entry-title);
 }
 
 .entry {
-  color: $clr-entry;
-  font-size: $fs-entry;
+  @include text($clr-entry, $fs-entry);
+}
+
+.budget-name {
+  @include text($clr-window-body, $fs-overview-title, $ff-window-body);
 }
 
 .message {
-  font-family: $ff-message;
-  color: $clr-blue;
-  font-size: $fs-message;
+  @include text($clr-accent-light, $fs-message, $ff-message);
 }
 
-.message-invalid {
-  font-family: $ff-message;
-  color: white;
-  font-size: $fs-message;
+.text-shadow {
+  text-shadow: $text-shadow;
 }
 
 // Colors.
-.clr-blue {
-  color: $clr-blue;
+.clr-accent-dark {
+  color: $clr-accent-dark;
 }
 
 .clr-red {
   color: $clr-red;
+}
+
+.clr-accent-light {
+  color: $clr-accent-light;
 }
 
 .bg--green {
@@ -97,7 +85,7 @@
 }
 
 .bg--blue {
-  background-color: $clr-blue;
+  background-color: $clr-accent-dark;
 }
 
 .bg--dark-red {
@@ -120,19 +108,18 @@
 }
 
 .bg--gradient {
-  background: #0f2027; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #2c5364,
-    #203a43,
-    #0f2027
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  // background: #141e30; /* fallback for old browsers */
+  // background: -webkit-linear-gradient(
+  //   to right,
+  //   #243b55,
+  //   #141e30
+  // ); /* Chrome 10-25, Safari 5.1-6 */
+  // background: linear-gradient(
+  //   to right,
+  //   #243b55,
+  //   #141e30
+  // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #133c55;
 }
 
 .button {
@@ -151,6 +138,13 @@
   }
   &::selection {
     background-color: transparent;
+  }
+}
+
+.anchor {
+  color: $clr-accent-light;
+  &:hover {
+    color: $clr-accent-dark;
   }
 }
 

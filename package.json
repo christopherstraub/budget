@@ -14,6 +14,7 @@
     "react-dom": "^16.13.1",
     "react-inline-editing": "^1.0.10",
     "react-scripts": "3.4.1",
+    "react-table": "^7.0.4",
     "tachyons": "^4.11.1"
   },
   "scripts": {
