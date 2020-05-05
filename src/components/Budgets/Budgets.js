@@ -45,7 +45,7 @@ const Budgets = ({
                 <li
                   key={index}
                   onClick={() => handleViewBudget(index)}
-                  className="overview-box-title tc dim pointer mv4 text-break"
+                  className="budget-name tc dim pointer mv4 text-break"
                 >
                   {budget.name}
                 </li>

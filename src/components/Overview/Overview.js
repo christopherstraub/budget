@@ -23,8 +23,8 @@ const Overview = ({
       <EditableLabel
         value="test"
         text={budget.name}
-        labelClassName="overview-box-title flex justify-center text-break pointer mb4 edit"
-        inputClassName="input-overview-box-title tc br3 ph2 mb4 w-100"
+        labelClassName="overview-title flex justify-center text-break pointer mb4 edit"
+        inputClassName="input-overview-title tc br3 ph2 mb4 w-100"
         inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Budget name"

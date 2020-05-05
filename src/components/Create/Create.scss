@@ -5,8 +5,8 @@
   margin-bottom: 1.4rem;
 }
 
-.input-overview-box-title {
-  @include input($fs-overview-box-title);
+.input-overview-title {
+  @include input($fs-overview-title);
 }
 
 .input-income {

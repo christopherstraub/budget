@@ -28,7 +28,7 @@ import './App.scss';
 // 'changed-name', 'changed-background'
 
 const initialState = {
-  route: 'about',
+  route: 'create',
   messageCode: null,
   input: {
     category: '',
