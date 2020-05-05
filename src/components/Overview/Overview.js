@@ -23,19 +23,17 @@ const Overview = ({
       <EditableLabel
         value="test"
         text={budget.name}
-        labelClassName="overview-title flex justify-center text-break pointer mb4 edit"
+        labelClassName="overview-title flex justify-center text-break pointer mb4 edit text-shadow"
         inputClassName="input-overview-title tc br3 ph2 mb4 w-100"
         inputHeight="1.5em"
         inputMaxLength={50}
         inputPlaceHolder="Budget name"
         onFocusOut={handleFocusOutBudgetName}
       />
-      <h3 className="window-body o-80 flex justify-center items-center mb4 edit text-shadow">
+      <h3 className="window-body o-80 flex justify-center items-center mb4 edit">
         Edit
       </h3>
-      <h2 className="number-label edit lh-title text-shadow">
-        Projected Monthly Income
-      </h2>
+      <h2 className="number-label edit lh-title">Projected Monthly Income</h2>
       <EditableLabel
         text={formattedBudget.projectedMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
@@ -63,9 +61,7 @@ const Overview = ({
           />
         </div>
       ) : null}
-      <h2 className="number-label edit lh-title text-shadow">
-        Actual Monthly Income
-      </h2>
+      <h2 className="number-label edit lh-title">Actual Monthly Income</h2>
       <EditableLabel
         text={formattedBudget.actualMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
@@ -91,7 +87,7 @@ const Overview = ({
           />
         </div>
       ) : null}
-      <h2 className="number-label lh-copy text-shadow">Projected Balance</h2>
+      <h2 className="number-label lh-copy">Projected Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedBalance()
@@ -100,7 +96,7 @@ const Overview = ({
       >
         {formattedBudget.projectedBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Actual Balance</h2>
+      <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualBalance()
@@ -109,7 +105,7 @@ const Overview = ({
       >
         {formattedBudget.actualBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Balance Difference</h2>
+      <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getDifferenceBalance()
@@ -118,7 +114,7 @@ const Overview = ({
       >
         {formattedBudget.differenceBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Projected Cost</h2>
+      <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedCost()
@@ -127,7 +123,7 @@ const Overview = ({
       >
         {formattedBudget.projectedCost}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Actual Cost</h2>
+      <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualCost()
@@ -136,7 +132,7 @@ const Overview = ({
       >
         {formattedBudget.actualCost}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Cost Difference</h2>
+      <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
         className={`number tr text-break ${classListIfNegative(
           budget.getDifferenceCost()

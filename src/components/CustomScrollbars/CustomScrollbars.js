@@ -12,7 +12,7 @@ export default class CustomScrollbars extends Component {
   renderThumb({ style, ...props }) {
     return (
       <div
-        className={`${this.state.bgColor} o-80 br-pill`}
+        className={`${this.state.bgColor} br-pill`}
         style={{ ...style }}
         {...props}
       />
