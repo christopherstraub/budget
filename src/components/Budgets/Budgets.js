@@ -12,7 +12,7 @@ const Budgets = ({
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classList="mw8 w-100">
+      <WindowBox classList="mw8 w-100 text-shadow">
         {messageCode === 'deleted-budget' ? (
           <div className="mb4">
             <Message message="Budget deleted." />
@@ -29,7 +29,7 @@ const Budgets = ({
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here are your
+            {user.name}, you have
             <span className="clr-accent-light b">
               {' '}
               {user.budgets.length}
@@ -54,7 +54,7 @@ const Budgets = ({
         <div className="flex justify-center pt3">
           <button
             onClick={handleAddBudget}
-            className="button bg--blue pv2 ph4 w-33 mr2"
+            className="button bg--accent-dark pv2 ph4 w-33 mr2"
             style={{ width: 'max-content' }}
           >
             CREATE NEW BUDGET

@@ -58,7 +58,7 @@
     flex-wrap: wrap;
     padding-right: 2rem;
     padding-left: 2rem;
-    > .bg--gradient:first-child {
+    > .bg--window-box:first-child {
       margin-bottom: 5rem;
     }
   }
@@ -76,7 +76,7 @@
 
   // Responsive Create component.
   .Create {
-    > .bg--gradient {
+    > .bg--window-box {
       margin-left: 0;
       margin-right: 0;
     }

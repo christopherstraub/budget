@@ -1,11 +1,6 @@
 @import './variables';
 @import './mixins';
 
-.ph8 {
-  padding-left: 32rem;
-  padding-right: 32rem;
-}
-
 // Text.
 .title {
   @include text($clr-title, $fs-title, $ff-title);
@@ -41,10 +36,12 @@
 
 .number {
   @include text($clr-number, $fs-number, $ff-number);
+  text-shadow: $text-shadow;
 }
 
 .number-label {
   @include text($clr-number-label, $fs-number-label, $ff-number-label);
+  text-shadow: $text-shadow;
 }
 
 .entry-title {
@@ -84,12 +81,20 @@
   background-color: $clr-green;
 }
 
-.bg--blue {
+.bg--accent-dark {
   background-color: $clr-accent-dark;
+}
+
+.bg--accent-light {
+  background-color: $clr-accent-light;
 }
 
 .bg--dark-red {
   background-color: $clr-dark-red;
+}
+
+.bg--window-box {
+  background-color: $clr-window-box;
 }
 
 // Components.
@@ -107,21 +112,6 @@
   }
 }
 
-.bg--gradient {
-  // background: #141e30; /* fallback for old browsers */
-  // background: -webkit-linear-gradient(
-  //   to right,
-  //   #243b55,
-  //   #141e30
-  // ); /* Chrome 10-25, Safari 5.1-6 */
-  // background: linear-gradient(
-  //   to right,
-  //   #243b55,
-  //   #141e30
-  // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-color: #133c55;
-}
-
 .button {
   border-radius: 5px;
   font-weight: 300;
@@ -129,7 +119,6 @@
   color: $clr-button-text;
   font-size: $fs-button-text;
   border: 0;
-  // transition: opacity 0.1s ease;
   &:focus {
     outline: 0;
   }
@@ -141,6 +130,22 @@
   }
 }
 
+.input {
+  @include input;
+}
+
+.input-overview-title {
+  @include input($fs-overview-title);
+}
+
+.input-income {
+  @include input($fs-number);
+}
+
+.input-entry {
+  @include input($fs-entry);
+}
+
 .anchor {
   color: $clr-accent-light;
   &:hover {
@@ -148,19 +153,19 @@
   }
 }
 
-.input {
-  @include input;
-}
-
-.edit::after {
-  content: url('../images/pencil.svg');
-  margin-left: 0.75rem;
-}
-
 .empty-number-field {
   visibility: hidden;
   &::after {
     visibility: visible;
     content: '$0.00';
+  }
+}
+
+.default {
+  &:hover {
+    cursor: default;
+  }
+  &::selection {
+    background-color: transparent;
   }
 }

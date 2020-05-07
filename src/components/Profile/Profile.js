@@ -14,7 +14,7 @@ const Profile = ({
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classList="tc">
+      <WindowBox classList="tc text-shadow">
         {messageCode === 'changed-name' ? (
           <div className="mb4">
             <Message message="Name changed." />
@@ -25,7 +25,7 @@ const Profile = ({
           </div>
         ) : null}
         <h1 className="window-title tc text-break">{user.name}</h1>
-        <h2 className="window-body tc o-80 text-break mb5 text-shadow">
+        <h2 className="window-body tc o-80 text-break mb5">
           {user.budgets.length} budget{user.budgets.length !== 1 ? 's' : null}
         </h2>
         <h2 className="window-body mb3">Change name</h2>
@@ -53,7 +53,7 @@ const Profile = ({
             <button
               key={index}
               onClick={handleBackgroundChange}
-              className="button bg--blue mr3 mb3 pv2 ph3"
+              className="button bg--accent-dark mr3 mb3 pv2 ph3"
             >
               {background.name}
             </button>

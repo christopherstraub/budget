@@ -228,7 +228,7 @@ class App extends Component {
   createBudget = () => {
     const date = new Date(
       new Date().getFullYear(),
-      new Date().getMonth() + 1,
+      new Date().getMonth() + this.state.user.budgets.length,
       new Date().getDate()
     );
 

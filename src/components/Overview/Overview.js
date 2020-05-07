@@ -12,7 +12,6 @@ const Overview = ({
   budget,
   messageCode,
   formattedBudget,
-  handleFocusOutBudgetName,
   handleFocusActualMonthlyIncome,
   handleFocusProjectedMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
@@ -20,21 +19,17 @@ const Overview = ({
 }) => {
   return (
     <>
-      <EditableLabel
-        value="test"
-        text={budget.name}
-        labelClassName="overview-title flex justify-center text-break pointer mb4 edit"
-        inputClassName="input-overview-title tc br3 ph2 mb4 w-100"
-        inputHeight="1.5em"
-        inputMaxLength={50}
-        inputPlaceHolder="Budget name"
-        onFocusOut={handleFocusOutBudgetName}
-      />
-      <h3 className="window-body o-80 flex justify-center items-center mb4 edit text-shadow">
-        Edit
+      <h3 className="window-body tc mb4 text-shadow">
+        Edit field
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h3>
-      <h2 className="number-label edit lh-title text-shadow">
+      <h2 className="number-label lh-title">
         Projected Monthly Income
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h2>
       <EditableLabel
         text={formattedBudget.projectedMonthlyIncome}
@@ -43,8 +38,8 @@ const Overview = ({
         )} ${
           budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : null
         }`}
-        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
-        inputHeight="1.5em"
+        inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
+        inputHeight="1.3em"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
         onFocus={handleFocusProjectedMonthlyIncome}
@@ -63,16 +58,19 @@ const Overview = ({
           />
         </div>
       ) : null}
-      <h2 className="number-label edit lh-title text-shadow">
+      <h2 className="number-label lh-title">
         Actual Monthly Income
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h2>
       <EditableLabel
         text={formattedBudget.actualMonthlyIncome}
         labelClassName={`number mb4 flex justify-end text-break pointer ${classListIfNegative(
           budget.actualMonthlyIncome
         )} ${budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null}`}
-        inputClassName="input-income tr br3 mt2 ph2 mb-input-income w-100"
-        inputHeight="1.5em"
+        inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
+        inputHeight="1.3em"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
         onFocus={handleFocusActualMonthlyIncome}
@@ -91,7 +89,7 @@ const Overview = ({
           />
         </div>
       ) : null}
-      <h2 className="number-label lh-copy text-shadow">Projected Balance</h2>
+      <h2 className="number-label lh-copy">Projected Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedBalance()
@@ -100,7 +98,7 @@ const Overview = ({
       >
         {formattedBudget.projectedBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Actual Balance</h2>
+      <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualBalance()
@@ -109,7 +107,7 @@ const Overview = ({
       >
         {formattedBudget.actualBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Balance Difference</h2>
+      <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getDifferenceBalance()
@@ -118,7 +116,7 @@ const Overview = ({
       >
         {formattedBudget.differenceBalance}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Projected Cost</h2>
+      <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getProjectedCost()
@@ -127,7 +125,7 @@ const Overview = ({
       >
         {formattedBudget.projectedCost}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Actual Cost</h2>
+      <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
           budget.getActualCost()
@@ -136,7 +134,7 @@ const Overview = ({
       >
         {formattedBudget.actualCost}
       </h1>
-      <h2 className="number-label lh-copy text-shadow">Cost Difference</h2>
+      <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
         className={`number tr text-break ${classListIfNegative(
           budget.getDifferenceCost()
