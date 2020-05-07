@@ -29,7 +29,7 @@ const Budgets = ({
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here are your
+            {user.name}, you have
             <span className="clr-accent-light b">
               {' '}
               {user.budgets.length}

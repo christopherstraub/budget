@@ -19,13 +19,17 @@ const Overview = ({
 }) => {
   return (
     <>
-      <h3 className="window-body o-80 tc mb4 text-shadow">
-        Edit
-        <span className="material-icons ml2 default">edit</span>
+      <h3 className="window-body tc mb4 text-shadow">
+        Edit field
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h3>
       <h2 className="number-label lh-title">
         Projected Monthly Income
-        <span className="material-icons ml2 default">edit</span>
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h2>
       <EditableLabel
         text={formattedBudget.projectedMonthlyIncome}
@@ -56,7 +60,9 @@ const Overview = ({
       ) : null}
       <h2 className="number-label lh-title">
         Actual Monthly Income
-        <span className="material-icons ml2">edit</span>
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h2>
       <EditableLabel
         text={formattedBudget.actualMonthlyIncome}

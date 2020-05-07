@@ -85,8 +85,16 @@
   background-color: $clr-accent-dark;
 }
 
+.bg--accent-light {
+  background-color: $clr-accent-light;
+}
+
 .bg--dark-red {
   background-color: $clr-dark-red;
+}
+
+.bg--window-box {
+  background-color: $clr-window-box;
 }
 
 // Components.
@@ -104,10 +112,6 @@
   }
 }
 
-.bg--gradient {
-  background-color: rgba(19, 60, 85, 0.95);
-}
-
 .button {
   border-radius: 5px;
   font-weight: 300;
@@ -115,7 +119,6 @@
   color: $clr-button-text;
   font-size: $fs-button-text;
   border: 0;
-  // transition: opacity 0.1s ease;
   &:focus {
     outline: 0;
   }

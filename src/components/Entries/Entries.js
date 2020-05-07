@@ -42,16 +42,22 @@ const Entries = ({
           onFocusOut={handleFocusOutBudgetName}
         />
         <span
-          className="material-icons absolute default"
-          style={{ top: '50%', right: '0', transform: 'translateY(-50%)' }}
+          className="material-icons absolute default clr-accent-light"
+          style={{
+            top: '50%',
+            right: '0',
+            transform: 'translateY(-50%)',
+          }}
         >
           edit
         </span>
       </div>
 
-      <h3 className="window-body o-80 tc mb4 text-shadow">
-        Edit
-        <span className="material-icons ml2 default">edit</span>
+      <h3 className="window-body tc mb4 text-shadow">
+        Edit field
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h3>
       <div className="add-entry flex justify-center">
         <input

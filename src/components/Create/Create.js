@@ -100,7 +100,7 @@ const Create = ({
       </WindowBox>
       <WindowBox
         classList="mh3"
-        style={{ minWidth: '34rem', maxWidth: '34rem' }}
+        style={{ minWidth: '37rem', maxWidth: '37rem' }}
       >
         <Overview
           budget={budget}
