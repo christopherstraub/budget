@@ -1,0 +1,79 @@
+@import './variables';
+@import './mixins';
+
+.logo {
+  font-family: $ff-logo;
+  color: $clr-logo;
+  font-size: $fs-logo;
+  &::selection {
+    background-color: transparent;
+  }
+  &.login {
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.button {
+  border-radius: 5px;
+  font-weight: 300;
+  font-family: 'Roboto Mono', monospace;
+  color: $clr-button-text;
+  font-size: $fs-button-text;
+  border: 0;
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+  &::selection {
+    background-color: transparent;
+  }
+}
+
+.input {
+  @include input;
+}
+
+.input-overview-title {
+  @include input($fs-overview-title);
+}
+
+.input-income {
+  @include input($fs-number);
+}
+
+.input-entry {
+  @include input($fs-entry);
+}
+
+.anchor {
+  color: $clr-accent-light;
+  &:hover {
+    color: $clr-accent-dark;
+  }
+}
+
+.empty-number-field {
+  visibility: hidden;
+  &::after {
+    visibility: visible;
+    content: '$0.00';
+  }
+}
+
+.login-box {
+  max-width: 300px;
+  border: 1px solid $clr-login-button;
+  background-color: $clr-login-box;
+
+  .submit {
+    border: 0;
+    background-color: $clr-login-button;
+    &:active {
+      background-color: $clr-login-button-active;
+    }
+  }
+}

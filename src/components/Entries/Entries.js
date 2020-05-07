@@ -59,6 +59,7 @@ const Entries = ({
           edit
         </span>
       </h3>
+
       <div className="add-entry flex justify-center">
         <input
           onChange={handleCategoryInputChange}
@@ -76,6 +77,7 @@ const Entries = ({
           ADD ENTRY
         </button>
       </div>
+
       <div className="table-responsive">
         <table className="bg-white mt4 table table-striped table-bordered table-hover">
           <thead className="entry-title">
@@ -155,6 +157,7 @@ const Entries = ({
         ) : messageCode === 'invalid-actual-cost' ? (
           <Message message="Actual cost invalid." />
         ) : null}
+
         {userClickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}

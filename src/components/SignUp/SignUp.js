@@ -1,7 +1,5 @@
 import React from 'react';
 
-import '../../styles/loginBox.scss';
-
 const SignUp = ({ handleRouteChange }) => {
   return (
     <div className="flex justify-center">

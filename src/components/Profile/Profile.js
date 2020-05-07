@@ -24,10 +24,13 @@ const Profile = ({
             <Message message="Background changed." />
           </div>
         ) : null}
+
         <h1 className="window-title tc text-break">{user.name}</h1>
+
         <h2 className="window-body tc o-80 text-break mb5">
           {user.budgets.length} budget{user.budgets.length !== 1 ? 's' : null}
         </h2>
+
         <h2 className="window-body mb3">Change name</h2>
         <div className="flex justify-center">
           <input
@@ -46,9 +49,9 @@ const Profile = ({
             SAVE
           </button>
         </div>
+
         <div className="mt4">
           <h2 className="window-body mb3">Background</h2>
-
           {backgrounds.map((background, index) => (
             <button
               key={index}

@@ -25,6 +25,7 @@ const Overview = ({
           edit
         </span>
       </h3>
+
       <h2 className="number-label lh-title">
         Projected Monthly Income
         <span className="material-icons ml2 default clr-accent-light">
@@ -58,6 +59,7 @@ const Overview = ({
           />
         </div>
       ) : null}
+
       <h2 className="number-label lh-title">
         Actual Monthly Income
         <span className="material-icons ml2 default clr-accent-light">
@@ -98,6 +100,7 @@ const Overview = ({
       >
         {formattedBudget.projectedBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -107,6 +110,7 @@ const Overview = ({
       >
         {formattedBudget.actualBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -116,6 +120,7 @@ const Overview = ({
       >
         {formattedBudget.differenceBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -125,6 +130,7 @@ const Overview = ({
       >
         {formattedBudget.projectedCost}
       </h1>
+
       <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -134,6 +140,7 @@ const Overview = ({
       >
         {formattedBudget.actualCost}
       </h1>
+
       <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
         className={`number tr text-break ${classListIfNegative(

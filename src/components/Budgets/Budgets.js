@@ -51,6 +51,7 @@ const Budgets = ({
                 </li>
               ))}
         </ul>
+
         <div className="flex justify-center pt3">
           <button
             onClick={handleAddBudget}
@@ -67,6 +68,7 @@ const Budgets = ({
             SAVE BUDGETS
           </button>
         </div>
+
         {messageCode === 'created-budget' ? (
           <div className="mt4">
             <Message message="Budget created." />
