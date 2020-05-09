@@ -9,7 +9,10 @@ const WindowBox = (props) => {
       className={`bg--window-box br3 ${props.classList}`}
       style={props.style ? props.style : null}
     >
-      <CustomScrollbars bgcolor="bg--accent-light">
+      <CustomScrollbars
+        classList="bg--scrollbar-window-box br-pill o-90"
+        heightMax="82vh"
+      >
         <ErrorBoundary>
           <div className="pv5 ph4">{props.children}</div>
         </ErrorBoundary>

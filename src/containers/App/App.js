@@ -6,8 +6,10 @@ import Budgets from '../../components/Budgets/Budgets';
 import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 import Create from '../../components/Create/Create';
+import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
 
 import cloneDeep from 'lodash/cloneDeep';
+import { CSSTransition } from 'react-transition-group';
 
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
@@ -458,68 +460,88 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div
-        className="background"
-        style={{ backgroundImage: `url(${this.state.user.background.url})` }}
+      <CustomScrollbars
+        classList="bg--scrollbar-app br-pill o-90"
+        heightMax="100vh"
       >
-        <div className={`App ${user.background.useDarkMode ? 'dark' : null}`}>
-          <Header
-            isLoggedIn={isLoggedIn}
-            handleRouteChange={this.handleRouteChange}
-          />
-          {route === 'signin' || route === 'signup' ? (
-            <Landing route={route} handleRouteChange={this.handleRouteChange} />
-          ) : route === 'create' ? (
-            <Create
-              budget={user.budgets[currentBudgetIndex]}
-              handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-              handleFocusProjectedMonthlyIncome={
-                this.handleFocusProjectedMonthlyIncome
-              }
-              handleFocusActualMonthlyIncome={
-                this.handleFocusActualMonthlyIncome
-              }
-              handleFocusOutProjectedMonthlyIncome={
-                this.handleFocusOutProjectedMonthlyIncome
-              }
-              handleFocusOutActualMonthlyIncome={
-                this.handleFocusOutActualMonthlyIncome
-              }
-              messageCode={messageCode}
-              inputCategory={input.category}
-              handleCategoryInputChange={this.handleCategoryInputChange}
-              handleAddEntry={this.handleAddEntry}
-              handleDeleteEntry={this.handleDeleteEntry}
-              handleFocusOutCategory={this.handleFocusOutCategory}
-              handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
-              handleFocusOutActualCost={this.handleFocusOutActualCost}
-              handleUserClickedDeleteBudget={this.handleUserClickedDeleteBudget}
-              userClickedDeleteBudget={userClickedDeleteBudget}
-              handleDeleteBudget={this.handleDeleteBudget}
+        <div
+          className="background"
+          style={{ backgroundImage: `url(${this.state.user.background.url})` }}
+        >
+          <div className={`App ${user.background.useDarkMode ? 'dark' : null}`}>
+            <Header
+              isLoggedIn={isLoggedIn}
+              handleRouteChange={this.handleRouteChange}
             />
-          ) : route === 'budgets' ? (
-            <Budgets
-              user={user}
-              handleViewBudget={this.handleViewBudget}
-              handleAddBudget={this.handleAddBudget}
-              handleSaveBudgets={this.handleSaveBudgets}
-              messageCode={messageCode}
-            />
-          ) : route === 'profile' ? (
-            <Profile
-              user={user}
-              inputName={input.name}
-              handleNameInputChange={this.handleNameInputChange}
-              handleNameChange={this.handleNameChange}
-              handleBackgroundChange={this.handleBackgroundChange}
-              backgrounds={backgrounds}
-              messageCode={messageCode}
-            />
-          ) : route === 'about' ? (
-            <About />
-          ) : null}
+            {route === 'signin' || route === 'signup' ? (
+              <Landing
+                route={route}
+                handleRouteChange={this.handleRouteChange}
+              />
+            ) : route === 'create' ? (
+              <>
+                <CSSTransition
+                  in={route === 'create'}
+                  timeout={500}
+                  classNames="my-node"
+                >
+                  <Create
+                    budget={user.budgets[currentBudgetIndex]}
+                    handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                    handleFocusProjectedMonthlyIncome={
+                      this.handleFocusProjectedMonthlyIncome
+                    }
+                    handleFocusActualMonthlyIncome={
+                      this.handleFocusActualMonthlyIncome
+                    }
+                    handleFocusOutProjectedMonthlyIncome={
+                      this.handleFocusOutProjectedMonthlyIncome
+                    }
+                    handleFocusOutActualMonthlyIncome={
+                      this.handleFocusOutActualMonthlyIncome
+                    }
+                    messageCode={messageCode}
+                    inputCategory={input.category}
+                    handleCategoryInputChange={this.handleCategoryInputChange}
+                    handleAddEntry={this.handleAddEntry}
+                    handleDeleteEntry={this.handleDeleteEntry}
+                    handleFocusOutCategory={this.handleFocusOutCategory}
+                    handleFocusOutProjectedCost={
+                      this.handleFocusOutProjectedCost
+                    }
+                    handleFocusOutActualCost={this.handleFocusOutActualCost}
+                    handleUserClickedDeleteBudget={
+                      this.handleUserClickedDeleteBudget
+                    }
+                    userClickedDeleteBudget={userClickedDeleteBudget}
+                    handleDeleteBudget={this.handleDeleteBudget}
+                  />
+                </CSSTransition>
+              </>
+            ) : route === 'budgets' ? (
+              <Budgets
+                user={user}
+                handleViewBudget={this.handleViewBudget}
+                handleAddBudget={this.handleAddBudget}
+                handleSaveBudgets={this.handleSaveBudgets}
+                messageCode={messageCode}
+              />
+            ) : route === 'profile' ? (
+              <Profile
+                user={user}
+                inputName={input.name}
+                handleNameInputChange={this.handleNameInputChange}
+                handleNameChange={this.handleNameChange}
+                handleBackgroundChange={this.handleBackgroundChange}
+                backgrounds={backgrounds}
+                messageCode={messageCode}
+              />
+            ) : route === 'about' ? (
+              <About />
+            ) : null}
+          </div>
         </div>
-      </div>
+      </CustomScrollbars>
     );
   }
 }

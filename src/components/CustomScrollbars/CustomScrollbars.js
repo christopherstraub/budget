@@ -5,14 +5,14 @@ import { Scrollbars } from 'react-custom-scrollbars';
 export default class CustomScrollbars extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
-    this.state = { bgColor: props.bgcolor };
+    this.state = { classList: props.classList, heightMax: props.heightMax };
     this.renderThumb = this.renderThumb.bind(this);
   }
 
   renderThumb({ style, ...props }) {
     return (
       <div
-        className={`${this.state.bgColor} br-pill o-40`}
+        className={`${this.state.classList}`}
         style={{ ...style }}
         {...props}
       />
@@ -26,7 +26,7 @@ export default class CustomScrollbars extends Component {
         renderThumbVertical={this.renderThumb}
         autoHeight
         autoHeightMin={0}
-        autoHeightMax={'82vh'}
+        autoHeightMax={this.state.heightMax}
         {...this.props}
       />
     );
