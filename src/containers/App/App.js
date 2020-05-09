@@ -467,7 +467,6 @@ class App extends Component {
             isLoggedIn={isLoggedIn}
             handleRouteChange={this.handleRouteChange}
           />
-
           {route === 'signin' || route === 'signup' ? (
             <Landing route={route} handleRouteChange={this.handleRouteChange} />
           ) : route === 'create' ? (

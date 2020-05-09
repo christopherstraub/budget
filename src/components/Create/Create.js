@@ -1,7 +1,7 @@
 import React from 'react';
 
 import WindowBox from '../WindowBox/WindowBox';
-import Overview from '../Overview/Overview';
+import Summary from '../Summary/Summary';
 import Entries from '../Entries/Entries';
 
 // Intl.NumberFormat object is a constructor that enables language sensitive number formatting.
@@ -24,7 +24,7 @@ const formatNegativeValues = (formattedBudget) => {
   return Object.fromEntries(formattedNegativeValues);
 };
 
-// formatCurrency returns an object with formatted values to be display in the Overview component.
+// formatCurrency returns an object with formatted values to be display in the Summary component.
 const formatCurrency = (budget, formatter) => {
   return {
     projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
@@ -109,7 +109,7 @@ const Create = ({
         classList="mh3"
         style={{ minWidth: '37rem', maxWidth: '37rem' }}
       >
-        <Overview
+        <Summary
           budget={budget}
           messageCode={messageCode}
           formattedBudget={formattedBudget}

@@ -8,7 +8,7 @@ const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
-const Overview = ({
+const Summary = ({
   budget,
   messageCode,
   formattedBudget,
@@ -40,7 +40,7 @@ const Overview = ({
           budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : null
         }`}
         inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
-        inputHeight="1.3em"
+        inputHeight="4rem"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
         onFocus={handleFocusProjectedMonthlyIncome}
@@ -72,7 +72,7 @@ const Overview = ({
           budget.actualMonthlyIncome
         )} ${budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null}`}
         inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
-        inputHeight="1.3em"
+        inputHeight="4rem"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
         onFocus={handleFocusActualMonthlyIncome}
@@ -154,4 +154,4 @@ const Overview = ({
   );
 };
 
-export default Overview;
+export default Summary;

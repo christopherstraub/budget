@@ -10,6 +10,13 @@
   }
 }
 
+.anchor {
+  color: $clr-accent-light;
+  &:hover {
+    color: $clr-accent-dark;
+  }
+}
+
 // Text.
 .title {
   @include text($clr-title, $fs-title, $ff-title);
@@ -39,8 +46,8 @@
   @include text($clr-window-body, $fs-window-body, $ff-window-body);
 }
 
-.overview-title {
-  @include text($clr-overview-title, $fs-overview-title);
+.summary-title {
+  @include text($clr-summary-title, $fs-summary-title);
 }
 
 .entries-title {
@@ -66,7 +73,7 @@
 }
 
 .budget-name {
-  @include text($clr-window-body, $fs-overview-title, $ff-window-body);
+  @include text($clr-window-body, $fs-summary-title, $ff-window-body);
 }
 
 .message {
@@ -108,4 +115,10 @@
 
 .bg--window-box {
   background-color: $clr-window-box;
+  background: rgb(22, 71, 102);
+  background: linear-gradient(
+    0deg,
+    rgba(22, 71, 102, 0.9) 0%,
+    $clr-window-box 100%
+  );
 }

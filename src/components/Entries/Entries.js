@@ -34,9 +34,9 @@ const Entries = ({
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="overview-title flex justify-center tc text-break pointer mb0 text-shadow"
-          inputClassName="input-overview-title tc br3 ph3 w-100"
-          inputHeight="1.5em"
+          labelClassName="summary-title flex justify-center tc text-break pointer mb0 text-shadow"
+          inputClassName="input-summary-title tc br3 ph3 w-100"
+          inputHeight="5.7rem"
           inputMaxLength={50}
           inputPlaceHolder="Budget name"
           onFocusOut={handleFocusOutBudgetName}

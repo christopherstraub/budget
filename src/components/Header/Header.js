@@ -9,7 +9,6 @@ const Header = ({ isLoggedIn, handleRouteChange }) => {
           isLoggedIn ? handleRouteChange('create') : handleRouteChange('signup')
         }
         className="logo header__logo absolute pointer"
-        style={{ top: '3rem', left: '4rem' }}
       >
         CSBudget
       </h1>

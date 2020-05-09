@@ -15,6 +15,11 @@
   }
 }
 
+.header__logo {
+  top: 3rem;
+  left: 4rem;
+}
+
 .button {
   border-radius: 5px;
   font-weight: 300;
@@ -37,8 +42,8 @@
   @include input;
 }
 
-.input-overview-title {
-  @include input($fs-overview-title);
+.input-summary-title {
+  @include input($fs-summary-title);
 }
 
 .input-income {
@@ -47,13 +52,6 @@
 
 .input-entry {
   @include input($fs-entry);
-}
-
-.anchor {
-  color: $clr-accent-light;
-  &:hover {
-    color: $clr-accent-dark;
-  }
 }
 
 .empty-number-field {
