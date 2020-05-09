@@ -1,6 +1,22 @@
 @import './variables';
 @import './mixins';
 
+.default {
+  &:hover {
+    cursor: default;
+  }
+  &::selection {
+    background-color: transparent;
+  }
+}
+
+.anchor {
+  color: $clr-accent-light;
+  &:hover {
+    color: $clr-accent-dark;
+  }
+}
+
 // Text.
 .title {
   @include text($clr-title, $fs-title, $ff-title);
@@ -18,6 +34,10 @@
   @include text($clr-continue-as-guest, $fs-continue-as-guest);
 }
 
+.navi__item {
+  @include text($clr-nav-item, $fs-nav-item, $ff-nav-item);
+}
+
 .window-title {
   @include text($clr-window-title, $fs-window-title);
 }
@@ -26,8 +46,8 @@
   @include text($clr-window-body, $fs-window-body, $ff-window-body);
 }
 
-.overview-title {
-  @include text($clr-overview-title, $fs-overview-title);
+.summary-title {
+  @include text($clr-summary-title, $fs-summary-title);
 }
 
 .entries-title {
@@ -53,7 +73,7 @@
 }
 
 .budget-name {
-  @include text($clr-window-body, $fs-overview-title, $ff-window-body);
+  @include text($clr-window-body, $fs-summary-title, $ff-window-body);
 }
 
 .message {
@@ -95,77 +115,10 @@
 
 .bg--window-box {
   background-color: $clr-window-box;
-}
-
-// Components.
-.logo {
-  font-family: $ff-logo;
-  color: $clr-logo;
-  font-size: $fs-logo;
-  &::selection {
-    background-color: transparent;
-  }
-  &.login {
-    &:hover {
-      cursor: default;
-    }
-  }
-}
-
-.button {
-  border-radius: 5px;
-  font-weight: 300;
-  font-family: 'Roboto Mono', monospace;
-  color: $clr-button-text;
-  font-size: $fs-button-text;
-  border: 0;
-  &:focus {
-    outline: 0;
-  }
-  &:hover {
-    opacity: 0.6;
-  }
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.input {
-  @include input;
-}
-
-.input-overview-title {
-  @include input($fs-overview-title);
-}
-
-.input-income {
-  @include input($fs-number);
-}
-
-.input-entry {
-  @include input($fs-entry);
-}
-
-.anchor {
-  color: $clr-accent-light;
-  &:hover {
-    color: $clr-accent-dark;
-  }
-}
-
-.empty-number-field {
-  visibility: hidden;
-  &::after {
-    visibility: visible;
-    content: '$0.00';
-  }
-}
-
-.default {
-  &:hover {
-    cursor: default;
-  }
-  &::selection {
-    background-color: transparent;
-  }
+  background: rgb(22, 71, 102);
+  background: linear-gradient(
+    0deg,
+    rgba(22, 71, 102, 0.9) 0%,
+    $clr-window-box 100%
+  );
 }

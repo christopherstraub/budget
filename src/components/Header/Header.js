@@ -1,8 +1,6 @@
 import React from 'react';
 import Nav from '../../components/Nav/Nav';
 
-import './Header.scss';
-
 const Header = ({ isLoggedIn, handleRouteChange }) => {
   return (
     <header>
@@ -14,6 +12,7 @@ const Header = ({ isLoggedIn, handleRouteChange }) => {
       >
         CSBudget
       </h1>
+
       {isLoggedIn ? (
         <Nav isLoggedIn={isLoggedIn} handleRouteChange={handleRouteChange} />
       ) : null}

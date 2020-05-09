@@ -8,7 +8,7 @@ const classListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : null;
 };
 
-const Overview = ({
+const Summary = ({
   budget,
   messageCode,
   formattedBudget,
@@ -25,6 +25,7 @@ const Overview = ({
           edit
         </span>
       </h3>
+
       <h2 className="number-label lh-title">
         Projected Monthly Income
         <span className="material-icons ml2 default clr-accent-light">
@@ -39,7 +40,7 @@ const Overview = ({
           budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : null
         }`}
         inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
-        inputHeight="1.3em"
+        inputHeight="4rem"
         inputMaxLength={50}
         inputPlaceHolder="Projected monthly income"
         onFocus={handleFocusProjectedMonthlyIncome}
@@ -58,6 +59,7 @@ const Overview = ({
           />
         </div>
       ) : null}
+
       <h2 className="number-label lh-title">
         Actual Monthly Income
         <span className="material-icons ml2 default clr-accent-light">
@@ -70,7 +72,7 @@ const Overview = ({
           budget.actualMonthlyIncome
         )} ${budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null}`}
         inputClassName="input-income tr br3 mt2 ph3 mb4 w-100"
-        inputHeight="1.3em"
+        inputHeight="4rem"
         inputMaxLength={50}
         inputPlaceHolder="Actual monthly income"
         onFocus={handleFocusActualMonthlyIncome}
@@ -98,6 +100,7 @@ const Overview = ({
       >
         {formattedBudget.projectedBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Actual Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -107,6 +110,7 @@ const Overview = ({
       >
         {formattedBudget.actualBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Balance Difference</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -116,6 +120,7 @@ const Overview = ({
       >
         {formattedBudget.differenceBalance}
       </h1>
+
       <h2 className="number-label lh-copy">Projected Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -125,6 +130,7 @@ const Overview = ({
       >
         {formattedBudget.projectedCost}
       </h1>
+
       <h2 className="number-label lh-copy">Actual Cost</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(
@@ -134,6 +140,7 @@ const Overview = ({
       >
         {formattedBudget.actualCost}
       </h1>
+
       <h2 className="number-label lh-copy">Cost Difference</h2>
       <h1
         className={`number tr text-break ${classListIfNegative(
@@ -147,4 +154,4 @@ const Overview = ({
   );
 };
 
-export default Overview;
+export default Summary;

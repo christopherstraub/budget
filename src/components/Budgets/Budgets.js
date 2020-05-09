@@ -29,7 +29,7 @@ const Budgets = ({
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, you have
+            {user.name}, here are your
             <span className="clr-accent-light b">
               {' '}
               {user.budgets.length}
@@ -51,6 +51,7 @@ const Budgets = ({
                 </li>
               ))}
         </ul>
+
         <div className="flex justify-center pt3">
           <button
             onClick={handleAddBudget}
@@ -67,6 +68,7 @@ const Budgets = ({
             SAVE BUDGETS
           </button>
         </div>
+
         {messageCode === 'created-budget' ? (
           <div className="mt4">
             <Message message="Budget created." />

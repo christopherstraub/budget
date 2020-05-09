@@ -1,14 +1,17 @@
 import React from 'react';
 
 import WindowBox from '../WindowBox/WindowBox';
-import Overview from '../Overview/Overview';
+import Summary from '../Summary/Summary';
 import Entries from '../Entries/Entries';
 
+// Intl.NumberFormat object is a constructor that enables language sensitive number formatting.
+// Takes parameters ([locales[, options]]).
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
 
+// We want to format negative numbers as numbers enclosed in parantheses.
 const formatNegativeValues = (formattedBudget) => {
   const entries = Object.entries(formattedBudget);
 
@@ -21,6 +24,7 @@ const formatNegativeValues = (formattedBudget) => {
   return Object.fromEntries(formattedNegativeValues);
 };
 
+// formatCurrency returns an object with formatted values to be display in the Summary component.
 const formatCurrency = (budget, formatter) => {
   return {
     projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
@@ -34,10 +38,12 @@ const formatCurrency = (budget, formatter) => {
   };
 };
 
+// formatBudget formats negative values in pre-formatted budget.
 const formatBudget = (budget, formatter) => {
   return formatNegativeValues(formatCurrency(budget, formatter));
 };
 
+// Format entries returns a formatted entries object. If no entries, returns an empty array.
 const formatEntries = (entries, formatter) => {
   if (entries.length === 0) {
     return [];
@@ -98,11 +104,12 @@ const Create = ({
           handleDeleteBudget={handleDeleteBudget}
         />
       </WindowBox>
+
       <WindowBox
         classList="mh3"
         style={{ minWidth: '37rem', maxWidth: '37rem' }}
       >
-        <Overview
+        <Summary
           budget={budget}
           messageCode={messageCode}
           formattedBudget={formattedBudget}
