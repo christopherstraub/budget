@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 import Header from '../../components/Header/Header';
 import Landing from '../../components/Landing/Landing';
@@ -31,7 +31,8 @@ import './App.scss';
 
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  route: 'create',
+  test: { inProp: false, setInProp: false },
+  route: 'created',
   messageCode: null,
   input: {
     category: '',
@@ -447,6 +448,22 @@ class App extends Component {
     }
   };
 
+  handleX = () => {
+    const copy = this.state.test;
+    if (copy.inProp === true) copy.inProp = false;
+    else copy.inProp = true;
+    this.setState({ test: copy });
+    console.log('esa pearra');
+  };
+
+  handleY = () => {
+    const copy = this.state.test;
+    if (copy.inProp === true) copy.inProp = false;
+    else copy.inProp = true;
+    this.setState({ test: copy });
+    console.log('esa pearra');
+  };
+
   render() {
     const {
       route,
@@ -459,10 +476,12 @@ class App extends Component {
       user,
     } = this.state;
 
+    const { inProp, setInProp } = this.state.test;
+
     return (
       <CustomScrollbars
-        classList="bg--scrollbar-app br-pill o-90"
-        heightMax="100vh"
+        classlist="bg--scrollbar-app br-pill o-90"
+        heightmax="100vh"
       >
         <div
           className="background"
@@ -481,9 +500,10 @@ class App extends Component {
             ) : route === 'create' ? (
               <>
                 <CSSTransition
-                  in={route === 'create'}
-                  timeout={500}
+                  in={inProp}
+                  timeout={2000}
                   classNames="my-node"
+                  unmountOnExit
                 >
                   <Create
                     budget={user.budgets[currentBudgetIndex]}
@@ -517,6 +537,9 @@ class App extends Component {
                     handleDeleteBudget={this.handleDeleteBudget}
                   />
                 </CSSTransition>
+                <div onMouseOver={this.handleX} onMouseLeave={this.handleY}>
+                  test
+                </div>
               </>
             ) : route === 'budgets' ? (
               <Budgets
@@ -538,7 +561,20 @@ class App extends Component {
               />
             ) : route === 'about' ? (
               <About />
-            ) : null}
+            ) : (
+              <div>
+                <CSSTransition
+                  in={inProp === true}
+                  timeout={1000}
+                  classNames="my-node"
+                >
+                  <div className="h1">{"I'll receive my-node-* classes"}</div>
+                </CSSTransition>
+                <button type="button" onClick={this.handleX}>
+                  Click to Enter
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </CustomScrollbars>

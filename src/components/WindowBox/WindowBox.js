@@ -6,12 +6,12 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 const WindowBox = (props) => {
   return (
     <div
-      className={`bg--window-box br3 ${props.classList}`}
+      className={`bg--window-box br3 ${props.classlist}`}
       style={props.style ? props.style : null}
     >
       <CustomScrollbars
-        classList="bg--scrollbar-window-box br-pill o-90"
-        heightMax="82vh"
+        classlist="bg--scrollbar-window-box br-pill o-90"
+        heightmax="82vh"
       >
         <ErrorBoundary>
           <div className="pv5 ph4">{props.children}</div>
