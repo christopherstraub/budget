@@ -114,11 +114,33 @@
 }
 
 .bg--window-box {
-  background-color: $clr-window-box;
   background: rgb(22, 71, 102);
   background: linear-gradient(
     0deg,
     rgba(22, 71, 102, 0.9) 0%,
     $clr-window-box 100%
   );
+}
+
+.bg--scrollbar-window-box {
+  background-color: $clr-scrollbar-window-box;
+}
+
+.bg--scrollbar-app {
+  background-color: $clr-scrollbar-app;
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 1s;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 1s;
 }

@@ -26,7 +26,6 @@ $fs-subtitle: 2.2rem;
 $clr-accent-dark: #3679b8;
 $clr-accent-light: #84d2f6;
 $clr-green: #0c8126;
-$clr-magenta: rgb(159, 57, 194);
 $clr-red: red;
 $clr-dark-red: rgb(135, 0, 0);
 
@@ -87,3 +86,8 @@ $ff-message: 'Roboto';
 
 // Text shadow.
 $text-shadow: 2px 1px 1px #302e2e;
+
+// Scrollbars.
+$clr-scrollbar-window-box: #84d2f6;
+$clr-scrollbar-app: white;
+$clr-scrollbar-app-dark: black;
