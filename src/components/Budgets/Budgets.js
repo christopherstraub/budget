@@ -12,7 +12,7 @@ const Budgets = ({
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classlist="mw8">
+      <WindowBox>
         {messageCode === 'deleted-budget' ? (
           <div className="mb4">
             <Message message="Budget deleted." />

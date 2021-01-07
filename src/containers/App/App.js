@@ -30,7 +30,7 @@ import './App.scss';
 
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  route: 'budgets',
+  route: 'create',
   messageCode: null,
   input: {
     category: '',
@@ -60,9 +60,9 @@ const initialState = {
     budgets: [
       {
         id: Math.round(Math.random() * 1000), //temp assignment of id
-        name: `${new Date(2020, 4, 4).toLocaleString('default', {
+        name: `${new Date(2021, 0).toLocaleString('default', {
           month: 'long',
-        })} ${new Date(2020, 4, 4).getFullYear()}`,
+        })} ${new Date(2021, 0).getFullYear()}`,
         projectedMonthlyIncome: 0,
         actualMonthlyIncome: 0,
         getProjectedBalance() {
