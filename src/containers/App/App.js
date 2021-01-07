@@ -30,7 +30,7 @@ import './App.scss';
 
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  route: 'create',
+  route: 'budgets',
   messageCode: null,
   input: {
     category: '',

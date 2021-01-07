@@ -56,12 +56,10 @@
 
 .number {
   @include text($clr-number, $fs-number, $ff-number);
-  text-shadow: $text-shadow;
 }
 
 .number-label {
   @include text($clr-number-label, $fs-number-label, $ff-number-label);
-  text-shadow: $text-shadow;
 }
 
 .entry-title {

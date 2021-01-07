@@ -14,7 +14,7 @@ const Profile = ({
 }) => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classlist="tc text-shadow">
+      <WindowBox classlist="tc">
         {messageCode === 'changed-name' ? (
           <div className="mb4">
             <Message message="Name changed." />

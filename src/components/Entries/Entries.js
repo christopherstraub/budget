@@ -26,7 +26,7 @@ const Entries = ({
         <EditableLabel
           value="test"
           text={budget.name}
-          labelClassName="summary-title flex justify-center tc text-break pointer mb0 text-shadow"
+          labelClassName="summary-title flex justify-center tc text-break pointer mb0"
           inputClassName="input-summary-title tc br3 ph3 w-100"
           inputHeight="5.7rem"
           inputMaxLength={50}
@@ -45,7 +45,7 @@ const Entries = ({
         </span>
       </div>
 
-      <h3 className="window-body tc mb4 text-shadow">
+      <h3 className="window-body tc mb4">
         Edit field
         <span className="material-icons ml2 default clr-accent-light">
           edit
