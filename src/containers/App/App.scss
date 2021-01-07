@@ -4,22 +4,25 @@
 // Functional classes.
 @import '../../styles/functional';
 
+// Component classes.
+@import '../../styles/components';
+
 .App {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $ff-body;
   color: $clr-body;
   min-height: 100vh;
   &.dark {
     .logo.header__logo {
       color: $clr-logo-dark;
     }
+    .navi__item {
+      color: $clr-nav-item-dark;
+    }
     .title {
       color: $clr-title-dark;
     }
     .subtitle {
       color: $clr-subtitle-dark;
-    }
-    .navi__item {
-      color: $clr-nav-item-dark;
     }
   }
 }
@@ -36,7 +39,14 @@
 
 // Media queries.
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1300px) {
+  .Create {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
   // Responsive nav and header.
   .navi {
     padding-top: 10rem;
@@ -51,7 +61,7 @@
     flex-wrap: wrap;
     padding-right: 2rem;
     padding-left: 2rem;
-    > .bg--gradient:first-child {
+    > .bg--window-box:first-child {
       margin-bottom: 5rem;
     }
   }
@@ -69,7 +79,7 @@
 
   // Responsive Create component.
   .Create {
-    > .bg--gradient {
+    > .bg--window-box {
       margin-left: 0;
       margin-right: 0;
     }

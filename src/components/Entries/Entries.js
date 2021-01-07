@@ -3,13 +3,20 @@ import React from 'react';
 import Message from '../Message/Message';
 
 import EditableLabel from 'react-inline-editing';
-
-import trash from '../../images/trash.svg';
+import {
+  useTable,
+  useGroupBy,
+  useFilters,
+  useSortBy,
+  useExpanded,
+  usePagination,
+} from 'react-table';
 
 const Entries = ({
   budget,
   messageCode,
   formattedEntries,
+  handleFocusOutBudgetName,
   inputCategory,
   handleCategoryInputChange,
   handleAddEntry,
@@ -23,17 +30,36 @@ const Entries = ({
 }) => {
   return (
     <>
-      <h1 className="entries-box-title tc mb5">
-        Entries ({budget.entries.length})
-      </h1>
-      <h3
-        className="window-body o-80 flex justify-center items-center mb4"
-        style={{
-          textShadow: '2px 1px 1px #302e2e',
-        }}
-      >
-        Click cell to edit
+      <div className="relative mb5 ph5">
+        <EditableLabel
+          value="test"
+          text={budget.name}
+          labelClassName="summary-title flex justify-center tc text-break pointer mb0 text-shadow"
+          inputClassName="input-summary-title tc br3 ph3 w-100"
+          inputHeight="5.7rem"
+          inputMaxLength={50}
+          inputPlaceHolder="Budget name"
+          onFocusOut={handleFocusOutBudgetName}
+        />
+        <span
+          className="material-icons absolute default clr-accent-light"
+          style={{
+            top: '50%',
+            right: '0',
+            transform: 'translateY(-50%)',
+          }}
+        >
+          edit
+        </span>
+      </div>
+
+      <h3 className="window-body tc mb4 text-shadow">
+        Edit field
+        <span className="material-icons ml2 default clr-accent-light">
+          edit
+        </span>
       </h3>
+
       <div className="add-entry flex justify-center">
         <input
           onChange={handleCategoryInputChange}
@@ -46,37 +72,32 @@ const Entries = ({
         />
         <button
           onClick={handleAddEntry}
-          className="button bg--blue pv2 ph4 w-33"
+          className="button bg--accent-dark pv2 ph4 w-33"
         >
           ADD ENTRY
         </button>
       </div>
+
       <div className="table-responsive">
         <table className="bg-white mt4 table table-striped table-bordered table-hover">
           <thead className="entry-title">
             <tr>
-              <th scope="col">Category</th>
-              <th scope="col" className="w-20">
-                Projected Cost
-              </th>
-              <th scope="col" className="w-20">
-                Actual Cost
-              </th>
-              <th scope="col" className="w-20">
-                Difference
-              </th>
+              <th scope="col">Category ({budget.entries.length})</th>
+              <th scope="col">Projected Cost</th>
+              <th scope="col">Actual Cost</th>
+              <th scope="col">Difference</th>
             </tr>
           </thead>
           <tbody>
             {formattedEntries.map((entry, index) => (
               <tr key={index}>
                 <td className="entry flex items-center text-break">
-                  <img
+                  <span
                     onClick={() => handleDeleteEntry(index)}
-                    className="pointer mr3"
-                    src={trash}
-                    alt="trash"
-                  />
+                    className="material-icons pointer mr2"
+                  >
+                    delete
+                  </span>
                   <EditableLabel
                     text={entry.category}
                     labelClassName="entry text-break pointer mb0 lh-title"
@@ -136,6 +157,7 @@ const Entries = ({
         ) : messageCode === 'invalid-actual-cost' ? (
           <Message message="Actual cost invalid." />
         ) : null}
+
         {userClickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}

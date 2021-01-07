@@ -11,6 +11,7 @@ const Landing = ({ route, handleRouteChange }) => {
           Sign up or sign in to save your work and come back any time.
         </h2>
       </section>
+
       {route === 'signin' ? (
         <SignIn handleRouteChange={handleRouteChange} />
       ) : route === 'signup' ? (
