@@ -9,7 +9,6 @@ import Create from '../../components/Create/Create';
 import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
 
 import cloneDeep from 'lodash/cloneDeep';
-import { CSSTransition } from 'react-transition-group';
 
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
@@ -31,8 +30,7 @@ import './App.scss';
 
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  test: { inProp: false, setInProp: false },
-  route: 'created',
+  route: 'create',
   messageCode: null,
   input: {
     category: '',
@@ -55,9 +53,9 @@ const initialState = {
     email: 'chris@gmail.com',
     joined: null,
     background: {
-      name: 'YOSEMITE VALLEY',
-      url: Background3,
-      useDarkMode: true,
+      name: 'ALPINE MOUNTAINS',
+      url: Background1,
+      useDarkMode: false,
     },
     budgets: [
       {
@@ -448,22 +446,6 @@ class App extends Component {
     }
   };
 
-  handleX = () => {
-    const copy = this.state.test;
-    if (copy.inProp === true) copy.inProp = false;
-    else copy.inProp = true;
-    this.setState({ test: copy });
-    console.log('esa pearra');
-  };
-
-  handleY = () => {
-    const copy = this.state.test;
-    if (copy.inProp === true) copy.inProp = false;
-    else copy.inProp = true;
-    this.setState({ test: copy });
-    console.log('esa pearra');
-  };
-
   render() {
     const {
       route,
@@ -475,8 +457,6 @@ class App extends Component {
       userClickedDeleteBudget,
       user,
     } = this.state;
-
-    const { inProp, setInProp } = this.state.test;
 
     return (
       <CustomScrollbars
@@ -499,47 +479,35 @@ class App extends Component {
               />
             ) : route === 'create' ? (
               <>
-                <CSSTransition
-                  in={inProp}
-                  timeout={2000}
-                  classNames="my-node"
-                  unmountOnExit
-                >
-                  <Create
-                    budget={user.budgets[currentBudgetIndex]}
-                    handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-                    handleFocusProjectedMonthlyIncome={
-                      this.handleFocusProjectedMonthlyIncome
-                    }
-                    handleFocusActualMonthlyIncome={
-                      this.handleFocusActualMonthlyIncome
-                    }
-                    handleFocusOutProjectedMonthlyIncome={
-                      this.handleFocusOutProjectedMonthlyIncome
-                    }
-                    handleFocusOutActualMonthlyIncome={
-                      this.handleFocusOutActualMonthlyIncome
-                    }
-                    messageCode={messageCode}
-                    inputCategory={input.category}
-                    handleCategoryInputChange={this.handleCategoryInputChange}
-                    handleAddEntry={this.handleAddEntry}
-                    handleDeleteEntry={this.handleDeleteEntry}
-                    handleFocusOutCategory={this.handleFocusOutCategory}
-                    handleFocusOutProjectedCost={
-                      this.handleFocusOutProjectedCost
-                    }
-                    handleFocusOutActualCost={this.handleFocusOutActualCost}
-                    handleUserClickedDeleteBudget={
-                      this.handleUserClickedDeleteBudget
-                    }
-                    userClickedDeleteBudget={userClickedDeleteBudget}
-                    handleDeleteBudget={this.handleDeleteBudget}
-                  />
-                </CSSTransition>
-                <div onMouseOver={this.handleX} onMouseLeave={this.handleY}>
-                  test
-                </div>
+                <Create
+                  budget={user.budgets[currentBudgetIndex]}
+                  handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                  handleFocusProjectedMonthlyIncome={
+                    this.handleFocusProjectedMonthlyIncome
+                  }
+                  handleFocusActualMonthlyIncome={
+                    this.handleFocusActualMonthlyIncome
+                  }
+                  handleFocusOutProjectedMonthlyIncome={
+                    this.handleFocusOutProjectedMonthlyIncome
+                  }
+                  handleFocusOutActualMonthlyIncome={
+                    this.handleFocusOutActualMonthlyIncome
+                  }
+                  messageCode={messageCode}
+                  inputCategory={input.category}
+                  handleCategoryInputChange={this.handleCategoryInputChange}
+                  handleAddEntry={this.handleAddEntry}
+                  handleDeleteEntry={this.handleDeleteEntry}
+                  handleFocusOutCategory={this.handleFocusOutCategory}
+                  handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
+                  handleFocusOutActualCost={this.handleFocusOutActualCost}
+                  handleUserClickedDeleteBudget={
+                    this.handleUserClickedDeleteBudget
+                  }
+                  userClickedDeleteBudget={userClickedDeleteBudget}
+                  handleDeleteBudget={this.handleDeleteBudget}
+                />
               </>
             ) : route === 'budgets' ? (
               <Budgets
@@ -561,20 +529,7 @@ class App extends Component {
               />
             ) : route === 'about' ? (
               <About />
-            ) : (
-              <div>
-                <CSSTransition
-                  in={inProp === true}
-                  timeout={1000}
-                  classNames="my-node"
-                >
-                  <div className="h1">{"I'll receive my-node-* classes"}</div>
-                </CSSTransition>
-                <button type="button" onClick={this.handleX}>
-                  Click to Enter
-                </button>
-              </div>
-            )}
+            ) : null}
           </div>
         </div>
       </CustomScrollbars>

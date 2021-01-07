@@ -4,7 +4,7 @@ import WindowBox from '../WindowBox/WindowBox';
 const About = () => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classList="mw8">
+      <WindowBox classlist="mw7">
         <div className="text-shadow">
           <p className="window-body">
             <span className="clr-accent-light i">CSBudget</span> is maintained

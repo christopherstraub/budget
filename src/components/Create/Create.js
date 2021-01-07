@@ -86,7 +86,7 @@ const Create = ({
 
   return (
     <div className="Create flex justify-center items-start pv5 ph7">
-      <WindowBox classList="flex-grow-1 mh3">
+      <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
           messageCode={messageCode}
