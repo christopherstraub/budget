@@ -240,8 +240,7 @@ class App extends Component {
   createBudget = () => {
     const date = new Date(
       new Date().getFullYear(),
-      new Date().getMonth() + this.state.user.budgets.length,
-      new Date().getDate()
+      new Date().getMonth() + this.state.user.budgets.length
     );
 
     return {
@@ -290,13 +289,17 @@ class App extends Component {
   };
 
   handleAddBudget = () => {
-    const userCopy = cloneDeep(this.state.user);
+    if (this.state.user.budgets.length === 24) {
+      this.setState({ messageCode: 'max-budgets' });
+    } else {
+      const userCopy = cloneDeep(this.state.user);
 
-    userCopy.budgets.push(this.createBudget());
-    this.setState({
-      user: userCopy,
-      messageCode: 'created-budget',
-    });
+      userCopy.budgets.push(this.createBudget());
+      this.setState({
+        user: userCopy,
+        messageCode: 'created-budget',
+      });
+    }
   };
 
   // Event handler for save budgets button.

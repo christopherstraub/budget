@@ -68,16 +68,21 @@ const Budgets = ({
             SAVE BUDGETS
           </button>
         </div>
-
-        {messageCode === 'created-budget' ? (
-          <div className="mt4">
-            <Message message="Budget created." />
-          </div>
-        ) : messageCode === 'saved-budgets' ? (
-          <div className="mt4">
-            <Message message="Budgets saved." />
-          </div>
-        ) : null}
+        <div className="mw7">
+          {messageCode === 'created-budget' ? (
+            <div className="mt4">
+              <Message message="Budget created." />
+            </div>
+          ) : messageCode === 'saved-budgets' ? (
+            <div className="mt4">
+              <Message message="Budgets saved." />
+            </div>
+          ) : messageCode === 'max-budgets' ? (
+            <div className="mt4">
+              <Message message="Maximum number of budgets created. You're an excellent financial planner!" />
+            </div>
+          ) : null}
+        </div>
       </WindowBox>
     </div>
   );
