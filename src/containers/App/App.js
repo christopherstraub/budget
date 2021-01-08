@@ -289,7 +289,7 @@ class App extends Component {
   };
 
   handleAddBudget = () => {
-    if (this.state.user.budgets.length === 24) {
+    if (this.state.user.budgets.length === 12) {
       this.setState({ messageCode: 'max-budgets' });
     } else {
       const userCopy = cloneDeep(this.state.user);

@@ -28,7 +28,8 @@ const Profile = ({
         <h1 className="window-title tc text-break">{user.name}</h1>
 
         <h2 className="window-body tc o-80 text-break mb5">
-          {user.budgets.length} budget{user.budgets.length !== 1 ? 's' : null}
+          {user.budgets.length}/12 budget
+          {user.budgets.length !== 1 ? 's' : null}
         </h2>
 
         <h2 className="window-body mb3">Change name</h2>
