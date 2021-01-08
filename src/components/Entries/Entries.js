@@ -74,10 +74,18 @@ const Entries = ({
         <table className="bg-white mt4 table table-striped table-bordered table-hover">
           <thead className="entry-title">
             <tr>
-              <th scope="col">Category ({budget.entries.length})</th>
-              <th scope="col">Projected Cost</th>
-              <th scope="col">Actual Cost</th>
-              <th scope="col">Difference</th>
+              <th scope="col" width="55%" className="v-mid">
+                Category ({budget.entries.length})
+              </th>
+              <th scope="col" width="15%" className="v-mid">
+                Projected Cost
+              </th>
+              <th scope="col" width="15%" className="v-mid">
+                Actual Cost
+              </th>
+              <th scope="col" width="15%" className="v-mid">
+                Difference
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -100,7 +108,7 @@ const Entries = ({
                     onFocusOut={(text) => handleFocusOutCategory(text, index)}
                   />
                 </td>
-                <td className="entry text-break tr w-20">
+                <td className="entry text-break tr">
                   <EditableLabel
                     text={entry.projectedCost}
                     labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
@@ -117,7 +125,7 @@ const Entries = ({
                     }
                   />
                 </td>
-                <td className="entry text-break tr w-20">
+                <td className="entry text-break tr">
                   <EditableLabel
                     text={entry.actualCost}
                     labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
@@ -132,7 +140,7 @@ const Entries = ({
                     onFocusOut={(text) => handleFocusOutActualCost(text, index)}
                   />
                 </td>
-                <td className="entry text-break tr w-20">{entry.difference}</td>
+                <td className="entry text-break tr">{entry.difference}</td>
               </tr>
             ))}
           </tbody>
@@ -140,13 +148,13 @@ const Entries = ({
       </div>
 
       <div className="flex items-center pt4">
-        {messageCode === 'updated-projected-cost' ? (
+        {messageCode === 'projected-cost-updated' ? (
           <Message message="Projected cost updated." />
-        ) : messageCode === 'invalid-projected-cost' ? (
+        ) : messageCode === 'projected-cost-invalid' ? (
           <Message message="Projected cost invalid." />
-        ) : messageCode === 'updated-actual-cost' ? (
+        ) : messageCode === 'actual-cost-updated' ? (
           <Message message="Actual cost updated." />
-        ) : messageCode === 'invalid-actual-cost' ? (
+        ) : messageCode === 'actual-cost-invalid' ? (
           <Message message="Actual cost invalid." />
         ) : null}
 
