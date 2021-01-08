@@ -5,7 +5,7 @@ import SignUp from '../SignUp/SignUp';
 const Landing = ({ route, handleRouteChange }) => {
   return (
     <div className="pv5 ph4">
-      <section className="pt6">
+      <section style={{ paddingTop: '4.5rem' }}>
         <h1 className="title tc mb3">Budgeting doesn't have to be hard.</h1>
         <h2 className="subtitle tc mb5">
           Sign up or sign in to save your budgets and access them at any time.
