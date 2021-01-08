@@ -85,7 +85,7 @@ const Create = ({
   );
 
   return (
-    <div className="Create flex justify-center items-start pv5 ph4">
+    <div className="Create flex justify-center items-start mt4 ph4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}

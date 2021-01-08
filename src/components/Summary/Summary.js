@@ -46,13 +46,13 @@ const Summary = ({
         onFocus={handleFocusProjectedMonthlyIncome}
         onFocusOut={handleFocusOutProjectedMonthlyIncome}
       />
-      {messageCode === 'updated-projected-monthly-income' ? (
+      {messageCode === 'projected-monthly-income-updated' ? (
         <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
             message={`Income updated to ${formattedBudget.projectedMonthlyIncome}.`}
           />
         </div>
-      ) : messageCode === 'invalid-projected-monthly-income' ? (
+      ) : messageCode === 'projected-monthly-income-invalid' ? (
         <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
             message={`Input invalid. Income still ${formattedBudget.projectedMonthlyIncome}.`}
@@ -78,13 +78,13 @@ const Summary = ({
         onFocus={handleFocusActualMonthlyIncome}
         onFocusOut={handleFocusOutActualMonthlyIncome}
       />
-      {messageCode === 'updated-actual-monthly-income' ? (
+      {messageCode === 'actual-monthly-income-updated' ? (
         <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
             message={`Income updated to ${formattedBudget.actualMonthlyIncome}.`}
           />
         </div>
-      ) : messageCode === 'invalid-actual-monthly-income' ? (
+      ) : messageCode === 'actual-monthly-income-invalid' ? (
         <div className="mb4" style={{ marginTop: '-0.5rem' }}>
           <Message
             message={`Input invalid. Income still ${formattedBudget.actualMonthlyIncome}.`}

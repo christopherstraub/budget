@@ -11,7 +11,7 @@ const WindowBox = (props) => {
     >
       <CustomScrollbars
         classlist="bg--scrollbar-window-box br-pill o-90"
-        heightmax="82vh"
+        heightmax="86vh"
       >
         <ErrorBoundary>
           <div className="pv5 ph4">{props.children}</div>

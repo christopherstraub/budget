@@ -11,9 +11,9 @@ const Budgets = ({
   messageCode,
 }) => {
   return (
-    <div className="flex justify-center pv5 ph4">
+    <div className="flex justify-center mt4 ph4">
       <WindowBox>
-        {messageCode === 'deleted-budget' ? (
+        {messageCode === 'budget-deleted' ? (
           <div className="mb4">
             <Message message="Budget deleted." />
           </div>
@@ -69,15 +69,15 @@ const Budgets = ({
           </button>
         </div>
         <div className="mw7">
-          {messageCode === 'created-budget' ? (
+          {messageCode === 'budget-created' ? (
             <div className="mt4">
               <Message message="Budget created." />
             </div>
-          ) : messageCode === 'saved-budgets' ? (
+          ) : messageCode === 'budgets-saved' ? (
             <div className="mt4">
               <Message message="Budgets saved." />
             </div>
-          ) : messageCode === 'max-budgets' ? (
+          ) : messageCode === 'budgets-max-allowed' ? (
             <div className="mt4">
               <Message message="Maximum number of budgets created. You're an excellent financial planner!" />
             </div>

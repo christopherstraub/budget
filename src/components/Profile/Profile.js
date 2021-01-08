@@ -13,13 +13,13 @@ const Profile = ({
   messageCode,
 }) => {
   return (
-    <div className="flex justify-center pv5 ph4">
+    <div className="flex justify-center mt4 ph4">
       <WindowBox classlist="mw7 tc">
-        {messageCode === 'changed-name' ? (
+        {messageCode === 'name-changed' ? (
           <div className="mb4">
             <Message message="Name changed." />
           </div>
-        ) : messageCode === 'changed-background' ? (
+        ) : messageCode === 'background-changed' ? (
           <div className="mb4">
             <Message message="Background changed." />
           </div>
