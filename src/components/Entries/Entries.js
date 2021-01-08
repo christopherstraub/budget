@@ -64,7 +64,7 @@ const Entries = ({
         />
         <button
           onClick={handleAddEntry}
-          className="button bg--accent-dark pv2 ph4 w-33"
+          className="button bg--accent-dark pv2 ph4 w-20"
         >
           ADD ENTRY
         </button>

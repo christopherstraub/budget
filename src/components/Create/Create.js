@@ -85,7 +85,7 @@ const Create = ({
   );
 
   return (
-    <div className="Create flex justify-center items-start pv5 ph7">
+    <div className="Create flex justify-center items-start pv5 ph4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
@@ -105,10 +105,7 @@ const Create = ({
         />
       </WindowBox>
 
-      <WindowBox
-        classList="mh3"
-        style={{ minWidth: '37rem', maxWidth: '37rem' }}
-      >
+      <WindowBox classList="mh3" style={{ maxWidth: '350px' }}>
         <Summary
           budget={budget}
           messageCode={messageCode}
