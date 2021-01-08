@@ -4,7 +4,7 @@ import WindowBox from '../WindowBox/WindowBox';
 const About = () => {
   return (
     <div className="flex justify-center pv5 ph4">
-      <WindowBox classlist="mw9">
+      <WindowBox classlist="mw9 tc">
         <p className="window-body">
           <span className="clr-accent-light i">CSBudget</span> is maintained by
           Christopher Straub and distributed under the MIT License.
