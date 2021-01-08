@@ -8,7 +8,7 @@ const Landing = ({ route, handleRouteChange }) => {
       <section className="pt6">
         <h1 className="title tc mb3">Budgeting doesn't have to be hard.</h1>
         <h2 className="subtitle tc mb5">
-          Sign up or sign in to save your work and come back any time.
+          Sign up or sign in to save your budgets and access them at any time.
         </h2>
       </section>
 
