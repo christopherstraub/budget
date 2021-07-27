@@ -4,7 +4,7 @@ const PreloadedBackgrounds = ({ backgrounds }) => {
   return (
     <div className="dn">
       {backgrounds.map((background, index) => (
-        <img key={index} src={background.url} />
+        <img key={index} src={background.url} alt={background.name} />
       ))}
     </div>
   );
