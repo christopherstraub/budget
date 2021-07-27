@@ -45,13 +45,6 @@ const Entries = ({
         </span>
       </div>
 
-      <h3 className="window-body tc mb4">
-        Edit field
-        <span className="material-icons ml2 default clr-accent-light">
-          edit
-        </span>
-      </h3>
-
       <div className="add-entry flex justify-center">
         <input
           onChange={handleCategoryInputChange}
