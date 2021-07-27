@@ -11,6 +11,7 @@ const Profile = ({
   handleBackgroundChange,
   backgrounds,
   messageCode,
+  maxBudgets,
 }) => {
   return (
     <div className="flex justify-center mt4 ph4">
@@ -28,8 +29,7 @@ const Profile = ({
         <h1 className="window-title tc text-break">{user.name}</h1>
 
         <h2 className="window-body tc o-80 text-break mb5">
-          {user.budgets.length}/12 budget
-          {user.budgets.length !== 1 ? 's' : null}
+          {user.budgets.length}/{maxBudgets} budgets
         </h2>
 
         <h2 className="window-body mb3">Change name</h2>
