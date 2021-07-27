@@ -24,6 +24,13 @@
     .subtitle {
       color: $clr-subtitle-dark;
     }
+
+    .logo.header__logo,
+    .navi__item,
+    .title,
+    .subtitle {
+      transition: color 4s ease-out;
+    }
   }
 }
 
@@ -34,7 +41,9 @@
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-  background-color: rgba(0, 116, 145, 0.9);
+  background-color: $clr-login-box;
+
+  transition: background-image 4s ease-out;
 }
 
 // Media queries.
