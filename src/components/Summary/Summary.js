@@ -20,7 +20,7 @@ const Summary = ({
   return (
     <>
       <h3 className="window-body tc mb4">
-        Edit field
+        Click to edit field
         <span className="material-icons ml2 default clr-accent-light">
           edit
         </span>
