@@ -4,7 +4,7 @@ const SignUp = ({ handleRouteChange }) => {
   return (
     <div className="flex justify-center">
       <div className="login-box br3 tc pt5 pb4">
-        <h1 className="logo login tc mb4">CSBudget</h1>
+        <h1 className="logo login selection-transparent tc mb4">CSBudget</h1>
         <div className="ph4">
           <input
             className="input br3 pa3 mv2 w-100"

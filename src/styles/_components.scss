@@ -5,9 +5,7 @@
   font-family: $ff-logo;
   color: $clr-logo;
   font-size: $fs-logo;
-  &::selection {
-    background-color: transparent;
-  }
+
   &.login {
     &:hover {
       cursor: default;
