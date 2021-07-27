@@ -45,6 +45,12 @@ const initialState = {
     { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
     { name: 'SPACE', url: Background4, useDarkMode: false },
   ],
+  background: {
+    name: 'ALPINE MOUNTAINS',
+    url: Background1,
+    useDarkMode: false,
+  },
+  maxBudgets: 24,
   isLoggedIn: true,
   currentBudgetIndex: 0,
   userClickedDeleteBudget: false,
@@ -53,11 +59,6 @@ const initialState = {
     name: 'Chris',
     email: 'chris@gmail.com',
     joined: null,
-    background: {
-      name: 'ALPINE MOUNTAINS',
-      url: Background1,
-      useDarkMode: false,
-    },
     budgets: [
       {
         id: Math.round(Math.random() * 1000), //temp assignment of id
@@ -106,6 +107,27 @@ class App extends Component {
     this.state = initialState;
   }
 
+  // Get background from localStorage if it exists there.
+  componentWillMount() {
+    if (this.state.background.name !== localStorage.getItem('background')) {
+      const backgroundName =
+        localStorage.getItem('background') ?? this.state.background.name;
+
+      let background = this.state.backgrounds.filter(
+        (background) => background.name === backgroundName
+      );
+
+      background =
+        background.length === 0 ? [this.state.background] : background;
+
+      localStorage.setItem('background', background[0].name);
+
+      const stateCopy = { ...this.state };
+      stateCopy.background = background[0];
+      this.setState(stateCopy);
+    }
+  }
+
   // If user routes to Create and they have no budgets, add a budget.
   // Else if user is routing to a non-selected route, change route.
   // If route does not equal 'signin' or 'signup', log user in.
@@ -127,15 +149,19 @@ class App extends Component {
   // Only filter through backgrounds if selected background is different
   // from current background.
   handleBackgroundChange = (event) => {
-    if (this.state.user.background.name !== event.target.textContent) {
+    if (this.state.background.name !== event.target.textContent) {
+      localStorage.setItem('background', event.target.textContent);
+
       const selectedBackground = this.state.backgrounds.filter(
         (background) => background.name === event.target.textContent
       );
 
-      const userCopy = { ...this.state.user };
-      userCopy.background = selectedBackground[0];
-      this.setState({ user: userCopy, messageCode: 'background-changed' });
-    }
+      const stateCopy = { ...this.state };
+      stateCopy.background = selectedBackground[0];
+      stateCopy.messageCode = 'background-changed';
+      this.setState(stateCopy);
+    } else if (localStorage.getItem('background') !== event.target.textContent)
+      localStorage.setItem('background', event.target.textContent);
   };
 
   // Update state name input with user input.
@@ -290,7 +316,7 @@ class App extends Component {
   };
 
   handleAddBudget = () => {
-    if (this.state.user.budgets.length === 12) {
+    if (this.state.user.budgets.length === this.state.maxBudgets) {
       this.setState({ messageCode: 'budgets-max-allowed' });
     } else {
       const userCopy = cloneDeep(this.state.user);
@@ -460,6 +486,7 @@ class App extends Component {
       currentBudgetIndex,
       userClickedDeleteBudget,
       user,
+      maxBudgets,
     } = this.state;
 
     return (
@@ -469,9 +496,13 @@ class App extends Component {
       >
         <div
           className="background"
-          style={{ backgroundImage: `url(${this.state.user.background.url})` }}
+          style={{ backgroundImage: `url(${this.state.background.url})` }}
         >
-          <div className={`App ${user.background.useDarkMode ? 'dark' : null}`}>
+          <div
+            className={`App ${
+              this.state.background.useDarkMode ? 'dark' : null
+            }`}
+          >
             <Header
               isLoggedIn={isLoggedIn}
               handleRouteChange={this.handleRouteChange}
@@ -530,6 +561,7 @@ class App extends Component {
                 handleBackgroundChange={this.handleBackgroundChange}
                 backgrounds={backgrounds}
                 messageCode={messageCode}
+                maxBudgets={maxBudgets}
               />
             ) : route === 'about' ? (
               <About />
