@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 export default class CustomScrollbars extends Component {
   constructor(props, ...rest) {
@@ -19,10 +19,14 @@ export default class CustomScrollbars extends Component {
     );
   }
 
+  renderThumbHorizontal({ style, ...props }) {
+    return <div className="dn" {...props} />;
+  }
+
   render() {
     return (
       <Scrollbars
-        renderThumbHorizontal={this.renderThumb}
+        renderThumbHorizontal={this.renderThumbHorizontal}
         renderThumbVertical={this.renderThumb}
         autoHeight
         autoHeightMin={0}
