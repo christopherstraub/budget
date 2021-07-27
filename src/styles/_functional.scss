@@ -71,7 +71,7 @@
 }
 
 .budget-name {
-  @include text($clr-window-body, $fs-summary-title, $ff-window-body);
+  @include text($clr-window-body, 3rem, $ff-window-body);
 }
 
 .message {
