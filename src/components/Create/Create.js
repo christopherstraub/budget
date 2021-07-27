@@ -45,18 +45,15 @@ const formatBudget = (budget, formatter) => {
 
 // Format entries returns a formatted entries object. If no entries, returns an empty array.
 const formatEntries = (entries, formatter) => {
-  if (entries.length === 0) {
-    return [];
-  } else {
-    return entries.map((entry) => {
-      return {
-        category: entry.category,
-        projectedCost: formatter.format(entry.projectedCost),
-        actualCost: formatter.format(entry.actualCost),
-        difference: formatter.format(entry.getDifference()),
-      };
-    });
-  }
+  if (entries.length === 0) return [];
+  return entries.map((entry) => {
+    return {
+      category: entry.category,
+      projectedCost: formatter.format(entry.projectedCost),
+      actualCost: formatter.format(entry.actualCost),
+      difference: formatter.format(entry.getDifference()),
+    };
+  });
 };
 
 const Create = ({
