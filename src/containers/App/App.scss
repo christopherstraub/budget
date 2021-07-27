@@ -24,13 +24,13 @@
     .subtitle {
       color: $clr-subtitle-dark;
     }
+  }
 
-    .logo.header__logo,
-    .navi__item,
-    .title,
-    .subtitle {
-      transition: color 3s ease-in-out;
-    }
+  .logo.header__logo,
+  .navi__item,
+  .title,
+  .subtitle {
+    transition: color 3s ease-in-out;
   }
 }
 
