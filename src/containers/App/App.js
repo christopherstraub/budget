@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 
 import Header from '../../components/Header/Header';
 import Landing from '../../components/Landing/Landing';
@@ -7,6 +7,7 @@ import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 import Create from '../../components/Create/Create';
 import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
+import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -490,85 +491,90 @@ class App extends Component {
     } = this.state;
 
     return (
-      <CustomScrollbars
-        classlist="bg--scrollbar-app br-pill o-90"
-        heightmax="100vh"
-      >
-        <div
-          className="background"
-          style={{ backgroundImage: `url(${this.state.background.url})` }}
+      <>
+        <CustomScrollbars
+          classlist="bg--scrollbar-app br-pill o-90"
+          heightmax="100vh"
         >
           <div
-            className={`App ${
-              this.state.background.useDarkMode ? 'dark' : null
-            }`}
+            className="background"
+            style={{ backgroundImage: `url(${this.state.background.url})` }}
           >
-            <Header
-              isLoggedIn={isLoggedIn}
-              handleRouteChange={this.handleRouteChange}
-            />
-            {route === 'signin' || route === 'signup' ? (
-              <Landing
-                route={route}
+            <div
+              className={`App ${
+                this.state.background.useDarkMode ? 'dark' : null
+              }`}
+            >
+              <Header
+                isLoggedIn={isLoggedIn}
                 handleRouteChange={this.handleRouteChange}
               />
-            ) : route === 'create' ? (
-              <>
-                <Create
-                  budget={user.budgets[currentBudgetIndex]}
-                  handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-                  handleFocusProjectedMonthlyIncome={
-                    this.handleFocusProjectedMonthlyIncome
-                  }
-                  handleFocusActualMonthlyIncome={
-                    this.handleFocusActualMonthlyIncome
-                  }
-                  handleFocusOutProjectedMonthlyIncome={
-                    this.handleFocusOutProjectedMonthlyIncome
-                  }
-                  handleFocusOutActualMonthlyIncome={
-                    this.handleFocusOutActualMonthlyIncome
-                  }
-                  messageCode={messageCode}
-                  inputCategory={input.category}
-                  handleCategoryInputChange={this.handleCategoryInputChange}
-                  handleAddEntry={this.handleAddEntry}
-                  handleDeleteEntry={this.handleDeleteEntry}
-                  handleFocusOutCategory={this.handleFocusOutCategory}
-                  handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
-                  handleFocusOutActualCost={this.handleFocusOutActualCost}
-                  handleUserClickedDeleteBudget={
-                    this.handleUserClickedDeleteBudget
-                  }
-                  userClickedDeleteBudget={userClickedDeleteBudget}
-                  handleDeleteBudget={this.handleDeleteBudget}
+              {route === 'signin' || route === 'signup' ? (
+                <Landing
+                  route={route}
+                  handleRouteChange={this.handleRouteChange}
                 />
-              </>
-            ) : route === 'budgets' ? (
-              <Budgets
-                user={user}
-                handleViewBudget={this.handleViewBudget}
-                handleAddBudget={this.handleAddBudget}
-                handleSaveBudgets={this.handleSaveBudgets}
-                messageCode={messageCode}
-              />
-            ) : route === 'profile' ? (
-              <Profile
-                user={user}
-                inputName={input.name}
-                handleNameInputChange={this.handleNameInputChange}
-                handleNameChange={this.handleNameChange}
-                handleBackgroundChange={this.handleBackgroundChange}
-                backgrounds={backgrounds}
-                messageCode={messageCode}
-                maxBudgets={maxBudgets}
-              />
-            ) : route === 'about' ? (
-              <About />
-            ) : null}
+              ) : route === 'create' ? (
+                <>
+                  <Create
+                    budget={user.budgets[currentBudgetIndex]}
+                    handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                    handleFocusProjectedMonthlyIncome={
+                      this.handleFocusProjectedMonthlyIncome
+                    }
+                    handleFocusActualMonthlyIncome={
+                      this.handleFocusActualMonthlyIncome
+                    }
+                    handleFocusOutProjectedMonthlyIncome={
+                      this.handleFocusOutProjectedMonthlyIncome
+                    }
+                    handleFocusOutActualMonthlyIncome={
+                      this.handleFocusOutActualMonthlyIncome
+                    }
+                    messageCode={messageCode}
+                    inputCategory={input.category}
+                    handleCategoryInputChange={this.handleCategoryInputChange}
+                    handleAddEntry={this.handleAddEntry}
+                    handleDeleteEntry={this.handleDeleteEntry}
+                    handleFocusOutCategory={this.handleFocusOutCategory}
+                    handleFocusOutProjectedCost={
+                      this.handleFocusOutProjectedCost
+                    }
+                    handleFocusOutActualCost={this.handleFocusOutActualCost}
+                    handleUserClickedDeleteBudget={
+                      this.handleUserClickedDeleteBudget
+                    }
+                    userClickedDeleteBudget={userClickedDeleteBudget}
+                    handleDeleteBudget={this.handleDeleteBudget}
+                  />
+                </>
+              ) : route === 'budgets' ? (
+                <Budgets
+                  user={user}
+                  handleViewBudget={this.handleViewBudget}
+                  handleAddBudget={this.handleAddBudget}
+                  handleSaveBudgets={this.handleSaveBudgets}
+                  messageCode={messageCode}
+                />
+              ) : route === 'profile' ? (
+                <Profile
+                  user={user}
+                  inputName={input.name}
+                  handleNameInputChange={this.handleNameInputChange}
+                  handleNameChange={this.handleNameChange}
+                  handleBackgroundChange={this.handleBackgroundChange}
+                  backgrounds={backgrounds}
+                  messageCode={messageCode}
+                  maxBudgets={maxBudgets}
+                />
+              ) : route === 'about' ? (
+                <About />
+              ) : null}
+            </div>
           </div>
-        </div>
-      </CustomScrollbars>
+        </CustomScrollbars>
+        <PreloadedBackgrounds backgrounds={backgrounds} />
+      </>
     );
   }
 }

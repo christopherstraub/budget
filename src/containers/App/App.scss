@@ -29,7 +29,7 @@
     .navi__item,
     .title,
     .subtitle {
-      transition: color 4s ease-out;
+      transition: color 3s ease-in-out;
     }
   }
 }
@@ -43,7 +43,7 @@
   background-size: cover;
   background-color: $clr-login-box;
 
-  transition: background-image 4s ease-out;
+  transition: background-image 3s ease-in-out;
 }
 
 // Media queries.
