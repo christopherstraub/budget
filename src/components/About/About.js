@@ -6,8 +6,8 @@ const About = () => {
     <div className="flex justify-center mt4 ph4">
       <WindowBox classlist="mw9 tc">
         <p className="window-body">
-          <span className="clr-accent-light i">CSBudget</span> is maintained by
-          Christopher Straub and distributed under the MIT License.
+          CSBudget is maintained by Christopher Straub and distributed under the
+          MIT License.
         </p>
         <p className="window-body mb0">
           You can get in touch with Christopher
