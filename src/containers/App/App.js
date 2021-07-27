@@ -10,6 +10,7 @@ import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
 import cloneDeep from 'lodash/cloneDeep';
+import { nanoid } from 'nanoid';
 
 import Background1 from '../../images/bg1.jpg';
 import Background2 from '../../images/bg2.jpg';
@@ -32,7 +33,8 @@ import './App.scss';
 
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  route: 'create',
+  route: 'signup',
+  isLoggedIn: false,
   messageCode: null,
   input: {
     category: '',
@@ -52,20 +54,20 @@ const initialState = {
     useDarkMode: false,
   },
   maxBudgets: 24,
-  isLoggedIn: true,
   currentBudgetIndex: 0,
   userClickedDeleteBudget: false,
   user: {
-    id: 1,
-    name: 'Chris',
-    email: 'chris@gmail.com',
+    id: nanoid(),
+    isGuest: true,
+    name: 'Guest',
+    email: null,
     joined: null,
     budgets: [
       {
-        id: Math.round(Math.random() * 1000), //temp assignment of id
-        name: `${new Date(2021, 0).toLocaleString('default', {
+        id: nanoid(),
+        name: `${new Date().toLocaleString('default', {
           month: 'long',
-        })} ${new Date(2021, 0).getFullYear()}`,
+        })} ${new Date().getFullYear()}`,
         projectedMonthlyIncome: 0,
         actualMonthlyIncome: 0,
         getProjectedBalance() {
@@ -108,8 +110,13 @@ class App extends Component {
     this.state = initialState;
   }
 
-  // Get background from localStorage if it exists there.
-  componentWillMount() {
+  componentDidMount() {
+    this.getBackgroundFromLocalStorage();
+  }
+
+  // getBackgroundFromLocalStorage gets background from localStorage if it
+  // exists there and its value is different from the state background value.
+  getBackgroundFromLocalStorage() {
     if (this.state.background.name !== localStorage.getItem('background')) {
       const backgroundName =
         localStorage.getItem('background') ?? this.state.background.name;
@@ -118,6 +125,8 @@ class App extends Component {
         (background) => background.name === backgroundName
       );
 
+      // If the value of the localStorage background key is invalid,
+      // don't change the background.
       background =
         background.length === 0 ? [this.state.background] : background;
 
@@ -190,20 +199,24 @@ class App extends Component {
   };
 
   // Update state category input with user input.
-  handleCategoryInputChange = (event) => {
+  handleEntryCategoryInputChange = (event) => {
     const inputCopy = { ...this.state.input };
     inputCopy.category = event.target.value;
     this.setState({ input: inputCopy });
   };
 
+  handleEntryCategoryInputKeyDown = (event) => {
+    if (event.keyCode === 13 && event.target.value !== '') {
+      this.handleAddEntry();
+    }
+  };
+
   // Create entry object. If category is empty, set category to 'No category set'.
   createEntry = () => {
-    const category =
-      this.state.input.category === ''
-        ? 'No category set'
-        : this.state.input.category;
+    const category = this.state.input.category || 'No category set';
 
     return {
+      id: nanoid(),
       category,
       projectedCost: 0,
       actualCost: 0,
@@ -230,13 +243,10 @@ class App extends Component {
 
   // Event handler for delete entry button.
   handleDeleteEntry = (index) => {
-    console.log(index);
     const userCopy = cloneDeep(this.state.user);
-    const filteredEntries = userCopy.budgets[
-      this.state.currentBudgetIndex
-    ].entries.filter((entry, i) => i !== index);
+    const entries = userCopy.budgets[this.state.currentBudgetIndex].entries;
+    const filteredEntries = entries.filter((entry) => entry.id !== index);
     userCopy.budgets[this.state.currentBudgetIndex].entries = filteredEntries;
-    console.log(filteredEntries);
     this.setState({ user: userCopy });
   };
 
@@ -256,10 +266,14 @@ class App extends Component {
     );
     userCopy.budgets = filteredBudgets;
     this.setState({
-      user: userCopy,
       route: 'budgets',
       messageCode: 'budget-deleted',
       userClickedDeleteBudget: false,
+      currentBudgetIndex:
+        this.state.currentBudgetIndex >= 1
+          ? this.state.currentBudgetIndex - 1
+          : 0,
+      user: userCopy,
     });
   };
 
@@ -272,7 +286,7 @@ class App extends Component {
     );
 
     return {
-      id: Math.round(Math.random() * 1000), //temp assignment of id
+      id: nanoid(),
       name: `${date.toLocaleString('default', {
         month: 'long',
       })} ${date.getFullYear()}`,
@@ -406,14 +420,20 @@ class App extends Component {
   };
 
   // Update entry category if input is not empty.
-  handleFocusOutCategory = (text, index) => {
+  handleFocusOutEntryCategory = (text, id) => {
     const userCopy = cloneDeep(this.state.user);
+    const entries = userCopy.budgets[this.state.currentBudgetIndex].entries;
 
-    userCopy.budgets[this.state.currentBudgetIndex].entries[index].category =
-      text === ''
-        ? userCopy.budgets[this.state.currentBudgetIndex].entries[index]
-            .category
-        : text;
+    const updatedEntries = entries.map((entry) => {
+      if (entry.id === id) {
+        entry.category = text || 'entry.category';
+        console.log(entry.category);
+        return entry;
+      }
+      return entry;
+    });
+
+    userCopy.budgets[this.state.currentBudgetIndex].entries = updatedEntries;
 
     this.setState({ user: userCopy });
   };
@@ -533,10 +553,17 @@ class App extends Component {
                     }
                     messageCode={messageCode}
                     inputCategory={input.category}
-                    handleCategoryInputChange={this.handleCategoryInputChange}
+                    handleEntryCategoryInputChange={
+                      this.handleEntryCategoryInputChange
+                    }
+                    handleEntryCategoryInputKeyDown={
+                      this.handleEntryCategoryInputKeyDown
+                    }
                     handleAddEntry={this.handleAddEntry}
                     handleDeleteEntry={this.handleDeleteEntry}
-                    handleFocusOutCategory={this.handleFocusOutCategory}
+                    handleFocusOutEntryCategory={
+                      this.handleFocusOutEntryCategory
+                    }
                     handleFocusOutProjectedCost={
                       this.handleFocusOutProjectedCost
                     }
@@ -555,6 +582,7 @@ class App extends Component {
                   handleAddBudget={this.handleAddBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
                   messageCode={messageCode}
+                  currentBudgetIndex={currentBudgetIndex}
                 />
               ) : route === 'profile' ? (
                 <Profile

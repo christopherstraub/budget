@@ -10,10 +10,11 @@ const Entries = ({
   formattedEntries,
   handleFocusOutBudgetName,
   inputCategory,
-  handleCategoryInputChange,
+  handleEntryCategoryInputChange,
+  handleEntryCategoryInputKeyDown,
   handleAddEntry,
   handleDeleteEntry,
-  handleFocusOutCategory,
+  handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
@@ -47,7 +48,8 @@ const Entries = ({
 
       <div className="add-entry flex justify-center">
         <input
-          onChange={handleCategoryInputChange}
+          onChange={handleEntryCategoryInputChange}
+          onKeyDown={handleEntryCategoryInputKeyDown}
           className="input br3 pv2 ph3 mr3 w-100"
           type="text"
           id="name"
@@ -83,11 +85,11 @@ const Entries = ({
           </thead>
           <tbody>
             {formattedEntries.map((entry, index) => (
-              <tr key={index}>
+              <tr key={entry.id}>
                 <td className="entry flex items-center text-break">
                   <span
-                    onClick={() => handleDeleteEntry(index)}
-                    className="material-icons pointer mr2"
+                    onClick={() => handleDeleteEntry(entry.id)}
+                    className="material-icons pointer mr2 selection-transparent"
                   >
                     delete
                   </span>
@@ -98,7 +100,9 @@ const Entries = ({
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Category"
-                    onFocusOut={(text) => handleFocusOutCategory(text, index)}
+                    onFocusOut={(text) =>
+                      handleFocusOutEntryCategory(text, entry.id)
+                    }
                   />
                 </td>
                 <td className="entry text-break tr">

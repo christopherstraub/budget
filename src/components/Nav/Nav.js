@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Nav = ({ isLoggedIn, handleRouteChange }) => {
+const Nav = ({ handleRouteChange }) => {
   return (
     <nav>
       <ul className="navi list pl0 flex justify-center pt5">
@@ -32,7 +32,7 @@ const Nav = ({ isLoggedIn, handleRouteChange }) => {
           onClick={() => handleRouteChange('signin')} //DONT FORGET TO SIGN USER OUT
           className="navi__item pointer br-pill dim mh4"
         >
-          {isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
+          SIGN OUT
         </li>
       </ul>
     </nav>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from '../../components/Nav/Nav';
 
-const Header = ({ isLoggedIn, handleRouteChange }) => {
+const Header = ({ handleRouteChange, isLoggedIn }) => {
   return (
     <header>
       <h1
@@ -13,9 +13,7 @@ const Header = ({ isLoggedIn, handleRouteChange }) => {
         CSBudget
       </h1>
 
-      {isLoggedIn ? (
-        <Nav isLoggedIn={isLoggedIn} handleRouteChange={handleRouteChange} />
-      ) : null}
+      {isLoggedIn ? <Nav handleRouteChange={handleRouteChange} /> : null}
     </header>
   );
 };

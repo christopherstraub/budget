@@ -9,6 +9,7 @@ const Budgets = ({
   handleViewBudget,
   handleSaveBudgets,
   messageCode,
+  currentBudgetIndex,
 }) => {
   return (
     <div className="flex justify-center mt4 ph4">
@@ -43,9 +44,10 @@ const Budgets = ({
             ? null
             : user.budgets.map((budget, index) => (
                 <li
-                  key={index}
+                  key={budget.id}
                   onClick={() => handleViewBudget(index)}
-                  className="budget-name tc dim pointer mv4 text-break"
+                  className={`budget-name tc dim pointer mv4 text-break
+                  ${index === currentBudgetIndex ? 'current-budget' : null}`}
                 >
                   {budget.name}
                 </li>

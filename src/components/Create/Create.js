@@ -48,6 +48,7 @@ const formatEntries = (entries, formatter) => {
   if (entries.length === 0) return [];
   return entries.map((entry) => {
     return {
+      id: entry.id,
       category: entry.category,
       projectedCost: formatter.format(entry.projectedCost),
       actualCost: formatter.format(entry.actualCost),
@@ -65,10 +66,11 @@ const Create = ({
   handleFocusOutActualMonthlyIncome,
   messageCode,
   inputCategory,
-  handleCategoryInputChange,
+  handleEntryCategoryInputChange,
+  handleEntryCategoryInputKeyDown,
   handleAddEntry,
   handleDeleteEntry,
-  handleFocusOutCategory,
+  handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
@@ -90,10 +92,11 @@ const Create = ({
           formattedEntries={formattedEntries}
           handleFocusOutBudgetName={handleFocusOutBudgetName}
           inputCategory={inputCategory}
-          handleCategoryInputChange={handleCategoryInputChange}
+          handleEntryCategoryInputChange={handleEntryCategoryInputChange}
+          handleEntryCategoryInputKeyDown={handleEntryCategoryInputKeyDown}
           handleAddEntry={handleAddEntry}
           handleDeleteEntry={handleDeleteEntry}
-          handleFocusOutCategory={handleFocusOutCategory}
+          handleFocusOutEntryCategory={handleFocusOutEntryCategory}
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}

@@ -78,6 +78,11 @@
 
 .budget-name {
   @include text($clr-window-body, 3rem, $ff-window-body);
+
+  &.current-budget {
+    color: $clr-accent-light;
+    font-weight: bold;
+  }
 }
 
 .message {
