@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
-export default class CustomScrollbars extends Component {
+class CustomScrollbars extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
     this.state = { classlist: props.classlist, heightmax: props.heightmax };
@@ -36,3 +36,5 @@ export default class CustomScrollbars extends Component {
     );
   }
 }
+
+export default CustomScrollbars;

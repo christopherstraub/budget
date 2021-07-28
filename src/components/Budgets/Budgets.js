@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Message from '../Message/Message';
 import WindowBox from '../WindowBox/WindowBox';
 
 const Budgets = ({
@@ -8,18 +7,11 @@ const Budgets = ({
   handleAddBudget,
   handleViewBudget,
   handleSaveBudgets,
-  messageCode,
   currentBudgetIndex,
 }) => {
   return (
     <div className="flex justify-center mt4 ph4">
       <WindowBox>
-        {messageCode === 'budget-deleted' ? (
-          <div className="mb4">
-            <Message message="Budget deleted." />
-          </div>
-        ) : null}
-
         {user.budgets.length === 0 ? (
           <h1 className="window-title tc mb5 text-break">
             {user.name}, you don't have any budgets.
@@ -69,21 +61,6 @@ const Budgets = ({
           >
             SAVE BUDGETS
           </button>
-        </div>
-        <div className="mw7">
-          {messageCode === 'budget-created' ? (
-            <div className="mt4">
-              <Message message="Budget created." />
-            </div>
-          ) : messageCode === 'budgets-saved' ? (
-            <div className="mt4">
-              <Message message="Budgets saved." />
-            </div>
-          ) : messageCode === 'budgets-max-allowed' ? (
-            <div className="mt4">
-              <Message message="Maximum number of budgets created. You're an excellent financial planner!" />
-            </div>
-          ) : null}
         </div>
       </WindowBox>
     </div>

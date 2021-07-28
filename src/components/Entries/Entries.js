@@ -1,12 +1,9 @@
 import React from 'react';
 
-import Message from '../Message/Message';
-
 import EditableLabel from 'react-inline-editing';
 
 const Entries = ({
   budget,
-  messageCode,
   formattedEntries,
   handleFocusOutBudgetName,
   inputCategory,
@@ -94,15 +91,14 @@ const Entries = ({
                     delete
                   </span>
                   <EditableLabel
+                    key={entry.id}
                     text={entry.category}
                     labelClassName="entry text-break pointer mb0 lh-title"
                     inputClassName="input-entry ph2 br3 w-100"
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Category"
-                    onFocusOut={(text) =>
-                      handleFocusOutEntryCategory(text, entry.id)
-                    }
+                    onFocusOut={handleFocusOutEntryCategory(entry.id)}
                   />
                 </td>
                 <td className="entry text-break tr">
@@ -145,16 +141,6 @@ const Entries = ({
       </div>
 
       <div className="flex items-center pt4">
-        {messageCode === 'projected-cost-updated' ? (
-          <Message message="Projected cost updated." />
-        ) : messageCode === 'projected-cost-invalid' ? (
-          <Message message="Projected cost invalid." />
-        ) : messageCode === 'actual-cost-updated' ? (
-          <Message message="Actual cost updated." />
-        ) : messageCode === 'actual-cost-invalid' ? (
-          <Message message="Actual cost invalid." />
-        ) : null}
-
         {userClickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}

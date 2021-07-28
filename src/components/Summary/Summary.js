@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Message from '../Message/Message';
-
 import EditableLabel from 'react-inline-editing';
 
 const classListIfNegative = (value) => {
@@ -10,7 +8,6 @@ const classListIfNegative = (value) => {
 
 const Summary = ({
   budget,
-  messageCode,
   formattedBudget,
   handleFocusActualMonthlyIncome,
   handleFocusProjectedMonthlyIncome,
@@ -46,19 +43,6 @@ const Summary = ({
         onFocus={handleFocusProjectedMonthlyIncome}
         onFocusOut={handleFocusOutProjectedMonthlyIncome}
       />
-      {messageCode === 'projected-monthly-income-updated' ? (
-        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
-          <Message
-            message={`Income updated to ${formattedBudget.projectedMonthlyIncome}.`}
-          />
-        </div>
-      ) : messageCode === 'projected-monthly-income-invalid' ? (
-        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
-          <Message
-            message={`Input invalid. Income still ${formattedBudget.projectedMonthlyIncome}.`}
-          />
-        </div>
-      ) : null}
 
       <h2 className="number-label lh-title">
         Actual Monthly Income
@@ -78,19 +62,7 @@ const Summary = ({
         onFocus={handleFocusActualMonthlyIncome}
         onFocusOut={handleFocusOutActualMonthlyIncome}
       />
-      {messageCode === 'actual-monthly-income-updated' ? (
-        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
-          <Message
-            message={`Income updated to ${formattedBudget.actualMonthlyIncome}.`}
-          />
-        </div>
-      ) : messageCode === 'actual-monthly-income-invalid' ? (
-        <div className="mb4" style={{ marginTop: '-0.5rem' }}>
-          <Message
-            message={`Input invalid. Income still ${formattedBudget.actualMonthlyIncome}.`}
-          />
-        </div>
-      ) : null}
+
       <h2 className="number-label lh-copy">Projected Balance</h2>
       <h1
         className={`number tr text-break mb4 ${classListIfNegative(

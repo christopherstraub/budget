@@ -8,6 +8,8 @@
 @import '../../styles/components';
 
 .App {
+  position: relative;
+  overflow: hidden;
   font-family: $ff-body;
   color: $clr-body;
   min-height: 100vh;

@@ -7,6 +7,7 @@ import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
 import Create from '../../components/Create/Create';
 import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
+import Message from '../../components/Message/Message';
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
 import cloneDeep from 'lodash/cloneDeep';
@@ -22,19 +23,10 @@ import './App.scss';
 // VALID ROUTES
 // 'signin', 'signup', 'create', 'budgets', 'profile', 'about'
 
-// VALID MESSAGE CODES
-// 'projected-monthly-income-updated', 'actual-monthly-income-updated',
-// 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
-// 'projected-cost-updated', 'actual-cost-updated',
-// 'projected-cost-invalid', 'actual-cost-invalid',
-// 'budget-deleted', 'budget-created', 'budgets-saved',
-// 'budgets-max-allowed',
-// 'name-changed', 'background-changed'
-
 // Set initial state to be passed into App state upon application load.
 const initialState = {
-  route: 'signup',
-  isLoggedIn: false,
+  route: 'create',
+  isLoggedIn: true,
   messageCode: null,
   input: {
     category: '',
@@ -104,6 +96,13 @@ const initialState = {
   },
 };
 
+// Intl.NumberFormat object is a constructor that enables language sensitive number formatting.
+// Takes parameters ([locales[, options]]).
+const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 class App extends Component {
   constructor() {
     super();
@@ -112,6 +111,17 @@ class App extends Component {
 
   componentDidMount() {
     this.getBackgroundFromLocalStorage();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // If messageCode was updated, set a timeout to
+    // remove the messageCode.
+    if (this.state.messageCode !== prevState.messageCode) {
+      clearTimeout(this.messageTimer);
+      this.messageTimer = setTimeout(() => {
+        this.setState({ messageCode: null });
+      }, 4000);
+    }
   }
 
   // getBackgroundFromLocalStorage gets background from localStorage if it
@@ -420,14 +430,13 @@ class App extends Component {
   };
 
   // Update entry category if input is not empty.
-  handleFocusOutEntryCategory = (text, id) => {
+  handleFocusOutEntryCategory = (id) => (text) => {
     const userCopy = cloneDeep(this.state.user);
     const entries = userCopy.budgets[this.state.currentBudgetIndex].entries;
 
     const updatedEntries = entries.map((entry) => {
       if (entry.id === id) {
-        entry.category = text || 'entry.category';
-        console.log(entry.category);
+        entry.category = text || 'No category set';
         return entry;
       }
       return entry;
@@ -510,6 +519,19 @@ class App extends Component {
       maxBudgets,
     } = this.state;
 
+    let formattedProjectedMonthlyIncome;
+    let formattedActualMonthlyIncome;
+
+    if (user.budgets.length !== 0) {
+      formattedProjectedMonthlyIncome = formatterUnitedStatesDollar.format(
+        user.budgets[currentBudgetIndex].projectedMonthlyIncome
+      );
+
+      formattedActualMonthlyIncome = formatterUnitedStatesDollar.format(
+        user.budgets[currentBudgetIndex].actualMonthlyIncome
+      );
+    }
+
     return (
       <>
         <CustomScrollbars
@@ -551,7 +573,6 @@ class App extends Component {
                     handleFocusOutActualMonthlyIncome={
                       this.handleFocusOutActualMonthlyIncome
                     }
-                    messageCode={messageCode}
                     inputCategory={input.category}
                     handleEntryCategoryInputChange={
                       this.handleEntryCategoryInputChange
@@ -573,6 +594,7 @@ class App extends Component {
                     }
                     userClickedDeleteBudget={userClickedDeleteBudget}
                     handleDeleteBudget={this.handleDeleteBudget}
+                    formatter={formatterUnitedStatesDollar}
                   />
                 </>
               ) : route === 'budgets' ? (
@@ -581,7 +603,6 @@ class App extends Component {
                   handleViewBudget={this.handleViewBudget}
                   handleAddBudget={this.handleAddBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
-                  messageCode={messageCode}
                   currentBudgetIndex={currentBudgetIndex}
                 />
               ) : route === 'profile' ? (
@@ -592,12 +613,16 @@ class App extends Component {
                   handleNameChange={this.handleNameChange}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
-                  messageCode={messageCode}
                   maxBudgets={maxBudgets}
                 />
               ) : route === 'about' ? (
                 <About />
               ) : null}
+              <Message
+                messageCode={messageCode}
+                projectedMonthlyIncome={formattedProjectedMonthlyIncome}
+                actualMonthlyIncome={formattedActualMonthlyIncome}
+              />
             </div>
           </div>
         </CustomScrollbars>

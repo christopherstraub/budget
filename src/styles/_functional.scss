@@ -84,8 +84,31 @@
   }
 }
 
+@keyframes slideUpDown {
+  0% {
+    transform: translate(-50%, 100%);
+  }
+
+  10% {
+    transform: translate(-50%, 0);
+  }
+  90% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, 100%);
+  }
+}
+
 .message {
   @include text($clr-accent-light, $fs-message, $ff-message);
+
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  animation-name: slideUpDown;
+  animation-duration: 4s;
 }
 
 .text-shadow {
