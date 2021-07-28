@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Message from '../Message/Message';
 import WindowBox from '../WindowBox/WindowBox';
 
 const Profile = ({
@@ -10,22 +9,11 @@ const Profile = ({
   handleNameChange,
   handleBackgroundChange,
   backgrounds,
-  messageCode,
   maxBudgets,
 }) => {
   return (
     <div className="flex justify-center mt4 ph4">
       <WindowBox classlist="mw7 tc">
-        {messageCode === 'name-changed' ? (
-          <div className="mb4">
-            <Message message="Name changed." />
-          </div>
-        ) : messageCode === 'background-changed' ? (
-          <div className="mb4">
-            <Message message="Background changed." />
-          </div>
-        ) : null}
-
         <h1 className="window-title tc text-break">{user.name}</h1>
 
         <h2 className="window-body tc o-80 text-break mb5">

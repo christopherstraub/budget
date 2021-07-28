@@ -4,14 +4,7 @@ import WindowBox from '../WindowBox/WindowBox';
 import Summary from '../Summary/Summary';
 import Entries from '../Entries/Entries';
 
-// Intl.NumberFormat object is a constructor that enables language sensitive number formatting.
-// Takes parameters ([locales[, options]]).
-const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
-// We want to format negative numbers as numbers enclosed in parantheses.
+// Format negative numbers as numbers enclosed in parentheses.
 const formatNegativeValues = (formattedBudget) => {
   const entries = Object.entries(formattedBudget);
 
@@ -64,7 +57,6 @@ const Create = ({
   handleFocusProjectedMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
-  messageCode,
   inputCategory,
   handleEntryCategoryInputChange,
   handleEntryCategoryInputKeyDown,
@@ -76,19 +68,16 @@ const Create = ({
   handleUserClickedDeleteBudget,
   userClickedDeleteBudget,
   handleDeleteBudget,
+  formatter,
 }) => {
-  const formattedBudget = formatBudget(budget, formatterUnitedStatesDollar);
-  const formattedEntries = formatEntries(
-    budget.entries,
-    formatterUnitedStatesDollar
-  );
+  const formattedBudget = formatBudget(budget, formatter);
+  const formattedEntries = formatEntries(budget.entries, formatter);
 
   return (
     <div className="Create flex justify-center items-start mt4 ph4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
-          messageCode={messageCode}
           formattedEntries={formattedEntries}
           handleFocusOutBudgetName={handleFocusOutBudgetName}
           inputCategory={inputCategory}
@@ -108,7 +97,6 @@ const Create = ({
       <WindowBox classList="mh3" style={{ maxWidth: '350px' }}>
         <Summary
           budget={budget}
-          messageCode={messageCode}
           formattedBudget={formattedBudget}
           handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
           handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
