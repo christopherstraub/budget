@@ -15,7 +15,7 @@ const Entries = ({
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
-  userClickedDeleteBudget,
+  clickedDeleteBudget,
   handleDeleteBudget,
 }) => {
   return (
@@ -141,7 +141,7 @@ const Entries = ({
       </div>
 
       <div className="flex items-center pt4">
-        {userClickedDeleteBudget ? (
+        {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
