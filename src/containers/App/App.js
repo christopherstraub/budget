@@ -42,7 +42,7 @@ const initialState = {
   user: {
     id: null,
     isLoggedIn: false,
-    isGuest: true,
+    isGuest: false,
     displayName: 'Guest',
     username: null,
     joined: new Date(),
@@ -221,7 +221,7 @@ class App extends Component {
     // Handle user/guest sign out.
     else if (
       route !== this.state.route &&
-      route === 'signup' &&
+      (route === 'signup' || route === 'signin') &&
       this.state.user.isLoggedIn
     )
       this.setState({
