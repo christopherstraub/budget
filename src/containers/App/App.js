@@ -94,24 +94,24 @@ const initialState = {
 const backgrounds = [
   {
     name: 'ALPINE MOUNTAINS',
-    url: pathBg1,
+    path: pathBg1,
     useDarkLanding: false,
     initial: true,
   },
   {
     name: 'YOSEMITE VALLEY',
-    url: pathBg2,
+    path: pathBg2,
     useDarkLanding: true,
     initial: true,
   },
-  { name: 'BANFF', url: pathBg3, useDarkLanding: false, initial: false },
-  { name: 'MACHU PICCHU', url: pathBg4, useDarkLanding: true, initial: true },
-  { name: 'LAKESIDE', url: pathBg5, useDarkLanding: true, initial: false },
-  { name: 'WHISTLER', url: pathBg6, useDarkLanding: false, initial: false },
-  { name: 'MITTENWALD', url: pathBg7, useDarkLanding: false, initial: true },
-  { name: 'GRAND CANYON', url: pathBg8, useDarkLanding: true, initial: true },
-  { name: 'TRAIL', url: pathBg9, useDarkLanding: true, initial: false },
-  { name: 'SILHOUETTE', url: pathBg10, useDarkLanding: false, initial: true },
+  { name: 'BANFF', path: pathBg3, useDarkLanding: false, initial: false },
+  { name: 'MACHU PICCHU', path: pathBg4, useDarkLanding: true, initial: true },
+  { name: 'LAKESIDE', path: pathBg5, useDarkLanding: true, initial: false },
+  { name: 'WHISTLER', path: pathBg6, useDarkLanding: false, initial: false },
+  { name: 'MITTENWALD', path: pathBg7, useDarkLanding: false, initial: true },
+  { name: 'GRAND CANYON', path: pathBg8, useDarkLanding: true, initial: true },
+  { name: 'TRAIL', path: pathBg9, useDarkLanding: true, initial: false },
+  { name: 'SILHOUETTE', path: pathBg10, useDarkLanding: false, initial: true },
 ];
 
 // Intl.NumberFormat object is a constructor that enables language sensitive
@@ -237,8 +237,10 @@ class App extends Component {
       );
       this.setState({ background: selectedBackground[0] });
       setTimeout(() => {
-        this.setState({ messageCode: 'background-changed' });
-        this.clearMessageCode(4000);
+        if (this.state.messageCode !== 'background-changed') {
+          this.setState({ messageCode: 'background-changed' });
+          this.clearMessageCode(4000);
+        }
       }, 3000);
     } else if (localStorage.getItem('background') !== event.target.textContent)
       localStorage.setItem('background', event.target.textContent);
@@ -604,7 +606,7 @@ class App extends Component {
         >
           <div
             className="background"
-            style={{ backgroundImage: `url(${background.url})` }}
+            style={{ backgroundImage: `url(${background.path})` }}
           >
             <div className="App clr-light ff-primary fs-body">
               <Nav
