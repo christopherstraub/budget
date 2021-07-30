@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import Header from '../../components/Header/Header';
+import Nav from '../../components/Nav/Nav';
 import Landing from '../../components/Landing/Landing';
-import Budgets from '../../components/Budgets/Budgets';
+import SavedBudgets from '../../components/SavedBudgets/SavedBudgets';
 import About from '../../components/About/About';
 import Profile from '../../components/Profile/Profile';
-import Create from '../../components/Create/Create';
+import Budget from '../../components/Budget/Budget';
 import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
 import Message from '../../components/Message/Message';
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
@@ -13,47 +13,42 @@ import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/Preloade
 import cloneDeep from 'lodash/cloneDeep';
 import { nanoid } from 'nanoid';
 
-import Background1 from '../../images/bg1.jpg';
-import Background2 from '../../images/bg2.jpg';
-import Background3 from '../../images/bg3.jpg';
-import Background4 from '../../images/bg4.jpg';
+import pathBg1 from '../../images/bg1.webp';
+import pathBg2 from '../../images/bg2.webp';
+import pathBg3 from '../../images/bg3.webp';
+import pathBg4 from '../../images/bg4.webp';
+import pathBg5 from '../../images/bg5.webp';
+import pathBg6 from '../../images/bg6.webp';
+import pathBg7 from '../../images/bg7.webp';
+import pathBg8 from '../../images/bg8.webp';
+import pathBg9 from '../../images/bg9.webp';
+import pathBg10 from '../../images/bg10.webp';
 
 import './App.scss';
 
 // VALID ROUTES
-// 'signin', 'signup', 'create', 'budgets', 'profile', 'about'
+// 'signin', 'signup', 'budget', 'saved-budgets', 'profile', 'about'
 
-// Set initial state to be passed into App state upon application load.
+// Set initial state to be passed into App state.
 const initialState = {
-  route: 'create',
-  isLoggedIn: true,
+  route: 'signup',
   messageCode: null,
   input: {
     category: '',
-    name: '',
+    displayName: '',
     projectedMonthlyIncome: '',
     actualMonthlyIncome: '',
   },
-  backgrounds: [
-    { name: 'ALPINE MOUNTAINS', url: Background1, useDarkMode: false },
-    { name: 'MACHU PICCHU', url: Background2, useDarkMode: true },
-    { name: 'YOSEMITE VALLEY', url: Background3, useDarkMode: true },
-    { name: 'SPACE', url: Background4, useDarkMode: false },
-  ],
-  background: {
-    name: 'ALPINE MOUNTAINS',
-    url: Background1,
-    useDarkMode: false,
-  },
-  maxBudgets: 24,
-  currentBudgetIndex: 0,
-  userClickedDeleteBudget: false,
   user: {
-    id: nanoid(),
+    id: null,
+    isLoggedIn: false,
     isGuest: true,
-    name: 'Guest',
-    email: null,
-    joined: null,
+    displayName: 'Guest',
+    username: null,
+    joined: new Date(),
+    maxBudgets: 100,
+    currentBudgetIndex: 0,
+    clickedDeleteBudget: false,
     budgets: [
       {
         id: nanoid(),
@@ -96,7 +91,31 @@ const initialState = {
   },
 };
 
-// Intl.NumberFormat object is a constructor that enables language sensitive number formatting.
+const backgrounds = [
+  {
+    name: 'ALPINE MOUNTAINS',
+    url: pathBg1,
+    useDarkLanding: false,
+    initial: true,
+  },
+  {
+    name: 'YOSEMITE VALLEY',
+    url: pathBg2,
+    useDarkLanding: true,
+    initial: true,
+  },
+  { name: 'BANFF', url: pathBg3, useDarkLanding: false, initial: false },
+  { name: 'MACHU PICCHU', url: pathBg4, useDarkLanding: true, initial: true },
+  { name: 'LAKESIDE', url: pathBg5, useDarkLanding: true, initial: false },
+  { name: 'WHISTLER', url: pathBg6, useDarkLanding: false, initial: false },
+  { name: 'MITTENWALD', url: pathBg7, useDarkLanding: false, initial: true },
+  { name: 'GRAND CANYON', url: pathBg8, useDarkLanding: true, initial: true },
+  { name: 'TRAIL', url: pathBg9, useDarkLanding: true, initial: false },
+  { name: 'SILHOUETTE', url: pathBg10, useDarkLanding: false, initial: true },
+];
+
+// Intl.NumberFormat object is a constructor that enables language sensitive
+// number formatting.
 // Takes parameters ([locales[, options]]).
 const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -107,62 +126,112 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;
+    this.state.background = backgrounds[0];
   }
 
   componentDidMount() {
-    this.getBackgroundFromLocalStorage();
+    this.setBackgroundFromLocalStorage();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // If messageCode was updated, set a timeout to
-    // remove the messageCode.
-    if (this.state.messageCode !== prevState.messageCode) {
-      clearTimeout(this.messageTimer);
-      this.messageTimer = setTimeout(() => {
-        this.setState({ messageCode: null });
-      }, 4000);
-    }
-  }
+  /**
+   *
+   * @param {string} messageCode Message code. Valid message codes are commented in Message.js.
+   * @param {object} state The state to be updated with messageCode.
+   * @param {number} milliseconds Number of milliseconds to show message for.
+   */
+  updateMessageCode = (
+    messageCode,
+    state = this.state,
+    milliseconds = 4000
+  ) => {
+    if (this.messageCodeInterval) clearInterval(this.messageCodeInterval);
 
-  // getBackgroundFromLocalStorage gets background from localStorage if it
-  // exists there and its value is different from the state background value.
-  getBackgroundFromLocalStorage() {
-    if (this.state.background.name !== localStorage.getItem('background')) {
-      const backgroundName =
-        localStorage.getItem('background') ?? this.state.background.name;
+    const stateCopy = { ...state };
+    stateCopy.messageCode = messageCode;
+    this.setState(stateCopy);
+    this.messageCodeInterval = setInterval(() => {
+      this.setState({ messageCode: null });
+    }, milliseconds);
+  };
 
-      let background = this.state.backgrounds.filter(
-        (background) => background.name === backgroundName
+  // Sets background from localStorage if it exists there,
+  // otherwise set a random background.
+  setBackgroundFromLocalStorage() {
+    const localStorageBackgroundName = localStorage.getItem('background');
+    if (localStorageBackgroundName) {
+      const background = backgrounds.filter(
+        (background) => background.name === localStorageBackgroundName
       );
-
-      // If the value of the localStorage background key is invalid,
-      // don't change the background.
-      background =
-        background.length === 0 ? [this.state.background] : background;
-
-      localStorage.setItem('background', background[0].name);
-
       const stateCopy = { ...this.state };
       stateCopy.background = background[0];
       this.setState(stateCopy);
+      return;
     }
+
+    const initialBackgrounds = backgrounds.filter(
+      (background) => background.initial
+    );
+    const randomInitialBackgroundIndex = Math.floor(
+      Math.random() * initialBackgrounds.length
+    );
+    const randomBackgroundName =
+      initialBackgrounds[randomInitialBackgroundIndex].name;
+
+    const background = backgrounds.filter(
+      (background) => background.name === randomBackgroundName
+    );
+    const stateCopy = { ...this.state };
+    stateCopy.background = background[0];
+    this.setState(stateCopy);
   }
 
-  // If user routes to Create and they have no budgets, add a budget.
-  // Else if user is routing to a non-selected route, change route.
-  // If route does not equal 'signin' or 'signup', log user in.
   handleRouteChange = (route) => {
-    if (route === 'create' && this.state.user.budgets.length === 0) {
+    // Create a budget if user routes to Budget with no saved-budgets.
+    if (route === 'budget' && this.state.user.budgets.length === 0) {
       this.handleAddBudget();
-      this.setState({ route: 'create' });
-    } else if (this.state.route !== route)
-      this.setState({ route, messageCode: null });
-
-    // If we get user, log them in
-    if (route !== 'signin' && route !== 'signup')
-      this.setState({ isLoggedIn: true });
-    else {
-      this.setState({ isLoggedIn: false });
+      this.setState({ route: 'budget' });
+    }
+    // Handle user sign in.
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      !this.state.user.isGuest
+    ) {
+      localStorage.setItem('background', this.state.background.name);
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.isLoggedIn = true;
+      stateCopy.route = route;
+      this.updateMessageCode('user-logged-in', stateCopy, 12000);
+    }
+    // Handle guest sign in (don't set background in localStorage).
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      this.state.user.isGuest
+    ) {
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.isLoggedIn = true;
+      stateCopy.route = route;
+      this.updateMessageCode('user-logged-in', stateCopy, 12000);
+    }
+    // Handle user/guest sign out.
+    else if (
+      route !== this.state.route &&
+      route === 'signup' &&
+      this.state.user.isLoggedIn
+    )
+      this.setState({
+        route,
+        messageCode: null,
+        input: initialState.input,
+        user: initialState.user,
+      });
+    else if (route !== this.state.route) {
+      this.setState({ route });
     }
   };
 
@@ -172,38 +241,36 @@ class App extends Component {
     if (this.state.background.name !== event.target.textContent) {
       localStorage.setItem('background', event.target.textContent);
 
-      const selectedBackground = this.state.backgrounds.filter(
+      const selectedBackground = backgrounds.filter(
         (background) => background.name === event.target.textContent
       );
-
       const stateCopy = { ...this.state };
       stateCopy.background = selectedBackground[0];
-      stateCopy.messageCode = 'background-changed';
-      this.setState(stateCopy);
+      this.updateMessageCode('background-changed', stateCopy, 3000);
     } else if (localStorage.getItem('background') !== event.target.textContent)
       localStorage.setItem('background', event.target.textContent);
   };
 
-  // Update state name input with user input.
-  handleNameInputChange = (event) => {
+  // Update state displayName input with user input.
+  handleDisplayNameInputChange = (event) => {
     const inputCopy = { ...this.state.input };
-    inputCopy.name = event.target.value;
+    inputCopy.displayName = event.target.value;
     this.setState({ input: inputCopy });
   };
 
-  // Update name if name input is different from current name
-  // and name input is not empty.
-  handleNameChange = () => {
+  // Update display name if display name input is different from current
+  // display name and display name input is not empty.
+  handleDisplayNameChange = () => {
     if (
-      this.state.user.name !== this.state.input.name &&
-      this.state.input.name !== ''
+      this.state.user.displayName !== this.state.input.displayName &&
+      this.state.input.displayName !== ''
     ) {
-      const userCopy = { ...this.state.user };
-      userCopy.name = this.state.input.name;
-      this.setState({ user: userCopy, messageCode: 'name-changed' });
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.displayName = this.state.input.displayName;
+      this.updateMessageCode('display-name-changed', stateCopy);
       // Reset input field.
       const inputCopy = { ...this.state.input };
-      inputCopy.name = '';
+      inputCopy.displayName = '';
       this.setState({ input: inputCopy });
     }
   };
@@ -221,7 +288,8 @@ class App extends Component {
     }
   };
 
-  // Create entry object. If category is empty, set category to 'No category set'.
+  // Create entry object.
+  // If input category is empty, set category to 'No category set'.
   createEntry = () => {
     const category = this.state.input.category || 'No category set';
 
@@ -241,7 +309,7 @@ class App extends Component {
   handleAddEntry = () => {
     const userCopy = cloneDeep(this.state.user);
 
-    userCopy.budgets[this.state.currentBudgetIndex].entries.push(
+    userCopy.budgets[this.state.user.currentBudgetIndex].entries.push(
       this.createEntry()
     );
     this.setState({ user: userCopy });
@@ -254,37 +322,46 @@ class App extends Component {
   // Event handler for delete entry button.
   handleDeleteEntry = (index) => {
     const userCopy = cloneDeep(this.state.user);
-    const entries = userCopy.budgets[this.state.currentBudgetIndex].entries;
+    const entries =
+      userCopy.budgets[this.state.user.currentBudgetIndex].entries;
     const filteredEntries = entries.filter((entry) => entry.id !== index);
-    userCopy.budgets[this.state.currentBudgetIndex].entries = filteredEntries;
+    userCopy.budgets[this.state.user.currentBudgetIndex].entries =
+      filteredEntries;
     this.setState({ user: userCopy });
   };
 
   // Event handler for initial delete button.
   // Changes delete button to confirm delete button.
   handleUserClickedDeleteBudget = (userClicked) => {
-    if (userClicked) this.setState({ userClickedDeleteBudget: true });
-    else this.setState({ userClickedDeleteBudget: false });
+    const userCopy = cloneDeep(this.state.user);
+    if (userClicked) {
+      userCopy.clickedDeleteBudget = true;
+      this.setState({ user: userCopy });
+    } else {
+      userCopy.clickedDeleteBudget = false;
+      this.setState({ user: userCopy });
+    }
   };
 
   // Event handler for confirm delete button.
   handleDeleteBudget = () => {
-    const userCopy = cloneDeep(this.state.user);
+    const stateCopy = cloneDeep(this.state);
 
-    const filteredBudgets = userCopy.budgets.filter(
-      (budget, i) => i !== this.state.currentBudgetIndex
+    const filteredBudgets = stateCopy.user.budgets.filter(
+      (budget, i) => i !== this.state.user.currentBudgetIndex
     );
-    userCopy.budgets = filteredBudgets;
-    this.setState({
-      route: 'budgets',
-      messageCode: 'budget-deleted',
-      userClickedDeleteBudget: false,
+
+    Object.assign(stateCopy.user, {
+      budgets: filteredBudgets,
       currentBudgetIndex:
-        this.state.currentBudgetIndex >= 1
-          ? this.state.currentBudgetIndex - 1
+        this.state.user.currentBudgetIndex >= 1
+          ? this.state.user.currentBudgetIndex - 1
           : 0,
-      user: userCopy,
+      clickedDeleteBudget: false,
     });
+    stateCopy.route = 'saved-budgets';
+
+    this.updateMessageCode('budget-deleted', stateCopy);
   };
 
   // Create budget object. Budget name is set using the Date object.
@@ -335,36 +412,65 @@ class App extends Component {
   };
 
   // Event handler for view budget link.
-  // Sets currentBudgetIndex to the selected budget's index and route to 'create'.
+  // Sets user.currentBudgetIndex to the selected budget's index
+  // and route to 'budget'.
   handleViewBudget = (index) => {
-    this.setState({ currentBudgetIndex: index, route: 'create' });
+    const stateCopy = cloneDeep(this.state);
+    stateCopy.user.currentBudgetIndex = index;
+    stateCopy.route = 'budget';
+    this.setState(stateCopy);
   };
 
   handleAddBudget = () => {
-    if (this.state.user.budgets.length === this.state.maxBudgets) {
-      this.setState({ messageCode: 'budgets-max-allowed' });
+    if (this.state.user.budgets.length === this.state.user.maxBudgets) {
+      this.updateMessageCode('budgets-max-allowed', this.state, 6000);
+    } else if (
+      this.state.user.budgets.length >= 4 &&
+      this.state.user.budgets.length <= 9
+    ) {
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets.push(this.createBudget());
+      this.updateMessageCode('budgets-saved-many', stateCopy, 5000);
     } else {
-      const userCopy = cloneDeep(this.state.user);
-
-      userCopy.budgets.push(this.createBudget());
-      this.setState({
-        user: userCopy,
-        messageCode: 'budget-created',
-      });
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets.push(this.createBudget());
+      this.updateMessageCode('budget-created', stateCopy);
     }
   };
 
   // Event handler for save budgets button.
   handleSaveBudgets = () => {
-    this.setState({ messageCode: 'budgets-saved' });
+    this.updateMessageCode('budgets-saved');
   };
 
   // Update budget name if user input is not empty.
   handleFocusOutBudgetName = (text) => {
     const userCopy = cloneDeep(this.state.user);
 
-    userCopy.budgets[this.state.currentBudgetIndex].name =
-      text === '' ? userCopy.budgets[this.state.currentBudgetIndex].name : text;
+    userCopy.budgets[this.state.user.currentBudgetIndex].name =
+      text === ''
+        ? userCopy.budgets[this.state.user.currentBudgetIndex].name
+        : text;
+
+    this.setState({ user: userCopy });
+  };
+
+  // Update entry category if input is not empty.
+  handleFocusOutEntryCategory = (id) => (text) => {
+    const userCopy = cloneDeep(this.state.user);
+    const entries =
+      userCopy.budgets[this.state.user.currentBudgetIndex].entries;
+
+    const updatedEntries = entries.map((entry) => {
+      if (entry.id === id) {
+        entry.category = text || 'No category set';
+        return entry;
+      }
+      return entry;
+    });
+
+    userCopy.budgets[this.state.user.currentBudgetIndex].entries =
+      updatedEntries;
 
     this.setState({ user: userCopy });
   };
@@ -383,22 +489,24 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
-      this.setState({ messageCode: 'projected-monthly-income-invalid' });
+      this.updateMessageCode(
+        'projected-monthly-income-invalid',
+        this.state,
+        5000
+      );
     else if (
       Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.currentBudgetIndex]
+      this.state.user.budgets[this.state.user.currentBudgetIndex]
         .projectedMonthlyIncome
     ) {
       this.setState({ messageCode: null });
     } else {
-      const userCopy = cloneDeep(this.state.user);
-      userCopy.budgets[this.state.currentBudgetIndex].projectedMonthlyIncome =
-        Math.round(filteredText * 100) / 100;
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets[
+        this.state.user.currentBudgetIndex
+      ].projectedMonthlyIncome = Math.round(filteredText * 100) / 100;
 
-      this.setState({
-        user: userCopy,
-        messageCode: 'projected-monthly-income-updated',
-      });
+      this.updateMessageCode('projected-monthly-income-updated', stateCopy);
     }
   };
 
@@ -411,43 +519,23 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
-      this.setState({ messageCode: 'actual-monthly-income-invalid' });
+      this.updateMessageCode('actual-monthly-income-invalid', this.state, 5000);
     else if (
       Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.currentBudgetIndex].actualMonthlyIncome
+      this.state.user.budgets[this.state.user.currentBudgetIndex]
+        .actualMonthlyIncome
     ) {
       this.setState({ messageCode: null });
     } else {
-      const userCopy = cloneDeep(this.state.user);
-      userCopy.budgets[this.state.currentBudgetIndex].actualMonthlyIncome =
-        Math.round(filteredText * 100) / 100;
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets[
+        this.state.user.currentBudgetIndex
+      ].actualMonthlyIncome = Math.round(filteredText * 100) / 100;
 
-      this.setState({
-        user: userCopy,
-        messageCode: 'actual-monthly-income-updated',
-      });
+      this.updateMessageCode('actual-monthly-income-updated', stateCopy);
     }
   };
 
-  // Update entry category if input is not empty.
-  handleFocusOutEntryCategory = (id) => (text) => {
-    const userCopy = cloneDeep(this.state.user);
-    const entries = userCopy.budgets[this.state.currentBudgetIndex].entries;
-
-    const updatedEntries = entries.map((entry) => {
-      if (entry.id === id) {
-        entry.category = text || 'No category set';
-        return entry;
-      }
-      return entry;
-    });
-
-    userCopy.budgets[this.state.currentBudgetIndex].entries = updatedEntries;
-
-    this.setState({ user: userCopy });
-  };
-
-  // See comments for handleFocusOutProjectedMonthlyIncome/handleFocusOutActualMonthlyIncome
   handleFocusOutProjectedCost = (text, index) => {
     let filteredText = text;
 
@@ -457,23 +545,20 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
-      this.setState({ messageCode: 'projected-cost-invalid' });
+      this.updateMessageCode('projected-cost-invalid', this.state, 5000);
     else if (
       Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.currentBudgetIndex].entries[index]
+      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .projectedCost
     ) {
       this.setState({ messageCode: null });
     } else {
-      const userCopy = cloneDeep(this.state.user);
-      userCopy.budgets[this.state.currentBudgetIndex].entries[
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
         index
       ].projectedCost = Math.round(filteredText * 100) / 100;
 
-      this.setState({
-        user: userCopy,
-        messageCode: 'projected-cost-updated',
-      });
+      this.setState(stateCopy);
     }
   };
 
@@ -486,51 +571,25 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText))
-      this.setState({ messageCode: 'actual-cost-invalid' });
+      this.updateMessageCode('actual-cost-invalid', this.state, 5000);
     else if (
       Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.currentBudgetIndex].entries[index]
+      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .actualCost
     ) {
       this.setState({ messageCode: null });
     } else {
-      const userCopy = cloneDeep(this.state.user);
-      userCopy.budgets[this.state.currentBudgetIndex].entries[
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
         index
       ].actualCost = Math.round(filteredText * 100) / 100;
 
-      this.setState({
-        user: userCopy,
-        messageCode: 'actual-cost-updated',
-      });
+      this.setState(stateCopy);
     }
   };
 
   render() {
-    const {
-      route,
-      messageCode,
-      input,
-      backgrounds,
-      isLoggedIn,
-      currentBudgetIndex,
-      userClickedDeleteBudget,
-      user,
-      maxBudgets,
-    } = this.state;
-
-    let formattedProjectedMonthlyIncome;
-    let formattedActualMonthlyIncome;
-
-    if (user.budgets.length !== 0) {
-      formattedProjectedMonthlyIncome = formatterUnitedStatesDollar.format(
-        user.budgets[currentBudgetIndex].projectedMonthlyIncome
-      );
-
-      formattedActualMonthlyIncome = formatterUnitedStatesDollar.format(
-        user.budgets[currentBudgetIndex].actualMonthlyIncome
-      );
-    }
+    const { route, messageCode, input, background, user } = this.state;
 
     return (
       <>
@@ -540,26 +599,24 @@ class App extends Component {
         >
           <div
             className="background"
-            style={{ backgroundImage: `url(${this.state.background.url})` }}
+            style={{ backgroundImage: `url(${background.url})` }}
           >
-            <div
-              className={`App ${
-                this.state.background.useDarkMode ? 'dark' : null
-              }`}
-            >
-              <Header
-                isLoggedIn={isLoggedIn}
+            <div className="App">
+              <Nav
                 handleRouteChange={this.handleRouteChange}
+                loggedIn={user.isLoggedIn}
+                isGuest={user.isGuest}
               />
               {route === 'signin' || route === 'signup' ? (
                 <Landing
-                  route={route}
                   handleRouteChange={this.handleRouteChange}
+                  route={route}
+                  useDarkLanding={background.useDarkLanding}
                 />
-              ) : route === 'create' ? (
+              ) : route === 'budget' ? (
                 <>
-                  <Create
-                    budget={user.budgets[currentBudgetIndex]}
+                  <Budget
+                    budget={user.budgets[user.currentBudgetIndex]}
                     handleFocusOutBudgetName={this.handleFocusOutBudgetName}
                     handleFocusProjectedMonthlyIncome={
                       this.handleFocusProjectedMonthlyIncome
@@ -592,36 +649,39 @@ class App extends Component {
                     handleUserClickedDeleteBudget={
                       this.handleUserClickedDeleteBudget
                     }
-                    userClickedDeleteBudget={userClickedDeleteBudget}
+                    clickedDeleteBudget={user.clickedDeleteBudget}
                     handleDeleteBudget={this.handleDeleteBudget}
                     formatter={formatterUnitedStatesDollar}
                   />
                 </>
-              ) : route === 'budgets' ? (
-                <Budgets
+              ) : route === 'saved-budgets' ? (
+                <SavedBudgets
                   user={user}
                   handleViewBudget={this.handleViewBudget}
                   handleAddBudget={this.handleAddBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
-                  currentBudgetIndex={currentBudgetIndex}
+                  currentBudgetIndex={user.currentBudgetIndex}
                 />
               ) : route === 'profile' ? (
                 <Profile
                   user={user}
-                  inputName={input.name}
-                  handleNameInputChange={this.handleNameInputChange}
-                  handleNameChange={this.handleNameChange}
+                  inputDisplayName={input.displayName}
+                  handleDisplayNameInputChange={
+                    this.handleDisplayNameInputChange
+                  }
+                  handleDisplayNameChange={this.handleDisplayNameChange}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
-                  maxBudgets={maxBudgets}
+                  currentBackground={background}
+                  maxBudgets={user.maxBudgets}
                 />
               ) : route === 'about' ? (
                 <About />
               ) : null}
               <Message
                 messageCode={messageCode}
-                projectedMonthlyIncome={formattedProjectedMonthlyIncome}
-                actualMonthlyIncome={formattedActualMonthlyIncome}
+                user={user}
+                formatter={formatterUnitedStatesDollar}
               />
             </div>
           </div>
