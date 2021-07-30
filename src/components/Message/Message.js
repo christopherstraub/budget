@@ -1,65 +1,100 @@
 import React from 'react';
 
 // VALID MESSAGE CODES
+// App:
+// 'user-logged-in'
 // Entries:
-// 'projected-cost-updated', 'projected-cost-invalid',
-// 'actual-cost-updated', 'actual-cost-invalid',
+// 'projected-cost-invalid', 'actual-cost-invalid'
 // Summary:
-// 'projected-monthly-income-updated', 'projected-monthly-income-invalid',
-// actual-monthly-income-updated', 'actual-monthly-income-invalid',
+// 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
+// 'projected-monthly-income-updated', 'actual-monthly-income-updated'
 // Budgets:
 // 'budget-deleted', 'budget-created', 'budgets-saved',
-// 'budgets-max-allowed',
+// 'budgets-saved-many', 'budgets-max-allowed'
 // Profile:
-// 'name-changed', 'background-changed'
+// 'display-name-changed', 'background-changed'
 
-const getMessage = (
-  messageCode,
-  projectedMonthlyIncome,
-  actualMonthlyIncome
-) => {
+const backgroundChangedMessages = [
+  'One of my favorites!',
+  'Marvelous choice!',
+  'Wonderful choice!',
+  'Excellent choice!',
+  'Fantastic choice!',
+  'Splendid choice!',
+  'Fabulous choice!',
+  'Marvelous selection!',
+  'Wonderful selection!',
+  'Excellent selection!',
+  'Fantastic selection!',
+  'Splendid selection!',
+  'Fabulous selection!',
+];
+
+const getBackgroundChangedMessage = (arrayBackgroundChangedMessages) => {
+  const randomBackgroundChangedMessageIndex = Math.floor(
+    Math.random() * arrayBackgroundChangedMessages.length
+  );
+  return arrayBackgroundChangedMessages[randomBackgroundChangedMessageIndex];
+};
+
+const getMessage = (messageCode, user, formattedBudget) => {
   switch (messageCode) {
-    case 'projected-monthly-income-updated':
-      return `Income updated to ${projectedMonthlyIncome}.`;
-    case 'projected-monthly-income-invalid':
-      return `Input invalid. Income still ${projectedMonthlyIncome}.`;
-    case 'actual-monthly-income-updated':
-      return `Income updated to ${actualMonthlyIncome}.`;
-    case 'actual-monthly-income-invalid':
-      return `Input invalid. Income still ${actualMonthlyIncome}.`;
-    case 'projected-cost-updated':
-      return 'Projected cost updated.';
+    case 'user-logged-in':
+      return `Welcome ${user.displayName}. You can get started by entering your projected monthly income.`;
     case 'projected-cost-invalid':
-      return 'Projected cost invalid.';
-    case 'actual-cost-updated':
-      return 'Actual cost updated.';
     case 'actual-cost-invalid':
-      return 'Actual cost invalid.';
+    case 'projected-monthly-income-invalid':
+    case 'actual-monthly-income-invalid':
+      return `Invalid input.`;
+    case 'projected-monthly-income-updated':
+      return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
+    case 'actual-monthly-income-updated':
+      return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
     case 'budget-deleted':
       return 'Budget deleted.';
     case 'budget-created':
-      return 'Budget created.';
+      return 'Created new budget.';
     case 'budgets-saved':
-      return 'Budgets saved.';
+      return user.budgets.length === 0
+        ? 'Saved budgets.'
+        : user.budgets.length === 1
+        ? 'Saved 1 budget.'
+        : `Saved ${user.budgets.length} budgets.`;
+    case 'budgets-saved-many':
+      return `${user.budgets.length} budgets! You're a savvy financial planner.`;
     case 'budgets-max-allowed':
-      return "Maximum number of budgets created. You're an excellent financial planner!";
-    case 'name-changed':
-      return 'Name changed.';
+      return "Maximum number of budgets created. That's a lot of budgets!";
+    case 'display-name-changed':
+      return `Display name changed successfully.`;
     case 'background-changed':
-      return 'Background changed.';
+      return `${getBackgroundChangedMessage(backgroundChangedMessages)}`;
     default:
       return null;
   }
 };
 
-const Message = ({
-  messageCode,
-  projectedMonthlyIncome,
-  actualMonthlyIncome,
-}) => {
+const Message = ({ messageCode, user, formatter }) => {
+  const formattedProjectedMonthlyIncome =
+    user.budgets.length > 0
+      ? formatter.format(
+          user.budgets[user.currentBudgetIndex].projectedMonthlyIncome
+        )
+      : null;
+  const formattedActualMonthlyIncome =
+    user.budgets.length > 0
+      ? formatter.format(
+          user.budgets[user.currentBudgetIndex].actualMonthlyIncome
+        )
+      : null;
+
   return messageCode === null ? null : (
     <h2 className="message bg--window-box tc text-break mb0 p-5 br3 br--top">
-      {getMessage(messageCode, projectedMonthlyIncome, actualMonthlyIncome)}
+      {getMessage(
+        messageCode,
+        user,
+        formattedProjectedMonthlyIncome,
+        formattedActualMonthlyIncome
+      )}
     </h2>
   );
 };

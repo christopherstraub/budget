@@ -1,42 +1,59 @@
 import React from 'react';
 
-const Nav = ({ handleRouteChange }) => {
-  return (
-    <nav>
-      <ul className="navi list pl0 flex justify-center pt5">
+const Nav = ({ handleRouteChange, loggedIn, isGuest }) => {
+  return loggedIn ? (
+    <nav className="flex justify-center ph5 ttc bg--window-box">
+      <ul className="list flex pv2 mb0 items-center">
         <li
-          onClick={() => handleRouteChange('create')}
-          className="navi__item pointer br-pill dim mh4"
+          onClick={() => handleRouteChange('budget')}
+          className="logo selection-transparent pointer relative mr4"
         >
-          CREATE
+          CSBudget
         </li>
         <li
-          onClick={() => handleRouteChange('budgets')}
-          className="navi__item pointer br-pill dim mh4"
+          onClick={() => handleRouteChange('budget')}
+          className="nav-item pointer dim mr4"
         >
-          BUDGETS
+          view budget
+        </li>
+        <li
+          onClick={() => handleRouteChange('saved-budgets')}
+          className="nav-item pointer dim mr4"
+        >
+          saved budgets
         </li>
         <li
           onClick={() => handleRouteChange('profile')}
-          className="navi__item pointer br-pill dim mh4"
+          className="nav-item pointer dim"
         >
-          PROFILE
-        </li>
-        <li
-          onClick={() => handleRouteChange('about')}
-          className="navi__item pointer br-pill dim mh4"
-        >
-          ABOUT
-        </li>
-        <li
-          onClick={() => handleRouteChange('signin')} //DONT FORGET TO SIGN USER OUT
-          className="navi__item pointer br-pill dim mh4"
-        >
-          SIGN OUT
+          profile
         </li>
       </ul>
+      <ul className="list flex pv2 items-center ml-auto mb0">
+        <li
+          onClick={() => handleRouteChange('about')}
+          className="nav-item pointer dim"
+        >
+          about
+        </li>
+        {isGuest ? (
+          <li
+            onClick={() => handleRouteChange('signup')}
+            className="nav-item pointer dim ml4"
+          >
+            sign up
+          </li>
+        ) : (
+          <li
+            onClick={() => handleRouteChange('signin')}
+            className="nav-item pointer dim ml4"
+          >
+            sign out
+          </li>
+        )}
+      </ul>
     </nav>
-  );
+  ) : null;
 };
 
 export default Nav;

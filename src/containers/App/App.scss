@@ -13,61 +13,31 @@
   font-family: $ff-body;
   color: $clr-body;
   min-height: 100vh;
-  &.dark {
-    .logo.header__logo {
-      color: $clr-logo-dark;
-    }
-    .navi__item {
-      color: $clr-nav-item-dark;
-    }
-    .title {
-      color: $clr-title-dark;
-    }
-    .subtitle {
-      color: $clr-subtitle-dark;
-    }
-  }
-
-  .logo.header__logo,
-  .navi__item,
-  .title,
-  .subtitle {
-    transition: color 3s ease-in-out;
-  }
 }
 
-// Single line syntax: background: no-repeat center url('../../images/bg2.jpg') fixed;
-// Does not include background-size.
 .background {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
-  background-color: $clr-login-box;
+  -webkit-transition: background-image 3s ease-in-out;
+  -moz-transition: background-image 3s ease-in-out;
+  -o-transition: background-image 3s ease-in-out;
   transition: background-image 3s ease-in-out;
 }
 
 // Media queries.
 
 @media only screen and (max-width: 1300px) {
-  .Create {
+  .Budget {
     padding-left: 8rem;
     padding-right: 8rem;
   }
 }
 
 @media only screen and (max-width: 1200px) {
-  // Responsive nav and header.
-  .navi {
-    padding-top: 10rem;
-  }
-  .header__logo {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  // Responsive Create component.
-  .Create {
+  // Responsive Budget component.
+  .Budget {
     flex-wrap: wrap;
     padding-right: 2rem;
     padding-left: 2rem;
@@ -77,18 +47,17 @@
   }
 }
 
+@media only screen and (max-width: 1000px) {
+}
+
 @media only screen and (max-width: 768px) {
-  .navi {
-    align-items: center;
-    flex-direction: column;
-  }
-  .navi__item {
+  .nav-item {
     font-size: $fs-nav-item-mobile;
     margin: 0.5rem 0;
   }
 
-  // Responsive Create component.
-  .Create {
+  // Responsive Budget component.
+  .Budget {
     > .bg--window-box {
       margin-left: 0;
       margin-right: 0;

@@ -1,7 +1,6 @@
 // Dark mode.
 $clr-logo-dark: black;
-$clr-nav-item-dark: black;
-$clr-title-dark: black;
+$clr-title-dark: rgb(20, 20, 20);
 $clr-subtitle-dark: rgba(0, 0, 0, 0.85);
 
 // Defaults.
@@ -11,6 +10,7 @@ $ff-body: 'Open Sans', sans-serif;
 // Logo.
 $clr-logo: white;
 $fs-logo: 4rem;
+$fs-logo-nav: 3.2rem;
 $ff-logo: 'Lobster', cursive;
 
 // Title.
@@ -36,16 +36,20 @@ $fs-input: 1.8rem;
 $clr-placeholder: rgb(125, 125, 125);
 
 // Login box.
-$clr-login-box: rgba(0, 116, 145, 0.9);
+$clr-login-box-bottom: rgba(5, 105, 130, 0.9);
+$clr-login-box-top: rgba(5, 105, 130, 0.9);
+$clr-login-box-legacy-support: rgb(5, 105, 130);
 $clr-login-button: rgba(0, 0, 0, 0.5);
 $clr-login-button-active: rgba(0, 0, 0, 0.4);
 $clr-login-button-text: white;
 $fs-login-button-text: 2.2rem;
 $clr-continue-as-guest: rgba(255, 255, 255, 0.7);
-$fs-continue-as-guest: 1.5rem;
+$fs-continue-as-guest: 1.6rem;
 
 // Default window.
-$clr-window-box: rgba(19, 60, 85, 0.95);
+$clr-window-box-bottom: rgba(22, 71, 102, 0.9);
+$clr-window-box-top: rgba(19, 60, 85, 0.95);
+$clr-window-box-legacy-support: rgb(22, 71, 102);
 $clr-window-title: white;
 $fs-window-title: 2.4rem;
 $clr-window-body: white;

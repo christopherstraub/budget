@@ -4,35 +4,36 @@ import WindowBox from '../WindowBox/WindowBox';
 
 const Profile = ({
   user,
-  inputName,
-  handleNameInputChange,
-  handleNameChange,
+  inputDisplayName,
+  handleDisplayNameInputChange,
+  handleDisplayNameChange,
   handleBackgroundChange,
   backgrounds,
+  currentBackground,
   maxBudgets,
 }) => {
   return (
     <div className="flex justify-center mt4 ph4">
       <WindowBox classlist="mw7 tc">
-        <h1 className="window-title tc text-break">{user.name}</h1>
+        <h1 className="window-title tc text-break">{user.displayName}</h1>
 
         <h2 className="window-body tc o-80 text-break mb5">
-          {user.budgets.length}/{maxBudgets} budgets
+          {user.budgets.length}/{maxBudgets} saved budgets
         </h2>
 
-        <h2 className="window-body mb3">Change name</h2>
+        <h2 className="window-body mb3">Change display name</h2>
         <div className="flex justify-center">
           <input
-            onChange={handleNameInputChange}
+            onChange={handleDisplayNameInputChange}
             className="input br3 pv1 ph3 mr3 w-100"
             type="text"
-            id="name"
-            name="name"
+            id="display-name"
+            name="display-name"
             placeholder="Name"
-            value={inputName}
+            value={inputDisplayName}
           />
           <button
-            onClick={handleNameChange}
+            onClick={handleDisplayNameChange}
             className="button bg--green pv2 ph4"
           >
             SAVE
@@ -45,14 +46,16 @@ const Profile = ({
             <button
               key={index}
               onClick={handleBackgroundChange}
-              className="button bg--accent-dark mr3 mb3 pv2 ph3"
+              className={`button bg--accent-dark mr3 mb3 pv2 ph3
+              ${background.name === currentBackground.name ? 'fw-bold' : null}
+              `}
             >
               {background.name}
             </button>
           ))}
 
           <h2 className="window-body o-80 tc mt5">
-            Member since {new Date().toLocaleDateString()}
+            Member since {user.joined.toLocaleDateString()}
           </h2>
         </div>
       </WindowBox>

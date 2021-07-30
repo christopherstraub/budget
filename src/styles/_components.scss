@@ -11,11 +11,10 @@
       cursor: default;
     }
   }
-}
 
-.header__logo {
-  top: 2rem;
-  left: 4rem;
+  nav > ul > & {
+    font-size: $fs-logo-nav;
+  }
 }
 
 .button {
@@ -63,7 +62,6 @@
 .login-box {
   max-width: 300px;
   border: 1px solid $clr-login-button;
-  background-color: $clr-login-box;
 
   .submit {
     border: 0;
@@ -72,4 +70,11 @@
       background-color: $clr-login-button-active;
     }
   }
+}
+
+.landing {
+  padding-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
