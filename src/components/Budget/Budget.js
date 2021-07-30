@@ -17,7 +17,12 @@ const formatNegativeValues = (formattedBudget) => {
   return Object.fromEntries(formattedNegativeValues);
 };
 
-// formatCurrency returns an object with formatted values to be display in the Summary component.
+/**
+ *
+ * @param {object} budget The budget to be formatted (values should be numbers).
+ * @param {object} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
+ * @returns Formatted budget.
+ */
 const formatCurrency = (budget, formatter) => {
   return {
     projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
@@ -36,7 +41,12 @@ const formatBudget = (budget, formatter) => {
   return formatNegativeValues(formatCurrency(budget, formatter));
 };
 
-// Format entries returns a formatted entries object. If no entries, returns an empty array.
+/**
+ *
+ * @param {object} entries The entries to be formatted.
+ * @param {*} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
+ * @returns Formatted entries.
+ */
 const formatEntries = (entries, formatter) => {
   if (entries.length === 0) return [];
   return entries.map((entry) => {
@@ -50,7 +60,7 @@ const formatEntries = (entries, formatter) => {
   });
 };
 
-const Create = ({
+const Budget = ({
   budget,
   handleFocusOutBudgetName,
   handleFocusActualMonthlyIncome,
@@ -66,7 +76,7 @@ const Create = ({
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
-  userClickedDeleteBudget,
+  clickedDeleteBudget,
   handleDeleteBudget,
   formatter,
 }) => {
@@ -74,7 +84,7 @@ const Create = ({
   const formattedEntries = formatEntries(budget.entries, formatter);
 
   return (
-    <div className="Create flex justify-center items-start mt4 ph4">
+    <div className="Budget flex justify-center items-start mt4 ph4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
@@ -89,7 +99,7 @@ const Create = ({
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
-          userClickedDeleteBudget={userClickedDeleteBudget}
+          clickedDeleteBudget={clickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
         />
       </WindowBox>
@@ -110,4 +120,4 @@ const Create = ({
   );
 };
 
-export default Create;
+export default Budget;

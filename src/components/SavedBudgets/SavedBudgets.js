@@ -2,7 +2,7 @@ import React from 'react';
 
 import WindowBox from '../WindowBox/WindowBox';
 
-const Budgets = ({
+const SavedBudgets = ({
   user,
   handleAddBudget,
   handleViewBudget,
@@ -14,15 +14,15 @@ const Budgets = ({
       <WindowBox>
         {user.budgets.length === 0 ? (
           <h1 className="window-title tc mb5 text-break">
-            {user.name}, you don't have any budgets.
+            {user.displayName}, you don't have any budgets.
           </h1>
         ) : user.budgets.length === 1 ? (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here's your budget.
+            {user.displayName}, here's your budget.
           </h1>
         ) : (
           <h1 className="window-title tc mb4 text-break">
-            {user.name}, here are your
+            {user.displayName}, here are your
             <span className="clr-accent-light b">
               {' '}
               {user.budgets.length}
@@ -38,7 +38,7 @@ const Budgets = ({
                 <li
                   key={budget.id}
                   onClick={() => handleViewBudget(index)}
-                  className={`budget-name tc dim pointer mv4 text-break
+                  className={`budget-name tc pointer mv4 text-break
                   ${index === currentBudgetIndex ? 'current-budget' : null}`}
                 >
                   {budget.name}
@@ -52,7 +52,7 @@ const Budgets = ({
             className="button bg--accent-dark pv2 ph4 w-33 mr2"
             style={{ width: 'max-content' }}
           >
-            CREATE NEW BUDGET
+            NEW BUDGET
           </button>
           <button
             onClick={handleSaveBudgets}
@@ -67,4 +67,4 @@ const Budgets = ({
   );
 };
 
-export default Budgets;
+export default SavedBudgets;
