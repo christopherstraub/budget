@@ -55,7 +55,9 @@ const getMessage = (messageCode, user, formattedBudget) => {
     case 'budget-created':
       return 'Created new budget.';
     case 'budgets-saved':
-      return user.budgets.length === 0
+      return user.isGuest
+        ? 'Sign in to save your budgets!'
+        : user.budgets.length === 0
         ? 'Saved budgets.'
         : user.budgets.length === 1
         ? 'Saved 1 budget.'
