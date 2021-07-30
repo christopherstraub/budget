@@ -26,10 +26,17 @@
 // Text.
 .title {
   @include text($clr-title, $fs-title, $ff-title);
+
+  section.dark > & {
+    @include text($clr-title-dark, $fs-title, $ff-title);
+  }
 }
 
 .subtitle {
   @include text($clr-subtitle, $fs-subtitle);
+  section.dark > & {
+    @include text($clr-subtitle-dark, $fs-subtitle);
+  }
 }
 
 .login-button-text {
@@ -40,7 +47,7 @@
   @include text($clr-continue-as-guest, $fs-continue-as-guest);
 }
 
-.navi__item {
+.nav-item {
   @include text($clr-nav-item, $fs-nav-item, $ff-nav-item);
 }
 
@@ -79,36 +86,26 @@
 .budget-name {
   @include text($clr-window-body, 3rem, $ff-window-body);
 
-  &.current-budget {
+  &:hover {
     color: $clr-accent-light;
   }
-}
 
-@keyframes slideUpDown {
-  0% {
-    transform: translate(-50%, 100%);
-  }
+  &.current-budget {
+    color: $clr-accent-light;
 
-  10% {
-    transform: translate(-50%, 0);
-  }
-  90% {
-    transform: translate(-50%, 0);
-  }
-  100% {
-    transform: translate(-50%, 100%);
+    &:hover {
+      opacity: 0.5;
+    }
   }
 }
 
 .message {
-  @include text($clr-accent-light, $fs-message, $ff-message);
+  @include text($clr-body, $fs-message, $ff-message);
 
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 100%);
-  animation-name: slideUpDown;
-  animation-duration: 4s;
+  transform: translateX(-50%);
 }
 
 .text-shadow {
@@ -145,11 +142,21 @@
 }
 
 .bg--window-box {
-  background: rgb(22, 71, 102);
+  background-color: $clr-window-box-legacy-support;
   background: linear-gradient(
     0deg,
-    rgba(22, 71, 102, 0.9) 0%,
-    $clr-window-box 100%
+    $clr-login-box-bottom 0%,
+    $clr-login-box-top 90%
+  );
+  background: rgba(7, 64, 86, 0.9);
+}
+
+.bg--login-box {
+  background-color: $clr-login-box-legacy-support;
+  background: linear-gradient(
+    0deg,
+    $clr-login-box-bottom 0%,
+    $clr-login-box-top 50%
   );
 }
 
