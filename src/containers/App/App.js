@@ -236,8 +236,11 @@ class App extends Component {
         (background) => background.name === event.target.textContent
       );
       this.setState({ background: selectedBackground[0] });
-      setTimeout(() => {
-        if (this.state.messageCode !== 'background-changed') {
+      this.displayBackgroundChangedTimeout = setTimeout(() => {
+        if (
+          this.state.messageCode !== 'background-changed' &&
+          this.state.route === 'profile'
+        ) {
           this.setState({ messageCode: 'background-changed' });
           this.clearMessageCode(4000);
         }
@@ -427,10 +430,7 @@ class App extends Component {
     stateCopy.user.budgets.push(this.createBudget());
     this.setState(stateCopy);
 
-    if (
-      this.state.user.budgets.length >= 4 &&
-      this.state.user.budgets.length <= 9
-    ) {
+    if (this.state.user.budgets.length === 4) {
       this.setState({ messageCode: 'budgets-created-many' });
       this.clearMessageCode(5000);
       return;
@@ -613,6 +613,7 @@ class App extends Component {
                 handleRouteChange={this.handleRouteChange}
                 loggedIn={user.isLoggedIn}
                 isGuest={user.isGuest}
+                route={route}
               />
               {route === 'signin' || route === 'signup' ? (
                 <Landing
