@@ -42,7 +42,7 @@ const initialState = {
   user: {
     id: null,
     isLoggedIn: false,
-    isGuest: false,
+    isGuest: true,
     displayName: 'Guest',
     username: null,
     joined: new Date(),
@@ -94,24 +94,24 @@ const initialState = {
 const backgrounds = [
   {
     name: 'ALPINE MOUNTAINS',
-    url: pathBg1,
+    path: pathBg1,
     useDarkLanding: false,
     initial: true,
   },
   {
     name: 'YOSEMITE VALLEY',
-    url: pathBg2,
+    path: pathBg2,
     useDarkLanding: true,
     initial: true,
   },
-  { name: 'BANFF', url: pathBg3, useDarkLanding: false, initial: false },
-  { name: 'MACHU PICCHU', url: pathBg4, useDarkLanding: true, initial: true },
-  { name: 'LAKESIDE', url: pathBg5, useDarkLanding: true, initial: false },
-  { name: 'WHISTLER', url: pathBg6, useDarkLanding: false, initial: false },
-  { name: 'MITTENWALD', url: pathBg7, useDarkLanding: false, initial: true },
-  { name: 'GRAND CANYON', url: pathBg8, useDarkLanding: true, initial: true },
-  { name: 'TRAIL', url: pathBg9, useDarkLanding: true, initial: false },
-  { name: 'SILHOUETTE', url: pathBg10, useDarkLanding: false, initial: true },
+  { name: 'BANFF', path: pathBg3, useDarkLanding: false, initial: false },
+  { name: 'MACHU PICCHU', path: pathBg4, useDarkLanding: true, initial: true },
+  { name: 'LAKESIDE', path: pathBg5, useDarkLanding: true, initial: false },
+  { name: 'WHISTLER', path: pathBg6, useDarkLanding: false, initial: false },
+  { name: 'MITTENWALD', path: pathBg7, useDarkLanding: false, initial: true },
+  { name: 'GRAND CANYON', path: pathBg8, useDarkLanding: true, initial: true },
+  { name: 'TRAIL', path: pathBg9, useDarkLanding: true, initial: false },
+  { name: 'SILHOUETTE', path: pathBg10, useDarkLanding: false, initial: true },
 ];
 
 // Intl.NumberFormat object is a constructor that enables language sensitive
@@ -135,21 +135,12 @@ class App extends Component {
 
   /**
    *
-   * @param {string} messageCode Message code. Valid message codes are commented in Message.js.
-   * @param {object} state The state to be updated with messageCode.
-   * @param {number} milliseconds Number of milliseconds to show message for.
+   * @param {number} milliseconds Number of milliseconds to clear message after.
    */
-  updateMessageCode = (
-    messageCode,
-    state = this.state,
-    milliseconds = 4000
-  ) => {
-    if (this.messageCodeInterval) clearInterval(this.messageCodeInterval);
+  clearMessageCode = (milliseconds = 3000) => {
+    if (this.messageCodeTimeout) clearTimeout(this.messageCodeTimeout);
 
-    const stateCopy = { ...state };
-    stateCopy.messageCode = messageCode;
-    this.setState(stateCopy);
-    this.messageCodeInterval = setInterval(() => {
+    this.messageCodeTimeout = setTimeout(() => {
       this.setState({ messageCode: null });
     }, milliseconds);
   };
@@ -200,10 +191,10 @@ class App extends Component {
       !this.state.user.isGuest
     ) {
       localStorage.setItem('background', this.state.background.name);
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.isLoggedIn = true;
-      stateCopy.route = route;
-      this.updateMessageCode('user-logged-in', stateCopy, 12000);
+      const userCopy = { ...this.state.user };
+      userCopy.isLoggedIn = true;
+      this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
+      this.clearMessageCode(12000);
     }
     // Handle guest sign in (don't set background in localStorage).
     else if (
@@ -213,10 +204,10 @@ class App extends Component {
       !this.state.user.isLoggedIn &&
       this.state.user.isGuest
     ) {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.isLoggedIn = true;
-      stateCopy.route = route;
-      this.updateMessageCode('user-logged-in', stateCopy, 12000);
+      const userCopy = { ...this.state.user };
+      userCopy.isLoggedIn = true;
+      this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
+      this.clearMessageCode(12000);
     }
     // Handle user/guest sign out.
     else if (
@@ -244,9 +235,16 @@ class App extends Component {
       const selectedBackground = backgrounds.filter(
         (background) => background.name === event.target.textContent
       );
-      const stateCopy = { ...this.state };
-      stateCopy.background = selectedBackground[0];
-      this.updateMessageCode('background-changed', stateCopy, 3000);
+      this.setState({ background: selectedBackground[0] });
+      this.displayBackgroundChangedTimeout = setTimeout(() => {
+        if (
+          this.state.messageCode !== 'background-changed' &&
+          this.state.route === 'profile'
+        ) {
+          this.setState({ messageCode: 'background-changed' });
+          this.clearMessageCode(4000);
+        }
+      }, 3000);
     } else if (localStorage.getItem('background') !== event.target.textContent)
       localStorage.setItem('background', event.target.textContent);
   };
@@ -267,11 +265,10 @@ class App extends Component {
     ) {
       const stateCopy = cloneDeep(this.state);
       stateCopy.user.displayName = this.state.input.displayName;
-      this.updateMessageCode('display-name-changed', stateCopy);
-      // Reset input field.
-      const inputCopy = { ...this.state.input };
-      inputCopy.displayName = '';
-      this.setState({ input: inputCopy });
+      stateCopy.input.displayName = '';
+      stateCopy.messageCode = 'display-name-changed';
+      this.setState(stateCopy);
+      this.clearMessageCode();
     }
   };
 
@@ -345,13 +342,11 @@ class App extends Component {
 
   // Event handler for confirm delete button.
   handleDeleteBudget = () => {
-    const stateCopy = cloneDeep(this.state);
-
-    const filteredBudgets = stateCopy.user.budgets.filter(
+    const filteredBudgets = this.state.user.budgets.filter(
       (budget, i) => i !== this.state.user.currentBudgetIndex
     );
 
-    Object.assign(stateCopy.user, {
+    const updatedUser = Object.assign(cloneDeep(this.state.user), {
       budgets: filteredBudgets,
       currentBudgetIndex:
         this.state.user.currentBudgetIndex >= 1
@@ -359,9 +354,13 @@ class App extends Component {
           : 0,
       clickedDeleteBudget: false,
     });
-    stateCopy.route = 'saved-budgets';
 
-    this.updateMessageCode('budget-deleted', stateCopy);
+    this.setState({
+      user: updatedUser,
+      route: 'saved-budgets',
+      messageCode: 'budget-deleted',
+    });
+    this.clearMessageCode();
   };
 
   // Create budget object. Budget name is set using the Date object.
@@ -423,24 +422,27 @@ class App extends Component {
 
   handleAddBudget = () => {
     if (this.state.user.budgets.length === this.state.user.maxBudgets) {
-      this.updateMessageCode('budgets-max-allowed', this.state, 6000);
-    } else if (
-      this.state.user.budgets.length >= 4 &&
-      this.state.user.budgets.length <= 9
-    ) {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets.push(this.createBudget());
-      this.updateMessageCode('budgets-saved-many', stateCopy, 5000);
-    } else {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets.push(this.createBudget());
-      this.updateMessageCode('budget-created', stateCopy);
+      this.setState({ messageCode: 'budgets-max-allowed' });
+      this.clearMessageCode(6000);
+      return;
     }
+    const stateCopy = cloneDeep(this.state);
+    stateCopy.user.budgets.push(this.createBudget());
+    this.setState(stateCopy);
+
+    if (this.state.user.budgets.length === 4) {
+      this.setState({ messageCode: 'budgets-created-many' });
+      this.clearMessageCode(5000);
+      return;
+    }
+    this.setState({ messageCode: 'budget-created' });
+    this.clearMessageCode();
   };
 
   // Event handler for save budgets button.
   handleSaveBudgets = () => {
-    this.updateMessageCode('budgets-saved');
+    this.setState({ messageCode: 'budgets-saved' });
+    this.clearMessageCode();
   };
 
   // Update budget name if user input is not empty.
@@ -475,38 +477,39 @@ class App extends Component {
     this.setState({ user: userCopy });
   };
 
-  // Update monthly income with user input.
-  // Handle parentheses by formatting as negative number.
-  // If user input isNaN, set messageCode to invalid.
-  // If rounded user input is equal to current monthly income, do not update.
-  // Else, update monthly income.
   handleFocusOutProjectedMonthlyIncome = (text) => {
     let filteredText = text;
 
+    // Format text enclosed in parentheses as a negative number.
+    // Ex '(100)' = '-100'.
     if (filteredText.startsWith('(') && filteredText.endsWith(')'))
       filteredText = filteredText.replace('(', '-').replace(')', '');
 
+    // Remove commas. Ex '-10,000' = '10000'.
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText))
-      this.updateMessageCode(
-        'projected-monthly-income-invalid',
-        this.state,
-        5000
-      );
+    // If text isNaN, don't update state.
+    if (isNaN(filteredText)) {
+      this.setState({ messageCode: 'projected-monthly-income-invalid' });
+      this.clearMessageCode(4000);
+    }
+
+    // If input is equal to current state, don't update state.
     else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex]
         .projectedMonthlyIncome
-    ) {
+    )
       this.setState({ messageCode: null });
-    } else {
+    // Update state.
+    else {
       const stateCopy = cloneDeep(this.state);
       stateCopy.user.budgets[
         this.state.user.currentBudgetIndex
       ].projectedMonthlyIncome = Math.round(filteredText * 100) / 100;
-
-      this.updateMessageCode('projected-monthly-income-updated', stateCopy);
+      stateCopy.messageCode = 'projected-monthly-income-updated';
+      this.setState(stateCopy);
+      this.clearMessageCode();
     }
   };
 
@@ -518,21 +521,23 @@ class App extends Component {
 
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText))
-      this.updateMessageCode('actual-monthly-income-invalid', this.state, 5000);
-    else if (
+    if (isNaN(filteredText)) {
+      this.setState({ messageCode: 'actual-monthly-income-invalid' });
+      this.clearMessageCode(4000);
+    } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex]
         .actualMonthlyIncome
-    ) {
+    )
       this.setState({ messageCode: null });
-    } else {
+    else {
       const stateCopy = cloneDeep(this.state);
       stateCopy.user.budgets[
         this.state.user.currentBudgetIndex
       ].actualMonthlyIncome = Math.round(filteredText * 100) / 100;
-
-      this.updateMessageCode('actual-monthly-income-updated', stateCopy);
+      stateCopy.messageCode = 'actual-monthly-income-updated';
+      this.setState(stateCopy);
+      this.clearMessageCode(4000);
     }
   };
 
@@ -544,15 +549,16 @@ class App extends Component {
 
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText))
-      this.updateMessageCode('projected-cost-invalid', this.state, 5000);
-    else if (
+    if (isNaN(filteredText)) {
+      this.setState({ messageCode: 'projected-cost-invalid' });
+      this.clearMessageCode(4000);
+    } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .projectedCost
-    ) {
+    )
       this.setState({ messageCode: null });
-    } else {
+    else {
       const stateCopy = cloneDeep(this.state);
       stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
         index
@@ -570,15 +576,16 @@ class App extends Component {
 
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
-    if (isNaN(filteredText))
-      this.updateMessageCode('actual-cost-invalid', this.state, 5000);
-    else if (
+    if (isNaN(filteredText)) {
+      this.setState({ messageCode: 'actual-cost-invalid' });
+      this.clearMessageCode(4000);
+    } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .actualCost
-    ) {
+    )
       this.setState({ messageCode: null });
-    } else {
+    else {
       const stateCopy = cloneDeep(this.state);
       stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
         index
@@ -599,13 +606,14 @@ class App extends Component {
         >
           <div
             className="background"
-            style={{ backgroundImage: `url(${background.url})` }}
+            style={{ backgroundImage: `url(${background.path})` }}
           >
-            <div className="App">
+            <div className="App clr-light ff-primary fs-body">
               <Nav
                 handleRouteChange={this.handleRouteChange}
                 loggedIn={user.isLoggedIn}
                 isGuest={user.isGuest}
+                route={route}
               />
               {route === 'signin' || route === 'signup' ? (
                 <Landing

@@ -2,52 +2,52 @@ import React from 'react';
 
 const SignUp = ({ handleRouteChange }) => {
   return (
-    <div className="flex justify-center">
-      <div className="login-box bg--login-box br3 tc pt5 pb4">
-        <h1 className="logo login selection-transparent tc mb4">CSBudget</h1>
-        <div className="ph4">
-          <input
-            className="input br3 pa3 mv2 w-100"
-            type="text"
-            id="display-name"
-            name="display-name"
-            placeholder="Display Name"
-          />
-          <input
-            className="input br3 pa3 mv2 w-100"
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
-          />
-          <input
-            className="input br3 pa3 mv2 w-100"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-          />
-          <input
-            onClick={() => handleRouteChange('budget')}
-            className="submit login-button-text outline-0 br3 pa3 mv3 w-100"
-            type="submit"
-            value="Sign Up"
-          />
-          <h2
-            onClick={() => handleRouteChange('signin')}
-            className="continue-as-guest pointer mt3 mb6 dim"
-          >
-            Have an account? Sign in.
-          </h2>
-          <h3
-            onClick={() => handleRouteChange('budget')}
-            className="continue-as-guest pointer dim"
-          >
-            Continue as Guest
-          </h3>
-        </div>
+    <>
+      <div className="relative">
+        <input
+          className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          type="text"
+          id="display-name"
+          name="display-name"
+          required
+        />
+        <span className="floating-label clr-dark-accent fs-body">
+          Display Name
+        </span>
       </div>
-    </div>
+      <div className="relative">
+        <input
+          className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          type="text"
+          id="username"
+          name="username"
+          required
+        />
+        <span className="floating-label clr-dark-accent fs-body">Username</span>
+      </div>
+      <div className="relative">
+        <input
+          className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          type="password"
+          id="password"
+          name="password"
+          required
+        />
+        <span className="floating-label clr-dark-accent fs-body">Password</span>
+      </div>
+      <button
+        onClick={() => handleRouteChange('budget')}
+        className="button-transparent selection-transparent clr-light fs-body fw7 bg--dark border-0 br3 pv3 ph3 mv3 w-100"
+      >
+        Sign Up
+      </button>
+      <button
+        onClick={() => handleRouteChange('signin')}
+        className="clr-light fs-body fw3 bg-transparent border-0 pointer mt2 mb6 underline-hover"
+      >
+        Have an account? <span className="fw6">Sign in</span>.
+      </button>
+    </>
   );
 };
 

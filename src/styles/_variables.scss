@@ -1,97 +1,37 @@
-// Dark mode.
-$clr-logo-dark: black;
-$clr-title-dark: rgb(20, 20, 20);
-$clr-subtitle-dark: rgba(0, 0, 0, 0.85);
-
-// Defaults.
-$clr-body: white;
-$ff-body: 'Open Sans', sans-serif;
-
-// Logo.
-$clr-logo: white;
-$fs-logo: 4rem;
-$fs-logo-nav: 3.2rem;
-$ff-logo: 'Lobster', cursive;
-
-// Title.
-$clr-title: white;
-$fs-title: 4.2rem;
-$ff-title: 'Roboto', sans-serif;
-
-// Subtitle:
-$clr-subtitle: rgba(255, 255, 255, 0.85);
-$fs-subtitle: 2.2rem;
-
 // Colors.
+$clr-light: rgb(255, 255, 255);
+$clr-light-accent: rgb(200, 200, 200);
+$clr-dark: rgb(34, 34, 34);
+$clr-dark-accent: rgb(113, 113, 113);
 $clr-accent-dark: #3679b8;
 $clr-accent-light: #84d2f6;
 $clr-green: #0c8126;
 $clr-red: red;
 $clr-dark-red: rgb(135, 0, 0);
 
-// Input.
-$clr-input: black;
-$clr-input-box: white;
-$fs-input: 1.8rem;
-$clr-placeholder: rgb(125, 125, 125);
+// Font sizes.
+$fs-title: 6.4rem;
+$fs-heading: 4.8rem;
+$fs-subtitle: 3.2rem;
+$fs-subheading: 2.4rem;
+$fs-body: 1.6rem;
 
-// Login box.
+// Font families.
+$ff-primary: 'Open Sans', sans-serif;
+$ff-logo: 'Lobster', cursive;
+$ff-mono: 'Roboto Mono', monospace;
+
+// Sign in box.
 $clr-login-box-bottom: rgba(5, 105, 130, 0.9);
 $clr-login-box-top: rgba(5, 105, 130, 0.9);
 $clr-login-box-legacy-support: rgb(5, 105, 130);
-$clr-login-button: rgba(0, 0, 0, 0.5);
-$clr-login-button-active: rgba(0, 0, 0, 0.4);
-$clr-login-button-text: white;
-$fs-login-button-text: 2.2rem;
-$clr-continue-as-guest: rgba(255, 255, 255, 0.7);
-$fs-continue-as-guest: 1.6rem;
 
-// Default window.
+// Window box.
 $clr-window-box-bottom: rgba(22, 71, 102, 0.9);
 $clr-window-box-top: rgba(19, 60, 85, 0.95);
 $clr-window-box-legacy-support: rgb(22, 71, 102);
-$clr-window-title: white;
-$fs-window-title: 2.4rem;
-$clr-window-body: white;
-$fs-window-body: 2rem;
-$ff-window-body: 'Montserrat', sans-serif;
-
-// Default button.
-$clr-button-text: white;
-$fs-button-text: 1.8rem;
-
-// Nav.
-$clr-nav-item: white;
-$fs-nav-item: 2.4rem;
-$ff-nav-item: 'Lato', sans-serif;
-$fs-nav-item-mobile: 3rem;
-
-// Summary.
-$clr-summary-title: white;
-$fs-summary-title: 3.8rem;
-$clr-entries-title: white;
-$fs-entries-title: 3.8rem;
-$clr-number: white;
-$fs-number: 3rem;
-$ff-number: 'Lato', sans-serif;
-$clr-number-label: #dbdbdb;
-$fs-number-label: 2.2rem;
-$ff-number-label: 'Montserrat', sans-serif;
-
-// Entries.
-$clr-entry-title: #444444;
-$fs-entry-title: 2rem;
-$clr-entry: #444444;
-$fs-entry: 1.8rem;
-
-// Message.
-$fs-message: 2rem;
-$ff-message: 'Roboto';
-
-// Text shadow.
-$text-shadow: 2px 1px 1px #302e2e;
 
 // Scrollbars.
-$clr-scrollbar-window-box: #84d2f6;
-$clr-scrollbar-app: white;
-$clr-scrollbar-app-dark: black;
+$clr-scrollbar-app: $clr-light;
+$clr-scrollbar-app-dark: $clr-dark;
+$clr-scrollbar-window-box: $clr-accent-light;

@@ -4,22 +4,18 @@ import WindowBox from '../WindowBox/WindowBox';
 const About = () => {
   return (
     <div className="flex justify-center mt4 ph4">
-      <WindowBox classlist="mw9 tc">
-        <p className="window-body">
+      <WindowBox>
+        <p className="clr-light fs-body mb0">
           CSBudget is maintained by Christopher Straub and distributed under the
-          MIT License.
-        </p>
-        <p className="window-body mb0">
-          You can get in touch with Christopher
+          MIT License. You can get in touch with Christopher{' '}
           <a
             href="
 http://www.chrisstraub.com/
             "
-            className="anchor link"
+            className="clr-accent-light anchor hover-opacity"
             target="_blank"
             style={{ textDecoration: 'none' }}
           >
-            {' '}
             here
           </a>
           .
@@ -30,4 +26,3 @@ http://www.chrisstraub.com/
 };
 
 export default About;
-// CCUSTOM BUTTON ANIM

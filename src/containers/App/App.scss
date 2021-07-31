@@ -1,5 +1,5 @@
-@import '../../styles/variables';
 @import '~bootstrap/scss/bootstrap';
+@import '../../styles/variables';
 
 // Functional classes.
 @import '../../styles/functional';
@@ -7,12 +7,14 @@
 // Component classes.
 @import '../../styles/components';
 
-.App {
-  position: relative;
-  overflow: hidden;
-  font-family: $ff-body;
-  color: $clr-body;
-  min-height: 100vh;
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .background {
@@ -26,41 +28,8 @@
   transition: background-image 3s ease-in-out;
 }
 
-// Media queries.
-
-@media only screen and (max-width: 1300px) {
-  .Budget {
-    padding-left: 8rem;
-    padding-right: 8rem;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-  // Responsive Budget component.
-  .Budget {
-    flex-wrap: wrap;
-    padding-right: 2rem;
-    padding-left: 2rem;
-    > .bg--window-box:first-child {
-      margin-bottom: 5rem;
-    }
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-}
-
-@media only screen and (max-width: 768px) {
-  .nav-item {
-    font-size: $fs-nav-item-mobile;
-    margin: 0.5rem 0;
-  }
-
-  // Responsive Budget component.
-  .Budget {
-    > .bg--window-box {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
+.App {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
 }

@@ -5,6 +5,4 @@ import 'tachyons';
 
 import App from './containers/App/App';
 
-import './index.css';
-
 ReactDOM.render(<App />, document.getElementById('root'));

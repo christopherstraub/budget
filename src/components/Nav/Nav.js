@@ -1,57 +1,65 @@
 import React from 'react';
 
-const Nav = ({ handleRouteChange, loggedIn, isGuest }) => {
+const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
   return loggedIn ? (
-    <nav className="flex justify-center ph5 ttc bg--window-box">
-      <ul className="list flex pv2 mb0 items-center">
-        <li
+    <nav className="flex justify-center ph5 bg--window-box">
+      <div className="list flex pv2 mb0 items-center ttc">
+        <button
           onClick={() => handleRouteChange('budget')}
-          className="logo selection-transparent pointer relative mr4"
+          className="clr-light fs-subtitle ff-logo bg-transparent border-0 ttc selection-transparent pointer relative mr4"
         >
           CSBudget
-        </li>
-        <li
+        </button>
+        <button
           onClick={() => handleRouteChange('budget')}
-          className="nav-item pointer dim mr4"
+          className={`clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer mr4
+          ${route === 'budget' ? 'selected clr-accent-light' : ''}
+          `}
         >
           view budget
-        </li>
-        <li
+        </button>
+        <button
           onClick={() => handleRouteChange('saved-budgets')}
-          className="nav-item pointer dim mr4"
+          className={`clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer mr4
+          ${route === 'saved-budgets' ? 'selected clr-accent-light' : ''}
+          `}
         >
           saved budgets
-        </li>
-        <li
+        </button>
+        <button
           onClick={() => handleRouteChange('profile')}
-          className="nav-item pointer dim"
+          className={`clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer
+          ${route === 'profile' ? 'selected clr-accent-light' : ''}
+          `}
         >
           profile
-        </li>
-      </ul>
-      <ul className="list flex pv2 items-center ml-auto mb0">
-        <li
+        </button>
+      </div>
+      <div className="list flex pv2 items-center ml-auto mb0">
+        <button
           onClick={() => handleRouteChange('about')}
-          className="nav-item pointer dim"
+          className={`clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer
+          ${route === 'about' ? 'selected clr-accent-light' : ''}
+          `}
         >
           about
-        </li>
+        </button>
         {isGuest ? (
-          <li
+          <button
             onClick={() => handleRouteChange('signup')}
-            className="nav-item pointer dim ml4"
+            className="clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer ml4"
           >
             sign up
-          </li>
+          </button>
         ) : (
-          <li
+          <button
             onClick={() => handleRouteChange('signin')}
-            className="nav-item pointer dim ml4"
+            className="clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer ml4"
           >
             sign out
-          </li>
+          </button>
         )}
-      </ul>
+      </div>
     </nav>
   ) : null;
 };

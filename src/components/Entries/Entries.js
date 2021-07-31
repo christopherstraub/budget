@@ -21,18 +21,21 @@ const Entries = ({
   return (
     <>
       <div className="relative mb5 ph5">
-        <EditableLabel
-          value="test"
-          text={budget.name}
-          labelClassName="summary-title flex justify-center tc text-break pointer mb0"
-          inputClassName="input-summary-title tc br3 ph3 w-100"
-          inputHeight="5.7rem"
-          inputMaxLength={50}
-          inputPlaceHolder="Budget name"
-          onFocusOut={handleFocusOutBudgetName}
-        />
+        <h1>
+          <EditableLabel
+            value="test"
+            text={budget.name}
+            labelClassName="clr-light fs-heading fw3 tc text-break pointer w-100"
+            inputClassName="tc br3 ph3 w-100"
+            inputHeight="5.7rem"
+            inputMaxLength={50}
+            inputPlaceHolder="Budget name"
+            onFocusOut={handleFocusOutBudgetName}
+          />
+        </h1>
+
         <span
-          className="material-icons absolute default clr-accent-light"
+          className="material-icons absolute user-select-none clr-accent-light"
           style={{
             top: '50%',
             right: '0',
@@ -43,20 +46,26 @@ const Entries = ({
         </span>
       </div>
 
-      <div className="add-entry flex justify-center">
-        <input
-          onChange={handleEntryCategoryInputChange}
-          onKeyDown={handleEntryCategoryInputKeyDown}
-          className="input br3 pv2 ph3 mr3 w-100"
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Category of entry"
-          value={inputCategory}
-        />
+      <div className="flex justify-center content-stretch">
+        <div className="relative w-100">
+          <input
+            onChange={handleEntryCategoryInputChange}
+            onKeyDown={handleEntryCategoryInputKeyDown}
+            className="input br3 pt4 ph3 pb2 w-100"
+            type="text"
+            id="name"
+            name="name"
+            value={inputCategory}
+            required
+          />
+          <span className="floating-label clr-dark-accent fs-body">
+            Category of entry
+          </span>
+        </div>
+
         <button
           onClick={handleAddEntry}
-          className="button bg--accent-dark pv2 ph4 w-20"
+          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pv2 ph4 w-20 ml3"
         >
           ADD ENTRY
         </button>
@@ -64,18 +73,34 @@ const Entries = ({
 
       <div className="table-responsive">
         <table className="bg-white mt4 table table-striped table-bordered table-hover">
-          <thead className="entry-title">
+          <thead>
             <tr>
-              <th scope="col" width="55%" className="v-mid">
-                Category ({budget.entries.length})
+              <th
+                scope="col"
+                width="55%"
+                className="v-mid clr-dark fs-subheading fw4 tc"
+              >
+                Entries ({budget.entries.length})
               </th>
-              <th scope="col" width="15%" className="v-mid">
+              <th
+                scope="col"
+                width="15%"
+                className="v-mid clr-dark fs-subheading fw4 tr"
+              >
                 Projected Cost
               </th>
-              <th scope="col" width="15%" className="v-mid">
+              <th
+                scope="col"
+                width="15%"
+                className="v-mid clr-dark fs-subheading fw4 tr"
+              >
                 Actual Cost
               </th>
-              <th scope="col" width="15%" className="v-mid">
+              <th
+                scope="col"
+                width="15%"
+                className="v-mid clr-dark fs-subheading fw4 tr"
+              >
                 Difference
               </th>
             </tr>
@@ -83,33 +108,35 @@ const Entries = ({
           <tbody>
             {formattedEntries.map((entry, index) => (
               <tr key={entry.id}>
-                <td className="entry flex items-center text-break">
+                <td className="flex text-break relative items-center">
                   <span
                     onClick={() => handleDeleteEntry(entry.id)}
-                    className="material-icons pointer mr2 selection-transparent"
+                    className="absolute material-icons clr-dark-accent fs-subheading pointer selection-transparent"
                   >
                     delete
                   </span>
-                  <EditableLabel
-                    key={entry.id}
-                    text={entry.category}
-                    labelClassName="entry text-break pointer mb0 lh-title"
-                    inputClassName="input-entry ph2 br3 w-100"
-                    inputHeight="1.5em"
-                    inputMaxLength={50}
-                    inputPlaceHolder="Category"
-                    onFocusOut={handleFocusOutEntryCategory(entry.id)}
-                  />
+                  <div className="flex-grow-1 tc">
+                    <EditableLabel
+                      key={entry.id}
+                      text={entry.category}
+                      labelClassName="clr-dark fs-body text-break pointer"
+                      inputClassName="ph2 br3 tc"
+                      inputHeight="1.5em"
+                      inputMaxLength={50}
+                      inputPlaceHolder="Category"
+                      onFocusOut={handleFocusOutEntryCategory(entry.id)}
+                    />
+                  </div>
                 </td>
-                <td className="entry text-break tr">
+                <td className="clr-dark fs-body text-break tr">
                   <EditableLabel
                     text={entry.projectedCost}
-                    labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
+                    labelClassName={`clr-dark fs-body text-break pointer w-100 ${
                       budget.entries[index].projectedCost === 0
                         ? 'empty-number-field'
-                        : null
+                        : ''
                     }`}
-                    inputClassName="input-entry tr ph2 br3 w-100"
+                    inputClassName="tr ph2 br3 w-100"
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Projected cost"
@@ -118,22 +145,24 @@ const Entries = ({
                     }
                   />
                 </td>
-                <td className="entry text-break tr">
+                <td className="clr-dark fs-body text-break tr">
                   <EditableLabel
                     text={entry.actualCost}
-                    labelClassName={`entry text-break pointer w-100 mb0 lh-title ${
+                    labelClassName={`clr-dark fs-body text-break pointer w-100 ${
                       budget.entries[index].actualCost === 0
                         ? 'empty-number-field'
-                        : null
+                        : ''
                     }`}
-                    inputClassName="input-entry tr ph2 br3 w-100"
+                    inputClassName="tr ph2 br3 w-100"
                     inputHeight="1.5em"
                     inputMaxLength={50}
                     inputPlaceHolder="Actual cost"
                     onFocusOut={(text) => handleFocusOutActualCost(text, index)}
                   />
                 </td>
-                <td className="entry text-break tr">{entry.difference}</td>
+                <td className="clr-dark fs-body text-break tr">
+                  {entry.difference}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -145,14 +174,14 @@ const Entries = ({
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="button bg--dark-red pv3 ph4 ml-auto"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pv3 ph4 ml-auto"
           >
             CONFIRM DELETE
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="button bg--dark-red pv3 ph4 ml-auto"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pv3 ph4 ml-auto"
           >
             DELETE BUDGET
           </button>
