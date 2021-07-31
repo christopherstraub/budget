@@ -10,7 +10,7 @@ import React from 'react';
 // 'projected-monthly-income-updated', 'actual-monthly-income-updated'
 // Budgets:
 // 'budget-deleted', 'budget-created', 'budgets-saved',
-// 'budgets-saved-many', 'budgets-max-allowed'
+// 'budgets-created-many', 'budgets-max-allowed'
 // Profile:
 // 'display-name-changed', 'background-changed'
 
@@ -62,7 +62,7 @@ const getMessage = (messageCode, user, formattedBudget) => {
         : user.budgets.length === 1
         ? 'Saved 1 budget.'
         : `Saved ${user.budgets.length} budgets.`;
-    case 'budgets-saved-many':
+    case 'budgets-created-many':
       return `${user.budgets.length} budgets! You're a savvy financial planner.`;
     case 'budgets-max-allowed':
       return "Maximum number of budgets created. That's a lot of budgets!";
@@ -90,7 +90,7 @@ const Message = ({ messageCode, user, formatter }) => {
       : null;
 
   return messageCode === null ? null : (
-    <h2 className="message bg--window-box tc text-break mb0 p-5 br3 br--top">
+    <h2 className="message clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
       {getMessage(
         messageCode,
         user,
