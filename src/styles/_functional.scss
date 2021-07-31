@@ -154,6 +154,16 @@
   }
 }
 
+button:focus-visible,
+[type='button']:focus-visible,
+[type='reset']:focus-visible,
+[type='submit']:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+  outline-color: -webkit-focus-ring-color;
+  outline-style: auto;
+  outline-width: 1px;
+}
+
 .button-transparent {
   background-color: rgba(0, 0, 0, 0.5);
 
