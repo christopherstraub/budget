@@ -85,7 +85,7 @@ const Budget = ({
 
   return (
     <div className="Budget flex justify-center items-start mt4 ph4">
-      <WindowBox classlist="mh3 flex-grow-1">
+      <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
           formattedEntries={formattedEntries}
