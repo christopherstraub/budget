@@ -1,80 +1,13 @@
 @import './variables';
-@import './mixins';
 
-.logo {
-  font-family: $ff-logo;
-  color: $clr-logo;
-  font-size: $fs-logo;
-
-  &.login {
-    &:hover {
-      cursor: default;
-    }
-  }
-
-  nav > ul > & {
-    font-size: $fs-logo-nav;
-  }
+.message {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
-.button {
-  border-radius: 5px;
-  font-weight: 300;
-  font-family: 'Roboto Mono', monospace;
-  color: $clr-button-text;
-  font-size: $fs-button-text;
-  border: 0;
-  &:focus {
-    outline: 0;
-  }
-  &:hover {
-    opacity: 0.6;
-  }
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.input {
-  @include input;
-}
-
-.input-summary-title {
-  @include input($fs-summary-title);
-}
-
-.input-income {
-  @include input($fs-number);
-}
-
-.input-entry {
-  @include input($fs-entry);
-}
-
-.empty-number-field {
-  visibility: hidden;
-  &::after {
-    visibility: visible;
-    content: '$0.00';
-  }
-}
-
-.login-box {
-  max-width: 300px;
-  border: 1px solid $clr-login-button;
-
-  .submit {
-    border: 0;
-    background-color: $clr-login-button;
-    &:active {
-      background-color: $clr-login-button-active;
-    }
-  }
-}
-
-.landing {
-  padding-top: 10rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+nav button:hover:not(.selected, .ff-logo) {
+  opacity: 0.5;
 }

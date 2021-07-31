@@ -1,146 +1,81 @@
 @import './variables';
-@import './mixins';
-
-.default {
-  &:hover {
-    cursor: default;
-  }
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.selection-transparent {
-  &::selection {
-    background-color: transparent;
-  }
-}
-
-.anchor {
-  color: $clr-accent-light;
-  &:hover {
-    color: $clr-accent-dark;
-  }
-}
-
-// Text.
-.title {
-  @include text($clr-title, $fs-title, $ff-title);
-
-  section.dark > & {
-    @include text($clr-title-dark, $fs-title, $ff-title);
-  }
-}
-
-.subtitle {
-  @include text($clr-subtitle, $fs-subtitle);
-  section.dark > & {
-    @include text($clr-subtitle-dark, $fs-subtitle);
-  }
-}
-
-.login-button-text {
-  @include text($clr-login-button-text, $fs-login-button-text);
-}
-
-.continue-as-guest {
-  @include text($clr-continue-as-guest, $fs-continue-as-guest);
-}
-
-.nav-item {
-  @include text($clr-nav-item, $fs-nav-item, $ff-nav-item);
-}
-
-.window-title {
-  @include text($clr-window-title, $fs-window-title);
-}
-
-.window-body {
-  @include text($clr-window-body, $fs-window-body, $ff-window-body);
-}
-
-.summary-title {
-  @include text($clr-summary-title, $fs-summary-title);
-}
-
-.entries-title {
-  @include text($clr-entries-title, $fs-entries-title);
-}
-
-.number {
-  @include text($clr-number, $fs-number, $ff-number);
-}
-
-.number-label {
-  @include text($clr-number-label, $fs-number-label, $ff-number-label);
-}
-
-.entry-title {
-  @include text($clr-entry-title, $fs-entry-title);
-}
-
-.entry {
-  @include text($clr-entry, $fs-entry);
-}
-
-.budget-name {
-  @include text($clr-window-body, 3rem, $ff-window-body);
-
-  &:hover {
-    color: $clr-accent-light;
-  }
-
-  &.current-budget {
-    color: $clr-accent-light;
-
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-}
-
-.message {
-  @include text($clr-body, $fs-message, $ff-message);
-
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-}
-
-.text-shadow {
-  text-shadow: $text-shadow;
-}
 
 // Colors.
+.clr-light {
+  color: $clr-light;
+}
+.clr-light-accent {
+  color: $clr-light-accent;
+}
+.clr-dark {
+  color: $clr-dark;
+}
+.clr-dark-accent {
+  color: $clr-dark-accent;
+}
 .clr-accent-dark {
   color: $clr-accent-dark;
 }
-
 .clr-red {
   color: $clr-red;
 }
-
 .clr-accent-light {
   color: $clr-accent-light;
 }
 
+// Font sizes.
+.fs-title {
+  font-size: $fs-title;
+}
+.fs-heading {
+  font-size: $fs-heading;
+}
+.fs-subtitle {
+  font-size: $fs-subtitle;
+}
+.fs-subheading {
+  font-size: $fs-subheading;
+}
+.fs-body {
+  font-size: $fs-body;
+}
+
+// Font families.
+.ff-primary {
+  font-family: $ff-primary;
+}
+.ff-logo {
+  font-family: $ff-logo;
+}
+.ff-mono {
+  font-family: $ff-mono;
+}
+
+// Background colors.
+.bg--light {
+  background-color: $clr-light;
+}
+.bg--light-accent {
+  background-color: $clr-light-accent;
+}
+.bg--dark {
+  background-color: $clr-dark;
+}
+.bg--dark-accent {
+  background-color: $clr-dark-accent;
+}
 .bg--green {
   background-color: $clr-green;
 }
-
 .bg--accent-dark {
   background-color: $clr-accent-dark;
 }
-
 .bg--accent-light {
   background-color: $clr-accent-light;
 }
-
 .bg--dark-red {
   background-color: $clr-dark-red;
 }
-
 .bg--window-box {
   background-color: $clr-window-box-legacy-support;
   background: linear-gradient(
@@ -150,7 +85,6 @@
   );
   background: rgba(7, 64, 86, 0.9);
 }
-
 .bg--login-box {
   background-color: $clr-login-box-legacy-support;
   background: linear-gradient(
@@ -160,10 +94,108 @@
   );
 }
 
+// Scrollbars.
 .bg--scrollbar-window-box {
   background-color: $clr-scrollbar-window-box;
 }
-
 .bg--scrollbar-app {
   background-color: $clr-scrollbar-app;
+}
+
+// Borders.
+.border-dark {
+  border: 1px solid $clr-dark;
+}
+
+.input {
+  color: $clr-dark;
+  font-size: $fs-body;
+  background-color: $clr-light;
+  border: 1px solid $clr-dark;
+
+  &:focus,
+  &:focus-visible {
+    border: 1px solid $clr-accent-light;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &.input-decorated {
+    border: none;
+
+    &:focus,
+    &:focus-visible {
+      border: none;
+      border-bottom: 4px solid $clr-accent-light;
+      margin-bottom: calc(0.5rem - 4px);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.floating-label {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+
+  transition: 0.1s all;
+
+  input:focus + &,
+  input:not(focus):valid + & {
+    font-size: 1.2rem;
+    top: 30%;
+  }
+}
+
+.button-transparent {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+.default {
+  &:hover {
+    cursor: default;
+  }
+}
+
+.selection-transparent {
+  &::selection {
+    background-color: transparent;
+  }
+}
+
+.empty-number-field {
+  visibility: hidden;
+  &::after {
+    visibility: visible;
+    content: '$0.00';
+  }
+}
+
+.anchor {
+  &:hover {
+    color: $clr-accent-light;
+  }
+}
+
+.hover-opacity:hover {
+  opacity: 0.5;
+}
+
+.lh-title {
+  line-height: 1.2;
 }
