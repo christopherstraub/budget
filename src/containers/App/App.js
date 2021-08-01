@@ -45,7 +45,7 @@ const initialState = {
     isGuest: true,
     displayName: 'Guest',
     username: null,
-    joined: new Date(),
+    joined: null,
     maxBudgets: 100,
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
@@ -102,15 +102,20 @@ const backgrounds = [
     name: 'YOSEMITE VALLEY',
     path: pathBg2,
     useDarkLanding: true,
-    initial: true,
+    initial: false,
   },
   { name: 'BANFF', path: pathBg3, useDarkLanding: false, initial: false },
   { name: 'MACHU PICCHU', path: pathBg4, useDarkLanding: true, initial: true },
-  { name: 'LAKESIDE', path: pathBg5, useDarkLanding: true, initial: false },
+  { name: 'LAKESIDE', path: pathBg5, useDarkLanding: false, initial: false },
   { name: 'WHISTLER', path: pathBg6, useDarkLanding: false, initial: false },
   { name: 'MITTENWALD', path: pathBg7, useDarkLanding: false, initial: true },
-  { name: 'GRAND CANYON', path: pathBg8, useDarkLanding: true, initial: true },
-  { name: 'TRAIL', path: pathBg9, useDarkLanding: true, initial: false },
+  {
+    name: 'GRAND CANYON',
+    path: pathBg8,
+    useDarkLanding: false,
+    initial: false,
+  },
+  { name: 'TRAIL', path: pathBg9, useDarkLanding: false, initial: false },
   { name: 'SILHOUETTE', path: pathBg10, useDarkLanding: false, initial: true },
 ];
 
@@ -191,8 +196,10 @@ class App extends Component {
       !this.state.user.isGuest
     ) {
       localStorage.setItem('background', this.state.background.name);
-      const userCopy = { ...this.state.user };
-      userCopy.isLoggedIn = true;
+      const userCopy = Object.assign(
+        { ...this.state.user },
+        { isLoggedIn: true }
+      );
       this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
       this.clearMessageCode(12000);
     }
@@ -204,8 +211,10 @@ class App extends Component {
       !this.state.user.isLoggedIn &&
       this.state.user.isGuest
     ) {
-      const userCopy = { ...this.state.user };
-      userCopy.isLoggedIn = true;
+      const userCopy = Object.assign(
+        { ...this.state.user },
+        { isLoggedIn: true, joined: new Date() }
+      );
       this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
       this.clearMessageCode(12000);
     }
@@ -595,6 +604,20 @@ class App extends Component {
     }
   };
 
+  getBackgroundImageStyle(useDarkLanding, path, name) {
+    return useDarkLanding
+      ? {
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75)), url(${path})`,
+        }
+      : name === 'ALPINE MOUNTAINS'
+      ? {
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5) 25%, rgba(0, 0, 0, 0)), url(${path})`,
+        }
+      : {
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75) 25%, rgba(0, 0, 0, 0)), url(${path})`,
+        };
+  }
+
   render() {
     const { route, messageCode, input, background, user } = this.state;
 
@@ -606,7 +629,11 @@ class App extends Component {
         >
           <div
             className="background"
-            style={{ backgroundImage: `url(${background.path})` }}
+            style={this.getBackgroundImageStyle(
+              background.useDarkLanding,
+              background.path,
+              background.name
+            )}
           >
             <div className="App clr-light ff-primary fs-body">
               <Nav
