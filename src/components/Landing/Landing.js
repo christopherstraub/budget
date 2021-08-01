@@ -7,7 +7,7 @@ import SignUp from '../SignUp/SignUp';
 const Landing = ({ handleRouteChange, route, useDarkLanding }) => {
   return (
     <div
-      className={`flex flex-column justify-center landing ph4 pb4 ${
+      className={`flex flex-column justify-center ph4 pb4 ${
         useDarkLanding ? 'clr-dark' : 'clr-light'
       }`}
       style={{ paddingTop: '10rem' }}
