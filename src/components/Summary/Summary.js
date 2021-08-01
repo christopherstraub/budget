@@ -2,7 +2,7 @@ import React from 'react';
 
 import EditableLabel from 'react-inline-editing';
 
-const classListIfNegative = (value) => {
+const getClassListIfNegative = (value) => {
   return value < 0 ? 'clr-red' : '';
 };
 
@@ -22,7 +22,7 @@ const Summary = ({
             Total Projected Cost
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${getClassListIfNegative(
               budget.getProjectedCost()
             )}`}
           >
@@ -33,7 +33,7 @@ const Summary = ({
             Total Actual Cost
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${getClassListIfNegative(
               budget.getActualCost()
             )}`}
           >
@@ -44,7 +44,7 @@ const Summary = ({
             Total Difference
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb0 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb0 ${getClassListIfNegative(
               budget.getDifferenceCost()
             )}`}
           >
@@ -66,7 +66,7 @@ const Summary = ({
           <div className="mb5">
             <EditableLabel
               text={formattedBudget.projectedMonthlyIncome}
-              labelClassName={`clr-light fs-subtitle ff-primary fw3 text-break pointer lh-title ${classListIfNegative(
+              labelClassName={`clr-light fs-subtitle ff-primary fw3 text-break pointer lh-title ${getClassListIfNegative(
                 budget.projectedMonthlyIncome
               )} ${
                 budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : ''
@@ -89,7 +89,7 @@ const Summary = ({
           </h2>
           <EditableLabel
             text={formattedBudget.actualMonthlyIncome}
-            labelClassName={`clr-light fs-subtitle ff-primary fw3 mb5 text-break pointer lh-title ${classListIfNegative(
+            labelClassName={`clr-light fs-subtitle ff-primary fw3 mb5 text-break pointer lh-title ${getClassListIfNegative(
               budget.actualMonthlyIncome
             )} ${
               budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null
@@ -106,7 +106,7 @@ const Summary = ({
             Projected Balance
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${getClassListIfNegative(
               budget.getProjectedBalance()
             )}`}
           >
@@ -117,7 +117,7 @@ const Summary = ({
             Actual Balance
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb5 ${getClassListIfNegative(
               budget.getActualBalance()
             )}`}
           >
@@ -128,7 +128,7 @@ const Summary = ({
             Balance Difference
           </h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb0 ${classListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb0 ${getClassListIfNegative(
               budget.getDifferenceBalance()
             )}`}
           >
