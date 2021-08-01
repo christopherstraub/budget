@@ -40,7 +40,7 @@ const getBackgroundChangedMessage = (arrayBackgroundChangedMessages) => {
 const getMessage = (messageCode, user, formattedBudget) => {
   switch (messageCode) {
     case 'user-logged-in':
-      return `Welcome ${user.displayName}. You can get started by entering your projected monthly income.`;
+      return `Welcome, ${user.displayName}.`;
     case 'projected-cost-invalid':
     case 'actual-cost-invalid':
     case 'projected-monthly-income-invalid':

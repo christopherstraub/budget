@@ -201,7 +201,7 @@ class App extends Component {
         { isLoggedIn: true }
       );
       this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
-      this.clearMessageCode(12000);
+      this.clearMessageCode(6000);
     }
     // Handle guest sign in (don't set background in localStorage).
     else if (
@@ -216,7 +216,7 @@ class App extends Component {
         { isLoggedIn: true, joined: new Date() }
       );
       this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
-      this.clearMessageCode(12000);
+      this.clearMessageCode(6000);
     }
     // Handle user/guest sign out.
     else if (
