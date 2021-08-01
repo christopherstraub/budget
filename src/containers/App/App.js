@@ -245,15 +245,6 @@ class App extends Component {
         (background) => background.name === event.target.textContent
       );
       this.setState({ background: selectedBackground[0] });
-      this.displayBackgroundChangedTimeout = setTimeout(() => {
-        if (
-          this.state.messageCode !== 'background-changed' &&
-          this.state.route === 'profile'
-        ) {
-          this.setState({ messageCode: 'background-changed' });
-          this.clearMessageCode(4000);
-        }
-      }, 3000);
     } else if (localStorage.getItem('background') !== event.target.textContent)
       localStorage.setItem('background', event.target.textContent);
   };

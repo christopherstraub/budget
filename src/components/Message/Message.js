@@ -12,30 +12,7 @@ import React from 'react';
 // 'budget-deleted', 'budget-created', 'budgets-saved',
 // 'budgets-created-many', 'budgets-max-allowed'
 // Profile:
-// 'display-name-changed', 'background-changed'
-
-const backgroundChangedMessages = [
-  'One of my favorites!',
-  'Marvelous choice!',
-  'Wonderful choice!',
-  'Excellent choice!',
-  'Fantastic choice!',
-  'Splendid choice!',
-  'Fabulous choice!',
-  'Marvelous selection!',
-  'Wonderful selection!',
-  'Excellent selection!',
-  'Fantastic selection!',
-  'Splendid selection!',
-  'Fabulous selection!',
-];
-
-const getBackgroundChangedMessage = (arrayBackgroundChangedMessages) => {
-  const randomBackgroundChangedMessageIndex = Math.floor(
-    Math.random() * arrayBackgroundChangedMessages.length
-  );
-  return arrayBackgroundChangedMessages[randomBackgroundChangedMessageIndex];
-};
+// 'display-name-changed'
 
 const getMessage = (messageCode, user, formattedBudget) => {
   switch (messageCode) {
@@ -68,8 +45,6 @@ const getMessage = (messageCode, user, formattedBudget) => {
       return "Maximum number of budgets created. That's a lot of budgets!";
     case 'display-name-changed':
       return `Display name changed successfully.`;
-    case 'background-changed':
-      return `${getBackgroundChangedMessage(backgroundChangedMessages)}`;
     default:
       return null;
   }
