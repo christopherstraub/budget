@@ -10,26 +10,24 @@ const SavedBudgets = ({
   currentBudgetIndex,
 }) => {
   return (
-    <div className="flex justify-center mt4 ph4 tc">
-      <WindowBox classlist="mw9">
-        {user.budgets.length === 0 ? (
-          <h1 className="clr-light fs-subheading fw3 mb5 text-break">
-            {user.displayName}, you don't have any budgets.
-          </h1>
-        ) : user.budgets.length === 1 ? (
-          <h1 className="clr-light fs-subheading fw3 mb4 text-break">
-            {user.displayName}, here's your budget.
-          </h1>
-        ) : (
-          <h1 className="clr-light fs-subheading fw3 mb4 text-break">
-            {user.displayName}, here are your
-            <span className="clr-accent-light fw6">
-              {' '}
-              {user.budgets.length}
-            </span>{' '}
-            budgets.
-          </h1>
-        )}
+    <div className="flex justify-center pa4 tc">
+      <WindowBox classlist="mw7 w-100">
+        <h1 className="clr-light fs-subheading fw3 mb3 text-break">
+          {user.budgets.length === 0 ? (
+            `${user.displayName}, you don't have any budgets.`
+          ) : user.budgets.length === 1 ? (
+            `${user.displayName}, here's your budget.`
+          ) : (
+            <>
+              {user.displayName}, here are your{' '}
+              <span className="clr-accent-light fw6">
+                {' '}
+                {user.budgets.length}{' '}
+              </span>
+              budgets.
+            </>
+          )}
+        </h1>
 
         <ul className="list pl0">
           {user.budgets.length === 0
@@ -38,7 +36,7 @@ const SavedBudgets = ({
                 <li
                   key={budget.id}
                   onClick={() => handleViewBudget(index)}
-                  className={`clr-light fs-subtitle fw3 hover-opacity pointer mv4 text-break
+                  className={`clr-light fs-subtitle fw3 hover-opacity pointer text-break mv3
                   ${
                     index === currentBudgetIndex ? 'clr-accent-light fw6' : ''
                   }`}
@@ -48,17 +46,17 @@ const SavedBudgets = ({
               ))}
         </ul>
 
-        <div className="flex justify-center pt3">
+        <div className="flex mt5">
           <button
             onClick={handleAddBudget}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pv2 ph4 w-33 mr2"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pa3 mr2 w-100"
             style={{ width: 'max-content' }}
           >
             NEW BUDGET
           </button>
           <button
             onClick={handleSaveBudgets}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--green pv2 ph4 w-33 ml2"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--green pa3 ml2 w-100"
             style={{ width: 'max-content' }}
           >
             SAVE BUDGETS
