@@ -105,9 +105,8 @@ const backgrounds = [
     name: 'YOSEMITE VALLEY',
     path: pathBg4,
     useDarkLanding: true,
-    initial: false,
+    initial: true,
   },
-  { name: 'MITTENWALD', path: pathBg5, useDarkLanding: false, initial: false },
   {
     name: 'GRAND CANYON',
     path: pathBg6,
@@ -115,6 +114,7 @@ const backgrounds = [
     initial: false,
   },
   { name: 'TRAIL', path: pathBg7, useDarkLanding: false, initial: false },
+  { name: 'MITTENWALD', path: pathBg5, useDarkLanding: false, initial: false },
   { name: 'SILHOUETTE', path: pathBg8, useDarkLanding: false, initial: false },
 ];
 
@@ -286,7 +286,7 @@ class App extends Component {
       stateCopy.input.displayName = '';
       stateCopy.messageCode = 'display-name-changed';
       this.setState(stateCopy);
-      this.clearMessageCode();
+      this.clearMessageCode(4000);
     }
   };
 
