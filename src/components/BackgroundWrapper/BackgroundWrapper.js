@@ -7,10 +7,17 @@ const BackgroundWrapper = ({ background, children }) => {
     <div
       className="background"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75)), url(${path})`,
+        backgroundImage: `url(${path})`,
       }}
     >
-      {children}
+      <div
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75))',
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };
