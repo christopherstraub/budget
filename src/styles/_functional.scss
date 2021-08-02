@@ -151,6 +151,11 @@
   input:not(focus):valid + & {
     font-size: 1.2rem;
     top: 30%;
+
+    &.small {
+      font-size: 1rem;
+      top: 25%;
+    }
   }
 }
 
@@ -190,6 +195,7 @@ button:focus-visible,
 
 .empty-number-field {
   visibility: hidden;
+
   &::after {
     visibility: visible;
     content: '$0.00';
