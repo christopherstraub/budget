@@ -161,10 +161,7 @@ class App extends Component {
       if (backgroundArray.length === 0)
         backgroundArray[0] = this.state.background;
 
-      const state = Object.assign(
-        { ...this.state },
-        { background: backgroundArray[0] }
-      );
+      const state = { ...this.state, background: backgroundArray[0] };
       this.setState(state);
       return;
     }
@@ -178,14 +175,11 @@ class App extends Component {
     const randomBackgroundName =
       initialBackgrounds[randomInitialBackgroundIndex].name;
 
-    const background = backgrounds.filter(
+    const backgroundArray = backgrounds.filter(
       (background) => background.name === randomBackgroundName
     );
 
-    const state = Object.assign(
-      { ...this.state },
-      { background: background[0] }
-    );
+    const state = { ...this.state, background: backgroundArray[0] };
     this.setState(state);
   }
 
@@ -204,12 +198,10 @@ class App extends Component {
       !this.state.user.isGuest
     ) {
       localStorage.setItem('background', this.state.background.name);
-      const userCopy = Object.assign(
-        { ...this.state.user },
-        { isLoggedIn: true }
-      );
+
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
       this.setState({
-        user: userCopy,
+        user,
         route,
         messageCode: 'user-logged-in',
         input: initialState.input,
@@ -224,12 +216,9 @@ class App extends Component {
       !this.state.user.isLoggedIn &&
       this.state.user.isGuest
     ) {
-      const userCopy = Object.assign(
-        { ...this.state.user },
-        { isLoggedIn: true, joined: new Date() }
-      );
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
       this.setState({
-        user: userCopy,
+        user,
         route,
         messageCode: 'user-logged-in',
         input: initialState.input,
@@ -274,14 +263,11 @@ class App extends Component {
 
   // Update state displayName input with user input.
   handleDisplayNameInputChange = (event) => {
-    const input = Object.assign(
-      { ...this.state.input },
-      { displayName: event.target.value }
-    );
+    const input = { ...this.state.input, displayName: event.target.value };
     this.setState({ input });
   };
 
-  // Update state displayName input with user input.
+  // Change displayName if user presses 'Enter' key.
   handleDisplayNameInputKeyDown = (event) => {
     if (event.keyCode === 13 && event.target.value !== '') {
       this.handleDisplayNameChange();
@@ -289,7 +275,7 @@ class App extends Component {
   };
 
   // Update display name if display name input is different from current
-  // display name and display name input is not empty.
+  // display name and display name input is not an empty string.
   handleDisplayNameChange = () => {
     if (
       this.state.user.displayName !== this.state.input.displayName &&
@@ -306,10 +292,7 @@ class App extends Component {
 
   // Update state entry category input with user input.
   handleEntryCategoryInputChange = (event) => {
-    const input = Object.assign(
-      { ...this.state.input },
-      { entryCategory: event.target.value }
-    );
+    const input = { ...this.state.input, entryCategory: event.target.value };
     this.setState({ input });
   };
 
@@ -345,7 +328,7 @@ class App extends Component {
     );
     this.setState({ user: userCopy });
 
-    const input = Object.assign({ ...this.state.input }, { entryCategory: '' });
+    const input = { ...this.state.input, entryCategory: '' };
     this.setState({ input });
   };
 
@@ -379,7 +362,7 @@ class App extends Component {
       (budget, i) => i !== this.state.user.currentBudgetIndex
     );
 
-    const updatedUser = Object.assign(cloneDeep(this.state.user), {
+    const user = Object.assign(cloneDeep(this.state.user), {
       budgets: filteredBudgets,
       currentBudgetIndex:
         this.state.user.currentBudgetIndex >= 1
@@ -389,7 +372,7 @@ class App extends Component {
     });
 
     this.setState({
-      user: updatedUser,
+      user,
       route: 'saved-budgets',
       messageCode: 'budget-deleted',
     });
@@ -628,27 +611,13 @@ class App extends Component {
     }
   };
 
-  handleDisplayNameInputChange = (event) => {
-    const input = Object.assign(
-      { ...this.state.input },
-      { displayName: event.target.value }
-    );
-    this.setState({ input });
-  };
-
   handleUsernameInputChange = (event) => {
-    const input = Object.assign(
-      { ...this.state.input },
-      { username: event.target.value }
-    );
+    const input = { ...this.state.input, username: event.target.value };
     this.setState({ input });
   };
 
   handlePasswordInputChange = (event) => {
-    const input = Object.assign(
-      { ...this.state.input },
-      { password: event.target.value }
-    );
+    const input = { ...this.state.input, password: event.target.value };
     this.setState({ input });
   };
 
