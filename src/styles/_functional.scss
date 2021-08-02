@@ -77,21 +77,10 @@
   background-color: $clr-dark-red;
 }
 .bg--window-box {
-  background-color: $clr-window-box-legacy-support;
-  background: linear-gradient(
-    0deg,
-    $clr-login-box-bottom 0%,
-    $clr-login-box-top 90%
-  );
-  background: rgba(7, 64, 86, 0.9);
+  background: $clr-window-box;
 }
 .bg--login-box {
-  background-color: $clr-login-box-legacy-support;
-  background: linear-gradient(
-    0deg,
-    $clr-login-box-bottom 0%,
-    $clr-login-box-top 50%
-  );
+  background: linear-gradient($clr-login-box-top, $clr-login-box-bottom);
 }
 
 // Scrollbars.
@@ -103,7 +92,7 @@
 }
 
 // Borders.
-.border-dark {
+.border--dark {
   border: 1px solid $clr-dark;
 }
 

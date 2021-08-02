@@ -22,14 +22,11 @@ $ff-logo: 'Lobster', cursive;
 $ff-mono: 'Roboto Mono', monospace;
 
 // Sign in box.
-$clr-login-box-bottom: rgba(5, 105, 130, 0.9);
-$clr-login-box-top: rgba(5, 105, 130, 0.9);
-$clr-login-box-legacy-support: rgb(5, 105, 130);
+$clr-login-box-top: rgba(0, 46, 64, 0.9);
+$clr-login-box-bottom: rgba(1, 70, 91, 0.9);
 
 // Window box.
-$clr-window-box-bottom: rgba(22, 71, 102, 0.9);
-$clr-window-box-top: rgba(19, 60, 85, 0.95);
-$clr-window-box-legacy-support: rgb(22, 71, 102);
+$clr-window-box: rgba(3, 31, 56, 0.9);
 
 // Scrollbars.
 $clr-scrollbar-app: $clr-light;

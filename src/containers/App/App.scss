@@ -19,13 +19,14 @@ body {
 
 .background {
   background-repeat: no-repeat;
-  background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  background-position: center top;
   -webkit-transition: background-image 3s ease-in-out;
   -moz-transition: background-image 3s ease-in-out;
   -o-transition: background-image 3s ease-in-out;
   transition: background-image 3s ease-in-out;
+  background-color: gray;
 }
 
 .App {
