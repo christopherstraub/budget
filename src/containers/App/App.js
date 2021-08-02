@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
+import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
+import BackgroundWrapper from '../../components/BackgroundWrapper/BackgroundWrapper';
 import Nav from '../../components/Nav/Nav';
 import Landing from '../../components/Landing/Landing';
-import SavedBudgets from '../../components/SavedBudgets/SavedBudgets';
-import About from '../../components/About/About';
-import Profile from '../../components/Profile/Profile';
 import Budget from '../../components/Budget/Budget';
-import CustomScrollbars from '../../components/CustomScrollbars/CustomScrollbars';
+import SavedBudgets from '../../components/SavedBudgets/SavedBudgets';
+import Profile from '../../components/Profile/Profile';
+import About from '../../components/About/About';
 import Message from '../../components/Message/Message';
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
@@ -21,8 +22,6 @@ import pathBg5 from '../../images/bg5.webp';
 import pathBg6 from '../../images/bg6.webp';
 import pathBg7 from '../../images/bg7.webp';
 import pathBg8 from '../../images/bg8.webp';
-import pathBg9 from '../../images/bg9.webp';
-import pathBg10 from '../../images/bg10.webp';
 
 import './App.scss';
 
@@ -34,8 +33,10 @@ const initialState = {
   route: 'signup',
   messageCode: null,
   input: {
-    category: '',
     displayName: '',
+    username: '',
+    password: '',
+    entryCategory: '',
     projectedMonthlyIncome: '',
     actualMonthlyIncome: '',
   },
@@ -92,31 +93,29 @@ const initialState = {
 };
 
 const backgrounds = [
+  { name: 'BANFF', path: pathBg1, useDarkLanding: true, initial: true },
+  { name: 'MACHU PICCHU', path: pathBg2, useDarkLanding: true, initial: true },
   {
     name: 'ALPINE MOUNTAINS',
-    path: pathBg1,
+    path: pathBg3,
     useDarkLanding: false,
     initial: true,
   },
   {
     name: 'YOSEMITE VALLEY',
-    path: pathBg2,
+    path: pathBg4,
     useDarkLanding: true,
     initial: false,
   },
-  { name: 'BANFF', path: pathBg3, useDarkLanding: false, initial: false },
-  { name: 'MACHU PICCHU', path: pathBg4, useDarkLanding: true, initial: true },
-  { name: 'LAKESIDE', path: pathBg5, useDarkLanding: false, initial: false },
-  { name: 'WHISTLER', path: pathBg6, useDarkLanding: false, initial: false },
-  { name: 'MITTENWALD', path: pathBg7, useDarkLanding: false, initial: true },
+  { name: 'MITTENWALD', path: pathBg5, useDarkLanding: false, initial: false },
   {
     name: 'GRAND CANYON',
-    path: pathBg8,
+    path: pathBg6,
     useDarkLanding: false,
     initial: false,
   },
-  { name: 'TRAIL', path: pathBg9, useDarkLanding: false, initial: false },
-  { name: 'SILHOUETTE', path: pathBg10, useDarkLanding: false, initial: true },
+  { name: 'TRAIL', path: pathBg7, useDarkLanding: false, initial: false },
+  { name: 'SILHOUETTE', path: pathBg8, useDarkLanding: false, initial: false },
 ];
 
 // Intl.NumberFormat object is a constructor that enables language sensitive
@@ -155,12 +154,18 @@ class App extends Component {
   setBackgroundFromLocalStorage() {
     const localStorageBackgroundName = localStorage.getItem('background');
     if (localStorageBackgroundName) {
-      const background = backgrounds.filter(
+      const backgroundArray = backgrounds.filter(
         (background) => background.name === localStorageBackgroundName
       );
-      const stateCopy = { ...this.state };
-      stateCopy.background = background[0];
-      this.setState(stateCopy);
+
+      if (backgroundArray.length === 0)
+        backgroundArray[0] = this.state.background;
+
+      const state = Object.assign(
+        { ...this.state },
+        { background: backgroundArray[0] }
+      );
+      this.setState(state);
       return;
     }
 
@@ -176,9 +181,12 @@ class App extends Component {
     const background = backgrounds.filter(
       (background) => background.name === randomBackgroundName
     );
-    const stateCopy = { ...this.state };
-    stateCopy.background = background[0];
-    this.setState(stateCopy);
+
+    const state = Object.assign(
+      { ...this.state },
+      { background: background[0] }
+    );
+    this.setState(state);
   }
 
   handleRouteChange = (route) => {
@@ -200,7 +208,12 @@ class App extends Component {
         { ...this.state.user },
         { isLoggedIn: true }
       );
-      this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
+      this.setState({
+        user: userCopy,
+        route,
+        messageCode: 'user-logged-in',
+        input: initialState.input,
+      });
       this.clearMessageCode(6000);
     }
     // Handle guest sign in (don't set background in localStorage).
@@ -215,7 +228,12 @@ class App extends Component {
         { ...this.state.user },
         { isLoggedIn: true, joined: new Date() }
       );
-      this.setState({ user: userCopy, route, messageCode: 'user-logged-in' });
+      this.setState({
+        user: userCopy,
+        route,
+        messageCode: 'user-logged-in',
+        input: initialState.input,
+      });
       this.clearMessageCode(6000);
     }
     // Handle user/guest sign out.
@@ -230,9 +248,14 @@ class App extends Component {
         input: initialState.input,
         user: initialState.user,
       });
-    else if (route !== this.state.route) {
+    // Reset input when routing between SignIn and SignUp components.
+    else if (
+      (route === 'signin' || route === 'signup') &&
+      (this.state.route === 'signin' || this.state.route === 'signup')
+    ) {
+      this.setState({ input: initialState.input });
       this.setState({ route });
-    }
+    } else if (route !== this.state.route) this.setState({ route });
   };
 
   // Only filter through backgrounds if selected background is different
@@ -251,9 +274,18 @@ class App extends Component {
 
   // Update state displayName input with user input.
   handleDisplayNameInputChange = (event) => {
-    const inputCopy = { ...this.state.input };
-    inputCopy.displayName = event.target.value;
-    this.setState({ input: inputCopy });
+    const input = Object.assign(
+      { ...this.state.input },
+      { displayName: event.target.value }
+    );
+    this.setState({ input });
+  };
+
+  // Update state displayName input with user input.
+  handleDisplayNameInputKeyDown = (event) => {
+    if (event.keyCode === 13 && event.target.value !== '') {
+      this.handleDisplayNameChange();
+    }
   };
 
   // Update display name if display name input is different from current
@@ -272,11 +304,13 @@ class App extends Component {
     }
   };
 
-  // Update state category input with user input.
+  // Update state entry category input with user input.
   handleEntryCategoryInputChange = (event) => {
-    const inputCopy = { ...this.state.input };
-    inputCopy.category = event.target.value;
-    this.setState({ input: inputCopy });
+    const input = Object.assign(
+      { ...this.state.input },
+      { entryCategory: event.target.value }
+    );
+    this.setState({ input });
   };
 
   handleEntryCategoryInputKeyDown = (event) => {
@@ -286,9 +320,9 @@ class App extends Component {
   };
 
   // Create entry object.
-  // If input category is empty, set category to 'No category set'.
-  createEntry = () => {
-    const category = this.state.input.category || 'No category set';
+  // If input entry category is empty, set to 'No category set'.
+  getNewEntry = () => {
+    const category = this.state.input.entryCategory || 'No category set';
 
     return {
       id: nanoid(),
@@ -307,13 +341,12 @@ class App extends Component {
     const userCopy = cloneDeep(this.state.user);
 
     userCopy.budgets[this.state.user.currentBudgetIndex].entries.push(
-      this.createEntry()
+      this.getNewEntry()
     );
     this.setState({ user: userCopy });
 
-    const inputCopy = { ...this.state.input };
-    inputCopy.category = '';
-    this.setState({ input: inputCopy });
+    const input = Object.assign({ ...this.state.input }, { entryCategory: '' });
+    this.setState({ input });
   };
 
   // Event handler for delete entry button.
@@ -595,19 +628,29 @@ class App extends Component {
     }
   };
 
-  getBackgroundImageStyle(useDarkLanding, path, name) {
-    return useDarkLanding
-      ? {
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75)), url(${path})`,
-        }
-      : name === 'ALPINE MOUNTAINS'
-      ? {
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5) 25%, rgba(0, 0, 0, 0)), url(${path})`,
-        }
-      : {
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.75) 25%, rgba(0, 0, 0, 0)), url(${path})`,
-        };
-  }
+  handleDisplayNameInputChange = (event) => {
+    const input = Object.assign(
+      { ...this.state.input },
+      { displayName: event.target.value }
+    );
+    this.setState({ input });
+  };
+
+  handleUsernameInputChange = (event) => {
+    const input = Object.assign(
+      { ...this.state.input },
+      { username: event.target.value }
+    );
+    this.setState({ input });
+  };
+
+  handlePasswordInputChange = (event) => {
+    const input = Object.assign(
+      { ...this.state.input },
+      { password: event.target.value }
+    );
+    this.setState({ input });
+  };
 
   render() {
     const { route, messageCode, input, background, user } = this.state;
@@ -618,14 +661,7 @@ class App extends Component {
           classlist="bg--scrollbar-app br-pill o-90"
           heightmax="100vh"
         >
-          <div
-            className="background"
-            style={this.getBackgroundImageStyle(
-              background.useDarkLanding,
-              background.path,
-              background.name
-            )}
-          >
+          <BackgroundWrapper background={background}>
             <div className="App clr-light ff-primary fs-body">
               <Nav
                 handleRouteChange={this.handleRouteChange}
@@ -638,48 +674,47 @@ class App extends Component {
                   handleRouteChange={this.handleRouteChange}
                   route={route}
                   useDarkLanding={background.useDarkLanding}
+                  handleDisplayNameInputChange={
+                    this.handleDisplayNameInputChange
+                  }
+                  handleUsernameInputChange={this.handleUsernameInputChange}
+                  handlePasswordInputChange={this.handlePasswordInputChange}
                 />
               ) : route === 'budget' ? (
-                <>
-                  <Budget
-                    budget={user.budgets[user.currentBudgetIndex]}
-                    handleFocusOutBudgetName={this.handleFocusOutBudgetName}
-                    handleFocusProjectedMonthlyIncome={
-                      this.handleFocusProjectedMonthlyIncome
-                    }
-                    handleFocusActualMonthlyIncome={
-                      this.handleFocusActualMonthlyIncome
-                    }
-                    handleFocusOutProjectedMonthlyIncome={
-                      this.handleFocusOutProjectedMonthlyIncome
-                    }
-                    handleFocusOutActualMonthlyIncome={
-                      this.handleFocusOutActualMonthlyIncome
-                    }
-                    inputCategory={input.category}
-                    handleEntryCategoryInputChange={
-                      this.handleEntryCategoryInputChange
-                    }
-                    handleEntryCategoryInputKeyDown={
-                      this.handleEntryCategoryInputKeyDown
-                    }
-                    handleAddEntry={this.handleAddEntry}
-                    handleDeleteEntry={this.handleDeleteEntry}
-                    handleFocusOutEntryCategory={
-                      this.handleFocusOutEntryCategory
-                    }
-                    handleFocusOutProjectedCost={
-                      this.handleFocusOutProjectedCost
-                    }
-                    handleFocusOutActualCost={this.handleFocusOutActualCost}
-                    handleUserClickedDeleteBudget={
-                      this.handleUserClickedDeleteBudget
-                    }
-                    clickedDeleteBudget={user.clickedDeleteBudget}
-                    handleDeleteBudget={this.handleDeleteBudget}
-                    formatter={formatterUnitedStatesDollar}
-                  />
-                </>
+                <Budget
+                  budget={user.budgets[user.currentBudgetIndex]}
+                  handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                  handleFocusProjectedMonthlyIncome={
+                    this.handleFocusProjectedMonthlyIncome
+                  }
+                  handleFocusActualMonthlyIncome={
+                    this.handleFocusActualMonthlyIncome
+                  }
+                  handleFocusOutProjectedMonthlyIncome={
+                    this.handleFocusOutProjectedMonthlyIncome
+                  }
+                  handleFocusOutActualMonthlyIncome={
+                    this.handleFocusOutActualMonthlyIncome
+                  }
+                  inputEntryCategory={input.entryCategory}
+                  handleEntryCategoryInputChange={
+                    this.handleEntryCategoryInputChange
+                  }
+                  handleEntryCategoryInputKeyDown={
+                    this.handleEntryCategoryInputKeyDown
+                  }
+                  handleAddEntry={this.handleAddEntry}
+                  handleDeleteEntry={this.handleDeleteEntry}
+                  handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
+                  handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
+                  handleFocusOutActualCost={this.handleFocusOutActualCost}
+                  handleUserClickedDeleteBudget={
+                    this.handleUserClickedDeleteBudget
+                  }
+                  clickedDeleteBudget={user.clickedDeleteBudget}
+                  handleDeleteBudget={this.handleDeleteBudget}
+                  formatter={formatterUnitedStatesDollar}
+                />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
                   user={user}
@@ -696,6 +731,9 @@ class App extends Component {
                     this.handleDisplayNameInputChange
                   }
                   handleDisplayNameChange={this.handleDisplayNameChange}
+                  handleDisplayNameInputKeyDown={
+                    this.handleDisplayNameInputKeyDown
+                  }
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
                   currentBackground={background}
@@ -710,7 +748,7 @@ class App extends Component {
                 formatter={formatterUnitedStatesDollar}
               />
             </div>
-          </div>
+          </BackgroundWrapper>
         </CustomScrollbars>
         <PreloadedBackgrounds backgrounds={backgrounds} />
       </>
