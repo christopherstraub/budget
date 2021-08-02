@@ -7,14 +7,15 @@ const Profile = ({
   inputDisplayName,
   handleDisplayNameInputChange,
   handleDisplayNameChange,
+  handleDisplayNameInputKeyDown,
   handleBackgroundChange,
   backgrounds,
   currentBackground,
   maxBudgets,
 }) => {
   return (
-    <div className="flex justify-center mt4 ph4 tc">
-      <WindowBox classlist="mw7">
+    <div className="flex justify-center pa4 tc">
+      <WindowBox classlist="mw7 w-100">
         <h1 className="fs-subheading fw3 text-break">{user.displayName}</h1>
 
         <h2 className="clr-light-accent fs-body fw3 text-break mb5">
@@ -22,41 +23,41 @@ const Profile = ({
         </h2>
 
         <h2 className="clr-light fs-body fw3 mb3">Change display name</h2>
-        <div className="flex justify-center">
-          <div className="relative w-100">
+        <div className="flex">
+          <div className="relative flex-auto">
             <input
               onChange={handleDisplayNameInputChange}
-              className="input br3 pt4 ph3 pb2 w-100"
+              onBlur={handleDisplayNameChange}
+              onKeyDown={handleDisplayNameInputKeyDown}
+              className="input br3 ph3 pb1 w-100"
+              style={{ paddingTop: '15px' }}
               type="text"
               id="display-name"
               name="display-name"
               value={inputDisplayName}
               required
             />
-            <span className="floating-label clr-dark-accent fs-body">Name</span>
+            <span className="floating-label small clr-dark-accent fs-body ">
+              New display name
+            </span>
           </div>
-
-          <button
-            onClick={handleDisplayNameChange}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--green pv2 ph4 ml3"
-          >
-            SAVE
-          </button>
         </div>
 
         <div className="mt4">
           <h2 className="clr-light fs-body fw3 mb3">Backgrounds</h2>
-          {backgrounds.map((background, index) => (
-            <button
-              key={index}
-              onClick={handleBackgroundChange}
-              className={`clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark mr3 mb3 pv2 ph3
+          <div className="flex flex-wrap justify-center">
+            {backgrounds.map((background, index) => (
+              <button
+                key={index}
+                onClick={handleBackgroundChange}
+                className={`clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark mr3 mb3 pa2
               ${background.name === currentBackground.name ? 'fw5' : ''}
               `}
-            >
-              {background.name}
-            </button>
-          ))}
+              >
+                {background.name}
+              </button>
+            ))}
+          </div>
 
           <h2 className="clr-light-accent fs-body fw3 mt5 mb0">
             Member since {user.joined.toLocaleDateString()}
