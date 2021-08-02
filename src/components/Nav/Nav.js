@@ -3,7 +3,7 @@ import React from 'react';
 const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
   return loggedIn ? (
     <nav className="flex justify-center ph5 bg--window-box">
-      <div className="list flex pv2 mb0 items-center ttc">
+      <div className="flex pv2 mb0 items-center ttc">
         <button
           onClick={() => handleRouteChange('budget')}
           className="clr-light fs-subtitle ff-logo bg-transparent border-0 ttc selection-transparent pointer relative mr4"
@@ -35,7 +35,7 @@ const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
           profile
         </button>
       </div>
-      <div className="list flex pv2 items-center ml-auto mb0">
+      <div className="flex pv2 items-center ml-auto mb0">
         <button
           onClick={() => handleRouteChange('about')}
           className={`clr-light fs-subheading fw3 bg-transparent border-0 ttc pointer
