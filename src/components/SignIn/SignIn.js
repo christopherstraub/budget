@@ -1,11 +1,16 @@
 import React from 'react';
 
-const SignIn = ({ handleRouteChange }) => {
+const SignIn = ({
+  handleRouteChange,
+  handleUsernameInputChange,
+  handlePasswordInputChange,
+}) => {
   return (
     <>
       <div className="relative">
         <input
           className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          onChange={handleUsernameInputChange}
           type="text"
           id="username"
           name="username"
@@ -16,6 +21,7 @@ const SignIn = ({ handleRouteChange }) => {
       <div className="relative">
         <input
           className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          onChange={handlePasswordInputChange}
           type="password"
           id="password"
           name="password"

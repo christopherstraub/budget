@@ -4,7 +4,14 @@ import SignInWrapper from '../SignInWrapper/SignInWrapper';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 
-const Landing = ({ handleRouteChange, route, useDarkLanding }) => {
+const Landing = ({
+  handleRouteChange,
+  route,
+  useDarkLanding,
+  handleDisplayNameInputChange,
+  handleUsernameInputChange,
+  handlePasswordInputChange,
+}) => {
   return (
     <div
       className={`flex flex-column justify-center ph4 pb4 ${
@@ -22,10 +29,19 @@ const Landing = ({ handleRouteChange, route, useDarkLanding }) => {
       </section>
 
       <SignInWrapper handleRouteChange={handleRouteChange}>
-        {route === 'signin' ? (
-          <SignIn handleRouteChange={handleRouteChange} />
-        ) : route === 'signup' ? (
-          <SignUp handleRouteChange={handleRouteChange} />
+        {route === 'signup' ? (
+          <SignUp
+            handleRouteChange={handleRouteChange}
+            handleDisplayNameInputChange={handleDisplayNameInputChange}
+            handleUsernameInputChange={handleUsernameInputChange}
+            handlePasswordInputChange={handlePasswordInputChange}
+          />
+        ) : route === 'signin' ? (
+          <SignIn
+            handleRouteChange={handleRouteChange}
+            handleUsernameInputChange={handleUsernameInputChange}
+            handlePasswordInputChange={handlePasswordInputChange}
+          />
         ) : null}
       </SignInWrapper>
     </div>

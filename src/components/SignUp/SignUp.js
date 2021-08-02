@@ -1,23 +1,30 @@
 import React from 'react';
 
-const SignUp = ({ handleRouteChange }) => {
+const SignUp = ({
+  handleRouteChange,
+  handleDisplayNameInputChange,
+  handleUsernameInputChange,
+  handlePasswordInputChange,
+}) => {
   return (
     <>
       <div className="relative">
         <input
           className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          onChange={handleDisplayNameInputChange}
           type="text"
           id="display-name"
           name="display-name"
           required
         />
         <span className="floating-label clr-dark-accent fs-body">
-          Display Name
+          Display name
         </span>
       </div>
       <div className="relative">
         <input
           className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          onChange={handleUsernameInputChange}
           type="text"
           id="username"
           name="username"
@@ -28,6 +35,7 @@ const SignUp = ({ handleRouteChange }) => {
       <div className="relative">
         <input
           className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          onChange={handlePasswordInputChange}
           type="password"
           id="password"
           name="password"
