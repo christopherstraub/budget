@@ -1,27 +1,31 @@
 {
   "files": {
-    "main.css": "/csbudget/static/css/main.1c9483a1.chunk.css",
-    "main.js": "/csbudget/static/js/main.cf47b99f.chunk.js",
-    "main.js.map": "/csbudget/static/js/main.cf47b99f.chunk.js.map",
+    "main.css": "/csbudget/static/css/main.33be0cee.chunk.css",
+    "main.js": "/csbudget/static/js/main.1edfa0da.chunk.js",
+    "main.js.map": "/csbudget/static/js/main.1edfa0da.chunk.js.map",
     "runtime-main.js": "/csbudget/static/js/runtime-main.3355acde.js",
     "runtime-main.js.map": "/csbudget/static/js/runtime-main.3355acde.js.map",
     "static/css/2.6d7c7915.chunk.css": "/csbudget/static/css/2.6d7c7915.chunk.css",
-    "static/js/2.1cfca1d2.chunk.js": "/csbudget/static/js/2.1cfca1d2.chunk.js",
-    "static/js/2.1cfca1d2.chunk.js.map": "/csbudget/static/js/2.1cfca1d2.chunk.js.map",
+    "static/js/2.3bc04f13.chunk.js": "/csbudget/static/js/2.3bc04f13.chunk.js",
+    "static/js/2.3bc04f13.chunk.js.map": "/csbudget/static/js/2.3bc04f13.chunk.js.map",
     "index.html": "/csbudget/index.html",
     "static/css/2.6d7c7915.chunk.css.map": "/csbudget/static/css/2.6d7c7915.chunk.css.map",
-    "static/css/main.1c9483a1.chunk.css.map": "/csbudget/static/css/main.1c9483a1.chunk.css.map",
-    "static/js/2.1cfca1d2.chunk.js.LICENSE.txt": "/csbudget/static/js/2.1cfca1d2.chunk.js.LICENSE.txt",
-    "static/media/bg1.c89359ac.jpg": "/csbudget/static/media/bg1.c89359ac.jpg",
-    "static/media/bg2.7342bd64.jpg": "/csbudget/static/media/bg2.7342bd64.jpg",
-    "static/media/bg3.42ee7025.jpg": "/csbudget/static/media/bg3.42ee7025.jpg",
-    "static/media/bg4.62aab2b2.jpg": "/csbudget/static/media/bg4.62aab2b2.jpg"
+    "static/css/main.33be0cee.chunk.css.map": "/csbudget/static/css/main.33be0cee.chunk.css.map",
+    "static/js/2.3bc04f13.chunk.js.LICENSE.txt": "/csbudget/static/js/2.3bc04f13.chunk.js.LICENSE.txt",
+    "static/media/bg1.c17b8822.webp": "/csbudget/static/media/bg1.c17b8822.webp",
+    "static/media/bg2.05585106.webp": "/csbudget/static/media/bg2.05585106.webp",
+    "static/media/bg3.c3d0fcbf.webp": "/csbudget/static/media/bg3.c3d0fcbf.webp",
+    "static/media/bg4.bb9dbac0.webp": "/csbudget/static/media/bg4.bb9dbac0.webp",
+    "static/media/bg5.115cac3b.webp": "/csbudget/static/media/bg5.115cac3b.webp",
+    "static/media/bg6.1d8ee2f0.webp": "/csbudget/static/media/bg6.1d8ee2f0.webp",
+    "static/media/bg7.34b4eef3.webp": "/csbudget/static/media/bg7.34b4eef3.webp",
+    "static/media/bg8.544411e1.webp": "/csbudget/static/media/bg8.544411e1.webp"
   },
   "entrypoints": [
     "static/js/runtime-main.3355acde.js",
     "static/css/2.6d7c7915.chunk.css",
-    "static/js/2.1cfca1d2.chunk.js",
-    "static/css/main.1c9483a1.chunk.css",
-    "static/js/main.cf47b99f.chunk.js"
+    "static/js/2.3bc04f13.chunk.js",
+    "static/css/main.33be0cee.chunk.css",
+    "static/js/main.1edfa0da.chunk.js"
   ]
 }
