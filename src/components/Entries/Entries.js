@@ -6,7 +6,7 @@ const Entries = ({
   budget,
   formattedEntries,
   handleFocusOutBudgetName,
-  inputCategory,
+  inputEntryCategory,
   handleEntryCategoryInputChange,
   handleEntryCategoryInputKeyDown,
   handleAddEntry,
@@ -46,8 +46,8 @@ const Entries = ({
         </span>
       </div>
 
-      <div className="flex justify-center content-stretch">
-        <div className="relative w-100">
+      <div className="flex">
+        <div className="relative mr2 flex-auto">
           <input
             onChange={handleEntryCategoryInputChange}
             onKeyDown={handleEntryCategoryInputKeyDown}
@@ -55,7 +55,7 @@ const Entries = ({
             type="text"
             id="name"
             name="name"
-            value={inputCategory}
+            value={inputEntryCategory}
             required
           />
           <span className="floating-label clr-dark-accent fs-body">
@@ -65,7 +65,7 @@ const Entries = ({
 
         <button
           onClick={handleAddEntry}
-          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pv2 ph4 w-20 ml3"
+          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pa3 ml2"
         >
           ADD ENTRY
         </button>
@@ -169,19 +169,19 @@ const Entries = ({
         </table>
       </div>
 
-      <div className="flex items-center pt4">
+      <div className="flex justify-end mt4">
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pv3 ph4 ml-auto"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pa3"
           >
             CONFIRM DELETE
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pv3 ph4 ml-auto"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pa3"
           >
             DELETE BUDGET
           </button>

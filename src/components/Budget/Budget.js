@@ -67,7 +67,7 @@ const Budget = ({
   handleFocusProjectedMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
-  inputCategory,
+  inputEntryCategory,
   handleEntryCategoryInputChange,
   handleEntryCategoryInputKeyDown,
   handleAddEntry,
@@ -84,13 +84,13 @@ const Budget = ({
   const formattedEntries = formatEntries(budget.entries, formatter);
 
   return (
-    <div className="Budget flex justify-center items-start mt4 ph4">
+    <div className="Budget flex justify-center items-start pa4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
           formattedEntries={formattedEntries}
           handleFocusOutBudgetName={handleFocusOutBudgetName}
-          inputCategory={inputCategory}
+          inputEntryCategory={inputEntryCategory}
           handleEntryCategoryInputChange={handleEntryCategoryInputChange}
           handleEntryCategoryInputKeyDown={handleEntryCategoryInputKeyDown}
           handleAddEntry={handleAddEntry}
