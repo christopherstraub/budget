@@ -20,7 +20,7 @@ const Landing = ({
       style={{ paddingTop: '10rem' }}
     >
       <section>
-        <h1 className="fs-heading fw6 tc mb3">
+        <h1 className="fs-heading fw6 tc mb2">
           Budgeting doesn't have to be hard.
         </h1>
         <h2 className="fs-subheading fw3 tc mb5">
