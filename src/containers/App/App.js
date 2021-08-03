@@ -85,7 +85,35 @@ const initialState = {
         getDifferenceCost() {
           return this.getProjectedCost() - this.getActualCost();
         },
-        entries: [],
+        entries: [
+          {
+            id: 0,
+            category: 'Mortgage or rent',
+            projectedCost: 1000,
+            actualCost: 0,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+          {
+            id: 1,
+            category: 'Vehicle',
+            projectedCost: 200,
+            actualCost: 0,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+          {
+            id: 2,
+            category: 'Phone',
+            projectedCost: 20,
+            actualCost: 0,
+            getDifference() {
+              return this.projectedCost - this.actualCost;
+            },
+          },
+        ],
       },
     ],
   },
