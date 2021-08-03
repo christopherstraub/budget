@@ -88,27 +88,27 @@ const initialState = {
         entries: [
           {
             id: 0,
-            category: 'Mortgage or rent',
+            category: 'Housing costs',
             projectedCost: 1000,
-            actualCost: 0,
+            actualCost: 1100,
             getDifference() {
               return this.projectedCost - this.actualCost;
             },
           },
           {
             id: 1,
-            category: 'Vehicle',
+            category: 'Vehicle expenses',
             projectedCost: 200,
-            actualCost: 0,
+            actualCost: 175,
             getDifference() {
               return this.projectedCost - this.actualCost;
             },
           },
           {
             id: 2,
-            category: 'Phone',
+            category: 'Phone bill',
             projectedCost: 20,
-            actualCost: 0,
+            actualCost: 20,
             getDifference() {
               return this.projectedCost - this.actualCost;
             },
