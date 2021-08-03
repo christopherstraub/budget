@@ -50,28 +50,10 @@ const getMessage = (messageCode, user, formattedBudget) => {
   }
 };
 
-const Message = ({ messageCode, user, formatter }) => {
-  const formattedProjectedMonthlyIncome =
-    user.budgets.length > 0
-      ? formatter.format(
-          user.budgets[user.currentBudgetIndex].projectedMonthlyIncome
-        )
-      : null;
-  const formattedActualMonthlyIncome =
-    user.budgets.length > 0
-      ? formatter.format(
-          user.budgets[user.currentBudgetIndex].actualMonthlyIncome
-        )
-      : null;
-
+const Message = ({ messageCode, user, formattedBudget }) => {
   return messageCode === null ? null : (
     <h2 className="message clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
-      {getMessage(
-        messageCode,
-        user,
-        formattedProjectedMonthlyIncome,
-        formattedActualMonthlyIncome
-      )}
+      {getMessage(messageCode, user, formattedBudget)}
     </h2>
   );
 };

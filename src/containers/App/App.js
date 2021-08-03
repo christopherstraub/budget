@@ -153,6 +153,62 @@ const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
+/**
+ *
+ * @param {object} budget The budget to be formatted (values should be numbers).
+ * @param {object} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
+ * @returns Formatted budget.
+ */
+const formatCurrency = (budget, formatter) => {
+  return {
+    projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
+    actualMonthlyIncome: formatter.format(budget.actualMonthlyIncome),
+    projectedBalance: formatter.format(budget.getProjectedBalance()),
+    actualBalance: formatter.format(budget.getActualBalance()),
+    differenceBalance: formatter.format(budget.getDifferenceBalance()),
+    projectedCost: formatter.format(budget.getProjectedCost()),
+    actualCost: formatter.format(budget.getActualCost()),
+    differenceCost: formatter.format(budget.getDifferenceCost()),
+  };
+};
+
+// Format negative numbers as numbers enclosed in parentheses.
+const formatNegativeValues = (formattedBudget) => {
+  const entries = Object.entries(formattedBudget);
+
+  const formattedNegativeValues = entries.map((entry) =>
+    entry[1].startsWith('-')
+      ? [entry[0], entry[1].replace('-', '(').concat(')')]
+      : entry
+  );
+
+  return Object.fromEntries(formattedNegativeValues);
+};
+
+// formatBudget formats negative values in pre-formatted budget.
+const formatBudget = (budget, formatter) => {
+  return formatNegativeValues(formatCurrency(budget, formatter));
+};
+
+/**
+ *
+ * @param {object} entries The entries to be formatted.
+ * @param {*} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
+ * @returns Formatted entries.
+ */
+const formatEntries = (entries, formatter) => {
+  if (!entries?.length) return [];
+  return entries.map((entry) => {
+    return {
+      id: entry.id,
+      category: entry.category,
+      projectedCost: formatter.format(entry.projectedCost),
+      actualCost: formatter.format(entry.actualCost),
+      difference: formatter.format(entry.getDifference()),
+    };
+  });
+};
+
 class App extends Component {
   constructor() {
     super();
@@ -657,6 +713,18 @@ class App extends Component {
   render() {
     const { route, messageCode, input, background, user } = this.state;
 
+    const formattedBudget =
+      user.budgets.length === 0
+        ? formatBudget(this.getNewBudget(), formatterUnitedStatesDollar)
+        : formatBudget(
+            user.budgets[user.currentBudgetIndex],
+            formatterUnitedStatesDollar
+          );
+    const formattedEntries = formatEntries(
+      user.budgets[user.currentBudgetIndex]?.entries,
+      formatterUnitedStatesDollar
+    );
+
     return (
       <>
         <CustomScrollbars
@@ -715,7 +783,8 @@ class App extends Component {
                   }
                   clickedDeleteBudget={user.clickedDeleteBudget}
                   handleDeleteBudget={this.handleDeleteBudget}
-                  formatter={formatterUnitedStatesDollar}
+                  formattedBudget={formattedBudget}
+                  formattedEntries={formattedEntries}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -747,7 +816,7 @@ class App extends Component {
               <Message
                 messageCode={messageCode}
                 user={user}
-                formatter={formatterUnitedStatesDollar}
+                formattedBudget={formattedBudget}
               />
             </div>
           </BackgroundWrapper>
