@@ -84,11 +84,17 @@
 }
 
 // Scrollbars.
+.bg--scrollbar-app {
+  background-color: $clr-scrollbar-app;
+}
 .bg--scrollbar-window-box {
   background-color: $clr-scrollbar-window-box;
 }
-.bg--scrollbar-app {
-  background-color: $clr-scrollbar-app;
+.bg--scrollbar-app,
+.bg--scrollbar-window-box {
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 // Borders.
