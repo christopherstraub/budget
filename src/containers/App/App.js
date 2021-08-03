@@ -12,7 +12,6 @@ import Message from '../../components/Message/Message';
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
 import cloneDeep from 'lodash/cloneDeep';
-import { nanoid } from 'nanoid';
 
 import pathBg1 from '../../images/bg1.webp';
 import pathBg2 from '../../images/bg2.webp';
@@ -52,7 +51,7 @@ const initialState = {
     clickedDeleteBudget: false,
     budgets: [
       {
-        id: nanoid(),
+        id: 0,
         name: `${new Date().toLocaleString('default', {
           month: 'long',
         })} ${new Date().getFullYear()}`,
@@ -308,7 +307,11 @@ class App extends Component {
     const category = this.state.input.entryCategory || 'No category set';
 
     return {
-      id: nanoid(),
+      id:
+        this.state.user.budgets[this.state.user.currentBudgetIndex].entries[
+          this.state.user.budgets[this.state.user.currentBudgetIndex].entries
+            .length - 1
+        ]?.id + 1 || 0,
       category,
       projectedCost: 0,
       actualCost: 0,
@@ -381,14 +384,16 @@ class App extends Component {
 
   // Create budget object. Budget name is set using the Date object.
   // Name depends on current date and current number of budgets.
-  createBudget = () => {
+  getNewBudget = () => {
     const date = new Date(
       new Date().getFullYear(),
       new Date().getMonth() + this.state.user.budgets.length
     );
 
     return {
-      id: nanoid(),
+      id:
+        this.state.user.budgets[this.state.user.budgets.length - 1]?.id + 1 ||
+        0,
       name: `${date.toLocaleString('default', {
         month: 'long',
       })} ${date.getFullYear()}`,
@@ -443,7 +448,7 @@ class App extends Component {
       return;
     }
     const stateCopy = cloneDeep(this.state);
-    stateCopy.user.budgets.push(this.createBudget());
+    stateCopy.user.budgets.push(this.getNewBudget());
     this.setState(stateCopy);
 
     if (this.state.user.budgets.length === 4) {
