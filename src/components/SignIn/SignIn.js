@@ -4,6 +4,7 @@ const SignIn = ({
   handleRouteChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
+  handleKeyDown,
   handleUserSignIn,
   landingMessageCode,
   input,
@@ -16,6 +17,7 @@ const SignIn = ({
           ${input.username.empty ? 'empty' : ''}
           `}
           onChange={handleUsernameInputChange}
+          onKeyDown={handleKeyDown(handleUserSignIn)}
           type="text"
           id="username"
           name="username"
@@ -29,6 +31,7 @@ const SignIn = ({
           ${input.password.empty ? 'empty' : ''}
           `}
           onChange={handlePasswordInputChange}
+          onKeyDown={handleKeyDown(handleUserSignIn)}
           type="password"
           id="password"
           name="password"

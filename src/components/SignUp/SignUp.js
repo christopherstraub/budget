@@ -12,6 +12,7 @@ const SignUp = ({
   handleDisplayNameInputChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
+  handleKeyDown,
   handleUserSignUp,
   landingMessageCode,
   input,
@@ -24,6 +25,7 @@ const SignUp = ({
           ${input.displayName.empty ? 'empty' : ''}
           `}
           onChange={handleDisplayNameInputChange}
+          onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
           id="display-name"
           name="display-name"
@@ -39,6 +41,7 @@ const SignUp = ({
           ${input.username.empty ? 'empty' : ''}
           `}
           onChange={handleUsernameInputChange}
+          onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
           id="username"
           name="username"
@@ -53,6 +56,7 @@ const SignUp = ({
           ${getPasswordInputStyle(input.password)}
           `}
           onChange={handlePasswordInputChange}
+          onKeyDown={handleKeyDown(handleUserSignUp)}
           type="password"
           id="password"
           name="password"

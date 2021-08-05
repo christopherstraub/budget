@@ -7,7 +7,7 @@ const Profile = ({
   inputDisplayName,
   handleDisplayNameInputChange,
   handleDisplayNameChange,
-  handleDisplayNameInputKeyDown,
+  handleKeyDown,
   handleBackgroundChange,
   backgrounds,
   currentBackground,
@@ -27,8 +27,7 @@ const Profile = ({
           <div className="relative flex-auto">
             <input
               onChange={handleDisplayNameInputChange}
-              onBlur={handleDisplayNameChange}
-              onKeyDown={handleDisplayNameInputKeyDown}
+              onKeyDown={handleKeyDown(handleDisplayNameChange)}
               className="input br3 border--dark ph3 pb1 w-100"
               style={{ paddingTop: '15px' }}
               type="text"

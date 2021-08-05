@@ -15,7 +15,7 @@ const Budget = ({
   handleFocusOutActualMonthlyIncome,
   inputEntryCategory,
   handleEntryCategoryInputChange,
-  handleEntryCategoryInputKeyDown,
+  handleKeyDown,
   handleAddEntry,
   handleDeleteEntry,
   handleFocusOutEntryCategory,
@@ -34,7 +34,7 @@ const Budget = ({
           handleFocusOutBudgetName={handleFocusOutBudgetName}
           inputEntryCategory={inputEntryCategory}
           handleEntryCategoryInputChange={handleEntryCategoryInputChange}
-          handleEntryCategoryInputKeyDown={handleEntryCategoryInputKeyDown}
+          handleKeyDown={handleKeyDown}
           handleAddEntry={handleAddEntry}
           handleDeleteEntry={handleDeleteEntry}
           handleFocusOutEntryCategory={handleFocusOutEntryCategory}

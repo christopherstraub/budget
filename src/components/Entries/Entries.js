@@ -8,7 +8,7 @@ const Entries = ({
   handleFocusOutBudgetName,
   inputEntryCategory,
   handleEntryCategoryInputChange,
-  handleEntryCategoryInputKeyDown,
+  handleKeyDown,
   handleAddEntry,
   handleDeleteEntry,
   handleFocusOutEntryCategory,
@@ -50,7 +50,7 @@ const Entries = ({
         <div className="relative mr2 flex-auto">
           <input
             onChange={handleEntryCategoryInputChange}
-            onKeyDown={handleEntryCategoryInputKeyDown}
+            onKeyDown={handleKeyDown(handleAddEntry)}
             className="input br3 border--dark pt4 ph3 pb2 w-100"
             type="text"
             id="name"

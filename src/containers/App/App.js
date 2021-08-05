@@ -367,12 +367,6 @@ class App extends Component {
     this.setState({ input });
   };
 
-  handleEntryCategoryInputKeyDown = (event) => {
-    if (event.keyCode === 13 && event.target.value !== '') {
-      this.handleAddEntry();
-    }
-  };
-
   // Create entry object.
   // If input entry category is empty, set to 'No category set'.
   getNewEntry = () => {
@@ -699,13 +693,6 @@ class App extends Component {
     this.setState({ input });
   };
 
-  // Change displayName if user presses 'Enter' key.
-  handleDisplayNameInputKeyDown = (event) => {
-    if (event.keyCode === 13 && event.target.value !== '') {
-      this.handleDisplayNameChange();
-    }
-  };
-
   // Update display name if display name input is different from current
   // display name and display name input is not an empty string.
   handleDisplayNameChange = () => {
@@ -818,6 +805,18 @@ class App extends Component {
     }
   };
 
+  /**
+   *
+   * @param {*} callback The function to be called upon key press.
+   * @param {number} keyCode Integer that corresponds to the key pressed.
+   * Defaults to 13 (enter key).
+   */
+  handleKeyDown =
+    (callback, keyCode = 13) =>
+    (event) => {
+      if (event.keyCode === keyCode && event.target.value !== '') callback();
+    };
+
   render() {
     const { route, messageCode, landingMessageCode, input, background, user } =
       this.state;
@@ -865,6 +864,7 @@ class App extends Component {
                   }
                   handleUsernameInputChange={this.handleUsernameInputChange}
                   handlePasswordInputChange={this.handlePasswordInputChange}
+                  handleKeyDown={this.handleKeyDown}
                   handleUserSignUp={this.handleUserSignUp}
                   handleUserSignIn={this.handleUserSignIn}
                   landingMessageCode={landingMessageCode}
@@ -890,9 +890,7 @@ class App extends Component {
                   handleEntryCategoryInputChange={
                     this.handleEntryCategoryInputChange
                   }
-                  handleEntryCategoryInputKeyDown={
-                    this.handleEntryCategoryInputKeyDown
-                  }
+                  handleKeyDown={this.handleKeyDown}
                   handleAddEntry={this.handleAddEntry}
                   handleDeleteEntry={this.handleDeleteEntry}
                   handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
@@ -922,9 +920,7 @@ class App extends Component {
                     this.handleDisplayNameInputChange
                   }
                   handleDisplayNameChange={this.handleDisplayNameChange}
-                  handleDisplayNameInputKeyDown={
-                    this.handleDisplayNameInputKeyDown
-                  }
+                  handleKeyDown={this.handleKeyDown}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
                   currentBackground={background}
