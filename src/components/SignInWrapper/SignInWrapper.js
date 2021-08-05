@@ -10,11 +10,10 @@ const SignInWrapper = ({ handleRouteChange, children }) => {
         <h1 className="clr-light ff-logo fs-heading user-select-none tc mb4">
           CSBudget
         </h1>
-
         {children}
         <button
           onClick={() => handleRouteChange('budget')}
-          className="clr-light fs-body fw3 bg-transparent border-0 pointer underline-hover"
+          className="clr-light fs-body fw3 bg-transparent bn pointer underline-hover mt6"
         >
           Continue as guest.
         </button>

@@ -29,7 +29,7 @@ const Profile = ({
               onChange={handleDisplayNameInputChange}
               onBlur={handleDisplayNameChange}
               onKeyDown={handleDisplayNameInputKeyDown}
-              className="input br3 ph3 pb1 w-100"
+              className="input br3 border--dark ph3 pb1 w-100"
               style={{ paddingTop: '15px' }}
               type="text"
               id="display-name"
@@ -50,7 +50,7 @@ const Profile = ({
               <button
                 key={index}
                 onClick={handleBackgroundChange}
-                className={`clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark mr3 mb3 pa2
+                className={`clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark mr3 mb3 pa2
               ${background.name === currentBackground.name ? 'fw5' : ''}
               `}
               >

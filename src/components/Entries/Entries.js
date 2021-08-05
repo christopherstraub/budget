@@ -51,7 +51,7 @@ const Entries = ({
           <input
             onChange={handleEntryCategoryInputChange}
             onKeyDown={handleEntryCategoryInputKeyDown}
-            className="input br3 pt4 ph3 pb2 w-100"
+            className="input br3 border--dark pt4 ph3 pb2 w-100"
             type="text"
             id="name"
             name="name"
@@ -65,7 +65,7 @@ const Entries = ({
 
         <button
           onClick={handleAddEntry}
-          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--accent-dark pa3 ml2"
+          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3 ml2"
         >
           ADD ENTRY
         </button>
@@ -174,14 +174,14 @@ const Entries = ({
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pa3"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--dark-red pa3"
           >
             CONFIRM DELETE
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 border-0 bg--dark-red pa3"
+            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--dark-red pa3"
           >
             DELETE BUDGET
           </button>
