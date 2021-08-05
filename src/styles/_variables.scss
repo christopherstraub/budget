@@ -6,6 +6,7 @@ $clr-dark-accent: rgb(113, 113, 113);
 $clr-accent-dark: #3679b8;
 $clr-accent-light: #84d2f6;
 $clr-green: #0c8126;
+$clr-light-green: rgb(56, 218, 56);
 $clr-red: #ff4040;
 $clr-dark-red: rgb(135, 0, 0);
 
@@ -22,8 +23,7 @@ $ff-logo: 'Lobster', cursive;
 $ff-mono: 'Roboto Mono', monospace;
 
 // Sign in box.
-$clr-login-box-top: rgba(0, 46, 64, 0.9);
-$clr-login-box-bottom: rgba(1, 70, 91, 0.9);
+$clr-login-box: rgba(1, 70, 91, 0.9);
 
 // Window box.
 $clr-window-box: rgba(3, 31, 56, 0.9);

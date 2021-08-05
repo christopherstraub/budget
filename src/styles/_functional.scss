@@ -80,7 +80,7 @@
   background: $clr-window-box;
 }
 .bg--login-box {
-  background: linear-gradient($clr-login-box-top, $clr-login-box-bottom);
+  background: linear-gradient($clr-login-box, $clr-login-box);
 }
 
 // Scrollbars.
@@ -106,7 +106,6 @@
   color: $clr-dark;
   font-size: $fs-body;
   background-color: $clr-light;
-  border: 1px solid $clr-dark;
 
   &:focus,
   &:focus-visible {
@@ -118,13 +117,20 @@
   }
 
   &.input-decorated {
-    border: none;
+    &.empty {
+      border-bottom: 4px solid $clr-red;
+      margin-bottom: calc(0.5rem - 4px);
+    }
 
     &:focus,
     &:focus-visible {
       border: none;
       border-bottom: 4px solid $clr-accent-light;
       margin-bottom: calc(0.5rem - 4px);
+
+      &.valid {
+        border-bottom: 4px solid $clr-light-green;
+      }
     }
 
     &:focus {
