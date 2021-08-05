@@ -4,12 +4,17 @@ const SignIn = ({
   handleRouteChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
+  handleUserSignIn,
+  landingMessageCode,
+  input,
 }) => {
   return (
     <>
       <div className="relative">
         <input
-          className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          ${input.username.empty ? 'empty' : ''}
+          `}
           onChange={handleUsernameInputChange}
           type="text"
           id="username"
@@ -20,7 +25,9 @@ const SignIn = ({
       </div>
       <div className="relative">
         <input
-          className="input input-decorated br3 pt4 ph3 pb2 mv2 w-100"
+          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          ${input.password.empty ? 'empty' : ''}
+          `}
           onChange={handlePasswordInputChange}
           type="password"
           id="password"
@@ -30,15 +37,25 @@ const SignIn = ({
         <span className="floating-label clr-dark-accent fs-body">Password</span>
       </div>
 
+      {landingMessageCode === 'fields-empty' ? (
+        <h6 className="clr-red fs-body mt3">Username and password required.</h6>
+      ) : landingMessageCode === 'username-empty' ? (
+        <h6 className="clr-red fs-body mt3">Username required.</h6>
+      ) : landingMessageCode === 'password-empty' ? (
+        <h6 className="clr-red fs-body mt3">Password required.</h6>
+      ) : landingMessageCode === 'credentials-invalid' ? (
+        <h6 className="clr-red fs-body mt3">Invalid username or password.</h6>
+      ) : null}
+
       <button
-        onClick={() => handleRouteChange('budget')}
-        className="button-transparent selection-transparent clr-light fs-body fw7 bg--dark border-0 br3 pv3 ph3 mv3 w-100"
+        onClick={handleUserSignIn}
+        className="button-transparent selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mv3 w-100"
       >
         Sign In
       </button>
       <button
         onClick={() => handleRouteChange('signup')}
-        className="clr-light fs-body fw3 bg-transparent border-0 pointer mt2 mb6 underline-hover"
+        className="clr-light fs-body fw3 bg-transparent bn pointer mt2 underline-hover"
       >
         Don't have an account? <span className="fw6">Sign up</span>.
       </button>

@@ -24,17 +24,22 @@ import pathBg8 from '../../images/bg8.webp';
 
 import './App.scss';
 
-// VALID ROUTES
+// Valid routes
 // 'signin', 'signup', 'budget', 'saved-budgets', 'profile', 'about'
+
+// Valid landing message codes:
+// 'fields-empty', 'password-length-invalid', 'credentials-invalid'
+// 'username-empty', 'password-empty'
 
 // Set initial state to be passed into App state.
 const initialState = {
   route: 'signup',
   messageCode: null,
+  landingMessageCode: null,
   input: {
-    displayName: '',
-    username: '',
-    password: '',
+    displayName: { value: '', empty: false },
+    username: { value: '', empty: false },
+    password: { value: '', empty: false, minLength: 6, maxLength: 60 },
     entryCategory: '',
     projectedMonthlyIncome: '',
     actualMonthlyIncome: '',
@@ -209,6 +214,14 @@ const formatEntries = (entries, formatter) => {
   });
 };
 
+const someFieldsEmpty = (fields) => {
+  return fields.some((field) => field === '');
+};
+
+const allFieldsEmpty = (fields) => {
+  return fields.every((field) => field === '');
+};
+
 class App extends Component {
   constructor() {
     super();
@@ -320,14 +333,18 @@ class App extends Component {
         input: initialState.input,
         user: initialState.user,
       });
-    // Reset input when routing between SignIn and SignUp components.
+    // Reset input and message code when routing between
+    // SignIn and SignUp components.
     else if (
       (route === 'signin' || route === 'signup') &&
       (this.state.route === 'signin' || this.state.route === 'signup')
-    ) {
-      this.setState({ input: initialState.input });
-      this.setState({ route });
-    } else if (route !== this.state.route) this.setState({ route });
+    )
+      this.setState({
+        input: initialState.input,
+        landingMessageCode: null,
+        route,
+      });
+    else if (route !== this.state.route) this.setState({ route });
   };
 
   // Only filter through backgrounds if selected background is different
@@ -342,35 +359,6 @@ class App extends Component {
       this.setState({ background: selectedBackground[0] });
     } else if (localStorage.getItem('background') !== event.target.textContent)
       localStorage.setItem('background', event.target.textContent);
-  };
-
-  // Update state displayName input with user input.
-  handleDisplayNameInputChange = (event) => {
-    const input = { ...this.state.input, displayName: event.target.value };
-    this.setState({ input });
-  };
-
-  // Change displayName if user presses 'Enter' key.
-  handleDisplayNameInputKeyDown = (event) => {
-    if (event.keyCode === 13 && event.target.value !== '') {
-      this.handleDisplayNameChange();
-    }
-  };
-
-  // Update display name if display name input is different from current
-  // display name and display name input is not an empty string.
-  handleDisplayNameChange = () => {
-    if (
-      this.state.user.displayName !== this.state.input.displayName &&
-      this.state.input.displayName !== ''
-    ) {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.displayName = this.state.input.displayName;
-      stateCopy.input.displayName = '';
-      stateCopy.messageCode = 'display-name-changed';
-      this.setState(stateCopy);
-      this.clearMessageCode(4000);
-    }
   };
 
   // Update state entry category input with user input.
@@ -700,18 +688,139 @@ class App extends Component {
     }
   };
 
+  // Update state displayName input with user input.
+  handleDisplayNameInputChange = (event) => {
+    const displayName = {
+      ...this.state.input.displayName,
+      value: event.target.value,
+      empty: false,
+    };
+    const input = { ...this.state.input, displayName };
+    this.setState({ input });
+  };
+
+  // Change displayName if user presses 'Enter' key.
+  handleDisplayNameInputKeyDown = (event) => {
+    if (event.keyCode === 13 && event.target.value !== '') {
+      this.handleDisplayNameChange();
+    }
+  };
+
+  // Update display name if display name input is different from current
+  // display name and display name input is not an empty string.
+  handleDisplayNameChange = () => {
+    if (
+      this.state.user.displayName.value !==
+        this.state.input.displayName.value &&
+      this.state.input.displayName.value !== ''
+    ) {
+      const stateCopy = cloneDeep(this.state);
+      stateCopy.user.displayName = this.state.input.displayName.value;
+      stateCopy.input.displayName.value = '';
+      stateCopy.messageCode = 'display-name-changed';
+      this.setState(stateCopy);
+      this.clearMessageCode(4000);
+    }
+  };
+
   handleUsernameInputChange = (event) => {
-    const input = { ...this.state.input, username: event.target.value };
+    const username = {
+      ...this.state.input.username,
+      value: event.target.value,
+      empty: false,
+    };
+    const input = { ...this.state.input, username };
     this.setState({ input });
   };
 
   handlePasswordInputChange = (event) => {
-    const input = { ...this.state.input, password: event.target.value };
+    const password = {
+      ...this.state.input.password,
+      value: event.target.value,
+      empty: false,
+    };
+    const input = { ...this.state.input, password };
     this.setState({ input });
   };
 
+  handleUserSignUp = () => {
+    if (
+      someFieldsEmpty([
+        this.state.input.displayName.value,
+        this.state.input.username.value,
+        this.state.input.password.value,
+      ])
+    ) {
+      let inputCopy = { ...this.state.input };
+      if (this.state.input.displayName.value === '') {
+        const displayName = { ...this.state.input.displayName, empty: true };
+        inputCopy = { ...inputCopy, displayName };
+      } else {
+        const displayName = { ...this.state.input.displayName, empty: false };
+        inputCopy = { ...inputCopy, displayName };
+      }
+      if (this.state.input.username.value === '') {
+        const username = { ...this.state.input.username, empty: true };
+        inputCopy = { ...inputCopy, username };
+      } else {
+        const username = { ...this.state.input.username, empty: false };
+        inputCopy = { ...inputCopy, username };
+      }
+      if (this.state.input.password.value === '') {
+        const password = { ...this.state.input.password, empty: true };
+        inputCopy = { ...inputCopy, password };
+      } else {
+        const password = { ...this.state.input.password, empty: false };
+        inputCopy = { ...inputCopy, password };
+      }
+
+      this.setState({ landingMessageCode: 'fields-empty', input: inputCopy });
+    } else if (
+      this.state.input.password.value.length <
+        this.state.input.password.minLength ||
+      this.state.input.password.value.length >
+        this.state.input.password.maxLength
+    ) {
+      this.setState({ landingMessageCode: 'password-length-invalid' });
+    } else this.setState({ landingMessageCode: null });
+  };
+
+  handleUserSignIn = () => {
+    if (
+      allFieldsEmpty([
+        this.state.input.username.value,
+        this.state.input.password.value,
+      ])
+    ) {
+      const input = cloneDeep(this.state.input);
+      input.username.empty = true;
+      input.password.empty = true;
+      this.setState({ landingMessageCode: 'fields-empty', input });
+    } else if (this.state.input.username.value === '') {
+      this.setState({ landingMessageCode: 'username-empty' });
+      const username = { ...this.state.input.username, empty: true };
+      const input = { ...this.state.input, username };
+      this.setState({ input });
+    } else if (this.state.input.password.value === '') {
+      this.setState({ landingMessageCode: 'password-empty' });
+      const password = { ...this.state.input.password, empty: true };
+      const input = { ...this.state.input, password };
+      this.setState({ input });
+    } else if (
+      this.state.input.password.value.length <
+        this.state.input.password.minLength ||
+      this.state.input.password.value.length >
+        this.state.input.password.maxLength
+    )
+      this.setState({ landingMessageCode: 'credentials-invalid' });
+    else {
+      this.setState({ landingMessageCode: null });
+    }
+  };
+
   render() {
-    const { route, messageCode, input, background, user } = this.state;
+    const { route, messageCode, landingMessageCode, input, background, user } =
+      this.state;
 
     const formattedBudget =
       user.budgets.length === 0
@@ -724,6 +833,13 @@ class App extends Component {
       user.budgets[user.currentBudgetIndex]?.entries,
       formatterUnitedStatesDollar
     );
+
+    const {
+      entryCategory,
+      projectedMonthlyIncome,
+      actualMonthlyIncome,
+      ...landingInput
+    } = input;
 
     return (
       <>
@@ -749,6 +865,10 @@ class App extends Component {
                   }
                   handleUsernameInputChange={this.handleUsernameInputChange}
                   handlePasswordInputChange={this.handlePasswordInputChange}
+                  handleUserSignUp={this.handleUserSignUp}
+                  handleUserSignIn={this.handleUserSignIn}
+                  landingMessageCode={landingMessageCode}
+                  input={landingInput}
                 />
               ) : route === 'budget' ? (
                 <Budget
@@ -797,7 +917,7 @@ class App extends Component {
               ) : route === 'profile' ? (
                 <Profile
                   user={user}
-                  inputDisplayName={input.displayName}
+                  inputDisplayName={input.displayName.value}
                   handleDisplayNameInputChange={
                     this.handleDisplayNameInputChange
                   }

@@ -11,7 +11,13 @@ const Landing = ({
   handleDisplayNameInputChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
+  handleUserSignUp,
+  handleUserSignIn,
+  landingMessageCode,
+  input,
 }) => {
+  const { displayName, ...signInInput } = input;
+
   return (
     <div
       className={`flex flex-column justify-center ph4 pb4 ${
@@ -35,12 +41,18 @@ const Landing = ({
             handleDisplayNameInputChange={handleDisplayNameInputChange}
             handleUsernameInputChange={handleUsernameInputChange}
             handlePasswordInputChange={handlePasswordInputChange}
+            handleUserSignUp={handleUserSignUp}
+            landingMessageCode={landingMessageCode}
+            input={input}
           />
         ) : route === 'signin' ? (
           <SignIn
             handleRouteChange={handleRouteChange}
             handleUsernameInputChange={handleUsernameInputChange}
             handlePasswordInputChange={handlePasswordInputChange}
+            handleUserSignIn={handleUserSignIn}
+            landingMessageCode={landingMessageCode}
+            input={signInInput}
           />
         ) : null}
       </SignInWrapper>
