@@ -14,8 +14,8 @@ import React from 'react';
 // Profile:
 // 'display-name-changed'
 
-const getMessage = (messageCode, user, formattedBudget) => {
-  switch (messageCode) {
+const getMessage = (code, user, formattedBudget) => {
+  switch (code) {
     case 'user-logged-in':
       return `Welcome, ${user.displayName}.`;
     case 'projected-cost-invalid':
@@ -50,12 +50,10 @@ const getMessage = (messageCode, user, formattedBudget) => {
   }
 };
 
-const Message = ({ messageCode, user, formattedBudget }) => {
-  return messageCode === null ? null : (
-    <h2 className="message clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
-      {getMessage(messageCode, user, formattedBudget)}
-    </h2>
-  );
-};
+const Message = ({ code, user, formattedBudget }) => (
+  <h2 className="message fixed pointer-events-none clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
+    {getMessage(code, user, formattedBudget)}
+  </h2>
+);
 
 export default Message;

@@ -69,7 +69,8 @@ const SignUp = ({
         <h6 className="clr-red fs-body mt3">Please fill out all fields.</h6>
       ) : landingMessageCode === 'password-length-invalid' ? (
         <h6 className="clr-red fs-body mt3">
-          Password should be between 6 and 60 characters.
+          Password should be between {input.password.minLength} and{' '}
+          {input.password.maxLength} characters.
         </h6>
       ) : null}
 
