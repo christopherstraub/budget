@@ -22,8 +22,8 @@ const Budget = ({
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
-  clickedDeleteBudget,
   handleDeleteBudget,
+  clickedDeleteBudget,
 }) => {
   return (
     <div className="Budget flex justify-center items-start pa4">
@@ -41,8 +41,8 @@ const Budget = ({
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
-          clickedDeleteBudget={clickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
+          clickedDeleteBudget={clickedDeleteBudget}
         />
       </WindowBox>
 

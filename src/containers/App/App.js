@@ -55,6 +55,7 @@ const initialState = {
     maxBudgets: 100,
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
+    toggledExpandNav: false,
     budgets: [
       {
         id: 0,
@@ -888,6 +889,12 @@ class App extends Component {
       if (event.keyCode === keyCode && event.target.value !== '') callback();
     };
 
+  handleUserToggledExpandNav = () => {
+    const toggledExpandNav = this.state.user.toggledExpandNav ? false : true;
+    const user = { ...this.state.user, toggledExpandNav };
+    this.setState({ user });
+  };
+
   render() {
     const { route, message, landingMessageCode, input, background, user } =
       this.state;
@@ -924,6 +931,8 @@ class App extends Component {
                 loggedIn={user.isLoggedIn}
                 isGuest={user.isGuest}
                 route={route}
+                handleUserToggledExpandNav={this.handleUserToggledExpandNav}
+                toggledExpandNav={user.toggledExpandNav}
               />
               {route === 'signin' || route === 'signup' ? (
                 <Landing
@@ -970,8 +979,8 @@ class App extends Component {
                   handleUserClickedDeleteBudget={
                     this.handleUserClickedDeleteBudget
                   }
-                  clickedDeleteBudget={user.clickedDeleteBudget}
                   handleDeleteBudget={this.handleDeleteBudget}
+                  clickedDeleteBudget={user.clickedDeleteBudget}
                   formattedBudget={formattedBudget}
                   formattedEntries={formattedEntries}
                 />
