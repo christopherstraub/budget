@@ -15,8 +15,8 @@ const Entries = ({
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
   handleUserClickedDeleteBudget,
-  clickedDeleteBudget,
   handleDeleteBudget,
+  clickedDeleteBudget,
 }) => {
   return (
     <>

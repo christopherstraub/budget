@@ -1,9 +1,20 @@
 import React from 'react';
 
-const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
+const Nav = ({
+  handleRouteChange,
+  loggedIn,
+  isGuest,
+  route,
+  handleUserToggledExpandNav,
+  toggledExpandNav,
+}) => {
   return loggedIn ? (
-    <nav className="flex justify-center ph5 bg--window-box">
-      <div className="flex pv2 mb0 items-center ttc">
+    <nav
+      className={`flex justify-between pv2 ph5 bg--window-box
+    ${toggledExpandNav ? 'expand' : ''}
+    `}
+    >
+      <div className="flex items-center">
         <button
           onClick={() => handleRouteChange('budget')}
           className="clr-light fs-subtitle ff-logo bg-transparent bn ttc selection-transparent pointer relative mr4"
@@ -11,8 +22,16 @@ const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
           CSBudget
         </button>
         <button
+          className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity"
+          onClick={handleUserToggledExpandNav}
+        >
+          <span className="bar w-100 bg--light br4"></span>
+          <span className="bar w-100 bg--light br4"></span>
+          <span className="bar w-100 bg--light br4"></span>
+        </button>
+        <button
           onClick={() => handleRouteChange('budget')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity 
           ${route === 'budget' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -20,7 +39,7 @@ const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
         </button>
         <button
           onClick={() => handleRouteChange('saved-budgets')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity
           ${route === 'saved-budgets' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -28,17 +47,17 @@ const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
         </button>
         <button
           onClick={() => handleRouteChange('profile')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity
           ${route === 'profile' ? 'selected clr-accent-light' : ''}
           `}
         >
           profile
         </button>
       </div>
-      <div className="flex pv2 items-center ml-auto mb0">
+      <div className="flex items-center">
         <button
           onClick={() => handleRouteChange('about')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity
           ${route === 'about' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -47,14 +66,14 @@ const Nav = ({ handleRouteChange, loggedIn, isGuest, route }) => {
         {isGuest ? (
           <button
             onClick={() => handleRouteChange('signup')}
-            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4"
+            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity"
           >
             sign up
           </button>
         ) : (
           <button
             onClick={() => handleRouteChange('signin')}
-            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4"
+            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity"
           >
             sign out
           </button>

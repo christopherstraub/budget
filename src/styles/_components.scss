@@ -1,9 +1,5 @@
 @import './variables';
 
-nav button:hover:not(.selected, .ff-logo) {
-  opacity: 0.5;
-}
-
 .message {
   bottom: 0;
   left: 50%;
@@ -23,4 +19,62 @@ nav button:hover:not(.selected, .ff-logo) {
 .message-exit-active {
   transform: translate(-50%, 100%);
   transition: transform 0.5s linear;
+}
+
+@media (max-width: 900px) {
+  .App {
+    nav {
+      flex-direction: column;
+
+      div.flex {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .toggle-expand {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          top: 1.75rem;
+          right: 5rem;
+          width: 3.5rem;
+          height: 2.5rem;
+
+          .bar {
+            height: 0.5rem;
+            transition: all 0.5s;
+          }
+        }
+
+        button:not(.toggle-expand) {
+          margin: 0;
+
+          &:not(.ff-logo) {
+            display: none;
+            padding: 0.75rem 0.6rem;
+          }
+        }
+      }
+
+      &.expand div.flex {
+        .toggle-expand {
+          .bar:nth-child(1) {
+            transform: rotate(45deg) translate(0.75rem, 0.85rem);
+          }
+          .bar:nth-child(2) {
+            opacity: 0;
+          }
+          .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(0.5rem, -0.75rem);
+          }
+        }
+
+        button:not(.toggle-expand):not(.ff-logo) {
+          display: inline-block;
+          width: 100%;
+          text-align: start;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
 }
