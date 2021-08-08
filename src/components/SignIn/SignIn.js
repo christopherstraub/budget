@@ -19,7 +19,6 @@ const SignIn = ({
           onChange={handleUsernameInputChange}
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="text"
-          id="username"
           name="username"
           required
         />
@@ -33,7 +32,6 @@ const SignIn = ({
           onChange={handlePasswordInputChange}
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="password"
-          id="password"
           name="password"
           required
         />

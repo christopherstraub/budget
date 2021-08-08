@@ -27,7 +27,6 @@ const SignUp = ({
           onChange={handleDisplayNameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
-          id="display-name"
           name="display-name"
           required
         />
@@ -41,7 +40,6 @@ const SignUp = ({
           onChange={handleUsernameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
-          id="username"
           name="username"
           required
         />
@@ -56,7 +54,6 @@ const SignUp = ({
           onChange={handlePasswordInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="password"
-          id="password"
           name="password"
           required
         />
