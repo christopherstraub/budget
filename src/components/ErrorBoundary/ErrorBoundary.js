@@ -15,7 +15,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="pv5 ph4">
+        <div className="pv5 ph4 tc">
           <span className="clr-light fs-body">
             Unfortunately, we've encountered an error.
           </span>
