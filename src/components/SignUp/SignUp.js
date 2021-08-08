@@ -31,9 +31,7 @@ const SignUp = ({
           name="display-name"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">
-          Display name
-        </span>
+        <span className="floating-label">Display name</span>
       </div>
       <div className="relative">
         <input
@@ -47,7 +45,7 @@ const SignUp = ({
           name="username"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">Username</span>
+        <span className="floating-label">Username</span>
       </div>
       <div className="relative">
         <input
@@ -62,7 +60,7 @@ const SignUp = ({
           name="password"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">Password</span>
+        <span className="floating-label">Password</span>
       </div>
 
       {landingMessageCode === 'fields-empty' ? (

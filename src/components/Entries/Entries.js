@@ -58,9 +58,7 @@ const Entries = ({
             value={inputEntryCategory}
             required
           />
-          <span className="floating-label clr-dark-accent fs-body">
-            Category of entry
-          </span>
+          <span className="floating-label">Category of entry</span>
         </div>
 
         <button

@@ -140,6 +140,8 @@
 }
 
 .floating-label {
+  color: $clr-dark-accent;
+  font-size: $fs-body;
   pointer-events: none;
   position: absolute;
   top: 50%;
