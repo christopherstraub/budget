@@ -586,6 +586,25 @@ class App extends Component {
     this.setState({ user: userCopy });
   };
 
+  handleBudgetNameChange = (event) => {
+    if (
+      this.state.user.budgets[this.state.user.currentBudgetIndex].name !==
+        event.target.value.trim() &&
+      event.target.value.trim()
+    ) {
+      const user = cloneDeep(this.state.user);
+      user.budgets[this.state.user.currentBudgetIndex].name =
+        event.target.value.trim();
+      const message = {
+        ...this.state.message,
+        code: 'budget-name-changed',
+        show: true,
+      };
+      this.setState({ user, message });
+      this.clearMessage();
+    }
+  };
+
   // Update entry category if input is not empty.
   handleFocusOutEntryCategory = (id) => (text) => {
     const userCopy = cloneDeep(this.state.user);
@@ -879,14 +898,14 @@ class App extends Component {
 
   /**
    *
-   * @param {function} callback The function to be called upon key press.
-   * @param {number} keyCode JavaScript event keyCode.
-   * Defaults to 13 (enter key).
+   * @param {function} callback The function to be called upon key code press.
+   * @param {number} code JavaScript event code.
+   * Defaults to 'Enter'.
    */
   handleKeyDown =
-    (callback, keyCode = 13) =>
+    (callback, code = 'Enter') =>
     (event) => {
-      if (event.keyCode === keyCode && event.target.value !== '') callback();
+      if (event.code === code && event.target.value !== '') callback();
     };
 
   handleUserToggledExpandNav = () => {
