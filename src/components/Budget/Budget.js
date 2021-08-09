@@ -8,9 +8,11 @@ const Budget = ({
   budget,
   formattedBudget,
   formattedEntries,
-  handleFocusOutBudgetName,
-  handleFocusActualMonthlyIncome,
+  isEditingBudgetName,
+  editBudgetName,
+  handleBudgetNameChange,
   handleFocusProjectedMonthlyIncome,
+  handleFocusActualMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
   inputEntryCategory,
@@ -24,6 +26,8 @@ const Budget = ({
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  setMessage,
+  clearMessage,
 }) => {
   return (
     <div className="Budget flex justify-center items-start pa4">
@@ -31,7 +35,9 @@ const Budget = ({
         <Entries
           budget={budget}
           formattedEntries={formattedEntries}
-          handleFocusOutBudgetName={handleFocusOutBudgetName}
+          isEditingBudgetName={isEditingBudgetName}
+          editBudgetName={editBudgetName}
+          handleBudgetNameChange={handleBudgetNameChange}
           inputEntryCategory={inputEntryCategory}
           handleEntryCategoryInputChange={handleEntryCategoryInputChange}
           handleKeyDown={handleKeyDown}
@@ -43,6 +49,8 @@ const Budget = ({
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
           clickedDeleteBudget={clickedDeleteBudget}
+          setMessage={setMessage}
+          clearMessage={clearMessage}
         />
       </WindowBox>
 

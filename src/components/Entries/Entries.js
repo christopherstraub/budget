@@ -5,7 +5,9 @@ import EditableLabel from 'react-inline-editing';
 const Entries = ({
   budget,
   formattedEntries,
-  handleFocusOutBudgetName,
+  isEditingBudgetName,
+  editBudgetName,
+  handleBudgetNameChange,
   inputEntryCategory,
   handleEntryCategoryInputChange,
   handleKeyDown,
@@ -17,25 +19,40 @@ const Entries = ({
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  setMessage,
+  clearMessage,
 }) => {
   return (
     <>
       <div className="relative mb5 ph5">
-        <h1>
-          <EditableLabel
-            value="test"
-            text={budget.name}
-            labelClassName="clr-light fs-heading fw3 tc text-break pointer w-100"
-            inputClassName="tc br3 ph3 w-100"
-            inputHeight="5.7rem"
-            inputMaxLength={50}
-            inputPlaceHolder="Budget name"
-            onFocusOut={handleFocusOutBudgetName}
+        {isEditingBudgetName ? (
+          <input
+            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc"
+            onFocus={(event) => (event.target.value = budget.name)}
+            onBlur={handleBudgetNameChange}
+            type="text"
+            maxLength="50"
+            autoFocus={true}
           />
-        </h1>
+        ) : (
+          <label
+            className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
+            style={{ padding: '1px 0' }}
+            onClick={editBudgetName}
+            tabIndex="0"
+            onKeyDown={handleKeyDown(editBudgetName)}
+          >
+            {budget.name}
+          </label>
+        )}
 
         <span
-          className="material-icons absolute user-select-none clr-accent-light"
+          className="material-icons absolute user-select-none clr-accent-light pointer hover-opacity"
+          onClick={editBudgetName}
+          tabIndex="0"
+          onKeyDown={handleKeyDown(editBudgetName)}
+          onMouseEnter={() => setMessage('change-budget-name')}
+          onMouseLeave={() => clearMessage(0)}
           style={{
             top: '50%',
             right: '0',

@@ -4,7 +4,8 @@ import React from 'react';
 // App:
 // 'user-logged-in'
 // Entries:
-// 'budget-name-changed', 'projected-cost-invalid', 'actual-cost-invalid'
+// 'budget-name-changed', 'edit-budget-name',
+// 'projected-cost-invalid', 'actual-cost-invalid'
 // Summary:
 // 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
 // 'projected-monthly-income-updated', 'actual-monthly-income-updated'
@@ -20,6 +21,8 @@ const getMessage = (code, user, formattedBudget) => {
       return `Welcome, ${user.displayName}.`;
     case 'budget-name-changed':
       return 'Changed budget name.';
+    case 'change-budget-name':
+      return 'Change budget name.';
     case 'projected-cost-invalid':
     case 'actual-cost-invalid':
     case 'projected-monthly-income-invalid':
