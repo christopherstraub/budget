@@ -10,7 +10,7 @@ const SignIn = ({
   input,
 }) => {
   return (
-    <form>
+    <>
       <div className="relative">
         <input
           className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
@@ -20,7 +20,6 @@ const SignIn = ({
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="text"
           name="username"
-          autoComplete="username"
           required
         />
         <span className="floating-label">Username</span>
@@ -34,7 +33,6 @@ const SignIn = ({
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="password"
           name="password"
-          autoComplete="password"
           required
         />
         <span className="floating-label">Password</span>
@@ -62,7 +60,7 @@ const SignIn = ({
       >
         Don't have an account? <span className="fw6">Sign up</span>.
       </button>
-    </form>
+    </>
   );
 };
 
