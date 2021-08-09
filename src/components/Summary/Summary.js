@@ -17,25 +17,25 @@ const Summary = ({
   return (
     <>
       <div className="flex tr">
-        <div style={{ width: '22rem' }}>
+        <div style={{ maxWidth: '32rem' }}>
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Total Projected Cost
           </h2>
-          <h1 className="clr-light fs-subtitle ff-primary fw3 tr text-break mb5">
+          <h1 className="clr-light fs-subtitle ff-primary fw3 text-break mb5">
             {formattedBudget.projectedCost}
           </h1>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Total Actual Cost
           </h2>
-          <h1 className="clr-light fs-subtitle ff-primary fw3 tr text-break mb5">
+          <h1 className="clr-light fs-subtitle ff-primary fw3 text-break mb5">
             {formattedBudget.actualCost}
           </h1>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Total Difference
           </h2>
-          <h1 className="clr-light fs-subtitle ff-primary fw3 tr text-break mb0">
+          <h1 className="clr-light fs-subtitle ff-primary fw3 text-break mb0">
             {formattedBudget.differenceCost}
           </h1>
         </div>
@@ -43,7 +43,7 @@ const Summary = ({
           className="bg--light-accent br-pill mh4"
           style={{ width: '2px' }}
         ></div>
-        <div style={{ width: '31.5rem' }}>
+        <div style={{ maxWidth: '32rem' }}>
           <h2 className="clr-light-accent fs-subheading fw3 mb0 flex justify-end items-center">
             Projected Monthly Income
             <span className="material-icons user-select-none clr-accent-light ml2">
@@ -89,20 +89,20 @@ const Summary = ({
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Projected Balance
           </h2>
-          <h1 className="clr-light fs-subtitle ff-primary fw3 tr text-break mb5">
+          <h1 className="clr-light fs-subtitle ff-primary fw3 text-break mb5">
             {formattedBudget.projectedBalance}
           </h1>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Actual Balance
           </h2>
-          <h1 className="clr-light fs-subtitle ff-primary fw3 tr text-break mb5">
+          <h1 className="clr-light fs-subtitle ff-primary fw3 text-break mb5">
             {formattedBudget.actualBalance}
           </h1>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0">Difference</h2>
           <h1
-            className={`clr-light fs-subtitle ff-primary fw3 tr text-break mb0 ${getClassListIfNegative(
+            className={`clr-light fs-subtitle ff-primary fw3 text-break mb0 ${getClassListIfNegative(
               budget.getDifferenceBalance()
             )}`}
           >
