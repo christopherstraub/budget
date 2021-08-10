@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/csbudget/static/css/main.b6f0ae88.chunk.css",
+    "main.css": "/csbudget/static/css/main.2257023c.chunk.css",
     "main.js": "/csbudget/static/js/main.87c83849.chunk.js",
     "main.js.map": "/csbudget/static/js/main.87c83849.chunk.js.map",
     "runtime-main.js": "/csbudget/static/js/runtime-main.3355acde.js",
@@ -10,7 +10,7 @@
     "static/js/2.4ddd485b.chunk.js.map": "/csbudget/static/js/2.4ddd485b.chunk.js.map",
     "index.html": "/csbudget/index.html",
     "static/css/2.6d7c7915.chunk.css.map": "/csbudget/static/css/2.6d7c7915.chunk.css.map",
-    "static/css/main.b6f0ae88.chunk.css.map": "/csbudget/static/css/main.b6f0ae88.chunk.css.map",
+    "static/css/main.2257023c.chunk.css.map": "/csbudget/static/css/main.2257023c.chunk.css.map",
     "static/js/2.4ddd485b.chunk.js.LICENSE.txt": "/csbudget/static/js/2.4ddd485b.chunk.js.LICENSE.txt",
     "static/media/bg1.c17b8822.webp": "/csbudget/static/media/bg1.c17b8822.webp",
     "static/media/bg2.05585106.webp": "/csbudget/static/media/bg2.05585106.webp",
@@ -25,7 +25,7 @@
     "static/js/runtime-main.3355acde.js",
     "static/css/2.6d7c7915.chunk.css",
     "static/js/2.4ddd485b.chunk.js",
-    "static/css/main.b6f0ae88.chunk.css",
+    "static/css/main.2257023c.chunk.css",
     "static/js/main.87c83849.chunk.js"
   ]
 }
