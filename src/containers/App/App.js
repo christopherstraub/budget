@@ -151,29 +151,29 @@ const defaultEntries = [
 ];
 
 const backgrounds = [
-  { name: 'BANFF', path: pathBg1, useDarkLanding: true, initial: true },
-  { name: 'MACHU PICCHU', path: pathBg2, useDarkLanding: true, initial: true },
+  { name: 'banff', path: pathBg1, useDarkLanding: true, initial: true },
+  { name: 'machu picchu', path: pathBg2, useDarkLanding: true, initial: true },
   {
-    name: 'ALPINE MOUNTAINS',
+    name: 'alpine mountains',
     path: pathBg3,
     useDarkLanding: false,
     initial: true,
   },
   {
-    name: 'YOSEMITE VALLEY',
+    name: 'yosemite valley',
     path: pathBg4,
     useDarkLanding: true,
     initial: true,
   },
   {
-    name: 'GRAND CANYON',
+    name: 'grand canyon',
     path: pathBg6,
     useDarkLanding: false,
     initial: false,
   },
-  { name: 'TRAIL', path: pathBg7, useDarkLanding: false, initial: false },
-  { name: 'MITTENWALD', path: pathBg5, useDarkLanding: false, initial: false },
-  { name: 'SILHOUETTE', path: pathBg8, useDarkLanding: false, initial: false },
+  { name: 'trail', path: pathBg7, useDarkLanding: false, initial: false },
+  { name: 'mittenwald', path: pathBg5, useDarkLanding: false, initial: false },
+  { name: 'silhouette', path: pathBg8, useDarkLanding: false, initial: false },
 ];
 
 // Intl.NumberFormat object is a constructor that enables language sensitive

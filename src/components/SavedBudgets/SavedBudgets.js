@@ -49,17 +49,17 @@ const SavedBudgets = ({
         <div className="flex mt5">
           <button
             onClick={handleCreateBudget}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3 mr2 w-100"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3 mr2 w-100"
             style={{ width: 'max-content' }}
           >
-            NEW BUDGET
+            new budget
           </button>
           <button
             onClick={handleSaveBudgets}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--green pa3 ml2 w-100"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--green pa3 ml2 w-100"
             style={{ width: 'max-content' }}
           >
-            SAVE BUDGETS
+            save budgets
           </button>
         </div>
       </WindowBox>

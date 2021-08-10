@@ -86,9 +86,9 @@ const Entries = ({
 
         <button
           onClick={handleAddEntry}
-          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3 ml2"
+          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3 ml2"
         >
-          ADD ENTRY
+          add entry
         </button>
       </div>
 
@@ -193,24 +193,24 @@ const Entries = ({
       <div className="flex justify-between mt4">
         <button
           onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
-          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3"
+          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
         >
-          CREATE COPY
+          create copy
         </button>
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--dark-red pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
           >
-            CONFIRM DELETE
+            confirm delete
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--dark-red pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
           >
-            DELETE BUDGET
+            delete budget
           </button>
         )}
       </div>
