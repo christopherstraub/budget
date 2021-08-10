@@ -999,7 +999,7 @@ class App extends Component {
     return (
       <>
         <CustomScrollbars
-          classlist="bg--scrollbar-app br-pill o-90"
+          classlist="bg--scrollbar-app hover-opacity br-pill o-90"
           heightmax="100vh"
         >
           <BackgroundWrapper background={background}>

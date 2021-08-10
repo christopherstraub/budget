@@ -82,6 +82,9 @@
 .bg--login-box {
   background: linear-gradient($clr-login-box, $clr-login-box);
 }
+.bg--semi-transparent {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 // Scrollbars.
 .bg--scrollbar-app {
@@ -90,26 +93,40 @@
 .bg--scrollbar-window-box {
   background-color: $clr-scrollbar-window-box;
 }
-.bg--scrollbar-app,
-.bg--scrollbar-window-box {
-  &:hover {
-    opacity: 0.5;
-  }
-}
 
 // Borders.
 .border--dark {
   border: 1px solid $clr-dark;
 }
 
+// Hovers.
+.hover-opacity:hover {
+  opacity: 0.5;
+}
+.hover-opacity-75:hover {
+  opacity: 0.75;
+}
+
 .input {
   color: $clr-dark;
   font-size: $fs-body;
   background-color: $clr-light;
+  border: 1px solid $clr-dark-accent;
 
   &:focus,
   &:focus-visible {
-    border: 1px solid $clr-accent-light;
+    border: 1px solid $clr-dark;
+  }
+
+  &.dark {
+    color: $clr-light;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid transparent;
+
+    &:focus,
+    &:focus-visible {
+      border: 1px solid $clr-light-accent;
+    }
   }
 
   &:focus {
@@ -117,6 +134,8 @@
   }
 
   &.input-indicator {
+    border: none;
+
     &.empty {
       border-bottom: 4px solid $clr-red;
       margin-bottom: calc(0.5rem - 4px);
@@ -149,7 +168,7 @@
   transform: translateY(-50%);
 
   &.dark {
-    color: $clr-dark-accent;
+    color: $clr-light-accent;
   }
 
   transition: 0.1s all;
@@ -178,14 +197,6 @@ label:focus-visible {
   outline-width: 1px;
 }
 
-.button-transparent {
-  background-color: rgba(0, 0, 0, 0.5);
-
-  &:hover {
-    opacity: 0.75;
-  }
-}
-
 .pointer-events-none {
   pointer-events: none;
 }
@@ -210,10 +221,6 @@ label:focus-visible {
   &:hover {
     color: $clr-accent-light;
   }
-}
-
-.hover-opacity:hover {
-  opacity: 0.5;
 }
 
 .lh-title {

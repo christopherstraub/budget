@@ -74,7 +74,7 @@ const Entries = ({
           <input
             onChange={handleEntryCategoryInputChange}
             onKeyDown={handleKeyDown(handleAddEntry)}
-            className="input br3 border--dark pt4 ph3 pb2 w-100"
+            className="input br3 pt4 ph3 pb2 w-100"
             type="text"
             id="name"
             name="name"

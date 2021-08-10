@@ -28,7 +28,7 @@ const Profile = ({
             <input
               onChange={handleDisplayNameInputChange}
               onKeyDown={handleKeyDown(handleDisplayNameChange)}
-              className="input br3 border--dark ph3 pb1 w-100"
+              className="input br3 ph3 pb1 w-100"
               style={{ paddingTop: '15px' }}
               type="text"
               id="display-name"
