@@ -4,7 +4,7 @@ import WindowBox from '../WindowBox/WindowBox';
 
 const SavedBudgets = ({
   user,
-  handleAddBudget,
+  handleCreateBudget,
   handleViewBudget,
   handleSaveBudgets,
   currentBudgetIndex,
@@ -48,7 +48,7 @@ const SavedBudgets = ({
 
         <div className="flex mt5">
           <button
-            onClick={handleAddBudget}
+            onClick={handleCreateBudget}
             className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3 mr2 w-100"
             style={{ width: 'max-content' }}
           >

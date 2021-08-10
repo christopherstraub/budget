@@ -6,6 +6,7 @@ import Entries from '../Entries/Entries';
 
 const Budget = ({
   budget,
+  currentBudgetIndex,
   formattedBudget,
   formattedEntries,
   isEditingBudgetName,
@@ -23,6 +24,7 @@ const Budget = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
@@ -34,6 +36,7 @@ const Budget = ({
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
+          currentBudgetIndex={currentBudgetIndex}
           formattedEntries={formattedEntries}
           isEditingBudgetName={isEditingBudgetName}
           editBudgetName={editBudgetName}
@@ -46,6 +49,7 @@ const Budget = ({
           handleFocusOutEntryCategory={handleFocusOutEntryCategory}
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
+          handleCreateBudgetCopy={handleCreateBudgetCopy}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
           clickedDeleteBudget={clickedDeleteBudget}

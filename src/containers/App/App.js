@@ -59,6 +59,8 @@ const initialState = {
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
     toggledExpandNav: false,
+    budgetsCreated: 1,
+    budgetsDeleted: 0,
     budgets: [
       {
         id: 0,
@@ -184,9 +186,10 @@ const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
 
 /**
  *
- * @param {object} budget The budget to be formatted (values should be numbers).
- * @param {object} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
- * @returns Formatted budget.
+ * @param {Object} budget The budget to be formatted (values should be numbers).
+ * @param {Object} formatter The formatter instantiated with
+ * the Intl.NumberFormat() constructor.
+ * @returns {Object} Formatted budget.
  */
 const formatCurrency = (budget, formatter) => {
   return {
@@ -221,9 +224,10 @@ const formatBudget = (budget, formatter) => {
 
 /**
  *
- * @param {object} entries The entries to be formatted.
- * @param {*} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
- * @returns Formatted entries.
+ * @param {Object} entries The entries to be formatted.
+ * @param {Object} formatter The formatter instantiated with
+ * the Intl.NumberFormat() constructor.
+ * @returns {Object} Formatted entries.
  */
 const formatEntries = (entries, formatter) => {
   if (!entries?.length) return [];
@@ -240,16 +244,16 @@ const formatEntries = (entries, formatter) => {
 
 /**
  *
- * @param {array} strings Array of strings.
- * @returns true if at least one string is falsy (empty) or false
+ * @param {string[]} strings Array of strings.
+ * @returns {boolean} true if at least one string is falsy (empty) or false
  * if no string is empty.
  */
 const someStringsEmpty = (strings) => strings.some((string) => !string);
 
 /**
  *
- * @param {array} strings Array of strings.
- * @returns true if all strings are falsy (empty) or false
+ * @param {string[]} strings Array of strings.
+ * @returns {boolean} true if all strings are falsy (empty) or false
  * if at least one string is not empty.
  */
 const allStringsEmpty = (strings) => strings.every((string) => !string);
@@ -317,77 +321,6 @@ class App extends Component {
     const state = { ...this.state, background: backgroundArray[0] };
     this.setState(state);
   }
-
-  handleRouteChange = (route) => {
-    // Create a budget if user routes to Budget with no saved-budgets.
-    if (route === 'budget' && this.state.user.budgets.length === 0) {
-      this.handleAddBudget();
-      this.setState({ route: 'budget' });
-    }
-    // Handle user sign in.
-    else if (
-      route !== this.state.route &&
-      route !== 'signup' &&
-      route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      !this.state.user.isGuest
-    ) {
-      localStorage.setItem('background', this.state.background.name);
-
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
-      this.setState({
-        user,
-        route,
-        input: initialState.input,
-        landingMessageCode: null,
-      });
-      this.setMessage('user-logged-in');
-      this.clearMessage(6000);
-    }
-    // Handle guest sign in (don't set background in localStorage).
-    else if (
-      route !== this.state.route &&
-      route !== 'signup' &&
-      route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      this.state.user.isGuest
-    ) {
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
-      this.setState({
-        user,
-        route,
-        input: initialState.input,
-        landingMessageCode: null,
-      });
-      this.setMessage('user-logged-in');
-      this.clearMessage(6000);
-    }
-    // Handle user/guest sign out.
-    else if (
-      route !== this.state.route &&
-      (route === 'signup' || route === 'signin') &&
-      this.state.user.isLoggedIn
-    ) {
-      this.clearMessage(0);
-      this.setState({
-        route,
-        input: initialState.input,
-        user: initialState.user,
-      });
-    }
-    // Reset input and message code when routing between
-    // SignIn and SignUp components.
-    else if (
-      (route === 'signin' || route === 'signup') &&
-      (this.state.route === 'signin' || this.state.route === 'signup')
-    )
-      this.setState({
-        input: initialState.input,
-        landingMessageCode: null,
-        route,
-      });
-    else if (route !== this.state.route) this.setState({ route });
-  };
 
   // Only filter through backgrounds if selected background is different
   // from current background.
@@ -473,6 +406,7 @@ class App extends Component {
           ? this.state.user.currentBudgetIndex - 1
           : 0,
       clickedDeleteBudget: false,
+      budgetsDeleted: this.state.user.budgetsDeleted + 1,
     });
     this.setState({
       user,
@@ -482,21 +416,28 @@ class App extends Component {
     this.clearMessage();
   };
 
+  getNewBudgetName = () => {
+    const budgetsNotCopies = this.state.user.budgets.filter(
+      (budget) => !/\(\d+\)$/.test(budget.name)
+    ).length;
+
+    const date = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() + budgetsNotCopies
+    );
+
+    return date.toLocaleDateString('default', {
+      month: 'long',
+      year: 'numeric',
+    });
+  };
+
   // Create budget object. Budget name is set using the Date object.
   // Name depends on current date and current number of budgets.
   getNewBudget = () => {
-    const date = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth() + this.state.user.budgets.length
-    );
-
     return {
-      id:
-        this.state.user.budgets[this.state.user.budgets.length - 1]?.id + 1 ||
-        0,
-      name: `${date.toLocaleString('default', {
-        month: 'long',
-      })} ${date.getFullYear()}`,
+      id: this.state.user.budgetsCreated,
+      name: this.getNewBudgetName(),
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
       getProjectedBalance() {
@@ -539,7 +480,7 @@ class App extends Component {
     this.setState({ user, route: 'budget' });
   };
 
-  handleAddBudget = () => {
+  handleCreateBudget = () => {
     if (this.state.user.budgets.length === this.state.user.maxBudgets) {
       this.setMessage('budgets-max-allowed');
       this.clearMessage(6000);
@@ -547,6 +488,7 @@ class App extends Component {
     }
     const user = cloneDeep(this.state.user);
     user.budgets.push(this.getNewBudget());
+    user.budgetsCreated++;
     this.setState({ user });
 
     if (this.state.user.budgets.length === 4) {
@@ -555,6 +497,52 @@ class App extends Component {
       return;
     }
     this.setMessage('budget-created');
+    this.clearMessage();
+  };
+
+  /**
+   *
+   * @param {string} name The budget name that is being copied.
+   * @returns {string} The budget copy name.
+   * Ex. 'August 2021 (2)' if there are no copies of 'August 2021' or
+   * 'August 2021 (5)' if the newest copy is 'August 2021 (4)'.
+   */
+  getBudgetCopyName = (name) => {
+    const regex = /\(\d+\)$/;
+    // \( matches the character '('.
+    // \d matches a digit (equivalent to [0-9])
+    // + matches the previous token (a digit) between one and unlimited times.
+    // \) matches the character ')'.
+    // $ asserts position at the end of the string.
+    if (regex.test(name)) name = name.slice(0, name.search(regex) - 1);
+
+    const copyNumberArray = this.state.user.budgets
+      // Find budget copies.
+      .filter(
+        (budget) => budget.name.startsWith(name) && regex.test(budget.name)
+      )
+      // Extract and sort copy numbers in descending order.
+      .map((copy) =>
+        parseInt(
+          copy.name.slice(copy.name.search(regex) + 1, copy.name.length - 1)
+        )
+      )
+      .sort((a, b) => b - a);
+
+    return name + ` (${copyNumberArray[0] + 1 || 2})`;
+  };
+
+  handleCreateBudgetCopy = (index) => {
+    const budgetCopy = cloneDeep(this.state.user.budgets[index]);
+    budgetCopy.id = this.state.user.budgetsCreated;
+    budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
+
+    const user = cloneDeep(this.state.user);
+    user.budgets.splice(index + 1, 0, budgetCopy);
+    user.budgetsCreated++;
+    user.currentBudgetIndex = index + 1;
+    this.setState({ user });
+    this.setMessage('budget-copy-created');
     this.clearMessage();
   };
 
@@ -879,7 +867,8 @@ class App extends Component {
 
   /**
    *
-   * @param {function} callback The function to be called upon key code press.
+   * @param {requestCallback} callback The function to be called upon
+   * key code press.
    * @param {number} code JavaScript event code.
    * Defaults to 'Enter'.
    */
@@ -893,6 +882,77 @@ class App extends Component {
     const toggledExpandNav = this.state.user.toggledExpandNav ? false : true;
     const user = { ...this.state.user, toggledExpandNav };
     this.setState({ user });
+  };
+
+  handleRouteChange = (route) => {
+    // Create a budget if user routes to Budget with no saved-budgets.
+    if (route === 'budget' && this.state.user.budgets.length === 0) {
+      this.handleCreateBudget();
+      this.setState({ route: 'budget' });
+    }
+    // Handle user sign in.
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      !this.state.user.isGuest
+    ) {
+      localStorage.setItem('background', this.state.background.name);
+
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      this.setState({
+        user,
+        route,
+        input: initialState.input,
+        landingMessageCode: null,
+      });
+      this.setMessage('user-logged-in');
+      this.clearMessage(6000);
+    }
+    // Handle guest sign in (don't set background in localStorage).
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      this.state.user.isGuest
+    ) {
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      this.setState({
+        user,
+        route,
+        input: initialState.input,
+        landingMessageCode: null,
+      });
+      this.setMessage('user-logged-in');
+      this.clearMessage(6000);
+    }
+    // Handle user/guest sign out.
+    else if (
+      route !== this.state.route &&
+      (route === 'signup' || route === 'signin') &&
+      this.state.user.isLoggedIn
+    ) {
+      this.clearMessage(0);
+      this.setState({
+        route,
+        input: initialState.input,
+        user: initialState.user,
+      });
+    }
+    // Reset input and message code when routing between
+    // SignIn and SignUp components.
+    else if (
+      (route === 'signin' || route === 'signup') &&
+      (this.state.route === 'signin' || this.state.route === 'signup')
+    )
+      this.setState({
+        input: initialState.input,
+        landingMessageCode: null,
+        route,
+      });
+    else if (route !== this.state.route) this.setState({ route });
   };
 
   render() {
@@ -960,6 +1020,7 @@ class App extends Component {
               ) : route === 'budget' ? (
                 <Budget
                   budget={user.budgets[user.currentBudgetIndex]}
+                  currentBudgetIndex={user.currentBudgetIndex}
                   isEditingBudgetName={isEditing.budgetName}
                   editBudgetName={this.editBudgetName}
                   handleBudgetNameChange={this.handleBudgetNameChange}
@@ -985,6 +1046,7 @@ class App extends Component {
                   handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
                   handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
                   handleFocusOutActualCost={this.handleFocusOutActualCost}
+                  handleCreateBudgetCopy={this.handleCreateBudgetCopy}
                   handleUserClickedDeleteBudget={
                     this.handleUserClickedDeleteBudget
                   }
@@ -999,7 +1061,7 @@ class App extends Component {
                 <SavedBudgets
                   user={user}
                   handleViewBudget={this.handleViewBudget}
-                  handleAddBudget={this.handleAddBudget}
+                  handleCreateBudget={this.handleCreateBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
                 />

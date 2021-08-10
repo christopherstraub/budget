@@ -4,6 +4,7 @@ import EditableLabel from 'react-inline-editing';
 
 const Entries = ({
   budget,
+  currentBudgetIndex,
   formattedEntries,
   isEditingBudgetName,
   editBudgetName,
@@ -16,6 +17,7 @@ const Entries = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
@@ -188,7 +190,13 @@ const Entries = ({
         </table>
       </div>
 
-      <div className="flex justify-end mt4">
+      <div className="flex justify-between mt4">
+        <button
+          onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
+          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3"
+        >
+          CREATE COPY
+        </button>
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
