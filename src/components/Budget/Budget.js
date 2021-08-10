@@ -6,11 +6,14 @@ import Entries from '../Entries/Entries';
 
 const Budget = ({
   budget,
+  currentBudgetIndex,
   formattedBudget,
   formattedEntries,
-  handleFocusOutBudgetName,
-  handleFocusActualMonthlyIncome,
+  isEditingBudgetName,
+  editBudgetName,
+  handleBudgetNameChange,
   handleFocusProjectedMonthlyIncome,
+  handleFocusActualMonthlyIncome,
   handleFocusOutProjectedMonthlyIncome,
   handleFocusOutActualMonthlyIncome,
   inputEntryCategory,
@@ -21,17 +24,23 @@ const Budget = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  setMessage,
+  clearMessage,
 }) => {
   return (
     <div className="Budget flex justify-center items-start pa4">
       <WindowBox classlist="flex-grow-1 mh3">
         <Entries
           budget={budget}
+          currentBudgetIndex={currentBudgetIndex}
           formattedEntries={formattedEntries}
-          handleFocusOutBudgetName={handleFocusOutBudgetName}
+          isEditingBudgetName={isEditingBudgetName}
+          editBudgetName={editBudgetName}
+          handleBudgetNameChange={handleBudgetNameChange}
           inputEntryCategory={inputEntryCategory}
           handleEntryCategoryInputChange={handleEntryCategoryInputChange}
           handleKeyDown={handleKeyDown}
@@ -40,9 +49,12 @@ const Budget = ({
           handleFocusOutEntryCategory={handleFocusOutEntryCategory}
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
+          handleCreateBudgetCopy={handleCreateBudgetCopy}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}
           clickedDeleteBudget={clickedDeleteBudget}
+          setMessage={setMessage}
+          clearMessage={clearMessage}
         />
       </WindowBox>
 

@@ -140,6 +140,8 @@
 }
 
 .floating-label {
+  color: $clr-dark-accent;
+  font-size: $fs-body;
   pointer-events: none;
   position: absolute;
   top: 50%;
@@ -163,7 +165,8 @@
 button:focus-visible,
 [type='button']:focus-visible,
 [type='reset']:focus-visible,
-[type='submit']:focus-visible {
+[type='submit']:focus-visible,
+span:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
   outline-color: -webkit-focus-ring-color;
   outline-style: auto;
@@ -195,15 +198,6 @@ button:focus-visible,
 .selection-transparent {
   &::selection {
     background-color: transparent;
-  }
-}
-
-.empty-number-field {
-  visibility: hidden;
-
-  &::after {
-    visibility: visible;
-    content: '$0.00';
   }
 }
 

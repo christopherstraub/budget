@@ -27,13 +27,10 @@ const SignUp = ({
           onChange={handleDisplayNameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
-          id="display-name"
-          name="display-name"
+          name="new-display-name"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">
-          Display name
-        </span>
+        <span className="floating-label">Display name</span>
       </div>
       <div className="relative">
         <input
@@ -43,11 +40,10 @@ const SignUp = ({
           onChange={handleUsernameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
-          id="username"
-          name="username"
+          name="new-username"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">Username</span>
+        <span className="floating-label">Username</span>
       </div>
       <div className="relative">
         <input
@@ -58,11 +54,10 @@ const SignUp = ({
           onChange={handlePasswordInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="password"
-          id="password"
-          name="password"
+          name="new-password"
           required
         />
-        <span className="floating-label clr-dark-accent fs-body">Password</span>
+        <span className="floating-label">Password</span>
       </div>
 
       {landingMessageCode === 'fields-empty' ? (

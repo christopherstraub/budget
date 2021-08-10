@@ -45,6 +45,9 @@ const initialState = {
     projectedMonthlyIncome: '',
     actualMonthlyIncome: '',
   },
+  isEditing: {
+    budgetName: false,
+  },
   user: {
     id: null,
     isLoggedIn: false,
@@ -56,6 +59,8 @@ const initialState = {
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
     toggledExpandNav: false,
+    budgetsCreated: 1,
+    budgetsDeleted: 0,
     budgets: [
       {
         id: 0,
@@ -92,39 +97,58 @@ const initialState = {
         getDifferenceCost() {
           return this.getProjectedCost() - this.getActualCost();
         },
-        entries: [
-          {
-            id: 0,
-            category: 'Housing costs',
-            projectedCost: 1000,
-            actualCost: 1100,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            id: 1,
-            category: 'Vehicle expenses',
-            projectedCost: 200,
-            actualCost: 175,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            id: 2,
-            category: 'Phone bill',
-            projectedCost: 20,
-            actualCost: 20,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-        ],
       },
     ],
   },
 };
+
+const defaultEntries = [
+  {
+    id: 0,
+    category: 'Housing costs',
+    projectedCost: 1000,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 1,
+    category: 'Vehicle expenses',
+    projectedCost: 200,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 2,
+    category: 'Phone bill',
+    projectedCost: 20,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 3,
+    category: 'Groceries',
+    projectedCost: 250,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 4,
+    category: 'Savings',
+    projectedCost: 100,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+];
 
 const backgrounds = [
   { name: 'BANFF', path: pathBg1, useDarkLanding: true, initial: true },
@@ -162,9 +186,10 @@ const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
 
 /**
  *
- * @param {object} budget The budget to be formatted (values should be numbers).
- * @param {object} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
- * @returns Formatted budget.
+ * @param {Object} budget The budget to be formatted (values should be numbers).
+ * @param {Object} formatter The formatter instantiated with
+ * the Intl.NumberFormat() constructor.
+ * @returns {Object} Formatted budget.
  */
 const formatCurrency = (budget, formatter) => {
   return {
@@ -199,9 +224,10 @@ const formatBudget = (budget, formatter) => {
 
 /**
  *
- * @param {object} entries The entries to be formatted.
- * @param {*} formatter The formatter instantiated with the Intl.NumberFormat() constructor.
- * @returns Formatted entries.
+ * @param {Object} entries The entries to be formatted.
+ * @param {Object} formatter The formatter instantiated with
+ * the Intl.NumberFormat() constructor.
+ * @returns {Object} Formatted entries.
  */
 const formatEntries = (entries, formatter) => {
   if (!entries?.length) return [];
@@ -216,18 +242,27 @@ const formatEntries = (entries, formatter) => {
   });
 };
 
-const someFieldsEmpty = (fields) => {
-  return fields.some((field) => field === '');
-};
+/**
+ *
+ * @param {string[]} strings Array of strings.
+ * @returns {boolean} true if at least one string is falsy (empty) or false
+ * if no string is empty.
+ */
+const someStringsEmpty = (strings) => strings.some((string) => !string);
 
-const allFieldsEmpty = (fields) => {
-  return fields.every((field) => field === '');
-};
+/**
+ *
+ * @param {string[]} strings Array of strings.
+ * @returns {boolean} true if all strings are falsy (empty) or false
+ * if at least one string is not empty.
+ */
+const allStringsEmpty = (strings) => strings.every((string) => !string);
 
 class App extends Component {
   constructor() {
     super();
     this.state = initialState;
+    this.state.user.budgets[0].entries = defaultEntries;
     this.state.background = backgrounds[0];
   }
 
@@ -246,6 +281,11 @@ class App extends Component {
       const message = { ...this.state.message, show: false };
       this.setState({ message });
     }, milliseconds);
+  };
+
+  setMessage = (code) => {
+    const message = { ...this.state.message, code, show: true };
+    this.setState({ message });
   };
 
   // Sets background from localStorage if it exists there,
@@ -281,88 +321,6 @@ class App extends Component {
     const state = { ...this.state, background: backgroundArray[0] };
     this.setState(state);
   }
-
-  handleRouteChange = (route) => {
-    // Create a budget if user routes to Budget with no saved-budgets.
-    if (route === 'budget' && this.state.user.budgets.length === 0) {
-      this.handleAddBudget();
-      this.setState({ route: 'budget' });
-    }
-    // Handle user sign in.
-    else if (
-      route !== this.state.route &&
-      route !== 'signup' &&
-      route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      !this.state.user.isGuest
-    ) {
-      localStorage.setItem('background', this.state.background.name);
-
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
-      const message = {
-        ...this.state.message,
-        code: 'user-logged-in',
-        show: true,
-      };
-      this.setState({
-        user,
-        route,
-        message,
-        input: initialState.input,
-        landingMessageCode: null,
-      });
-      this.clearMessage(6000);
-    }
-    // Handle guest sign in (don't set background in localStorage).
-    else if (
-      route !== this.state.route &&
-      route !== 'signup' &&
-      route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      this.state.user.isGuest
-    ) {
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
-      const message = {
-        ...this.state.message,
-        code: 'user-logged-in',
-        show: true,
-      };
-      this.setState({
-        user,
-        route,
-        message,
-        input: initialState.input,
-        landingMessageCode: null,
-      });
-      this.clearMessage(6000);
-    }
-    // Handle user/guest sign out.
-    else if (
-      route !== this.state.route &&
-      (route === 'signup' || route === 'signin') &&
-      this.state.user.isLoggedIn
-    ) {
-      const message = { ...this.state.message, show: false };
-      this.setState({
-        route,
-        message,
-        input: initialState.input,
-        user: initialState.user,
-      });
-    }
-    // Reset input and message code when routing between
-    // SignIn and SignUp components.
-    else if (
-      (route === 'signin' || route === 'signup') &&
-      (this.state.route === 'signin' || this.state.route === 'signup')
-    )
-      this.setState({
-        input: initialState.input,
-        landingMessageCode: null,
-        route,
-      });
-    else if (route !== this.state.route) this.setState({ route });
-  };
 
   // Only filter through backgrounds if selected background is different
   // from current background.
@@ -405,40 +363,33 @@ class App extends Component {
   };
 
   // Event handler for add entry button.
-  // Add entry, then reset the category input field.
+  // Add entry and reset entry category input.
   handleAddEntry = () => {
-    const userCopy = cloneDeep(this.state.user);
-
-    userCopy.budgets[this.state.user.currentBudgetIndex].entries.push(
-      this.getNewEntry()
-    );
-    this.setState({ user: userCopy });
-
+    const user = cloneDeep(this.state.user);
+    user.budgets[user.currentBudgetIndex].entries.push(this.getNewEntry());
     const input = { ...this.state.input, entryCategory: '' };
-    this.setState({ input });
+    this.setState({ user, input });
   };
 
   // Event handler for delete entry button.
   handleDeleteEntry = (index) => {
-    const userCopy = cloneDeep(this.state.user);
-    const entries =
-      userCopy.budgets[this.state.user.currentBudgetIndex].entries;
+    const user = cloneDeep(this.state.user);
+    const entries = user.budgets[user.currentBudgetIndex].entries;
     const filteredEntries = entries.filter((entry) => entry.id !== index);
-    userCopy.budgets[this.state.user.currentBudgetIndex].entries =
-      filteredEntries;
-    this.setState({ user: userCopy });
+    user.budgets[user.currentBudgetIndex].entries = filteredEntries;
+    this.setState({ user });
   };
 
   // Event handler for initial delete button.
   // Changes delete button to confirm delete button.
   handleUserClickedDeleteBudget = (userClicked) => {
-    const userCopy = cloneDeep(this.state.user);
+    const user = { ...this.state.user };
     if (userClicked) {
-      userCopy.clickedDeleteBudget = true;
-      this.setState({ user: userCopy });
+      user.clickedDeleteBudget = true;
+      this.setState({ user });
     } else {
-      userCopy.clickedDeleteBudget = false;
-      this.setState({ user: userCopy });
+      user.clickedDeleteBudget = false;
+      this.setState({ user });
     }
   };
 
@@ -455,36 +406,38 @@ class App extends Component {
           ? this.state.user.currentBudgetIndex - 1
           : 0,
       clickedDeleteBudget: false,
+      budgetsDeleted: this.state.user.budgetsDeleted + 1,
     });
-
-    const message = {
-      ...this.state.message,
-      code: 'budget-deleted',
-      show: true,
-    };
     this.setState({
       user,
       route: 'saved-budgets',
-      message,
     });
+    this.setMessage('budget-deleted');
     this.clearMessage();
+  };
+
+  getNewBudgetName = () => {
+    const budgetsNotCopies = this.state.user.budgets.filter(
+      (budget) => !/\(\d+\)$/.test(budget.name)
+    ).length;
+
+    const date = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() + budgetsNotCopies
+    );
+
+    return date.toLocaleDateString('default', {
+      month: 'long',
+      year: 'numeric',
+    });
   };
 
   // Create budget object. Budget name is set using the Date object.
   // Name depends on current date and current number of budgets.
   getNewBudget = () => {
-    const date = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth() + this.state.user.budgets.length
-    );
-
     return {
-      id:
-        this.state.user.budgets[this.state.user.budgets.length - 1]?.id + 1 ||
-        0,
-      name: `${date.toLocaleString('default', {
-        month: 'long',
-      })} ${date.getFullYear()}`,
+      id: this.state.user.budgetsCreated,
+      name: this.getNewBudgetName(),
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
       getProjectedBalance() {
@@ -515,7 +468,7 @@ class App extends Component {
       getDifferenceCost() {
         return this.getProjectedCost() - this.getActualCost();
       },
-      entries: [],
+      entries: defaultEntries,
     };
   };
 
@@ -523,74 +476,110 @@ class App extends Component {
   // Sets user.currentBudgetIndex to the selected budget's index
   // and route to 'budget'.
   handleViewBudget = (index) => {
-    const stateCopy = cloneDeep(this.state);
-    stateCopy.user.currentBudgetIndex = index;
-    stateCopy.route = 'budget';
-    this.setState(stateCopy);
+    const user = { ...this.state.user, currentBudgetIndex: index };
+    this.setState({ user, route: 'budget' });
   };
 
-  handleAddBudget = () => {
+  handleCreateBudget = () => {
     if (this.state.user.budgets.length === this.state.user.maxBudgets) {
-      const message = {
-        ...this.state.message,
-        code: 'budgets-max-allowed',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('budgets-max-allowed');
       this.clearMessage(6000);
       return;
     }
-    const stateCopy = cloneDeep(this.state);
-    stateCopy.user.budgets.push(this.getNewBudget());
-    this.setState(stateCopy);
+    const user = cloneDeep(this.state.user);
+    user.budgets.push(this.getNewBudget());
+    user.budgetsCreated++;
+    this.setState({ user });
 
     if (this.state.user.budgets.length === 4) {
-      const message = {
-        ...this.state.message,
-        code: 'budgets-created-many',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('budgets-created-many');
       this.clearMessage(5000);
       return;
     }
-    const message = {
-      ...this.state.message,
-      code: 'budget-created',
-      show: true,
-    };
-    this.setState({ message });
+    this.setMessage('budget-created');
+    this.clearMessage();
+  };
+
+  /**
+   *
+   * @param {string} name The budget name that is being copied.
+   * @returns {string} The budget copy name.
+   * Ex. 'August 2021 (2)' if there are no copies of 'August 2021' or
+   * 'August 2021 (5)' if the newest copy is 'August 2021 (4)'.
+   */
+  getBudgetCopyName = (name) => {
+    const regex = /\(\d+\)$/;
+    // \( matches the character '('.
+    // \d matches a digit (equivalent to [0-9])
+    // + matches the previous token (a digit) between one and unlimited times.
+    // \) matches the character ')'.
+    // $ asserts position at the end of the string.
+    if (regex.test(name)) name = name.slice(0, name.search(regex) - 1);
+
+    const copyNumberArray = this.state.user.budgets
+      // Find budget copies.
+      .filter(
+        (budget) => budget.name.startsWith(name) && regex.test(budget.name)
+      )
+      // Extract and sort copy numbers in descending order.
+      .map((copy) =>
+        parseInt(
+          copy.name.slice(copy.name.search(regex) + 1, copy.name.length - 1)
+        )
+      )
+      .sort((a, b) => b - a);
+
+    return name + ` (${copyNumberArray[0] + 1 || 2})`;
+  };
+
+  handleCreateBudgetCopy = (index) => {
+    const budgetCopy = cloneDeep(this.state.user.budgets[index]);
+    budgetCopy.id = this.state.user.budgetsCreated;
+    budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
+
+    const user = cloneDeep(this.state.user);
+    user.budgets.splice(index + 1, 0, budgetCopy);
+    user.budgetsCreated++;
+    user.currentBudgetIndex = index + 1;
+    this.setState({ user });
+    this.setMessage('budget-copy-created');
     this.clearMessage();
   };
 
   // Event handler for save budgets button.
   handleSaveBudgets = () => {
-    const message = {
-      ...this.state.message,
-      code: 'budgets-saved',
-      show: true,
-    };
-    this.setState({ message });
+    this.setMessage('budgets-saved');
     this.clearMessage();
   };
 
-  // Update budget name if user input is not empty.
-  handleFocusOutBudgetName = (text) => {
-    const userCopy = cloneDeep(this.state.user);
+  handleBudgetNameChange = (event) => {
+    if (
+      this.state.user.budgets[this.state.user.currentBudgetIndex].name !==
+        event.target.value.trim() &&
+      event.target.value.trim()
+    ) {
+      const user = cloneDeep(this.state.user);
+      user.budgets[this.state.user.currentBudgetIndex].name =
+        event.target.value.trim();
+      const isEditing = { ...this.state.isEditing, budgetName: false };
+      this.setState({ user, isEditing });
+      this.setMessage('budget-name-changed');
+      this.clearMessage();
+    } else {
+      const isEditing = { ...this.state.isEditing, budgetName: false };
+      this.setState({ isEditing });
+    }
+  };
 
-    userCopy.budgets[this.state.user.currentBudgetIndex].name =
-      text === ''
-        ? userCopy.budgets[this.state.user.currentBudgetIndex].name
-        : text;
-
-    this.setState({ user: userCopy });
+  editBudgetName = () => {
+    const isEditing = { ...this.state.isEditing, budgetName: true };
+    this.setState({ isEditing });
   };
 
   // Update entry category if input is not empty.
   handleFocusOutEntryCategory = (id) => (text) => {
-    const userCopy = cloneDeep(this.state.user);
-    const entries =
-      userCopy.budgets[this.state.user.currentBudgetIndex].entries;
+    const user = cloneDeep(this.state.user);
+    const entries = user.budgets[user.currentBudgetIndex].entries;
 
     const updatedEntries = entries.map((entry) => {
       if (entry.id === id) {
@@ -600,10 +589,34 @@ class App extends Component {
       return entry;
     });
 
-    userCopy.budgets[this.state.user.currentBudgetIndex].entries =
-      updatedEntries;
+    user.budgets[this.state.user.currentBudgetIndex].entries = updatedEntries;
 
-    this.setState({ user: userCopy });
+    this.setState({ user });
+  };
+
+  handleBlurProjectedMonthlyIncome = (event) => {
+    let income = event.target.value;
+
+    if (income > 1e11) income = 1e11;
+
+    if (
+      Math.round(income * 100) / 100 ===
+      this.state.user.budgets[this.state.user.currentBudgetIndex]
+        .projectedMonthlyIncome
+    ) {
+      // If input is equal to current state, don't update state.
+      this.clearMessage(0);
+    }
+    // Update state.
+    else {
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].projectedMonthlyIncome =
+        Math.round(income * 100) / 100;
+
+      this.setState({ user });
+      this.setMessage('projected-monthly-income-updated');
+      this.clearMessage(5000);
+    }
   };
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
@@ -619,12 +632,7 @@ class App extends Component {
 
     // If text is not a number, don't update state.
     if (isNaN(filteredText)) {
-      const message = {
-        ...this.state.message,
-        code: 'projected-monthly-income-invalid',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('projected-monthly-income-invalid');
       this.clearMessage();
     }
 
@@ -634,18 +642,15 @@ class App extends Component {
       this.state.user.budgets[this.state.user.currentBudgetIndex]
         .projectedMonthlyIncome
     ) {
-      const message = { ...this.state.message, show: false };
-      this.setState({ message });
+      this.clearMessage(0);
     }
     // Update state.
     else {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets[
-        this.state.user.currentBudgetIndex
-      ].projectedMonthlyIncome = Math.round(filteredText * 100) / 100;
-      stateCopy.message.code = 'projected-monthly-income-updated';
-      stateCopy.message.show = true;
-      this.setState(stateCopy);
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].projectedMonthlyIncome =
+        Math.round(filteredText * 100) / 100;
+      this.setState({ user });
+      this.setMessage('projected-monthly-income-updated');
       this.clearMessage(5000);
     }
   };
@@ -659,28 +664,20 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText)) {
-      const message = {
-        ...this.state.message,
-        code: 'actual-monthly-income-invalid',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('actual-monthly-income-invalid');
       this.clearMessage();
     } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex]
         .actualMonthlyIncome
     ) {
-      const message = { ...this.state.message, show: false };
-      this.setState({ message });
+      this.clearMessage(0);
     } else {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets[
-        this.state.user.currentBudgetIndex
-      ].actualMonthlyIncome = Math.round(filteredText * 100) / 100;
-      stateCopy.message.code = 'actual-monthly-income-updated';
-      stateCopy.message.show = true;
-      this.setState(stateCopy);
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].actualMonthlyIncome =
+        Math.round(filteredText * 100) / 100;
+      this.setState({ user });
+      this.setMessage('actual-monthly-income-updated');
       this.clearMessage(5000);
     }
   };
@@ -694,28 +691,20 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText)) {
-      const message = {
-        ...this.state.message,
-        code: 'projected-cost-invalid',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('projected-cost-invalid');
       this.clearMessage();
     } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .projectedCost
     ) {
-      const message = { ...this.state.message, show: false };
-      this.setState({ message });
+      this.clearMessage(0);
     } else {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
-        index
-      ].projectedCost = Math.round(filteredText * 100) / 100;
-      stateCopy.message.show = false;
-
-      this.setState(stateCopy);
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].entries[index].projectedCost =
+        Math.round(filteredText * 100) / 100;
+      this.setState({ user });
+      this.clearMessage(0);
     }
   };
 
@@ -728,28 +717,20 @@ class App extends Component {
     filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
 
     if (isNaN(filteredText)) {
-      const message = {
-        ...this.state.message,
-        code: 'actual-cost-invalid',
-        show: true,
-      };
-      this.setState({ message });
+      this.setMessage('actual-cost-invalid');
       this.clearMessage();
     } else if (
       Math.round(filteredText * 100) / 100 ===
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
         .actualCost
     ) {
-      const message = { ...this.state.message, show: false };
-      this.setState({ message });
+      this.clearMessage(0);
     } else {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.budgets[this.state.user.currentBudgetIndex].entries[
-        index
-      ].actualCost = Math.round(filteredText * 100) / 100;
-      stateCopy.message.show = false;
-
-      this.setState(stateCopy);
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].entries[index].actualCost =
+        Math.round(filteredText * 100) / 100;
+      this.setState({ user });
+      this.clearMessage(0);
     }
   };
 
@@ -772,12 +753,15 @@ class App extends Component {
         this.state.input.displayName.value &&
       this.state.input.displayName.value !== ''
     ) {
-      const stateCopy = cloneDeep(this.state);
-      stateCopy.user.displayName = this.state.input.displayName.value;
-      stateCopy.input.displayName.value = '';
-      stateCopy.message.code = 'display-name-changed';
-      stateCopy.message.show = true;
-      this.setState(stateCopy);
+      // Clear input and update user display name.
+      const input = cloneDeep(this.state.input);
+      input.displayName.value = '';
+      const user = {
+        ...this.state.user,
+        displayName: this.state.input.displayName.value,
+      };
+      this.setState({ input, user });
+      this.setMessage('display-name-changed');
       this.clearMessage();
     }
   };
@@ -804,49 +788,53 @@ class App extends Component {
 
   handleUserSignUp = () => {
     if (
-      someFieldsEmpty([
+      someStringsEmpty([
         this.state.input.displayName.value,
         this.state.input.username.value,
         this.state.input.password.value,
       ])
     ) {
-      let inputCopy = { ...this.state.input };
-      if (this.state.input.displayName.value === '') {
+      let input = { ...this.state.input };
+      if (!this.state.input.displayName.value) {
         const displayName = { ...this.state.input.displayName, empty: true };
-        inputCopy = { ...inputCopy, displayName };
+        input.displayName = displayName;
       } else {
         const displayName = { ...this.state.input.displayName, empty: false };
-        inputCopy = { ...inputCopy, displayName };
+        input.displayName = displayName;
       }
-      if (this.state.input.username.value === '') {
+      if (!this.state.input.username.value) {
         const username = { ...this.state.input.username, empty: true };
-        inputCopy = { ...inputCopy, username };
+        input.username = username;
       } else {
         const username = { ...this.state.input.username, empty: false };
-        inputCopy = { ...inputCopy, username };
+        input.username = username;
       }
-      if (this.state.input.password.value === '') {
+      if (!this.state.input.password.value) {
         const password = { ...this.state.input.password, empty: true };
-        inputCopy = { ...inputCopy, password };
+        input.password = password;
       } else {
         const password = { ...this.state.input.password, empty: false };
-        inputCopy = { ...inputCopy, password };
+        input.password = password;
       }
-
-      this.setState({ landingMessageCode: 'fields-empty', input: inputCopy });
+      this.setState({ landingMessageCode: 'fields-empty', input });
     } else if (
       this.state.input.password.value.length <
         this.state.input.password.minLength ||
       this.state.input.password.value.length >
         this.state.input.password.maxLength
     ) {
-      this.setState({ landingMessageCode: 'password-length-invalid' });
+      const password = {
+        ...this.state.input.password,
+        empty: true,
+      };
+      const input = { ...this.state.input, password };
+      this.setState({ landingMessageCode: 'password-length-invalid', input });
     } else this.setState({ landingMessageCode: null });
   };
 
   handleUserSignIn = () => {
     if (
-      allFieldsEmpty([
+      allStringsEmpty([
         this.state.input.username.value,
         this.state.input.password.value,
       ])
@@ -855,12 +843,12 @@ class App extends Component {
       input.username.empty = true;
       input.password.empty = true;
       this.setState({ landingMessageCode: 'fields-empty', input });
-    } else if (this.state.input.username.value === '') {
+    } else if (!this.state.input.username.value) {
       this.setState({ landingMessageCode: 'username-empty' });
       const username = { ...this.state.input.username, empty: true };
       const input = { ...this.state.input, username };
       this.setState({ input });
-    } else if (this.state.input.password.value === '') {
+    } else if (!this.state.input.password.value) {
       this.setState({ landingMessageCode: 'password-empty' });
       const password = { ...this.state.input.password, empty: true };
       const input = { ...this.state.input, password };
@@ -879,14 +867,15 @@ class App extends Component {
 
   /**
    *
-   * @param {function} callback The function to be called upon key press.
-   * @param {number} keyCode JavaScript event keyCode.
-   * Defaults to 13 (enter key).
+   * @param {requestCallback} callback The function to be called upon
+   * key code press.
+   * @param {number} code JavaScript event code.
+   * Defaults to 'Enter'.
    */
   handleKeyDown =
-    (callback, keyCode = 13) =>
+    (callback, code = 'Enter') =>
     (event) => {
-      if (event.keyCode === keyCode && event.target.value !== '') callback();
+      if (event.code === code && event.target.value !== '') callback();
     };
 
   handleUserToggledExpandNav = () => {
@@ -895,9 +884,87 @@ class App extends Component {
     this.setState({ user });
   };
 
+  handleRouteChange = (route) => {
+    // Create a budget if user routes to Budget with no saved-budgets.
+    if (route === 'budget' && this.state.user.budgets.length === 0) {
+      this.handleCreateBudget();
+      this.setState({ route: 'budget' });
+    }
+    // Handle user sign in.
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      !this.state.user.isGuest
+    ) {
+      localStorage.setItem('background', this.state.background.name);
+
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      this.setState({
+        user,
+        route,
+        input: initialState.input,
+        landingMessageCode: null,
+      });
+      this.setMessage('user-logged-in');
+      this.clearMessage(6000);
+    }
+    // Handle guest sign in (don't set background in localStorage).
+    else if (
+      route !== this.state.route &&
+      route !== 'signup' &&
+      route !== 'signin' &&
+      !this.state.user.isLoggedIn &&
+      this.state.user.isGuest
+    ) {
+      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      this.setState({
+        user,
+        route,
+        input: initialState.input,
+        landingMessageCode: null,
+      });
+      this.setMessage('user-logged-in');
+      this.clearMessage(6000);
+    }
+    // Handle user/guest sign out.
+    else if (
+      route !== this.state.route &&
+      (route === 'signup' || route === 'signin') &&
+      this.state.user.isLoggedIn
+    ) {
+      this.clearMessage(0);
+      this.setState({
+        route,
+        input: initialState.input,
+        user: initialState.user,
+      });
+    }
+    // Reset input and message code when routing between
+    // SignIn and SignUp components.
+    else if (
+      (route === 'signin' || route === 'signup') &&
+      (this.state.route === 'signin' || this.state.route === 'signup')
+    )
+      this.setState({
+        input: initialState.input,
+        landingMessageCode: null,
+        route,
+      });
+    else if (route !== this.state.route) this.setState({ route });
+  };
+
   render() {
-    const { route, message, landingMessageCode, input, background, user } =
-      this.state;
+    const {
+      route,
+      message,
+      landingMessageCode,
+      input,
+      isEditing,
+      user,
+      background,
+    } = this.state;
 
     const formattedBudget =
       user.budgets.length === 0
@@ -953,7 +1020,10 @@ class App extends Component {
               ) : route === 'budget' ? (
                 <Budget
                   budget={user.budgets[user.currentBudgetIndex]}
-                  handleFocusOutBudgetName={this.handleFocusOutBudgetName}
+                  currentBudgetIndex={user.currentBudgetIndex}
+                  isEditingBudgetName={isEditing.budgetName}
+                  editBudgetName={this.editBudgetName}
+                  handleBudgetNameChange={this.handleBudgetNameChange}
                   handleFocusProjectedMonthlyIncome={
                     this.handleFocusProjectedMonthlyIncome
                   }
@@ -976,6 +1046,7 @@ class App extends Component {
                   handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
                   handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
                   handleFocusOutActualCost={this.handleFocusOutActualCost}
+                  handleCreateBudgetCopy={this.handleCreateBudgetCopy}
                   handleUserClickedDeleteBudget={
                     this.handleUserClickedDeleteBudget
                   }
@@ -983,12 +1054,14 @@ class App extends Component {
                   clickedDeleteBudget={user.clickedDeleteBudget}
                   formattedBudget={formattedBudget}
                   formattedEntries={formattedEntries}
+                  setMessage={this.setMessage}
+                  clearMessage={this.clearMessage}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
                   user={user}
                   handleViewBudget={this.handleViewBudget}
-                  handleAddBudget={this.handleAddBudget}
+                  handleCreateBudget={this.handleCreateBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
                 />
@@ -1014,6 +1087,10 @@ class App extends Component {
                 classNames="message"
                 timeout={500}
                 unmountOnExit
+                onExited={() => {
+                  const message = { ...this.state.message, code: null };
+                  this.setState({ message });
+                }}
               >
                 <Message
                   code={message.code}

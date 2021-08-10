@@ -36,9 +36,7 @@ const Profile = ({
               value={inputDisplayName}
               required
             />
-            <span className="floating-label small clr-dark-accent fs-body ">
-              New display name
-            </span>
+            <span className="floating-label small">New display name</span>
           </div>
         </div>
 

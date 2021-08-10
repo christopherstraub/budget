@@ -4,8 +4,11 @@ import EditableLabel from 'react-inline-editing';
 
 const Entries = ({
   budget,
+  currentBudgetIndex,
   formattedEntries,
-  handleFocusOutBudgetName,
+  isEditingBudgetName,
+  editBudgetName,
+  handleBudgetNameChange,
   inputEntryCategory,
   handleEntryCategoryInputChange,
   handleKeyDown,
@@ -14,36 +17,56 @@ const Entries = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  setMessage,
+  clearMessage,
 }) => {
   return (
     <>
-      <div className="relative mb5 ph5">
-        <h1>
-          <EditableLabel
-            value="test"
-            text={budget.name}
-            labelClassName="clr-light fs-heading fw3 tc text-break pointer w-100"
-            inputClassName="tc br3 ph3 w-100"
-            inputHeight="5.7rem"
-            inputMaxLength={50}
-            inputPlaceHolder="Budget name"
-            onFocusOut={handleFocusOutBudgetName}
+      <div className="relative mb5">
+        {isEditingBudgetName ? (
+          <input
+            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc"
+            onFocus={(event) => (event.target.value = budget.name)}
+            onBlur={handleBudgetNameChange}
+            type="text"
+            maxLength="50"
+            autoFocus={true}
           />
-        </h1>
-
-        <span
-          className="material-icons absolute user-select-none clr-accent-light"
-          style={{
-            top: '50%',
-            right: '0',
-            transform: 'translateY(-50%)',
-          }}
-        >
-          edit
-        </span>
+        ) : (
+          <div className="ph5">
+            <label
+              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
+              style={{ padding: '1px 0' }}
+              onClick={editBudgetName}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editBudgetName)}
+            >
+              {budget.name}
+            </label>
+            <span
+              className="material-icons absolute user-select-none clr-accent-light pointer hover-opacity"
+              onClick={editBudgetName}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editBudgetName)}
+              onMouseEnter={() => setMessage('edit-budget-name')}
+              onMouseLeave={() => clearMessage(0)}
+              onFocus={() => setMessage('edit-budget-name')}
+              onBlur={() => clearMessage(0)}
+              style={{
+                top: '50%',
+                right: '0',
+                transform: 'translateY(-50%)',
+                fontSize: '36px',
+              }}
+            >
+              edit
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="flex">
@@ -58,9 +81,7 @@ const Entries = ({
             value={inputEntryCategory}
             required
           />
-          <span className="floating-label clr-dark-accent fs-body">
-            Category of entry
-          </span>
+          <span className="floating-label">Category of entry</span>
         </div>
 
         <button
@@ -169,7 +190,13 @@ const Entries = ({
         </table>
       </div>
 
-      <div className="flex justify-end mt4">
+      <div className="flex justify-between mt4">
+        <button
+          onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
+          className="clr-light fs-body ff-mono selection-transparent hover-opacity fw3 br3 bn bg--accent-dark pa3"
+        >
+          CREATE COPY
+        </button>
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
