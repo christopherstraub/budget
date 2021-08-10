@@ -533,6 +533,11 @@ class App extends Component {
   };
 
   handleCreateBudgetCopy = (index) => {
+    if (this.state.user.budgets.length === this.state.user.maxBudgets) {
+      this.setMessage('budgets-max-allowed');
+      this.clearMessage(6000);
+      return;
+    }
     const budgetCopy = cloneDeep(this.state.user.budgets[index]);
     budgetCopy.id = this.state.user.budgetsCreated;
     budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
