@@ -542,6 +542,12 @@ class App extends Component {
     user.budgetsCreated++;
     user.currentBudgetIndex = index + 1;
     this.setState({ user });
+
+    if (this.state.user.budgets.length === 4) {
+      this.setMessage('budgets-created-many');
+      this.clearMessage(5000);
+      return;
+    }
     this.setMessage('budget-copy-created');
     this.clearMessage();
   };
