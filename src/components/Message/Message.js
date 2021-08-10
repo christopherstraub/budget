@@ -21,8 +21,8 @@ const getMessage = (code, user, formattedBudget) => {
       return `Welcome, ${user.displayName}.`;
     case 'budget-name-changed':
       return 'Changed budget name.';
-    case 'change-budget-name':
-      return 'Change budget name.';
+    case 'edit-budget-name':
+      return 'Edit budget name';
     case 'projected-cost-invalid':
     case 'actual-cost-invalid':
     case 'projected-monthly-income-invalid':

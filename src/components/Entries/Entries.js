@@ -24,7 +24,7 @@ const Entries = ({
 }) => {
   return (
     <>
-      <div className="relative mb5 ph5">
+      <div className="relative mb5">
         {isEditingBudgetName ? (
           <input
             className="clr-light bg-transparent fs-heading fw3 bn w-100 tc"
@@ -35,32 +35,36 @@ const Entries = ({
             autoFocus={true}
           />
         ) : (
-          <label
-            className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
-            style={{ padding: '1px 0' }}
-            onClick={editBudgetName}
-            tabIndex="0"
-            onKeyDown={handleKeyDown(editBudgetName)}
-          >
-            {budget.name}
-          </label>
+          <div className="ph5">
+            <label
+              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
+              style={{ padding: '1px 0' }}
+              onClick={editBudgetName}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editBudgetName)}
+            >
+              {budget.name}
+            </label>
+            <span
+              className="material-icons absolute user-select-none clr-accent-light pointer hover-opacity"
+              onClick={editBudgetName}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editBudgetName)}
+              onMouseEnter={() => setMessage('edit-budget-name')}
+              onMouseLeave={() => clearMessage(0)}
+              onFocus={() => setMessage('edit-budget-name')}
+              onBlur={() => clearMessage(0)}
+              style={{
+                top: '50%',
+                right: '0',
+                transform: 'translateY(-50%)',
+                fontSize: '36px',
+              }}
+            >
+              edit
+            </span>
+          </div>
         )}
-
-        <span
-          className="material-icons absolute user-select-none clr-accent-light pointer hover-opacity"
-          onClick={editBudgetName}
-          tabIndex="0"
-          onKeyDown={handleKeyDown(editBudgetName)}
-          onMouseEnter={() => setMessage('change-budget-name')}
-          onMouseLeave={() => clearMessage(0)}
-          style={{
-            top: '50%',
-            right: '0',
-            transform: 'translateY(-50%)',
-          }}
-        >
-          edit
-        </span>
       </div>
 
       <div className="flex">
