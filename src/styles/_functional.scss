@@ -116,7 +116,7 @@
     outline: 0;
   }
 
-  &.input-decorated {
+  &.input-indicator {
     &.empty {
       border-bottom: 4px solid $clr-red;
       margin-bottom: calc(0.5rem - 4px);
@@ -147,6 +147,10 @@
   top: 50%;
   left: 1rem;
   transform: translateY(-50%);
+
+  &.dark {
+    color: $clr-dark-accent;
+  }
 
   transition: 0.1s all;
 

@@ -13,7 +13,7 @@ const SignIn = ({
     <>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 bn pt4 ph3 pb2 mv2 w-100
           ${input.username.empty ? 'empty' : ''}
           `}
           onChange={handleUsernameInputChange}
@@ -26,7 +26,7 @@ const SignIn = ({
       </div>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 bn pt4 ph3 pb2 mv2 w-100
           ${input.password.empty ? 'empty' : ''}
           `}
           onChange={handlePasswordInputChange}
