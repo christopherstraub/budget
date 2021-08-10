@@ -95,39 +95,58 @@ const initialState = {
         getDifferenceCost() {
           return this.getProjectedCost() - this.getActualCost();
         },
-        entries: [
-          {
-            id: 0,
-            category: 'Housing costs',
-            projectedCost: 1000,
-            actualCost: 1100,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            id: 1,
-            category: 'Vehicle expenses',
-            projectedCost: 200,
-            actualCost: 175,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-          {
-            id: 2,
-            category: 'Phone bill',
-            projectedCost: 20,
-            actualCost: 20,
-            getDifference() {
-              return this.projectedCost - this.actualCost;
-            },
-          },
-        ],
       },
     ],
   },
 };
+
+const defaultEntries = [
+  {
+    id: 0,
+    category: 'Housing costs',
+    projectedCost: 1000,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 1,
+    category: 'Vehicle expenses',
+    projectedCost: 200,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 2,
+    category: 'Phone bill',
+    projectedCost: 20,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 3,
+    category: 'Groceries',
+    projectedCost: 250,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+  {
+    id: 4,
+    category: 'Savings',
+    projectedCost: 100,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  },
+];
 
 const backgrounds = [
   { name: 'BANFF', path: pathBg1, useDarkLanding: true, initial: true },
@@ -239,6 +258,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;
+    this.state.user.budgets[0].entries = defaultEntries;
     this.state.background = backgrounds[0];
   }
 
@@ -410,7 +430,7 @@ class App extends Component {
   };
 
   // Event handler for add entry button.
-  // Add entry, then reset the category input field.
+  // Add entry and reset entry category input.
   handleAddEntry = () => {
     const user = cloneDeep(this.state.user);
     user.budgets[user.currentBudgetIndex].entries.push(this.getNewEntry());
@@ -507,7 +527,7 @@ class App extends Component {
       getDifferenceCost() {
         return this.getProjectedCost() - this.getActualCost();
       },
-      entries: [],
+      entries: defaultEntries,
     };
   };
 
