@@ -57,7 +57,43 @@ const Entries = ({
             autoFocus={true}
           />
         ) : (
-          <div style={{ padding: '0 5rem' }}>
+          <div style={{ padding: '0 12rem' }}>
+            <span
+              className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr4"
+              onClick={() => handleSaveBudget(currentBudgetIndex)}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(() =>
+                handleSaveBudget(currentBudgetIndex)
+              )}
+              onMouseEnter={() => setMessage('save-budget')}
+              onMouseLeave={() => clearMessage(0)}
+              style={{
+                top: '50%',
+                left: '0',
+                transform: 'translateY(-50%)',
+                fontSize: '36px',
+              }}
+            >
+              save
+            </span>
+            <span
+              className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr3"
+              onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(() =>
+                handleCreateBudgetCopy(currentBudgetIndex)
+              )}
+              onMouseEnter={() => setMessage('copy-budget')}
+              onMouseLeave={() => clearMessage(0)}
+              style={{
+                top: '50%',
+                left: '6rem',
+                transform: 'translateY(-50%)',
+                fontSize: '36px',
+              }}
+            >
+              copy_all
+            </span>
             <label
               className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
               style={{ padding: '1px 0' }}
@@ -68,14 +104,12 @@ const Entries = ({
               {budget.name}
             </label>
             <span
-              className="material-icons absolute user-select-none clr-accent-light pointer hover-opacity"
+              className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
               onClick={editBudgetName}
               tabIndex="0"
               onKeyDown={handleKeyDown(editBudgetName)}
               onMouseEnter={() => setMessage('edit-budget-name')}
               onMouseLeave={() => clearMessage(0)}
-              onFocus={() => setMessage('edit-budget-name')}
-              onBlur={() => clearMessage(0)}
               style={{
                 top: '50%',
                 right: '0',
@@ -152,7 +186,7 @@ const Entries = ({
                 <td className="flex text-break relative items-center">
                   <span
                     onClick={() => handleDeleteEntry(entry.id)}
-                    className="absolute material-icons clr-dark-accent fs-subheading pointer selection-transparent"
+                    className="material-icons absolute user-select-none pointer clr-dark-accent hover-opacity"
                   >
                     delete
                   </span>
@@ -210,24 +244,9 @@ const Entries = ({
         </table>
       </div>
 
-      <div className="flex justify-between items-end mt4">
-        <div>
-          <button
-            onClick={() => handleSaveBudget(currentBudgetIndex)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--green pa3 mr3"
-          >
-            save budget
-          </button>
-          <button
-            onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
-          >
-            create copy
-          </button>
-        </div>
-
+      <div className="flex justify-end items-end mt4">
         <time
-          className="absolute clr-light-accent fs-body ff-mono fw3 ttc tc"
+          className="clr-light-accent absolute fs-body ff-mono fw3 ttc tc"
           style={{ left: '50%', transform: 'translateX(-50%)' }}
         >
           {getLastSavedTimeString(budget.lastSaved)}
@@ -237,14 +256,14 @@ const Entries = ({
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--orange pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
           >
             confirm delete
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--orange pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
           >
             delete budget
           </button>

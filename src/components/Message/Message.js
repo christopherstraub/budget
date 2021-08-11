@@ -4,9 +4,9 @@ import React from 'react';
 // App:
 // 'user-logged-in'
 // Entries:
-// 'budget-name-changed', 'edit-budget-name',
+// 'edit-budget-name', 'budget-name-changed',
 // 'projected-cost-invalid', 'actual-cost-invalid',
-// 'budget-saved', 'budget-copy-created'
+// 'save-budget', 'budget-saved', 'copy-budget', 'budget-copy-created'
 // Summary:
 // 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
 // 'projected-monthly-income-updated', 'actual-monthly-income-updated'
@@ -20,10 +20,10 @@ const getMessage = (code, user, formattedBudget) => {
   switch (code) {
     case 'user-logged-in':
       return `Welcome, ${user.displayName}.`;
-    case 'budget-name-changed':
-      return 'Changed budget name.';
     case 'edit-budget-name':
       return 'Edit budget name';
+    case 'budget-name-changed':
+      return 'Changed budget name.';
     case 'projected-cost-invalid':
     case 'actual-cost-invalid':
     case 'projected-monthly-income-invalid':
@@ -33,8 +33,12 @@ const getMessage = (code, user, formattedBudget) => {
       return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
     case 'actual-monthly-income-updated':
       return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
+    case 'save-budget':
+      return 'Save budget';
     case 'budget-saved':
       return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
+    case 'copy-budget':
+      return 'Create a copy of budget';
     case 'budget-copy-created':
       return 'Created budget copy.';
     case 'budget-deleted':
