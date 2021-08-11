@@ -153,18 +153,16 @@ const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
  * the Intl.NumberFormat() constructor.
  * @returns {Object} Formatted budget.
  */
-const formatCurrency = (budget, formatter) => {
-  return {
-    projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
-    actualMonthlyIncome: formatter.format(budget.actualMonthlyIncome),
-    projectedBalance: formatter.format(budget.getProjectedBalance()),
-    actualBalance: formatter.format(budget.getActualBalance()),
-    differenceBalance: formatter.format(budget.getDifferenceBalance()),
-    projectedCost: formatter.format(budget.getProjectedCost()),
-    actualCost: formatter.format(budget.getActualCost()),
-    differenceCost: formatter.format(budget.getDifferenceCost()),
-  };
-};
+const formatCurrency = (budget, formatter) => ({
+  projectedMonthlyIncome: formatter.format(budget.projectedMonthlyIncome),
+  actualMonthlyIncome: formatter.format(budget.actualMonthlyIncome),
+  projectedBalance: formatter.format(budget.getProjectedBalance()),
+  actualBalance: formatter.format(budget.getActualBalance()),
+  differenceBalance: formatter.format(budget.getDifferenceBalance()),
+  projectedCost: formatter.format(budget.getProjectedCost()),
+  actualCost: formatter.format(budget.getActualCost()),
+  differenceCost: formatter.format(budget.getDifferenceCost()),
+});
 
 // Format negative numbers as numbers enclosed in parentheses.
 const formatNegativeValues = (formattedBudget) => {
@@ -193,15 +191,13 @@ const formatBudget = (budget, formatter) => {
  */
 const formatEntries = (entries, formatter) => {
   if (!entries?.length) return [];
-  return entries.map((entry) => {
-    return {
-      id: entry.id,
-      category: entry.category,
-      projectedCost: formatter.format(entry.projectedCost),
-      actualCost: formatter.format(entry.actualCost),
-      difference: formatter.format(entry.getDifference()),
-    };
-  });
+  return entries.map((entry) => ({
+    id: entry.id,
+    category: entry.category,
+    projectedCost: formatter.format(entry.projectedCost),
+    actualCost: formatter.format(entry.actualCost),
+    difference: formatter.format(entry.getDifference()),
+  }));
 };
 
 /**
@@ -307,23 +303,19 @@ class App extends Component {
 
   // Create entry object.
   // If input entry category is empty, set to 'No category set'.
-  getNewEntry = () => {
-    const category = this.state.input.entryCategory || 'No category set';
-
-    return {
-      id:
-        this.state.user.budgets[this.state.user.currentBudgetIndex].entries[
-          this.state.user.budgets[this.state.user.currentBudgetIndex].entries
-            .length - 1
-        ]?.id + 1 || 0,
-      category,
-      projectedCost: 0,
-      actualCost: 0,
-      getDifference() {
-        return this.projectedCost - this.actualCost;
-      },
-    };
-  };
+  getNewEntry = () => ({
+    id:
+      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[
+        this.state.user.budgets[this.state.user.currentBudgetIndex].entries
+          .length - 1
+      ]?.id + 1 || 0,
+    category: this.state.input.entryCategory || 'No category set',
+    projectedCost: 0,
+    actualCost: 0,
+    getDifference() {
+      return this.projectedCost - this.actualCost;
+    },
+  });
 
   // Event handler for add entry button.
   // Add entry and reset entry category input.
@@ -334,7 +326,10 @@ class App extends Component {
     this.setState({ user, input });
   };
 
-  // Event handler for delete entry button.
+  /**
+   *
+   * @param {number} index The index of the entry to be deleted.
+   */
   handleDeleteEntry = (index) => {
     const user = cloneDeep(this.state.user);
     const entries = user.budgets[user.currentBudgetIndex].entries;
@@ -397,42 +392,40 @@ class App extends Component {
 
   // Create budget object. Budget name is set using the Date object.
   // Name depends on current date and current number of budgets.
-  getNewBudget = () => {
-    return {
-      id: this.state.user.budgetsCreated,
-      name: this.getNewBudgetName(),
-      lastSaved: false,
-      projectedMonthlyIncome: 0,
-      actualMonthlyIncome: 0,
-      getProjectedBalance() {
-        return this.projectedMonthlyIncome - this.getProjectedCost();
-      },
-      getActualBalance() {
-        return this.actualMonthlyIncome - this.getActualCost();
-      },
-      getDifferenceBalance() {
-        return this.getActualBalance() - this.getProjectedBalance();
-      },
-      getProjectedCost() {
-        return !this.entries.length
-          ? 0
-          : this.entries
-              .map((entry) => entry.projectedCost)
-              .reduce((acc, value) => acc + value);
-      },
-      getActualCost() {
-        return !this.entries.length
-          ? 0
-          : this.entries
-              .map((entry) => entry.actualCost)
-              .reduce((acc, value) => acc + value);
-      },
-      getDifferenceCost() {
-        return this.getProjectedCost() - this.getActualCost();
-      },
-      entries: defaultEntries,
-    };
-  };
+  getNewBudget = () => ({
+    id: this.state.user.budgetsCreated,
+    name: this.getNewBudgetName(),
+    lastSaved: false,
+    projectedMonthlyIncome: 0,
+    actualMonthlyIncome: 0,
+    getProjectedBalance() {
+      return this.projectedMonthlyIncome - this.getProjectedCost();
+    },
+    getActualBalance() {
+      return this.actualMonthlyIncome - this.getActualCost();
+    },
+    getDifferenceBalance() {
+      return this.getActualBalance() - this.getProjectedBalance();
+    },
+    getProjectedCost() {
+      return !this.entries.length
+        ? 0
+        : this.entries
+            .map((entry) => entry.projectedCost)
+            .reduce((acc, value) => acc + value);
+    },
+    getActualCost() {
+      return !this.entries.length
+        ? 0
+        : this.entries
+            .map((entry) => entry.actualCost)
+            .reduce((acc, value) => acc + value);
+    },
+    getDifferenceCost() {
+      return this.getProjectedCost() - this.getActualCost();
+    },
+    entries: defaultEntries,
+  });
 
   // Event handler for view budget link.
   // Sets user.currentBudgetIndex to the selected budget's index
@@ -520,7 +513,6 @@ class App extends Component {
     this.clearMessage();
   };
 
-  // Event handler for save budgets button.
   handleSaveBudgets = () => {
     if (!this.state.user.isGuest) {
       const user = cloneDeep(this.state.user);
@@ -531,6 +523,22 @@ class App extends Component {
       this.setState({ user });
     }
     this.setMessage('budgets-saved');
+    this.clearMessage();
+  };
+
+  /**
+   *
+   * @param {number} index The index of the budget to be saved.
+   */
+  handleSaveBudget = (index) => {
+    if (!this.state.user.isGuest) {
+      const user = cloneDeep(this.state.user);
+      user.budgets = user.budgets.map((budget, i) =>
+        i === index ? { ...budget, lastSaved: new Date() } : budget
+      );
+      this.setState({ user });
+    }
+    this.setMessage('budget-saved');
     this.clearMessage();
   };
 
@@ -1028,6 +1036,7 @@ class App extends Component {
                   handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
                   handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
                   handleFocusOutActualCost={this.handleFocusOutActualCost}
+                  handleSaveBudget={this.handleSaveBudget}
                   handleCreateBudgetCopy={this.handleCreateBudgetCopy}
                   handleUserClickedDeleteBudget={
                     this.handleUserClickedDeleteBudget

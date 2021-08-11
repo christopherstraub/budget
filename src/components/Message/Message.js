@@ -5,7 +5,8 @@ import React from 'react';
 // 'user-logged-in'
 // Entries:
 // 'budget-name-changed', 'edit-budget-name',
-// 'projected-cost-invalid', 'actual-cost-invalid' 'budget-copy-created'
+// 'projected-cost-invalid', 'actual-cost-invalid',
+// 'budget-saved', 'budget-copy-created'
 // Summary:
 // 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
 // 'projected-monthly-income-updated', 'actual-monthly-income-updated'
@@ -32,6 +33,8 @@ const getMessage = (code, user, formattedBudget) => {
       return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
     case 'actual-monthly-income-updated':
       return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
+    case 'budget-saved':
+      return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
     case 'budget-copy-created':
       return 'Created budget copy.';
     case 'budget-deleted':

@@ -24,6 +24,7 @@ const Budget = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleSaveBudget,
   handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
@@ -49,6 +50,7 @@ const Budget = ({
           handleFocusOutEntryCategory={handleFocusOutEntryCategory}
           handleFocusOutProjectedCost={handleFocusOutProjectedCost}
           handleFocusOutActualCost={handleFocusOutActualCost}
+          handleSaveBudget={handleSaveBudget}
           handleCreateBudgetCopy={handleCreateBudgetCopy}
           handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
           handleDeleteBudget={handleDeleteBudget}

@@ -36,6 +36,7 @@ const Entries = ({
   handleFocusOutEntryCategory,
   handleFocusOutProjectedCost,
   handleFocusOutActualCost,
+  handleSaveBudget,
   handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
@@ -89,7 +90,7 @@ const Entries = ({
       </div>
 
       <div className="flex">
-        <div className="relative mr2 flex-auto">
+        <div className="relative flex-auto mr3">
           <input
             onChange={handleEntryCategoryInputChange}
             onKeyDown={handleKeyDown(handleAddEntry)}
@@ -105,7 +106,7 @@ const Entries = ({
 
         <button
           onClick={handleAddEntry}
-          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3 ml2"
+          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
         >
           add entry
         </button>
@@ -210,15 +211,28 @@ const Entries = ({
       </div>
 
       <div className="flex justify-between items-end mt4">
-        <button
-          onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
-          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
+        <div>
+          <button
+            onClick={() => handleSaveBudget(currentBudgetIndex)}
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--green pa3 mr3"
+          >
+            save budget
+          </button>
+          <button
+            onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
+          >
+            create copy
+          </button>
+        </div>
+
+        <time
+          className="absolute clr-light-accent fs-body ff-mono fw3 ttc tc"
+          style={{ left: '50%', transform: 'translateX(-50%)' }}
         >
-          create copy
-        </button>
-        <time className="clr-light-accent fs-body ff-mono fw3 ttc tc ph4">
           {getLastSavedTimeString(budget.lastSaved)}
         </time>
+
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}
