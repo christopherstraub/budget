@@ -2,6 +2,25 @@ import React from 'react';
 
 import EditableLabel from 'react-inline-editing';
 
+const getLastSavedTimeString = (lastSaved) => {
+  return !lastSaved
+    ? 'unsaved'
+    : // If last saved one or more days ago, display date and time,
+    // otherwise display time.
+    new Date() - lastSaved >= 8.64e7
+    ? `last saved ${lastSaved.toLocaleString([], {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`
+    : `last saved ${lastSaved.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`;
+};
+
 const Entries = ({
   budget,
   currentBudgetIndex,
@@ -190,13 +209,16 @@ const Entries = ({
         </table>
       </div>
 
-      <div className="flex justify-between mt4">
+      <div className="flex justify-between items-end mt4">
         <button
           onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
           className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
         >
           create copy
         </button>
+        <time className="clr-light-accent fs-body ff-mono fw3 ttc tc ph4">
+          {getLastSavedTimeString(budget.lastSaved)}
+        </time>
         {clickedDeleteBudget ? (
           <button
             onClick={handleDeleteBudget}

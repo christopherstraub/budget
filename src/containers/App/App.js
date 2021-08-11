@@ -51,7 +51,7 @@ const initialState = {
   user: {
     id: null,
     isLoggedIn: false,
-    isGuest: true,
+    isGuest: false,
     displayName: 'Guest',
     username: null,
     joined: null,
@@ -59,46 +59,8 @@ const initialState = {
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
     toggledExpandNav: false,
-    budgetsCreated: 1,
+    budgetsCreated: 0,
     budgetsDeleted: 0,
-    budgets: [
-      {
-        id: 0,
-        name: `${new Date().toLocaleString('default', {
-          month: 'long',
-        })} ${new Date().getFullYear()}`,
-        projectedMonthlyIncome: 0,
-        actualMonthlyIncome: 0,
-        getProjectedBalance() {
-          return this.projectedMonthlyIncome - this.getProjectedCost();
-        },
-        getActualBalance() {
-          return this.actualMonthlyIncome - this.getActualCost();
-        },
-        getDifferenceBalance() {
-          return this.getActualBalance() - this.getProjectedBalance();
-        },
-        getProjectedCost() {
-          if (this.entries.length === 0) return 0;
-          else {
-            const projectedCosts = this.entries.map(
-              (entry) => entry.projectedCost
-            );
-            return projectedCosts.reduce((acc, value) => acc + value);
-          }
-        },
-        getActualCost() {
-          if (this.entries.length === 0) return 0;
-          else {
-            const actualCosts = this.entries.map((entry) => entry.actualCost);
-            return actualCosts.reduce((acc, value) => acc + value);
-          }
-        },
-        getDifferenceCost() {
-          return this.getProjectedCost() - this.getActualCost();
-        },
-      },
-    ],
   },
 };
 
@@ -262,7 +224,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;
-    this.state.user.budgets[0].entries = defaultEntries;
+    this.state.user.budgets = [this.getNewBudget()];
+    this.state.user.budgetsCreated++;
     this.state.background = backgrounds[0];
   }
 
@@ -417,16 +380,16 @@ class App extends Component {
   };
 
   getNewBudgetName = () => {
-    const budgetsNotCopies = this.state.user.budgets.filter(
-      (budget) => !/\(\d+\)$/.test(budget.name)
-    ).length;
+    const budgetsNotCopies =
+      this.state.user.budgets?.filter((budget) => !/\(\d+\)$/.test(budget.name))
+        .length ?? 0;
 
     const date = new Date(
       new Date().getFullYear(),
       new Date().getMonth() + budgetsNotCopies
     );
 
-    return date.toLocaleDateString('default', {
+    return date.toLocaleDateString([], {
       month: 'long',
       year: 'numeric',
     });
@@ -438,6 +401,7 @@ class App extends Component {
     return {
       id: this.state.user.budgetsCreated,
       name: this.getNewBudgetName(),
+      lastSaved: false,
       projectedMonthlyIncome: 0,
       actualMonthlyIncome: 0,
       getProjectedBalance() {
@@ -450,20 +414,18 @@ class App extends Component {
         return this.getActualBalance() - this.getProjectedBalance();
       },
       getProjectedCost() {
-        if (this.entries.length === 0) return 0;
-        else {
-          const projectedCosts = this.entries.map(
-            (entry) => entry.projectedCost
-          );
-          return projectedCosts.reduce((acc, value) => acc + value);
-        }
+        return !this.entries.length
+          ? 0
+          : this.entries
+              .map((entry) => entry.projectedCost)
+              .reduce((acc, value) => acc + value);
       },
       getActualCost() {
-        if (this.entries.length === 0) return 0;
-        else {
-          const actualCosts = this.entries.map((entry) => entry.actualCost);
-          return actualCosts.reduce((acc, value) => acc + value);
-        }
+        return !this.entries.length
+          ? 0
+          : this.entries
+              .map((entry) => entry.actualCost)
+              .reduce((acc, value) => acc + value);
       },
       getDifferenceCost() {
         return this.getProjectedCost() - this.getActualCost();
@@ -541,6 +503,7 @@ class App extends Component {
     const budgetCopy = cloneDeep(this.state.user.budgets[index]);
     budgetCopy.id = this.state.user.budgetsCreated;
     budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
+    budgetCopy.lastSaved = false;
 
     const user = cloneDeep(this.state.user);
     user.budgets.splice(index + 1, 0, budgetCopy);
@@ -559,6 +522,14 @@ class App extends Component {
 
   // Event handler for save budgets button.
   handleSaveBudgets = () => {
+    if (!this.state.user.isGuest) {
+      const user = cloneDeep(this.state.user);
+      user.budgets = user.budgets.map((budget) => ({
+        ...budget,
+        lastSaved: new Date(),
+      }));
+      this.setState({ user });
+    }
     this.setMessage('budgets-saved');
     this.clearMessage();
   };
