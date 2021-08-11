@@ -37,7 +37,7 @@ const Entries = ({
             autoFocus={true}
           />
         ) : (
-          <div className="ph5">
+          <div style={{ padding: '0 5rem' }}>
             <label
               className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
               style={{ padding: '1px 0' }}
