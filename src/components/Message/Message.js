@@ -42,7 +42,7 @@ const getMessage = (code, user, formattedBudget) => {
     case 'budget-saved':
       return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
     case 'copy-budget':
-      return 'Create a copy of budget';
+      return 'Create a copy of this budget';
     case 'budget-copy-created':
       return 'Created budget copy.';
     case 'budget-deleted':
