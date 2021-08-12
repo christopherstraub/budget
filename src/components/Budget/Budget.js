@@ -9,14 +9,15 @@ const Budget = ({
   currentBudgetIndex,
   formattedBudget,
   formattedEntries,
-  isEditingBudgetName,
   editBudgetName,
-  handleBudgetNameChange,
-  handleFocusProjectedMonthlyIncome,
-  handleFocusActualMonthlyIncome,
-  handleFocusOutProjectedMonthlyIncome,
-  handleFocusOutActualMonthlyIncome,
-  inputEntryCategory,
+  editProjectedMonthlyIncome,
+  editActualMonthlyIncome,
+  isEditingBudgetName,
+  isEditingProjectedMonthlyIncome,
+  isEditingActualMonthlyIncome,
+  handleUpdateBudgetName,
+  handleUpdateProjectedMonthlyIncome,
+  handleUpdateActualMonthlyIncome,
   handleEntryCategoryInputChange,
   handleKeyDown,
   handleAddEntry,
@@ -29,51 +30,57 @@ const Budget = ({
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  input,
   setMessage,
   clearMessage,
-}) => {
-  return (
-    <div className="Budget flex justify-center items-start pa4">
-      <WindowBox classlist="flex-grow-1 mh3">
-        <Entries
-          budget={budget}
-          currentBudgetIndex={currentBudgetIndex}
-          formattedEntries={formattedEntries}
-          isEditingBudgetName={isEditingBudgetName}
-          editBudgetName={editBudgetName}
-          handleBudgetNameChange={handleBudgetNameChange}
-          inputEntryCategory={inputEntryCategory}
-          handleEntryCategoryInputChange={handleEntryCategoryInputChange}
-          handleKeyDown={handleKeyDown}
-          handleAddEntry={handleAddEntry}
-          handleDeleteEntry={handleDeleteEntry}
-          handleFocusOutEntryCategory={handleFocusOutEntryCategory}
-          handleFocusOutProjectedCost={handleFocusOutProjectedCost}
-          handleFocusOutActualCost={handleFocusOutActualCost}
-          handleSaveBudget={handleSaveBudget}
-          handleCreateBudgetCopy={handleCreateBudgetCopy}
-          handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
-          handleDeleteBudget={handleDeleteBudget}
-          clickedDeleteBudget={clickedDeleteBudget}
-          setMessage={setMessage}
-          clearMessage={clearMessage}
-        />
-      </WindowBox>
+  messageCode,
+}) => (
+  <div className="Budget flex justify-center items-start pa4">
+    <WindowBox classlist="flex-grow-1 mh3">
+      <Entries
+        budget={budget}
+        currentBudgetIndex={currentBudgetIndex}
+        formattedEntries={formattedEntries}
+        editBudgetName={editBudgetName}
+        isEditingBudgetName={isEditingBudgetName}
+        handleUpdateBudgetName={handleUpdateBudgetName}
+        handleEntryCategoryInputChange={handleEntryCategoryInputChange}
+        handleKeyDown={handleKeyDown}
+        handleAddEntry={handleAddEntry}
+        handleDeleteEntry={handleDeleteEntry}
+        handleFocusOutEntryCategory={handleFocusOutEntryCategory}
+        handleFocusOutProjectedCost={handleFocusOutProjectedCost}
+        handleFocusOutActualCost={handleFocusOutActualCost}
+        handleSaveBudget={handleSaveBudget}
+        handleCreateBudgetCopy={handleCreateBudgetCopy}
+        handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
+        handleDeleteBudget={handleDeleteBudget}
+        clickedDeleteBudget={clickedDeleteBudget}
+        input={input}
+        setMessage={setMessage}
+        clearMessage={clearMessage}
+        messageCode={messageCode}
+      />
+    </WindowBox>
 
-      <WindowBox classlist="mh3">
-        <Summary
-          budget={budget}
-          formattedBudget={formattedBudget}
-          handleFocusActualMonthlyIncome={handleFocusActualMonthlyIncome}
-          handleFocusProjectedMonthlyIncome={handleFocusProjectedMonthlyIncome}
-          handleFocusOutProjectedMonthlyIncome={
-            handleFocusOutProjectedMonthlyIncome
-          }
-          handleFocusOutActualMonthlyIncome={handleFocusOutActualMonthlyIncome}
-        />
-      </WindowBox>
-    </div>
-  );
-};
+    <WindowBox classlist="mh3">
+      <Summary
+        budget={budget}
+        formattedBudget={formattedBudget}
+        editProjectedMonthlyIncome={editProjectedMonthlyIncome}
+        editActualMonthlyIncome={editActualMonthlyIncome}
+        isEditingProjectedMonthlyIncome={isEditingProjectedMonthlyIncome}
+        isEditingActualMonthlyIncome={isEditingActualMonthlyIncome}
+        handleUpdateProjectedMonthlyIncome={handleUpdateProjectedMonthlyIncome}
+        handleUpdateActualMonthlyIncome={handleUpdateActualMonthlyIncome}
+        handleKeyDown={handleKeyDown}
+        input={input}
+        setMessage={setMessage}
+        clearMessage={clearMessage}
+        messageCode={messageCode}
+      />
+    </WindowBox>
+  </div>
+);
 
 export default Budget;

@@ -20,6 +20,7 @@ const SignIn = ({
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="text"
           name="username"
+          maxLength={input.username.maxLength}
           required
         />
         <span className="floating-label">Username</span>
@@ -33,6 +34,7 @@ const SignIn = ({
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="password"
           name="password"
+          maxLength={input.password.maxLength}
           required
         />
         <span className="floating-label">Password</span>

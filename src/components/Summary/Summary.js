@@ -9,10 +9,17 @@ const getClassListIfNegative = (value) => {
 const Summary = ({
   budget,
   formattedBudget,
-  handleFocusActualMonthlyIncome,
-  handleFocusProjectedMonthlyIncome,
-  handleFocusOutProjectedMonthlyIncome,
-  handleFocusOutActualMonthlyIncome,
+  editProjectedMonthlyIncome,
+  editActualMonthlyIncome,
+  isEditingProjectedMonthlyIncome,
+  isEditingActualMonthlyIncome,
+  handleUpdateProjectedMonthlyIncome,
+  handleUpdateActualMonthlyIncome,
+  handleKeyDown,
+  input,
+  setMessage,
+  clearMessage,
+  messageCode,
 }) => {
   return (
     <>
@@ -43,48 +50,88 @@ const Summary = ({
           className="bg--light-accent br-pill mh4"
           style={{ width: '2px' }}
         ></div>
-        <div style={{ maxWidth: '32rem' }}>
+        <div style={{ width: '32rem' }}>
           <h2 className="clr-light-accent fs-subheading fw3 mb0 flex justify-end items-center">
             Projected Monthly Income
-            <span className="material-icons user-select-none clr-accent-light ml2">
+            <span
+              className="material-icons user-select-none pointer clr-accent-light hover-opacity ml2"
+              onClick={editProjectedMonthlyIncome}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editProjectedMonthlyIncome)}
+              onMouseEnter={() => setMessage('edit-projected-monthly-income')}
+              onMouseLeave={() => {
+                if (messageCode === 'edit-projected-monthly-income')
+                  clearMessage(0);
+              }}
+            >
               edit
             </span>
           </h2>
 
           <div className="mb5">
-            <EditableLabel
-              text={formattedBudget.projectedMonthlyIncome}
-              labelClassName={`clr-light fs-subtitle ff-primary fw3 text-break pointer lh-title ${
-                budget.projectedMonthlyIncome === 0 ? 'empty-number-field' : ''
-              }`}
-              inputClassName="tr br3 mt2 ph3 w-100"
-              inputHeight="4rem"
-              inputMaxLength={50}
-              inputPlaceHolder="Projected monthly income"
-              onFocus={handleFocusProjectedMonthlyIncome}
-              onFocusOut={handleFocusOutProjectedMonthlyIncome}
-              labelStyle={{ lineHeight: '1.2rem' }}
-            />
+            {isEditingProjectedMonthlyIncome ? (
+              <input
+                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1 lh-title"
+                onFocus={(event) =>
+                  (event.target.value = budget.projectedMonthlyIncome)
+                }
+                onBlur={handleUpdateProjectedMonthlyIncome}
+                type="number"
+                min={input.income.min}
+                max={input.income.max}
+                placeholder="0"
+                autoFocus={true}
+              />
+            ) : (
+              <label
+                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break lh-title"
+                onClick={editProjectedMonthlyIncome}
+              >
+                {formattedBudget.projectedMonthlyIncome}
+              </label>
+            )}
           </div>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0 flex justify-end items-center">
             Actual Monthly Income
-            <span className="material-icons user-select-none clr-accent-light ml2">
+            <span
+              className="material-icons user-select-none pointer clr-accent-light hover-opacity ml2"
+              onClick={editActualMonthlyIncome}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(editActualMonthlyIncome)}
+              onMouseEnter={() => setMessage('edit-actual-monthly-income')}
+              onMouseLeave={() => {
+                if (messageCode === 'edit-actual-monthly-income')
+                  clearMessage(0);
+              }}
+            >
               edit
             </span>
           </h2>
-          <EditableLabel
-            text={formattedBudget.actualMonthlyIncome}
-            labelClassName={`clr-light fs-subtitle ff-primary fw3 mb5 text-break pointer lh-title ${
-              budget.actualMonthlyIncome === 0 ? 'empty-number-field' : null
-            }`}
-            inputClassName="tr br3 mt2 ph3 mb5 w-100"
-            inputHeight="4rem"
-            inputMaxLength={50}
-            inputPlaceHolder="Actual monthly income"
-            onFocus={handleFocusActualMonthlyIncome}
-            onFocusOut={handleFocusOutActualMonthlyIncome}
-          />
+
+          <div className="mb5">
+            {isEditingActualMonthlyIncome ? (
+              <input
+                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1 lh-title"
+                onFocus={(event) =>
+                  (event.target.value = budget.actualMonthlyIncome)
+                }
+                onBlur={handleUpdateActualMonthlyIncome}
+                type="number"
+                min={input.income.min}
+                max={input.income.max}
+                placeholder="0"
+                autoFocus={true}
+              />
+            ) : (
+              <label
+                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break lh-title"
+                onClick={editActualMonthlyIncome}
+              >
+                {formattedBudget.actualMonthlyIncome}
+              </label>
+            )}
+          </div>
 
           <h2 className="clr-light-accent fs-subheading fw3 mb0">
             Projected Balance

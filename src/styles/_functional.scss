@@ -107,6 +107,13 @@
   opacity: 0.75;
 }
 
+input::placeholder {
+  color: $clr-light-accent;
+  &.dark {
+    color: $clr-dark-accent;
+  }
+}
+
 .input {
   color: $clr-dark;
   font-size: $fs-body;
@@ -174,7 +181,7 @@
   transition: 0.1s all;
 
   input:focus + &,
-  input:not(focus):valid + & {
+  input:not(:focus):valid + & {
     font-size: 1.2rem;
     top: 30%;
 
@@ -223,6 +230,11 @@ label:focus-visible {
   }
 }
 
-.lh-title {
-  line-height: 1.2;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
 }

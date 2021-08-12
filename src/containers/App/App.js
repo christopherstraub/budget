@@ -25,12 +25,14 @@ import pathBg8 from '../../images/bg8.webp';
 
 import './App.scss';
 
-// Valid routes
-// 'signin', 'signup', 'budget', 'saved-budgets', 'profile', 'about'
+/*
+Valid routes:
+'signin', 'signup', 'budget', 'saved-budgets', 'profile', 'about'
 
-// Valid landing message codes:
-// 'fields-empty', 'password-length-invalid', 'credentials-invalid'
-// 'username-empty', 'password-empty'
+Valid landing message codes:
+'fields-empty', 'password-length-invalid', 'credentials-invalid',
+'username-empty', 'password-empty'
+*/
 
 // Set initial state to be passed into App state.
 const initialState = {
@@ -38,15 +40,17 @@ const initialState = {
   message: { code: null, show: false },
   landingMessageCode: null,
   input: {
-    displayName: { value: '', empty: false },
-    username: { value: '', empty: false },
+    displayName: { value: '', empty: false, maxLength: 50 },
+    username: { value: '', empty: false, maxLength: 50 },
     password: { value: '', empty: false, minLength: 6, maxLength: 60 },
-    entryCategory: '',
-    projectedMonthlyIncome: '',
-    actualMonthlyIncome: '',
+    budgetName: { maxLength: 50 },
+    entryCategory: { value: '', maxLength: 50 },
+    income: { min: -1e9 + 0.01, max: 1e9 - 0.01 },
   },
   isEditing: {
     budgetName: false,
+    projectedMonthlyIncome: false,
+    actualMonthlyIncome: false,
   },
   user: {
     id: null,
@@ -178,9 +182,8 @@ const formatNegativeValues = (formattedBudget) => {
 };
 
 // formatBudget formats negative values in pre-formatted budget.
-const formatBudget = (budget, formatter) => {
-  return formatNegativeValues(formatCurrency(budget, formatter));
-};
+const formatBudget = (budget, formatter) =>
+  formatNegativeValues(formatCurrency(budget, formatter));
 
 /**
  *
@@ -189,16 +192,16 @@ const formatBudget = (budget, formatter) => {
  * the Intl.NumberFormat() constructor.
  * @returns {Object} Formatted entries.
  */
-const formatEntries = (entries, formatter) => {
-  if (!entries?.length) return [];
-  return entries.map((entry) => ({
-    id: entry.id,
-    category: entry.category,
-    projectedCost: formatter.format(entry.projectedCost),
-    actualCost: formatter.format(entry.actualCost),
-    difference: formatter.format(entry.getDifference()),
-  }));
-};
+const formatEntries = (entries, formatter) =>
+  !entries?.length
+    ? []
+    : entries.map((entry) => ({
+        id: entry.id,
+        category: entry.category,
+        projectedCost: formatter.format(entry.projectedCost),
+        actualCost: formatter.format(entry.actualCost),
+        difference: formatter.format(entry.getDifference()),
+      }));
 
 /**
  *
@@ -297,7 +300,11 @@ class App extends Component {
 
   // Update state entry category input with user input.
   handleEntryCategoryInputChange = (event) => {
-    const input = { ...this.state.input, entryCategory: event.target.value };
+    const entryCategory = {
+      ...this.state.input.entryCategory,
+      value: event.target.value,
+    };
+    const input = { ...this.state.input, entryCategory };
     this.setState({ input });
   };
 
@@ -309,7 +316,7 @@ class App extends Component {
         this.state.user.budgets[this.state.user.currentBudgetIndex].entries
           .length - 1
       ]?.id + 1 || 0,
-    category: this.state.input.entryCategory || 'No category set',
+    category: this.state.input.entryCategory.value || 'No category set',
     projectedCost: 0,
     actualCost: 0,
     getDifference() {
@@ -322,7 +329,11 @@ class App extends Component {
   handleAddEntry = () => {
     const user = cloneDeep(this.state.user);
     user.budgets[user.currentBudgetIndex].entries.push(this.getNewEntry());
-    const input = { ...this.state.input, entryCategory: '' };
+    const entryCategory = {
+      ...this.state.input.entryCategory,
+      value: '',
+    };
+    const input = { ...this.state.input, entryCategory };
     this.setState({ user, input });
   };
 
@@ -542,7 +553,7 @@ class App extends Component {
     this.clearMessage();
   };
 
-  handleBudgetNameChange = (event) => {
+  handleUpdateBudgetName = (event) => {
     if (
       this.state.user.budgets[this.state.user.currentBudgetIndex].name !==
         event.target.value.trim() &&
@@ -551,18 +562,26 @@ class App extends Component {
       const user = cloneDeep(this.state.user);
       user.budgets[this.state.user.currentBudgetIndex].name =
         event.target.value.trim();
-      const isEditing = { ...this.state.isEditing, budgetName: false };
-      this.setState({ user, isEditing });
+      this.setState({ user });
       this.setMessage('budget-name-changed');
       this.clearMessage();
-    } else {
-      const isEditing = { ...this.state.isEditing, budgetName: false };
-      this.setState({ isEditing });
     }
+    this.setState({ isEditing: false });
   };
 
   editBudgetName = () => {
+    if (this.state.message.code === 'edit-budget-name') this.clearMessage(0);
     const isEditing = { ...this.state.isEditing, budgetName: true };
+    this.setState({ isEditing });
+  };
+
+  editProjectedMonthlyIncome = () => {
+    const isEditing = { ...this.state.isEditing, projectedMonthlyIncome: true };
+    this.setState({ isEditing });
+  };
+
+  editActualMonthlyIncome = () => {
+    const isEditing = { ...this.state.isEditing, actualMonthlyIncome: true };
     this.setState({ isEditing });
   };
 
@@ -584,21 +603,22 @@ class App extends Component {
     this.setState({ user });
   };
 
-  handleBlurProjectedMonthlyIncome = (event) => {
-    let income = event.target.value;
+  getFilteredIncome = (
+    income,
+    minIncome = this.state.input.income.min,
+    maxIncome = this.state.input.income.max
+  ) =>
+    income > maxIncome ? maxIncome : income < minIncome ? minIncome : income;
 
-    if (income > 1e11) income = 1e11;
+  handleUpdateProjectedMonthlyIncome = (event) => {
+    const income = this.getFilteredIncome(event.target.value);
 
+    // If input is not equal to current state, update state.
     if (
-      Math.round(income * 100) / 100 ===
+      Math.round(income * 100) / 100 !==
       this.state.user.budgets[this.state.user.currentBudgetIndex]
         .projectedMonthlyIncome
     ) {
-      // If input is equal to current state, don't update state.
-      this.clearMessage(0);
-    }
-    // Update state.
-    else {
       const user = cloneDeep(this.state.user);
       user.budgets[user.currentBudgetIndex].projectedMonthlyIncome =
         Math.round(income * 100) / 100;
@@ -607,6 +627,27 @@ class App extends Component {
       this.setMessage('projected-monthly-income-updated');
       this.clearMessage(5000);
     }
+    this.setState({ isEditing: false });
+  };
+
+  handleUpdateActualMonthlyIncome = (event) => {
+    const income = this.getFilteredIncome(event.target.value);
+
+    // If input is not equal to current state, update state.
+    if (
+      Math.round(income * 100) / 100 !==
+      this.state.user.budgets[this.state.user.currentBudgetIndex]
+        .actualMonthlyIncome
+    ) {
+      const user = cloneDeep(this.state.user);
+      user.budgets[user.currentBudgetIndex].actualMonthlyIncome =
+        Math.round(income * 100) / 100;
+
+      this.setState({ user });
+      this.setMessage('actual-monthly-income-updated');
+      this.clearMessage(5000);
+    }
+    this.setState({ isEditing: false });
   };
 
   handleFocusOutProjectedMonthlyIncome = (text) => {
@@ -737,10 +778,9 @@ class App extends Component {
 
   // Update display name if display name input is different from current
   // display name and display name input is not an empty string.
-  handleDisplayNameChange = () => {
+  handleUpdateDisplayName = () => {
     if (
-      this.state.user.displayName.value !==
-        this.state.input.displayName.value &&
+      this.state.input.displayName.value !== this.state.user.displayName &&
       this.state.input.displayName.value !== ''
     ) {
       // Clear input and update user display name.
@@ -1011,22 +1051,23 @@ class App extends Component {
                 <Budget
                   budget={user.budgets[user.currentBudgetIndex]}
                   currentBudgetIndex={user.currentBudgetIndex}
-                  isEditingBudgetName={isEditing.budgetName}
+                  formattedBudget={formattedBudget}
+                  formattedEntries={formattedEntries}
                   editBudgetName={this.editBudgetName}
-                  handleBudgetNameChange={this.handleBudgetNameChange}
-                  handleFocusProjectedMonthlyIncome={
-                    this.handleFocusProjectedMonthlyIncome
+                  editProjectedMonthlyIncome={this.editProjectedMonthlyIncome}
+                  editActualMonthlyIncome={this.editActualMonthlyIncome}
+                  isEditingBudgetName={isEditing.budgetName}
+                  isEditingProjectedMonthlyIncome={
+                    isEditing.projectedMonthlyIncome
                   }
-                  handleFocusActualMonthlyIncome={
-                    this.handleFocusActualMonthlyIncome
+                  isEditingActualMonthlyIncome={isEditing.actualMonthlyIncome}
+                  handleUpdateBudgetName={this.handleUpdateBudgetName}
+                  handleUpdateProjectedMonthlyIncome={
+                    this.handleUpdateProjectedMonthlyIncome
                   }
-                  handleFocusOutProjectedMonthlyIncome={
-                    this.handleFocusOutProjectedMonthlyIncome
+                  handleUpdateActualMonthlyIncome={
+                    this.handleUpdateActualMonthlyIncome
                   }
-                  handleFocusOutActualMonthlyIncome={
-                    this.handleFocusOutActualMonthlyIncome
-                  }
-                  inputEntryCategory={input.entryCategory}
                   handleEntryCategoryInputChange={
                     this.handleEntryCategoryInputChange
                   }
@@ -1043,10 +1084,10 @@ class App extends Component {
                   }
                   handleDeleteBudget={this.handleDeleteBudget}
                   clickedDeleteBudget={user.clickedDeleteBudget}
-                  formattedBudget={formattedBudget}
-                  formattedEntries={formattedEntries}
+                  input={input}
                   setMessage={this.setMessage}
                   clearMessage={this.clearMessage}
+                  messageCode={message.code}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -1063,7 +1104,7 @@ class App extends Component {
                   handleDisplayNameInputChange={
                     this.handleDisplayNameInputChange
                   }
-                  handleDisplayNameChange={this.handleDisplayNameChange}
+                  handleUpdateDisplayName={this.handleUpdateDisplayName}
                   handleKeyDown={this.handleKeyDown}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}

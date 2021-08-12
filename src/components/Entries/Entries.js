@@ -25,10 +25,9 @@ const Entries = ({
   budget,
   currentBudgetIndex,
   formattedEntries,
-  isEditingBudgetName,
   editBudgetName,
-  handleBudgetNameChange,
-  inputEntryCategory,
+  isEditingBudgetName,
+  handleUpdateBudgetName,
   handleEntryCategoryInputChange,
   handleKeyDown,
   handleAddEntry,
@@ -41,19 +40,22 @@ const Entries = ({
   handleUserClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
+  input,
   setMessage,
   clearMessage,
+  messageCode,
 }) => {
   return (
     <>
       <div className="relative mb5">
         {isEditingBudgetName ? (
           <input
-            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc"
+            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc pv0 ph1 lh-title"
             onFocus={(event) => (event.target.value = budget.name)}
-            onBlur={handleBudgetNameChange}
+            onBlur={handleUpdateBudgetName}
             type="text"
-            maxLength="50"
+            maxLength={input.budgetName.maxLength}
+            placeholder="Budget name"
             autoFocus={true}
           />
         ) : (
@@ -66,7 +68,9 @@ const Entries = ({
                 handleSaveBudget(currentBudgetIndex)
               )}
               onMouseEnter={() => setMessage('save-budget')}
-              onMouseLeave={() => clearMessage(0)}
+              onMouseLeave={() => {
+                if (messageCode === 'save-budget') clearMessage(0);
+              }}
               style={{
                 top: '50%',
                 left: '0',
@@ -84,7 +88,9 @@ const Entries = ({
                 handleCreateBudgetCopy(currentBudgetIndex)
               )}
               onMouseEnter={() => setMessage('copy-budget')}
-              onMouseLeave={() => clearMessage(0)}
+              onMouseLeave={() => {
+                if (messageCode === 'copy-budget') clearMessage(0);
+              }}
               style={{
                 top: '50%',
                 left: '6rem',
@@ -95,11 +101,8 @@ const Entries = ({
               copy_all
             </span>
             <label
-              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
-              style={{ padding: '1px 0' }}
+              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break lh-title"
               onClick={editBudgetName}
-              tabIndex="0"
-              onKeyDown={handleKeyDown(editBudgetName)}
             >
               {budget.name}
             </label>
@@ -109,7 +112,9 @@ const Entries = ({
               tabIndex="0"
               onKeyDown={handleKeyDown(editBudgetName)}
               onMouseEnter={() => setMessage('edit-budget-name')}
-              onMouseLeave={() => clearMessage(0)}
+              onMouseLeave={() => {
+                if (messageCode === 'edit-budget-name') clearMessage(0);
+              }}
               style={{
                 top: '50%',
                 right: '0',
@@ -132,7 +137,7 @@ const Entries = ({
             type="text"
             id="name"
             name="name"
-            value={inputEntryCategory}
+            value={input.entryCategory.value}
             required
           />
           <span className="floating-label">Category of entry</span>

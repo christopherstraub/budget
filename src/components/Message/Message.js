@@ -1,20 +1,22 @@
 import React from 'react';
 
-// VALID MESSAGE CODES
-// App:
-// 'user-logged-in'
-// Entries:
-// 'edit-budget-name', 'budget-name-changed',
-// 'projected-cost-invalid', 'actual-cost-invalid',
-// 'save-budget', 'budget-saved', 'copy-budget', 'budget-copy-created'
-// Summary:
-// 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
-// 'projected-monthly-income-updated', 'actual-monthly-income-updated'
-// Budgets:
-// 'budget-deleted', 'budget-created', 'budgets-saved',
-// 'budgets-created-many', 'budgets-max-allowed'
-// Profile:
-// 'display-name-changed'
+/*  
+Valid message codes:
+App:
+'user-logged-in'
+Entries:
+'edit-budget-name', 'budget-name-changed',
+'projected-cost-invalid', 'actual-cost-invalid',
+'save-budget', 'budget-saved', 'copy-budget', 'budget-copy-created'
+Summary:
+'edit-projected-monthly-income', 'projected-monthly-income-updated',
+'edit-actual-monthly-income', 'actual-monthly-income-updated'
+Budgets:
+'budget-deleted', 'budget-created', 'budgets-saved',
+'budgets-created-many', 'budgets-max-allowed'
+Profile:
+'display-name-changed'
+*/
 
 const getMessage = (code, user, formattedBudget) => {
   switch (code) {
@@ -24,15 +26,17 @@ const getMessage = (code, user, formattedBudget) => {
       return 'Edit budget name';
     case 'budget-name-changed':
       return 'Changed budget name.';
-    case 'projected-cost-invalid':
-    case 'actual-cost-invalid':
-    case 'projected-monthly-income-invalid':
-    case 'actual-monthly-income-invalid':
-      return `Invalid input.`;
+    case 'edit-projected-monthly-income':
+      return 'Edit projected monthly income';
     case 'projected-monthly-income-updated':
       return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
+    case 'edit-actual-monthly-income':
+      return 'Edit actual monthly income';
     case 'actual-monthly-income-updated':
       return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
+    case 'projected-cost-invalid':
+    case 'actual-cost-invalid':
+      return `Invalid input.`;
     case 'save-budget':
       return 'Save budget';
     case 'budget-saved':
