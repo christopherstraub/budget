@@ -121,7 +121,7 @@ const Entries = ({
         )}
       </div>
 
-      <div className="flex">
+      <div className="flex mb4">
         <div className="relative flex-auto mr3">
           <input
             onChange={handleEntryCategoryInputChange}
@@ -144,103 +144,115 @@ const Entries = ({
         </button>
       </div>
 
-      <div className="table-responsive">
-        <table className="bg-white mt4 table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <th
-                scope="col"
-                width="55%"
-                className="v-mid clr-dark fs-subheading fw4 tc"
-              >
-                Entries ({budget.entries.length})
-              </th>
-              <th
-                scope="col"
-                width="15%"
-                className="v-mid clr-dark fs-subheading fw4 tr"
-              >
-                Projected Cost
-              </th>
-              <th
-                scope="col"
-                width="15%"
-                className="v-mid clr-dark fs-subheading fw4 tr"
-              >
-                Actual Cost
-              </th>
-              <th
-                scope="col"
-                width="15%"
-                className="v-mid clr-dark fs-subheading fw4 tr"
-              >
-                Difference
-              </th>
+      <h2 className="clr-light fs-subtitle fw3 mb3">
+        Entries ({budget.entries.length})
+      </h2>
+
+      <table className="bg--light w-100 br3">
+        <thead>
+          <tr>
+            <th
+              className="clr-dark fs-subheading fw4 tc"
+              scope="col"
+              width="55%"
+            >
+              Category
+            </th>
+            <th
+              scope="col"
+              width="15%"
+              className="clr-dark fs-subheading fw4 tr"
+            >
+              Projected Cost
+            </th>
+            <th
+              scope="col"
+              width="15%"
+              className="clr-dark fs-subheading fw4 tr"
+            >
+              Actual Cost
+            </th>
+            <th
+              scope="col"
+              width="15%"
+              className="clr-dark fs-subheading fw4 tr"
+            >
+              Difference
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {formattedEntries.map((entry, index) => (
+            <tr key={entry.id}>
+              <td className="flex text-break relative items-center">
+                <span
+                  className="material-icons absolute user-select-none pointer clr-dark-accent hover-opacity"
+                  onClick={() => handleDeleteEntry(entry.id)}
+                  tabIndex="0"
+                  onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
+                  onMouseMove={(event) =>
+                    setTooltip('custom', event, `Delete "${entry.category}"`)
+                  }
+                  onMouseOver={(event) =>
+                    setTooltip('custom', event, `Delete "${entry.category}"`)
+                  }
+                  onMouseLeave={clearTooltip}
+                  onMouseUp={clearTooltip}
+                >
+                  delete
+                </span>
+                <div className="flex-grow-1 tc">
+                  <EditableLabel
+                    key={entry.id}
+                    text={entry.category}
+                    labelClassName="clr-dark fs-body text-break pointer"
+                    inputClassName="ph2 br3 tc"
+                    inputHeight="1.5em"
+                    inputMaxLength={50}
+                    inputPlaceHolder="Category"
+                    onFocusOut={handleFocusOutEntryCategory(entry.id)}
+                  />
+                </div>
+              </td>
+              <td className="clr-dark fs-body text-break tr">
+                <EditableLabel
+                  text={entry.projectedCost}
+                  labelClassName={`clr-dark fs-body text-break pointer w-100 ${
+                    budget.entries[index].projectedCost === 0
+                      ? 'empty-number-field'
+                      : ''
+                  }`}
+                  inputClassName="tr ph2 br3 w-100"
+                  inputHeight="1.5em"
+                  inputMaxLength={50}
+                  inputPlaceHolder="Projected cost"
+                  onFocusOut={(text) =>
+                    handleFocusOutProjectedCost(text, index)
+                  }
+                />
+              </td>
+              <td className="clr-dark fs-body text-break tr">
+                <EditableLabel
+                  text={entry.actualCost}
+                  labelClassName={`clr-dark fs-body text-break pointer w-100 ${
+                    budget.entries[index].actualCost === 0
+                      ? 'empty-number-field'
+                      : ''
+                  }`}
+                  inputClassName="tr ph2 br3 w-100"
+                  inputHeight="1.5em"
+                  inputMaxLength={50}
+                  inputPlaceHolder="Actual cost"
+                  onFocusOut={(text) => handleFocusOutActualCost(text, index)}
+                />
+              </td>
+              <td className="clr-dark fs-body text-break tr">
+                {entry.difference}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {formattedEntries.map((entry, index) => (
-              <tr key={entry.id}>
-                <td className="flex text-break relative items-center">
-                  <span
-                    onClick={() => handleDeleteEntry(entry.id)}
-                    className="material-icons absolute user-select-none pointer clr-dark-accent hover-opacity"
-                  >
-                    delete
-                  </span>
-                  <div className="flex-grow-1 tc">
-                    <EditableLabel
-                      key={entry.id}
-                      text={entry.category}
-                      labelClassName="clr-dark fs-body text-break pointer"
-                      inputClassName="ph2 br3 tc"
-                      inputHeight="1.5em"
-                      inputMaxLength={50}
-                      inputPlaceHolder="Category"
-                      onFocusOut={handleFocusOutEntryCategory(entry.id)}
-                    />
-                  </div>
-                </td>
-                <td className="clr-dark fs-body text-break tr">
-                  <EditableLabel
-                    text={entry.projectedCost}
-                    labelClassName={`clr-dark fs-body text-break pointer w-100 ${
-                      budget.entries[index].projectedCost === 0
-                        ? 'empty-number-field'
-                        : ''
-                    }`}
-                    inputClassName="tr ph2 br3 w-100"
-                    inputHeight="1.5em"
-                    inputMaxLength={50}
-                    inputPlaceHolder="Projected cost"
-                    onFocusOut={(text) =>
-                      handleFocusOutProjectedCost(text, index)
-                    }
-                  />
-                </td>
-                <td className="clr-dark fs-body text-break tr">
-                  <EditableLabel
-                    text={entry.actualCost}
-                    labelClassName={`clr-dark fs-body text-break pointer w-100 ${
-                      budget.entries[index].actualCost === 0
-                        ? 'empty-number-field'
-                        : ''
-                    }`}
-                    inputClassName="tr ph2 br3 w-100"
-                    inputHeight="1.5em"
-                    inputMaxLength={50}
-                    inputPlaceHolder="Actual cost"
-                    onFocusOut={(text) => handleFocusOutActualCost(text, index)}
-                  />
-                </td>
-                <td className="clr-dark fs-body text-break tr">
-                  {entry.difference}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
 
       <div className="flex justify-end items-end mt4">
         <time

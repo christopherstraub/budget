@@ -2,14 +2,17 @@ import React from 'react';
 
 /*  
 Valid tooltip codes:
+'custom' returns tooltip.custom.
 Entries:
 'save-budget', 'copy-budget', 'edit-budget-name'
 Summary:
 'edit-projected-monthly-income', 'edit-actual-monthly-income'
 */
 
-const getTooltip = (code) => {
+const getTooltip = (code, custom) => {
   switch (code) {
+    case 'custom':
+      return custom;
     case 'save-budget':
       return 'Save budget';
     case 'copy-budget':
@@ -40,7 +43,7 @@ const Tooltip = ({ tooltip, mousePosition }) => (
       width: 'fit-content',
     }}
   >
-    {getTooltip(tooltip.code)}
+    {getTooltip(tooltip.code, tooltip.custom)}
   </span>
 );
 

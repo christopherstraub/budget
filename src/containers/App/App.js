@@ -39,7 +39,7 @@ Valid landing message codes:
 const initialState = {
   route: 'signup',
   message: { code: null, show: false },
-  tooltip: { code: null, show: false, showToLeft: null },
+  tooltip: { code: null, show: false, showToLeft: null, custom: null },
   mousePosition: { x: null, y: null },
   landingMessageCode: null,
   input: {
@@ -253,12 +253,13 @@ class App extends Component {
     }, milliseconds);
   };
 
-  setTooltip = (code, event) => {
+  setTooltip = (code, event, custom) => {
     const tooltip = {
       ...this.state.tooltip,
       code,
       show: true,
       showToLeft: event.clientX / window.innerWidth > 0.5,
+      custom: custom ?? null,
     };
     const mousePosition = {
       ...this.state.mousePosition,
@@ -1168,6 +1169,7 @@ class App extends Component {
                     ...this.state.tooltip,
                     code: null,
                     showToLeft: null,
+                    custom: null,
                   };
                   this.setState({ tooltip });
                 }}
