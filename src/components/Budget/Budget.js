@@ -31,9 +31,8 @@ const Budget = ({
   handleDeleteBudget,
   clickedDeleteBudget,
   input,
-  setMessage,
-  clearMessage,
-  messageCode,
+  setTooltip,
+  clearTooltip,
 }) => (
   <div className="Budget flex justify-center items-start pa4">
     <WindowBox classlist="flex-grow-1 mh3">
@@ -57,9 +56,8 @@ const Budget = ({
         handleDeleteBudget={handleDeleteBudget}
         clickedDeleteBudget={clickedDeleteBudget}
         input={input}
-        setMessage={setMessage}
-        clearMessage={clearMessage}
-        messageCode={messageCode}
+        setTooltip={setTooltip}
+        clearTooltip={clearTooltip}
       />
     </WindowBox>
 
@@ -75,9 +73,8 @@ const Budget = ({
         handleUpdateActualMonthlyIncome={handleUpdateActualMonthlyIncome}
         handleKeyDown={handleKeyDown}
         input={input}
-        setMessage={setMessage}
-        clearMessage={clearMessage}
-        messageCode={messageCode}
+        setTooltip={setTooltip}
+        clearTooltip={clearTooltip}
       />
     </WindowBox>
   </div>

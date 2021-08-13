@@ -41,9 +41,8 @@ const Entries = ({
   handleDeleteBudget,
   clickedDeleteBudget,
   input,
-  setMessage,
-  clearMessage,
-  messageCode,
+  setTooltip,
+  clearTooltip,
 }) => {
   return (
     <>
@@ -67,10 +66,8 @@ const Entries = ({
               onKeyDown={handleKeyDown(() =>
                 handleSaveBudget(currentBudgetIndex)
               )}
-              onMouseEnter={() => setMessage('save-budget')}
-              onMouseLeave={() => {
-                if (messageCode === 'save-budget') clearMessage(0);
-              }}
+              onMouseMove={(event) => setTooltip('save-budget', event)}
+              onMouseLeave={clearTooltip}
               style={{
                 top: '50%',
                 left: '0',
@@ -87,10 +84,8 @@ const Entries = ({
               onKeyDown={handleKeyDown(() =>
                 handleCreateBudgetCopy(currentBudgetIndex)
               )}
-              onMouseEnter={() => setMessage('copy-budget')}
-              onMouseLeave={() => {
-                if (messageCode === 'copy-budget') clearMessage(0);
-              }}
+              onMouseMove={(event) => setTooltip('copy-budget', event)}
+              onMouseLeave={clearTooltip}
               style={{
                 top: '50%',
                 left: '6rem',
@@ -111,10 +106,8 @@ const Entries = ({
               onClick={editBudgetName}
               tabIndex="0"
               onKeyDown={handleKeyDown(editBudgetName)}
-              onMouseEnter={() => setMessage('edit-budget-name')}
-              onMouseLeave={() => {
-                if (messageCode === 'edit-budget-name') clearMessage(0);
-              }}
+              onMouseMove={(event) => setTooltip('edit-budget-name', event)}
+              onMouseLeave={clearTooltip}
               style={{
                 top: '50%',
                 right: '0',

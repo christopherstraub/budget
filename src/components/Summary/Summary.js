@@ -17,9 +17,8 @@ const Summary = ({
   handleUpdateActualMonthlyIncome,
   handleKeyDown,
   input,
-  setMessage,
-  clearMessage,
-  messageCode,
+  setTooltip,
+  clearTooltip,
 }) => {
   return (
     <>
@@ -54,15 +53,16 @@ const Summary = ({
           <h2 className="clr-light-accent fs-subheading fw3 mb0 flex justify-end items-center">
             Projected Monthly Income
             <span
-              className="material-icons user-select-none pointer clr-accent-light hover-opacity ml2"
+              className={`material-icons user-select-none pointer clr-accent-light hover-opacity ml2
+              ${isEditingProjectedMonthlyIncome ? 'visibility-hidden' : ''}
+              `}
               onClick={editProjectedMonthlyIncome}
               tabIndex="0"
               onKeyDown={handleKeyDown(editProjectedMonthlyIncome)}
-              onMouseEnter={() => setMessage('edit-projected-monthly-income')}
-              onMouseLeave={() => {
-                if (messageCode === 'edit-projected-monthly-income')
-                  clearMessage(0);
-              }}
+              onMouseMove={(event) =>
+                setTooltip('edit-projected-monthly-income', event)
+              }
+              onMouseLeave={clearTooltip}
             >
               edit
             </span>
@@ -95,15 +95,16 @@ const Summary = ({
           <h2 className="clr-light-accent fs-subheading fw3 mb0 flex justify-end items-center">
             Actual Monthly Income
             <span
-              className="material-icons user-select-none pointer clr-accent-light hover-opacity ml2"
+              className={`material-icons user-select-none pointer clr-accent-light hover-opacity ml2
+              ${isEditingActualMonthlyIncome ? 'visibility-hidden' : ''}
+              `}
               onClick={editActualMonthlyIncome}
               tabIndex="0"
               onKeyDown={handleKeyDown(editActualMonthlyIncome)}
-              onMouseEnter={() => setMessage('edit-actual-monthly-income')}
-              onMouseLeave={() => {
-                if (messageCode === 'edit-actual-monthly-income')
-                  clearMessage(0);
-              }}
+              onMouseMove={(event) =>
+                setTooltip('edit-actual-monthly-income', event)
+              }
+              onMouseLeave={clearTooltip}
             >
               edit
             </span>

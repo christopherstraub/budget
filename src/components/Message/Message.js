@@ -5,12 +5,11 @@ Valid message codes:
 App:
 'user-logged-in'
 Entries:
-'edit-budget-name', 'budget-name-changed',
-'projected-cost-invalid', 'actual-cost-invalid',
-'save-budget', 'budget-saved', 'copy-budget', 'budget-copy-created'
+'budget-name-changed',
+'projected-cost-invalid', 'actual-cost-invalid', 'budget-saved',
+'budget-copy-created'
 Summary:
-'edit-projected-monthly-income', 'projected-monthly-income-updated',
-'edit-actual-monthly-income', 'actual-monthly-income-updated'
+'projected-monthly-income-updated', 'actual-monthly-income-updated'
 Budgets:
 'budget-deleted', 'budget-created', 'budgets-saved',
 'budgets-created-many', 'budgets-max-allowed'
@@ -22,27 +21,17 @@ const getMessage = (code, user, formattedBudget) => {
   switch (code) {
     case 'user-logged-in':
       return `Welcome, ${user.displayName}.`;
-    case 'edit-budget-name':
-      return 'Edit budget name';
     case 'budget-name-changed':
       return 'Changed budget name.';
-    case 'edit-projected-monthly-income':
-      return 'Edit projected monthly income';
     case 'projected-monthly-income-updated':
       return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
-    case 'edit-actual-monthly-income':
-      return 'Edit actual monthly income';
     case 'actual-monthly-income-updated':
       return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
     case 'projected-cost-invalid':
     case 'actual-cost-invalid':
       return `Invalid input.`;
-    case 'save-budget':
-      return 'Save budget';
     case 'budget-saved':
       return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
-    case 'copy-budget':
-      return 'Create a copy of this budget';
     case 'budget-copy-created':
       return 'Created budget copy.';
     case 'budget-deleted':
@@ -69,9 +58,9 @@ const getMessage = (code, user, formattedBudget) => {
 };
 
 const Message = ({ code, user, formattedBudget }) => (
-  <h2 className="message fixed pointer-events-none clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
+  <span className="message fixed pointer-events-none clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
     {getMessage(code, user, formattedBudget)}
-  </h2>
+  </span>
 );
 
 export default Message;

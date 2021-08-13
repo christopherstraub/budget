@@ -9,6 +9,7 @@ import SavedBudgets from '../../components/SavedBudgets/SavedBudgets';
 import Profile from '../../components/Profile/Profile';
 import About from '../../components/About/About';
 import Message from '../../components/Message/Message';
+import Tooltip from '../../components/Tooltip/Tooltip';
 import PreloadedBackgrounds from '../../components/PreloadedBackgrounds/PreloadedBackgrounds';
 
 import cloneDeep from 'lodash/cloneDeep';
@@ -38,6 +39,8 @@ Valid landing message codes:
 const initialState = {
   route: 'signup',
   message: { code: null, show: false },
+  tooltip: { code: null, show: false, showToLeft: null },
+  mousePosition: { x: null, y: null },
   landingMessageCode: null,
   input: {
     displayName: { value: '', empty: false, maxLength: 50 },
@@ -232,6 +235,11 @@ class App extends Component {
     this.setBackgroundFromLocalStorage();
   }
 
+  setMessage = (code) => {
+    const message = { ...this.state.message, code, show: true };
+    this.setState({ message });
+  };
+
   /**
    *
    * @param {number} milliseconds Number of milliseconds to clear message after.
@@ -245,9 +253,24 @@ class App extends Component {
     }, milliseconds);
   };
 
-  setMessage = (code) => {
-    const message = { ...this.state.message, code, show: true };
-    this.setState({ message });
+  setTooltip = (code, event) => {
+    const tooltip = {
+      ...this.state.tooltip,
+      code,
+      show: true,
+      showToLeft: event.clientX / window.innerWidth > 0.5,
+    };
+    const mousePosition = {
+      ...this.state.mousePosition,
+      x: event.clientX,
+      y: event.clientY,
+    };
+    this.setState({ tooltip, mousePosition });
+  };
+
+  clearTooltip = () => {
+    const tooltip = { ...this.state.tooltip, show: false };
+    this.setState({ tooltip });
   };
 
   // Sets background from localStorage if it exists there,
@@ -570,7 +593,7 @@ class App extends Component {
   };
 
   editBudgetName = () => {
-    if (this.state.message.code === 'edit-budget-name') this.clearMessage(0);
+    if (this.state.tooltip.code === 'edit-budget-name') this.clearTooltip();
     const isEditing = { ...this.state.isEditing, budgetName: true };
     this.setState({ isEditing });
   };
@@ -989,6 +1012,8 @@ class App extends Component {
     const {
       route,
       message,
+      tooltip,
+      mousePosition,
       landingMessageCode,
       input,
       isEditing,
@@ -1085,9 +1110,8 @@ class App extends Component {
                   handleDeleteBudget={this.handleDeleteBudget}
                   clickedDeleteBudget={user.clickedDeleteBudget}
                   input={input}
-                  setMessage={this.setMessage}
-                  clearMessage={this.clearMessage}
-                  messageCode={message.code}
+                  setTooltip={this.setTooltip}
+                  clearTooltip={this.clearTooltip}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -1129,6 +1153,22 @@ class App extends Component {
                   user={user}
                   formattedBudget={formattedBudget}
                 />
+              </CSSTransition>
+              <CSSTransition
+                in={tooltip.show}
+                classNames="tooltip"
+                timeout={1000}
+                unmountOnExit
+                onExited={() => {
+                  const tooltip = {
+                    ...this.state.tooltip,
+                    code: null,
+                    showToLeft: null,
+                  };
+                  this.setState({ tooltip });
+                }}
+              >
+                <Tooltip tooltip={tooltip} mousePosition={mousePosition} />
               </CSSTransition>
             </div>
           </BackgroundWrapper>
