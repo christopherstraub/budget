@@ -8,6 +8,7 @@ const SavedBudgets = ({
   handleViewBudget,
   handleSaveBudgets,
   currentBudgetIndex,
+  handleKeyDown,
 }) => {
   return (
     <div className="flex justify-center pa4 tc">
@@ -36,6 +37,8 @@ const SavedBudgets = ({
                 <li
                   key={budget.id}
                   onClick={() => handleViewBudget(index)}
+                  tabIndex={0}
+                  onKeyDown={handleKeyDown(() => handleViewBudget(index))}
                   className={`clr-light fs-subtitle fw3 hover-opacity pointer text-break mv3
                   ${
                     index === currentBudgetIndex ? 'clr-accent-light fw6' : ''

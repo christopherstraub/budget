@@ -1125,6 +1125,7 @@ class App extends Component {
                   handleCreateBudget={this.handleCreateBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
+                  handleKeyDown={this.handleKeyDown}
                 />
               ) : route === 'profile' ? (
                 <Profile
