@@ -71,7 +71,7 @@ const Summary = ({
           <div className="mb5">
             {isEditingProjectedMonthlyIncome ? (
               <input
-                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1 lh-title"
+                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
                 onFocus={(event) =>
                   (event.target.value = budget.projectedMonthlyIncome)
                 }
@@ -84,7 +84,7 @@ const Summary = ({
               />
             ) : (
               <label
-                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break lh-title"
+                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break"
                 onClick={editProjectedMonthlyIncome}
               >
                 {formattedBudget.projectedMonthlyIncome}
@@ -113,7 +113,7 @@ const Summary = ({
           <div className="mb5">
             {isEditingActualMonthlyIncome ? (
               <input
-                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1 lh-title"
+                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
                 onFocus={(event) =>
                   (event.target.value = budget.actualMonthlyIncome)
                 }
@@ -126,7 +126,7 @@ const Summary = ({
               />
             ) : (
               <label
-                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break lh-title"
+                className="clr-light fs-subtitle fw3 bn w-100 pointer text-break"
                 onClick={editActualMonthlyIncome}
               >
                 {formattedBudget.actualMonthlyIncome}
