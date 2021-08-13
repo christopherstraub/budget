@@ -72,7 +72,6 @@ const Budget = ({
         handleUpdateProjectedMonthlyIncome={handleUpdateProjectedMonthlyIncome}
         handleUpdateActualMonthlyIncome={handleUpdateActualMonthlyIncome}
         handleKeyDown={handleKeyDown}
-        input={input}
         setTooltip={setTooltip}
         clearTooltip={clearTooltip}
       />

@@ -95,12 +95,12 @@ const Entries = ({
             >
               copy_all
             </span>
-            <label
-              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break"
+            <h1
+              className="clr-light fs-heading fw3 bn w-100 tc pointer text-break lh-copy"
               onClick={editBudgetName}
             >
               {budget.name}
-            </label>
+            </h1>
             <span
               className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
               onClick={editBudgetName}

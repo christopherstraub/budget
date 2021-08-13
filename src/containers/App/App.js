@@ -48,7 +48,7 @@ const initialState = {
     password: { value: '', empty: false, minLength: 6, maxLength: 60 },
     budgetName: { maxLength: 50 },
     entryCategory: { value: '', maxLength: 50 },
-    income: { min: -1e9 + 0.01, max: 1e9 - 0.01 },
+    income: { min: null, max: null },
   },
   isEditing: {
     budgetName: false,
@@ -626,6 +626,10 @@ class App extends Component {
     this.setState({ user });
   };
 
+  /*
+  GetFilteredIncome sets lower and upper limits for income input.
+  Not currently in use.
+  */
   getFilteredIncome = (
     income,
     minIncome = this.state.input.income.min,
@@ -634,7 +638,7 @@ class App extends Component {
     income > maxIncome ? maxIncome : income < minIncome ? minIncome : income;
 
   handleUpdateProjectedMonthlyIncome = (event) => {
-    const income = this.getFilteredIncome(event.target.value);
+    const income = event.target.value;
 
     // If input is not equal to current state, update state.
     if (
@@ -654,7 +658,7 @@ class App extends Component {
   };
 
   handleUpdateActualMonthlyIncome = (event) => {
-    const income = this.getFilteredIncome(event.target.value);
+    const income = event.target.value;
 
     // If input is not equal to current state, update state.
     if (
