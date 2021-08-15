@@ -6,9 +6,10 @@ import Entries from '../Entries/Entries';
 
 const Budget = ({
   budget,
-  currentBudgetIndex,
   formattedBudget,
+  entries,
   formattedEntries,
+  currentBudgetIndex,
   editBudgetName,
   editProjectedMonthlyIncome,
   editActualMonthlyIncome,
@@ -18,13 +19,20 @@ const Budget = ({
   handleUpdateBudgetName,
   handleUpdateProjectedMonthlyIncome,
   handleUpdateActualMonthlyIncome,
-  handleEntryCategoryInputChange,
+  handleAddEntryInputChange,
   handleKeyDown,
   handleAddEntry,
   handleDeleteEntry,
-  handleFocusOutEntryCategory,
-  handleFocusOutProjectedCost,
-  handleFocusOutActualCost,
+  editCategory,
+  editProjectedCost,
+  editActualCost,
+  isEditingCategory,
+  isEditingProjectedCost,
+  isEditingActualCost,
+  isEditingEntryId,
+  handleUpdateCategory,
+  handleUpdateProjectedCost,
+  handleUpdateActualCost,
   handleSaveBudget,
   handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
@@ -38,18 +46,26 @@ const Budget = ({
     <WindowBox classlist="flex-grow-1 mh3">
       <Entries
         budget={budget}
-        currentBudgetIndex={currentBudgetIndex}
+        entries={entries}
         formattedEntries={formattedEntries}
+        currentBudgetIndex={currentBudgetIndex}
         editBudgetName={editBudgetName}
         isEditingBudgetName={isEditingBudgetName}
         handleUpdateBudgetName={handleUpdateBudgetName}
-        handleEntryCategoryInputChange={handleEntryCategoryInputChange}
+        handleAddEntryInputChange={handleAddEntryInputChange}
         handleKeyDown={handleKeyDown}
         handleAddEntry={handleAddEntry}
         handleDeleteEntry={handleDeleteEntry}
-        handleFocusOutEntryCategory={handleFocusOutEntryCategory}
-        handleFocusOutProjectedCost={handleFocusOutProjectedCost}
-        handleFocusOutActualCost={handleFocusOutActualCost}
+        editCategory={editCategory}
+        editProjectedCost={editProjectedCost}
+        editActualCost={editActualCost}
+        isEditingCategory={isEditingCategory}
+        isEditingProjectedCost={isEditingProjectedCost}
+        isEditingActualCost={isEditingActualCost}
+        isEditingEntryId={isEditingEntryId}
+        handleUpdateCategory={handleUpdateCategory}
+        handleUpdateProjectedCost={handleUpdateProjectedCost}
+        handleUpdateActualCost={handleUpdateActualCost}
         handleSaveBudget={handleSaveBudget}
         handleCreateBudgetCopy={handleCreateBudgetCopy}
         handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}

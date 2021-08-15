@@ -1,7 +1,5 @@
 import React from 'react';
 
-import EditableLabel from 'react-inline-editing';
-
 const getLastSavedTimeString = (lastSaved) => {
   return !lastSaved
     ? 'unsaved'
@@ -23,18 +21,26 @@ const getLastSavedTimeString = (lastSaved) => {
 
 const Entries = ({
   budget,
-  currentBudgetIndex,
+  entries,
   formattedEntries,
+  currentBudgetIndex,
   editBudgetName,
   isEditingBudgetName,
   handleUpdateBudgetName,
-  handleEntryCategoryInputChange,
+  handleAddEntryInputChange,
   handleKeyDown,
   handleAddEntry,
   handleDeleteEntry,
-  handleFocusOutEntryCategory,
-  handleFocusOutProjectedCost,
-  handleFocusOutActualCost,
+  editCategory,
+  editProjectedCost,
+  editActualCost,
+  isEditingCategory,
+  isEditingProjectedCost,
+  isEditingActualCost,
+  isEditingEntryId,
+  handleUpdateCategory,
+  handleUpdateProjectedCost,
+  handleUpdateActualCost,
   handleSaveBudget,
   handleCreateBudgetCopy,
   handleUserClickedDeleteBudget,
@@ -61,11 +67,9 @@ const Entries = ({
           <div style={{ padding: '0 12rem' }}>
             <span
               className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr4"
-              onClick={() => handleSaveBudget(currentBudgetIndex)}
+              onClick={handleSaveBudget}
               tabIndex="0"
-              onKeyDown={handleKeyDown(() =>
-                handleSaveBudget(currentBudgetIndex)
-              )}
+              onKeyDown={handleKeyDown(handleSaveBudget)}
               onMouseMove={(event) => setTooltip('save-budget', event)}
               onMouseLeave={clearTooltip}
               style={{
@@ -124,13 +128,12 @@ const Entries = ({
       <div className="flex mb4">
         <div className="relative flex-auto mr3">
           <input
-            onChange={handleEntryCategoryInputChange}
+            onChange={handleAddEntryInputChange}
             onKeyDown={handleKeyDown(handleAddEntry)}
             className="input br3 pt4 ph3 pb2 w-100"
             type="text"
-            id="name"
-            name="name"
-            value={input.entryCategory.value}
+            maxLength={input.addEntry.maxLength}
+            value={input.addEntry.value}
             required
           />
           <span className="floating-label">Category of entry</span>
@@ -148,111 +151,108 @@ const Entries = ({
         Entries ({budget.entries.length})
       </h2>
 
-      <table className="bg--light w-100 br3">
-        <thead>
-          <tr>
-            <th
-              className="clr-dark fs-subheading fw4 tc"
-              scope="col"
-              width="55%"
+      <div className="bg--light border-clr-light-accent bt">
+        <div className="grid-entry border-clr-light-accent br bb bl">
+          <span></span>
+          <span className="clr-dark fs-subheading fw4 tc ph1">Category</span>
+          <span className="clr-dark fs-subheading fw4 tr ph1">
+            Projected Cost
+          </span>
+          <span className="clr-dark fs-subheading fw4 tr ph1">Actual Cost</span>
+          <span className="clr-dark fs-subheading fw4 tr ph1">Difference</span>
+        </div>
+
+        {formattedEntries.map((entry, index) => (
+          <div
+            key={entry.id}
+            className="grid-entry border-clr-light-accent br bb bl"
+          >
+            <span
+              className="material-icons clr-dark-accent user-select-none pointer hover-opacity tc"
+              onClick={() => handleDeleteEntry(entry.id)}
+              tabIndex="0"
+              onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
+              onMouseMove={(event) =>
+                setTooltip('custom', event, `Delete "${entry.category}"`)
+              }
+              onMouseOver={(event) =>
+                setTooltip('custom', event, `Delete "${entry.category}"`)
+              }
+              onMouseLeave={clearTooltip}
+              onMouseUp={clearTooltip}
             >
-              Category
-            </th>
-            <th
-              scope="col"
-              width="15%"
-              className="clr-dark fs-subheading fw4 tr"
-            >
-              Projected Cost
-            </th>
-            <th
-              scope="col"
-              width="15%"
-              className="clr-dark fs-subheading fw4 tr"
-            >
-              Actual Cost
-            </th>
-            <th
-              scope="col"
-              width="15%"
-              className="clr-dark fs-subheading fw4 tr"
-            >
-              Difference
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {formattedEntries.map((entry, index) => (
-            <tr key={entry.id}>
-              <td className="flex text-break relative items-center">
-                <span
-                  className="material-icons absolute user-select-none pointer clr-dark-accent hover-opacity"
-                  onClick={() => handleDeleteEntry(entry.id)}
-                  tabIndex="0"
-                  onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
-                  onMouseMove={(event) =>
-                    setTooltip('custom', event, `Delete "${entry.category}"`)
-                  }
-                  onMouseOver={(event) =>
-                    setTooltip('custom', event, `Delete "${entry.category}"`)
-                  }
-                  onMouseLeave={clearTooltip}
-                  onMouseUp={clearTooltip}
-                >
-                  delete
-                </span>
-                <div className="flex-grow-1 tc">
-                  <EditableLabel
-                    key={entry.id}
-                    text={entry.category}
-                    labelClassName="clr-dark fs-body text-break pointer"
-                    inputClassName="ph2 br3 tc"
-                    inputHeight="1.5em"
-                    inputMaxLength={50}
-                    inputPlaceHolder="Category"
-                    onFocusOut={handleFocusOutEntryCategory(entry.id)}
-                  />
-                </div>
-              </td>
-              <td className="clr-dark fs-body text-break tr">
-                <EditableLabel
-                  text={entry.projectedCost}
-                  labelClassName={`clr-dark fs-body text-break pointer w-100 ${
-                    budget.entries[index].projectedCost === 0
-                      ? 'empty-number-field'
-                      : ''
-                  }`}
-                  inputClassName="tr ph2 br3 w-100"
-                  inputHeight="1.5em"
-                  inputMaxLength={50}
-                  inputPlaceHolder="Projected cost"
-                  onFocusOut={(text) =>
-                    handleFocusOutProjectedCost(text, index)
-                  }
-                />
-              </td>
-              <td className="clr-dark fs-body text-break tr">
-                <EditableLabel
-                  text={entry.actualCost}
-                  labelClassName={`clr-dark fs-body text-break pointer w-100 ${
-                    budget.entries[index].actualCost === 0
-                      ? 'empty-number-field'
-                      : ''
-                  }`}
-                  inputClassName="tr ph2 br3 w-100"
-                  inputHeight="1.5em"
-                  inputMaxLength={50}
-                  inputPlaceHolder="Actual cost"
-                  onFocusOut={(text) => handleFocusOutActualCost(text, index)}
-                />
-              </td>
-              <td className="clr-dark fs-body text-break tr">
-                {entry.difference}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              delete
+            </span>
+            {isEditingCategory && isEditingEntryId === entry.id ? (
+              <input
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
+                onFocus={(event) => (event.target.value = entry.category)}
+                onBlur={(event) => handleUpdateCategory(entry.id, event)}
+                type="text"
+                maxLength={input.category.maxLength}
+                placeholder="Category"
+                autoFocus={true}
+              />
+            ) : (
+              <span
+                className="clr-dark fs-body tc pointer ph1"
+                onClick={() => editCategory(entry.id)}
+                tabIndex="0"
+                onKeyDown={handleKeyDown(() => editCategory(entry.id))}
+              >
+                {entry.category}
+              </span>
+            )}
+            {isEditingProjectedCost && isEditingEntryId === entry.id ? (
+              <input
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
+                onFocus={(event) =>
+                  (event.target.value = entries[index].projectedCost)
+                }
+                onBlur={(event) => handleUpdateProjectedCost(entry.id, event)}
+                type="number"
+                placeholder="0"
+                step={50}
+                autoFocus={true}
+              />
+            ) : (
+              <span
+                className="clr-dark fs-body tr pointer ph1"
+                onClick={() => editProjectedCost(entry.id)}
+                tabIndex="0"
+                onKeyDown={handleKeyDown(() => editProjectedCost(entry.id))}
+              >
+                {entry.projectedCost}
+              </span>
+            )}
+            {isEditingActualCost && isEditingEntryId === entry.id ? (
+              <input
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
+                onFocus={(event) =>
+                  (event.target.value = entries[index].actualCost)
+                }
+                onBlur={(event) => handleUpdateActualCost(entry.id, event)}
+                type="number"
+                placeholder="0"
+                step={50}
+                autoFocus={true}
+              />
+            ) : (
+              <span
+                className="clr-dark fs-body tr pointer ph1"
+                onClick={() => editActualCost(entry.id)}
+                tabIndex="0"
+                onKeyDown={handleKeyDown(() => editActualCost(entry.id))}
+              >
+                {entry.actualCost}
+              </span>
+            )}
+            <span className="clr-dark fs-body tr pointer">
+              {entry.difference}
+            </span>
+          </div>
+        ))}
+      </div>
 
       <div className="flex justify-end items-end mt4">
         <time

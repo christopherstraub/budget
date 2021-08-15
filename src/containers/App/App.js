@@ -47,13 +47,17 @@ const initialState = {
     username: { value: '', empty: false, maxLength: 50 },
     password: { value: '', empty: false, minLength: 6, maxLength: 60 },
     budgetName: { maxLength: 50 },
-    entryCategory: { value: '', maxLength: 50 },
-    income: { min: null, max: null },
+    addEntry: { value: '', maxLength: 50 },
+    category: { maxLength: 50 },
   },
   isEditing: {
     budgetName: false,
     projectedMonthlyIncome: false,
     actualMonthlyIncome: false,
+    category: false,
+    projectedCost: false,
+    actualCost: false,
+    entryId: null,
   },
   user: {
     id: null,
@@ -63,6 +67,7 @@ const initialState = {
     username: null,
     joined: null,
     maxBudgets: 100,
+    maxEntries: 100,
     currentBudgetIndex: 0,
     clickedDeleteBudget: false,
     toggledExpandNav: false,
@@ -323,24 +328,21 @@ class App extends Component {
   };
 
   // Update state entry category input with user input.
-  handleEntryCategoryInputChange = (event) => {
-    const entryCategory = {
-      ...this.state.input.entryCategory,
+  handleAddEntryInputChange = (event) => {
+    const addEntry = {
+      ...this.state.input.addEntry,
       value: event.target.value,
     };
-    const input = { ...this.state.input, entryCategory };
+    const input = { ...this.state.input, addEntry };
     this.setState({ input });
   };
 
   // Create entry object.
   // If input entry category is empty, set to 'No category set'.
   getNewEntry = () => ({
-    id:
-      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[
-        this.state.user.budgets[this.state.user.currentBudgetIndex].entries
-          .length - 1
-      ]?.id + 1 || 0,
-    category: this.state.input.entryCategory.value || 'No category set',
+    id: this.state.user.budgets[this.state.user.currentBudgetIndex]
+      .entriesCreated,
+    category: this.state.input.addEntry.value || 'No category set',
     projectedCost: 0,
     actualCost: 0,
     getDifference() {
@@ -351,25 +353,31 @@ class App extends Component {
   // Event handler for add entry button.
   // Add entry and reset entry category input.
   handleAddEntry = () => {
+    if (
+      this.state.user.budgets[this.state.user.currentBudgetIndex].entries
+        .length === this.state.user.maxEntries
+    ) {
+      this.setMessage('entries-max-allowed');
+      this.clearMessage(6000);
+      return;
+    }
     const user = cloneDeep(this.state.user);
     user.budgets[user.currentBudgetIndex].entries.push(this.getNewEntry());
-    const entryCategory = {
-      ...this.state.input.entryCategory,
+    const addEntry = {
+      ...this.state.input.addEntry,
       value: '',
     };
-    const input = { ...this.state.input, entryCategory };
+    user.budgets[user.currentBudgetIndex].entriesCreated++;
+    const input = { ...this.state.input, addEntry };
     this.setState({ user, input });
   };
 
-  /**
-   *
-   * @param {number} index The index of the entry to be deleted.
-   */
-  handleDeleteEntry = (index) => {
+  handleDeleteEntry = (entryId) => {
     const user = cloneDeep(this.state.user);
     const entries = user.budgets[user.currentBudgetIndex].entries;
-    const filteredEntries = entries.filter((entry) => entry.id !== index);
+    const filteredEntries = entries.filter((entry) => entry.id !== entryId);
     user.budgets[user.currentBudgetIndex].entries = filteredEntries;
+    user.budgets[user.currentBudgetIndex].entriesDeleted++;
     this.setState({ user });
   };
 
@@ -431,6 +439,8 @@ class App extends Component {
     id: this.state.user.budgetsCreated,
     name: this.getNewBudgetName(),
     lastSaved: false,
+    entriesCreated: defaultEntries.length,
+    entriesDeleted: 0,
     projectedMonthlyIncome: 0,
     actualMonthlyIncome: 0,
     getProjectedBalance() {
@@ -561,20 +571,44 @@ class App extends Component {
     this.clearMessage();
   };
 
-  /**
-   *
-   * @param {number} index The index of the budget to be saved.
-   */
-  handleSaveBudget = (index) => {
+  handleSaveBudget = () => {
     if (!this.state.user.isGuest) {
       const user = cloneDeep(this.state.user);
-      user.budgets = user.budgets.map((budget, i) =>
-        i === index ? { ...budget, lastSaved: new Date() } : budget
+      user.budgets = user.budgets.map((budget, index) =>
+        index === user.currentBudgetIndex
+          ? { ...budget, lastSaved: new Date() }
+          : budget
       );
       this.setState({ user });
     }
     this.setMessage('budget-saved');
     this.clearMessage();
+  };
+
+  editBudgetName = () => {
+    if (this.state.tooltip.code === 'edit-budget-name') this.clearTooltip();
+    const isEditing = { ...this.state.isEditing, budgetName: true };
+    this.setState({ isEditing });
+  };
+  editCategory = (entryId) => {
+    const isEditing = { ...this.state.isEditing, category: true, entryId };
+    this.setState({ isEditing });
+  };
+  editProjectedCost = (entryId) => {
+    const isEditing = { ...this.state.isEditing, projectedCost: true, entryId };
+    this.setState({ isEditing });
+  };
+  editActualCost = (entryId) => {
+    const isEditing = { ...this.state.isEditing, actualCost: true, entryId };
+    this.setState({ isEditing });
+  };
+  editProjectedMonthlyIncome = () => {
+    const isEditing = { ...this.state.isEditing, projectedMonthlyIncome: true };
+    this.setState({ isEditing });
+  };
+  editActualMonthlyIncome = () => {
+    const isEditing = { ...this.state.isEditing, actualMonthlyIncome: true };
+    this.setState({ isEditing });
   };
 
   handleUpdateBudgetName = (event) => {
@@ -590,53 +624,99 @@ class App extends Component {
       this.setMessage('budget-name-changed');
       this.clearMessage();
     }
-    this.setState({ isEditing: false });
-  };
-
-  editBudgetName = () => {
-    if (this.state.tooltip.code === 'edit-budget-name') this.clearTooltip();
-    const isEditing = { ...this.state.isEditing, budgetName: true };
+    const isEditing = {
+      ...this.state.isEditing,
+      budgetName: false,
+      entryId: null,
+    };
     this.setState({ isEditing });
   };
 
-  editProjectedMonthlyIncome = () => {
-    const isEditing = { ...this.state.isEditing, projectedMonthlyIncome: true };
-    this.setState({ isEditing });
-  };
+  handleUpdateCategory = (entryId, event) => {
+    const entry = this.state.user.budgets[
+      this.state.user.currentBudgetIndex
+    ].entries.filter((entry) => entry.id === entryId);
 
-  editActualMonthlyIncome = () => {
-    const isEditing = { ...this.state.isEditing, actualMonthlyIncome: true };
-    this.setState({ isEditing });
-  };
-
-  // Update entry category if input is not empty.
-  handleFocusOutEntryCategory = (id) => (text) => {
-    const user = cloneDeep(this.state.user);
-    const entries = user.budgets[user.currentBudgetIndex].entries;
-
-    const updatedEntries = entries.map((entry) => {
-      if (entry.id === id) {
-        entry.category = text || 'No category set';
+    if (
+      entry.category !== event.target.value.trim() &&
+      event.target.value.trim()
+    ) {
+      const user = cloneDeep(this.state.user);
+      const updatedEntries = user.budgets[
+        this.state.user.currentBudgetIndex
+      ].entries.map((entry) => {
+        if (entry.id === entryId) {
+          entry.category = event.target.value.trim();
+          return entry;
+        }
         return entry;
-      }
-      return entry;
-    });
-
-    user.budgets[this.state.user.currentBudgetIndex].entries = updatedEntries;
-
-    this.setState({ user });
+      });
+      user.budgets[this.state.user.currentBudgetIndex].entries = updatedEntries;
+      this.setState({ user });
+    }
+    const isEditing = { ...this.state.isEditing, category: false };
+    this.setState({ isEditing });
   };
 
-  /*
-  GetFilteredIncome sets lower and upper limits for income input.
-  Not currently in use.
-  */
-  getFilteredIncome = (
-    income,
-    minIncome = this.state.input.income.min,
-    maxIncome = this.state.input.income.max
-  ) =>
-    income > maxIncome ? maxIncome : income < minIncome ? minIncome : income;
+  handleUpdateProjectedCost = (entryId, event) => {
+    const cost = event.target.value;
+
+    // If input is not equal to current state, update state.
+    if (
+      Math.round(cost * 100) / 100 !==
+        this.state.user.budgets[
+          this.state.user.currentBudgetIndex
+        ].entries.filter((entry) => entry.id === entryId)[0].projectedCost &&
+      this.numberIsValid(cost)
+    ) {
+      const user = cloneDeep(this.state.user);
+      const updatedEntries = user.budgets[user.currentBudgetIndex].entries.map(
+        (entry) => {
+          if (entry.id === entryId)
+            return { ...entry, projectedCost: Math.round(cost * 100) / 100 };
+          return entry;
+        }
+      );
+      user.budgets[this.state.user.currentBudgetIndex].entries = updatedEntries;
+      this.setState({ user });
+    }
+    const isEditing = {
+      ...this.state.isEditing,
+      projectedCost: false,
+      entryId: null,
+    };
+    this.setState({ isEditing });
+  };
+
+  handleUpdateActualCost = (entryId, event) => {
+    const cost = event.target.value;
+
+    // If input is not equal to current state, update state.
+    if (
+      Math.round(cost * 100) / 100 !==
+        this.state.user.budgets[
+          this.state.user.currentBudgetIndex
+        ].entries.filter((entry) => entry.id === entryId)[0].actualCost &&
+      this.numberIsValid(cost)
+    ) {
+      const user = cloneDeep(this.state.user);
+      const updatedEntries = user.budgets[user.currentBudgetIndex].entries.map(
+        (entry) => {
+          if (entry.id === entryId)
+            return { ...entry, actualCost: Math.round(cost * 100) / 100 };
+          return entry;
+        }
+      );
+      user.budgets[this.state.user.currentBudgetIndex].entries = updatedEntries;
+      this.setState({ user });
+    }
+    const isEditing = {
+      ...this.state.isEditing,
+      actualCost: false,
+      entryId: null,
+    };
+    this.setState({ isEditing });
+  };
 
   handleUpdateProjectedMonthlyIncome = (event) => {
     const income = event.target.value;
@@ -644,8 +724,9 @@ class App extends Component {
     // If input is not equal to current state, update state.
     if (
       Math.round(income * 100) / 100 !==
-      this.state.user.budgets[this.state.user.currentBudgetIndex]
-        .projectedMonthlyIncome
+        this.state.user.budgets[this.state.user.currentBudgetIndex]
+          .projectedMonthlyIncome &&
+      this.numberIsValid(income)
     ) {
       const user = cloneDeep(this.state.user);
       user.budgets[user.currentBudgetIndex].projectedMonthlyIncome =
@@ -655,7 +736,11 @@ class App extends Component {
       this.setMessage('projected-monthly-income-updated');
       this.clearMessage(5000);
     }
-    this.setState({ isEditing: false });
+    const isEditing = {
+      ...this.state.isEditing,
+      projectedMonthlyIncome: false,
+    };
+    this.setState({ isEditing });
   };
 
   handleUpdateActualMonthlyIncome = (event) => {
@@ -664,8 +749,9 @@ class App extends Component {
     // If input is not equal to current state, update state.
     if (
       Math.round(income * 100) / 100 !==
-      this.state.user.budgets[this.state.user.currentBudgetIndex]
-        .actualMonthlyIncome
+        this.state.user.budgets[this.state.user.currentBudgetIndex]
+          .actualMonthlyIncome &&
+      this.numberIsValid(income)
     ) {
       const user = cloneDeep(this.state.user);
       user.budgets[user.currentBudgetIndex].actualMonthlyIncome =
@@ -675,123 +761,15 @@ class App extends Component {
       this.setMessage('actual-monthly-income-updated');
       this.clearMessage(5000);
     }
-    this.setState({ isEditing: false });
+    const isEditing = { ...this.state.isEditing, actualMonthlyIncome: false };
+    this.setState({ isEditing });
   };
 
-  handleFocusOutProjectedMonthlyIncome = (text) => {
-    let filteredText = text;
-
-    // Format text enclosed in parentheses as a negative number.
-    // Ex '(100)' = '-100'.
-    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
-      filteredText = filteredText.replace('(', '-').replace(')', '');
-
-    // Remove commas. Ex '-10,000' = '10000'.
-    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
-
-    // If text is not a number, don't update state.
-    if (isNaN(filteredText)) {
-      this.setMessage('projected-monthly-income-invalid');
-      this.clearMessage();
-    }
-
-    // If input is equal to current state, don't update state.
-    else if (
-      Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.user.currentBudgetIndex]
-        .projectedMonthlyIncome
-    ) {
-      this.clearMessage(0);
-    }
-    // Update state.
-    else {
-      const user = cloneDeep(this.state.user);
-      user.budgets[user.currentBudgetIndex].projectedMonthlyIncome =
-        Math.round(filteredText * 100) / 100;
-      this.setState({ user });
-      this.setMessage('projected-monthly-income-updated');
-      this.clearMessage(5000);
-    }
-  };
-
-  handleFocusOutActualMonthlyIncome = (text) => {
-    let filteredText = text;
-
-    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
-      filteredText = filteredText.replace('(', '-').replace(')', '');
-
-    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
-
-    if (isNaN(filteredText)) {
-      this.setMessage('actual-monthly-income-invalid');
-      this.clearMessage();
-    } else if (
-      Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.user.currentBudgetIndex]
-        .actualMonthlyIncome
-    ) {
-      this.clearMessage(0);
-    } else {
-      const user = cloneDeep(this.state.user);
-      user.budgets[user.currentBudgetIndex].actualMonthlyIncome =
-        Math.round(filteredText * 100) / 100;
-      this.setState({ user });
-      this.setMessage('actual-monthly-income-updated');
-      this.clearMessage(5000);
-    }
-  };
-
-  handleFocusOutProjectedCost = (text, index) => {
-    let filteredText = text;
-
-    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
-      filteredText = filteredText.replace('(', '-').replace(')', '');
-
-    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
-
-    if (isNaN(filteredText)) {
-      this.setMessage('projected-cost-invalid');
-      this.clearMessage();
-    } else if (
-      Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
-        .projectedCost
-    ) {
-      this.clearMessage(0);
-    } else {
-      const user = cloneDeep(this.state.user);
-      user.budgets[user.currentBudgetIndex].entries[index].projectedCost =
-        Math.round(filteredText * 100) / 100;
-      this.setState({ user });
-      this.clearMessage(0);
-    }
-  };
-
-  handleFocusOutActualCost = (text, index) => {
-    let filteredText = text;
-
-    if (filteredText.startsWith('(') && filteredText.endsWith(')'))
-      filteredText = filteredText.replace('(', '-').replace(')', '');
-
-    filteredText = filteredText.replace(/,/g, '').replace(/\$/g, '');
-
-    if (isNaN(filteredText)) {
-      this.setMessage('actual-cost-invalid');
-      this.clearMessage();
-    } else if (
-      Math.round(filteredText * 100) / 100 ===
-      this.state.user.budgets[this.state.user.currentBudgetIndex].entries[index]
-        .actualCost
-    ) {
-      this.clearMessage(0);
-    } else {
-      const user = cloneDeep(this.state.user);
-      user.budgets[user.currentBudgetIndex].entries[index].actualCost =
-        Math.round(filteredText * 100) / 100;
-      this.setState({ user });
-      this.clearMessage(0);
-    }
-  };
+  numberIsValid = (
+    number,
+    min = Number.MIN_SAFE_INTEGER,
+    max = Number.MAX_SAFE_INTEGER
+  ) => number <= max && number >= min;
 
   // Update state displayName input with user input.
   handleDisplayNameInputChange = (event) => {
@@ -965,7 +943,7 @@ class App extends Component {
         input: initialState.input,
         landingMessageCode: null,
       });
-      this.setMessage('user-logged-in');
+      setTimeout(() => this.setMessage('user-logged-in'), 0);
       this.clearMessage(6000);
     }
     // Handle guest sign in (don't set background in localStorage).
@@ -983,7 +961,7 @@ class App extends Component {
         input: initialState.input,
         landingMessageCode: null,
       });
-      this.setMessage('user-logged-in');
+      setTimeout(() => this.setMessage('user-logged-in'), 0);
       this.clearMessage(6000);
     }
     // Handle user/guest sign out.
@@ -1039,7 +1017,7 @@ class App extends Component {
     );
 
     const {
-      entryCategory,
+      addEntry,
       projectedMonthlyIncome,
       actualMonthlyIncome,
       ...landingInput
@@ -1080,9 +1058,12 @@ class App extends Component {
               ) : route === 'budget' ? (
                 <Budget
                   budget={user.budgets[user.currentBudgetIndex]}
-                  currentBudgetIndex={user.currentBudgetIndex}
                   formattedBudget={formattedBudget}
+                  entries={user.budgets[user.currentBudgetIndex].entries}
                   formattedEntries={formattedEntries}
+                  currentBudgetIndex={user.currentBudgetIndex}
+                  handleSaveBudget={this.handleSaveBudget}
+                  handleCreateBudgetCopy={this.handleCreateBudgetCopy}
                   editBudgetName={this.editBudgetName}
                   editProjectedMonthlyIncome={this.editProjectedMonthlyIncome}
                   editActualMonthlyIncome={this.editActualMonthlyIncome}
@@ -1098,17 +1079,20 @@ class App extends Component {
                   handleUpdateActualMonthlyIncome={
                     this.handleUpdateActualMonthlyIncome
                   }
-                  handleEntryCategoryInputChange={
-                    this.handleEntryCategoryInputChange
-                  }
+                  handleAddEntryInputChange={this.handleAddEntryInputChange}
                   handleKeyDown={this.handleKeyDown}
                   handleAddEntry={this.handleAddEntry}
                   handleDeleteEntry={this.handleDeleteEntry}
-                  handleFocusOutEntryCategory={this.handleFocusOutEntryCategory}
-                  handleFocusOutProjectedCost={this.handleFocusOutProjectedCost}
-                  handleFocusOutActualCost={this.handleFocusOutActualCost}
-                  handleSaveBudget={this.handleSaveBudget}
-                  handleCreateBudgetCopy={this.handleCreateBudgetCopy}
+                  editCategory={this.editCategory}
+                  editProjectedCost={this.editProjectedCost}
+                  editActualCost={this.editActualCost}
+                  isEditingCategory={isEditing.category}
+                  isEditingProjectedCost={isEditing.projectedCost}
+                  isEditingActualCost={isEditing.actualCost}
+                  isEditingEntryId={isEditing.entryId}
+                  handleUpdateCategory={this.handleUpdateCategory}
+                  handleUpdateProjectedCost={this.handleUpdateProjectedCost}
+                  handleUpdateActualCost={this.handleUpdateActualCost}
                   handleUserClickedDeleteBudget={
                     this.handleUserClickedDeleteBudget
                   }
@@ -1144,22 +1128,30 @@ class App extends Component {
               ) : route === 'about' ? (
                 <About />
               ) : null}
-              <CSSTransition
-                in={message.show}
-                classNames="message"
-                timeout={500}
-                unmountOnExit
-                onExited={() => {
-                  const message = { ...this.state.message, code: null };
-                  this.setState({ message });
-                }}
-              >
-                <Message
-                  code={message.code}
-                  user={user}
-                  formattedBudget={formattedBudget}
-                />
-              </CSSTransition>
+              {route === 'signup' || route === 'signin' ? null : (
+                <CSSTransition
+                  in={message.show}
+                  classNames={{
+                    enter: 'message-enter',
+                    enterActive: 'message-enter-active',
+                    exit: 'message-exit',
+                    exitActive: 'message-exit-active',
+                  }}
+                  timeout={500}
+                  unmountOnExit
+                  onExited={() => {
+                    const message = { ...this.state.message, code: null };
+                    this.setState({ message });
+                  }}
+                >
+                  <Message
+                    code={message.code}
+                    user={user}
+                    formattedBudget={formattedBudget}
+                  />
+                </CSSTransition>
+              )}
+
               <CSSTransition
                 in={tooltip.show}
                 classNames="tooltip"
