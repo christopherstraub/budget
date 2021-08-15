@@ -9,19 +9,17 @@ class CustomScrollbars extends Component {
     this.renderThumb = this.renderThumb.bind(this);
   }
 
-  renderThumb({ style, ...props }) {
-    return (
-      <div
-        className={`${this.state.classlist}`}
-        style={{ ...style }}
-        {...props}
-      />
-    );
-  }
+  renderThumb = ({ style, ...props }) => (
+    <div
+      className={`${this.state.classlist}`}
+      style={{ ...style }}
+      {...props}
+    />
+  );
 
-  renderThumbHorizontal({ style, ...props }) {
-    return <div className="dn" {...props} />;
-  }
+  renderThumbHorizontal = ({ style, ...props }) => (
+    <div className="dn" {...props} />
+  );
 
   render() {
     return (

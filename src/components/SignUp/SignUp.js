@@ -21,33 +21,35 @@ const SignUp = ({
     <>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
           ${input.displayName.empty ? 'empty' : ''}
           `}
           onChange={handleDisplayNameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
           name="new-display-name"
+          maxLength={input.displayName.maxLength}
           required
         />
         <span className="floating-label">Display name</span>
       </div>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
           ${input.username.empty ? 'empty' : ''}
           `}
           onChange={handleUsernameInputChange}
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="text"
           name="new-username"
+          maxLength={input.username.maxLength}
           required
         />
         <span className="floating-label">Username</span>
       </div>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
           ${input.password.empty ? 'empty' : ''}
           ${getPasswordInputStyle(input.password)}
           `}
@@ -55,6 +57,7 @@ const SignUp = ({
           onKeyDown={handleKeyDown(handleUserSignUp)}
           type="password"
           name="new-password"
+          maxLength={input.password.maxLength}
           required
         />
         <span className="floating-label">Password</span>
@@ -71,7 +74,7 @@ const SignUp = ({
 
       <button
         onClick={handleUserSignUp}
-        className="button-transparent selection-transparent clr-light fs-body fw7 bg--dark bn br3 pv3 ph3 mv3 w-100"
+        className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pv3 ph3 mv3 w-100"
       >
         Sign Up
       </button>

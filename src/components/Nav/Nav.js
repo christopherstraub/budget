@@ -22,7 +22,7 @@ const Nav = ({
           CSBudget
         </button>
         <button
-          className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity"
+          className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity selection-transparent"
           onClick={handleUserToggledExpandNav}
         >
           <span className="bar w-100 bg--light br4"></span>
@@ -31,7 +31,7 @@ const Nav = ({
         </button>
         <button
           onClick={() => handleRouteChange('budget')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity 
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity selection-transparent 
           ${route === 'budget' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -39,7 +39,7 @@ const Nav = ({
         </button>
         <button
           onClick={() => handleRouteChange('saved-budgets')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer mr4 hover-opacity selection-transparent
           ${route === 'saved-budgets' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -47,7 +47,7 @@ const Nav = ({
         </button>
         <button
           onClick={() => handleRouteChange('profile')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity selection-transparent
           ${route === 'profile' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -57,7 +57,7 @@ const Nav = ({
       <div className="flex items-center">
         <button
           onClick={() => handleRouteChange('about')}
-          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity
+          className={`clr-light fs-subheading fw3 bg-transparent bn ttc pointer hover-opacity selection-transparent
           ${route === 'about' ? 'selected clr-accent-light' : ''}
           `}
         >
@@ -66,14 +66,14 @@ const Nav = ({
         {isGuest ? (
           <button
             onClick={() => handleRouteChange('signup')}
-            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity"
+            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity selection-transparent"
           >
             sign up
           </button>
         ) : (
           <button
             onClick={() => handleRouteChange('signin')}
-            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity"
+            className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity selection-transparent"
           >
             sign out
           </button>

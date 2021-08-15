@@ -13,26 +13,28 @@ const SignIn = ({
     <>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
           ${input.username.empty ? 'empty' : ''}
           `}
           onChange={handleUsernameInputChange}
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="text"
           name="username"
+          maxLength={input.username.maxLength}
           required
         />
         <span className="floating-label">Username</span>
       </div>
       <div className="relative">
         <input
-          className={`input input-decorated br3 bn pt4 ph3 pb2 mv2 w-100
+          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
           ${input.password.empty ? 'empty' : ''}
           `}
           onChange={handlePasswordInputChange}
           onKeyDown={handleKeyDown(handleUserSignIn)}
           type="password"
           name="password"
+          maxLength={input.password.maxLength}
           required
         />
         <span className="floating-label">Password</span>
@@ -50,7 +52,7 @@ const SignIn = ({
 
       <button
         onClick={handleUserSignIn}
-        className="button-transparent selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mv3 w-100"
+        className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mv3 w-100"
       >
         Sign In
       </button>

@@ -1,43 +1,44 @@
 import React from 'react';
 
-// VALID MESSAGE CODES
-// App:
-// 'user-logged-in'
-// Entries:
-// 'budget-name-changed', 'edit-budget-name',
-// 'projected-cost-invalid', 'actual-cost-invalid' 'budget-copy-created'
-// Summary:
-// 'projected-monthly-income-invalid', 'actual-monthly-income-invalid',
-// 'projected-monthly-income-updated', 'actual-monthly-income-updated'
-// Budgets:
-// 'budget-deleted', 'budget-created', 'budgets-saved',
-// 'budgets-created-many', 'budgets-max-allowed'
-// Profile:
-// 'display-name-changed'
+/*  
+Valid message codes:
+App:
+'user-logged-in'
+Entries:
+'budget-saved', 'budget-copy-created', 'budget-name-changed',
+'entries-max-allowed', 'budget-deleted'
+Summary:
+'projected-monthly-income-updated', 'actual-monthly-income-updated'
+Budgets:
+'budget-created', 'budgets-created-many', 'budgets-max-allowed', 'budgets-saved'
+Profile:
+'display-name-changed'
+*/
 
 const getMessage = (code, user, formattedBudget) => {
   switch (code) {
     case 'user-logged-in':
       return `Welcome, ${user.displayName}.`;
+    case 'budget-saved':
+      return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
+    case 'budget-copy-created':
+      return 'Created budget copy.';
     case 'budget-name-changed':
       return 'Changed budget name.';
-    case 'edit-budget-name':
-      return 'Edit budget name';
-    case 'projected-cost-invalid':
-    case 'actual-cost-invalid':
-    case 'projected-monthly-income-invalid':
-    case 'actual-monthly-income-invalid':
-      return `Invalid input.`;
+    case 'entries-max-allowed':
+      return 'Maximum number of entries created.';
+    case 'budget-deleted':
+      return 'Deleted budget.';
     case 'projected-monthly-income-updated':
       return `Projected monthly income updated to ${formattedBudget.projectedMonthlyIncome}.`;
     case 'actual-monthly-income-updated':
       return `Actual monthly income updated to ${formattedBudget.actualMonthlyIncome}.`;
-    case 'budget-copy-created':
-      return 'Created budget copy.';
-    case 'budget-deleted':
-      return 'Deleted budget.';
     case 'budget-created':
       return 'Created new budget.';
+    case 'budgets-created-many':
+      return `${user.budgets.length} budgets! You're a savvy financial planner.`;
+    case 'budgets-max-allowed':
+      return "Maximum number of budgets created. That's a lot of budgets!";
     case 'budgets-saved':
       return user.isGuest
         ? 'Sign in to save your budgets.'
@@ -46,10 +47,6 @@ const getMessage = (code, user, formattedBudget) => {
         : user.budgets.length === 1
         ? 'Saved 1 budget.'
         : `Saved ${user.budgets.length} budgets.`;
-    case 'budgets-created-many':
-      return `${user.budgets.length} budgets! You're a savvy financial planner.`;
-    case 'budgets-max-allowed':
-      return "Maximum number of budgets created. That's a lot of budgets!";
     case 'display-name-changed':
       return `Display name changed successfully.`;
     default:
@@ -58,9 +55,9 @@ const getMessage = (code, user, formattedBudget) => {
 };
 
 const Message = ({ code, user, formattedBudget }) => (
-  <h2 className="message fixed pointer-events-none clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
+  <span className="message fixed pointer-events-none clr-light fs-body bg--window-box tc mb0 pa4 br3 br--top">
     {getMessage(code, user, formattedBudget)}
-  </h2>
+  </span>
 );
 
 export default Message;

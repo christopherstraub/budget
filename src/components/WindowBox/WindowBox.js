@@ -7,7 +7,7 @@ const WindowBox = (props) => {
   return (
     <div className={`bg--window-box br3 ${props.classlist}`}>
       <CustomScrollbars
-        classlist="bg--scrollbar-window-box br-pill o-90"
+        classlist="bg--scrollbar-window-box hover-opacity br-pill o-90"
         heightmax="86vh"
       >
         <ErrorBoundary>

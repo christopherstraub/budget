@@ -77,10 +77,13 @@
   background-color: $clr-dark-red;
 }
 .bg--window-box {
-  background: $clr-window-box;
+  background-color: $clr-window-box;
 }
 .bg--login-box {
-  background: linear-gradient($clr-login-box, $clr-login-box);
+  background-color: $clr-login-box;
+}
+.bg--semi-transparent {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 // Scrollbars.
@@ -90,33 +93,60 @@
 .bg--scrollbar-window-box {
   background-color: $clr-scrollbar-window-box;
 }
-.bg--scrollbar-app,
-.bg--scrollbar-window-box {
-  &:hover {
-    opacity: 0.5;
-  }
-}
 
 // Borders.
-.border--dark {
-  border: 1px solid $clr-dark;
+.border-clr-dark {
+  border-color: $clr-dark;
+}
+.border-clr-light-accent {
+  border-color: $clr-light-accent;
+}
+
+// Hovers.
+.hover-opacity:hover {
+  opacity: 0.5;
+}
+.hover-opacity-75:hover {
+  opacity: 0.75;
+}
+
+// Placeholders.
+.placeholder-dark-accent::placeholder {
+  color: $clr-dark-accent;
+}
+.placeholder-light-accent::placeholder {
+  color: $clr-light-accent;
 }
 
 .input {
   color: $clr-dark;
   font-size: $fs-body;
   background-color: $clr-light;
+  border: 1px solid $clr-dark-accent;
 
   &:focus,
   &:focus-visible {
-    border: 1px solid $clr-accent-light;
+    border: 1px solid $clr-dark;
+  }
+
+  &.dark {
+    color: $clr-light;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid transparent;
+
+    &:focus,
+    &:focus-visible {
+      border: 1px solid $clr-light-accent;
+    }
   }
 
   &:focus {
     outline: 0;
   }
 
-  &.input-decorated {
+  &.input-indicator {
+    border: none;
+
     &.empty {
       border-bottom: 4px solid $clr-red;
       margin-bottom: calc(0.5rem - 4px);
@@ -148,10 +178,14 @@
   left: 1rem;
   transform: translateY(-50%);
 
+  &.dark {
+    color: $clr-light-accent;
+  }
+
   transition: 0.1s all;
 
   input:focus + &,
-  input:not(focus):valid + & {
+  input:not(:focus):valid + & {
     font-size: 1.2rem;
     top: 30%;
 
@@ -166,20 +200,11 @@ button:focus-visible,
 [type='button']:focus-visible,
 [type='reset']:focus-visible,
 [type='submit']:focus-visible,
-span:focus-visible,
-label:focus-visible {
+*:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
   outline-color: -webkit-focus-ring-color;
   outline-style: auto;
   outline-width: 1px;
-}
-
-.button-transparent {
-  background-color: rgba(0, 0, 0, 0.5);
-
-  &:hover {
-    opacity: 0.75;
-  }
 }
 
 .pointer-events-none {
@@ -208,10 +233,37 @@ label:focus-visible {
   }
 }
 
-.hover-opacity:hover {
-  opacity: 0.5;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
 }
 
-.lh-title {
-  line-height: 1.2;
+.arrow-left::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent $clr-accent-dark transparent transparent;
+}
+
+.arrow-right::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(100%, -50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent transparent $clr-accent-dark;
+}
+
+.visibility-hidden {
+  visibility: hidden;
 }
