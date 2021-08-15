@@ -95,8 +95,11 @@
 }
 
 // Borders.
-.border--dark {
-  border: 1px solid $clr-dark;
+.border-clr-dark {
+  border-color: $clr-dark;
+}
+.border-clr-light-accent {
+  border-color: $clr-light-accent;
 }
 
 // Hovers.
@@ -107,11 +110,12 @@
   opacity: 0.75;
 }
 
-input::placeholder {
+// Placeholders.
+.placeholder-dark-accent::placeholder {
+  color: $clr-dark-accent;
+}
+.placeholder-light-accent::placeholder {
   color: $clr-light-accent;
-  &.dark {
-    color: $clr-dark-accent;
-  }
 }
 
 .input {
@@ -196,8 +200,7 @@ button:focus-visible,
 [type='button']:focus-visible,
 [type='reset']:focus-visible,
 [type='submit']:focus-visible,
-span:focus-visible,
-label:focus-visible {
+*:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
   outline-color: -webkit-focus-ring-color;
   outline-style: auto;

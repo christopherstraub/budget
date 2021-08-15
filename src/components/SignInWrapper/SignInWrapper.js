@@ -4,7 +4,7 @@ const SignInWrapper = ({ handleRouteChange, children }) => {
   return (
     <div className="flex justify-center">
       <div
-        className="bg--login-box br3 tc pt5 pb4 ph4 border--dark"
+        className="bg--login-box br3 tc pt5 pb4 ph4 ba border-clr-dark"
         style={{ maxWidth: '30rem' }}
       >
         <h1 className="clr-light ff-logo fs-heading user-select-none tc mb4">

@@ -68,7 +68,7 @@ const Summary = ({
           <div className="mb4">
             {isEditingProjectedMonthlyIncome ? (
               <input
-                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
+                className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
                 onFocus={(event) =>
                   (event.target.value = budget.projectedMonthlyIncome)
                 }
@@ -109,7 +109,7 @@ const Summary = ({
           <div className="mb4">
             {isEditingActualMonthlyIncome ? (
               <input
-                className="clr-light bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
+                className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 tc pv0 ph1"
                 onFocus={(event) =>
                   (event.target.value = budget.actualMonthlyIncome)
                 }
