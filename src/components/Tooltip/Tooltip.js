@@ -41,6 +41,7 @@ const Tooltip = ({ tooltip, mousePosition }) => (
         : 'translateY( -50%)',
       marginLeft: tooltip.showToLeft ? '-15px' : '15px',
       width: 'max-content',
+      zIndex: '999',
     }}
   >
     {getTooltip(tooltip.code, tooltip.custom)}
