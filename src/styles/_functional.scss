@@ -205,6 +205,7 @@ button:focus-visible,
   outline-color: -webkit-focus-ring-color;
   outline-style: auto;
   outline-width: 1px;
+  z-index: 99;
 }
 
 .pointer-events-none {
