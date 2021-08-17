@@ -151,107 +151,124 @@ const Entries = ({
         Entries ({budget.entries.length})
       </h2>
 
-      <div className="bg--light border-clr-light-accent bt">
-        <div className="grid-entry border-clr-light-accent br bb bl">
-          <span></span>
-          <span className="clr-dark fs-subheading fw4 tc ph1">Category</span>
-          <span className="clr-dark fs-subheading fw4 tr ph1">
+      <div className="bg--light text-break">
+        <div className="grid-entry bb border-clr-light-accent">
+          <span
+            className="ph2"
+            style={{
+              width: '24px',
+              boxSizing: 'content-box',
+              visibility: 'hidden',
+            }}
+          ></span>
+          <span className="clr-dark fs-subheading fw4 tc pv3 ph1">
+            Category
+          </span>
+          <span className="clr-dark fs-subheading fw4 tr pv3 ph1">
             Projected Cost
           </span>
-          <span className="clr-dark fs-subheading fw4 tr ph1">Actual Cost</span>
-          <span className="clr-dark fs-subheading fw4 tr ph1">Difference</span>
+          <span className="clr-dark fs-subheading fw4 tr pv3 ph1">
+            Actual Cost
+          </span>
+          <span className="clr-dark fs-subheading fw4 tr pv3 pr2 pl1">
+            Difference
+          </span>
         </div>
 
-        {formattedEntries.map((entry, index) => (
-          <div
-            key={entry.id}
-            className="grid-entry border-clr-light-accent br bb bl"
-          >
-            <span
-              className="material-icons clr-dark-accent user-select-none pointer hover-opacity tc"
-              onClick={() => handleDeleteEntry(entry.id)}
-              tabIndex="0"
-              onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
-              onMouseMove={(event) =>
-                setTooltip('custom', event, `Delete "${entry.category}"`)
-              }
-              onMouseOver={(event) =>
-                setTooltip('custom', event, `Delete "${entry.category}"`)
-              }
-              onMouseLeave={clearTooltip}
-              onMouseUp={clearTooltip}
-            >
-              delete
-            </span>
-            {isEditingCategory && isEditingEntryId === entry.id ? (
-              <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
-                onFocus={(event) => (event.target.value = entry.category)}
-                onBlur={(event) => handleUpdateCategory(entry.id, event)}
-                type="text"
-                maxLength={input.category.maxLength}
-                placeholder="Category"
-                autoFocus={true}
-              />
-            ) : (
+        <div className="entries">
+          {formattedEntries.map((entry, index) => (
+            <div key={entry.id} className="grid-entry items-center">
               <span
-                className="clr-dark fs-body tc pointer ph1"
-                onClick={() => editCategory(entry.id)}
+                className="material-icons clr-dark-accent user-select-none pointer hover-opacity pv2 ph2 tc"
+                onClick={() => handleDeleteEntry(entry.id)}
                 tabIndex="0"
-                onKeyDown={handleKeyDown(() => editCategory(entry.id))}
-              >
-                {entry.category}
-              </span>
-            )}
-            {isEditingProjectedCost && isEditingEntryId === entry.id ? (
-              <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
-                onFocus={(event) =>
-                  (event.target.value = entries[index].projectedCost)
+                onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
+                onMouseMove={(event) =>
+                  setTooltip('custom', event, `Delete "${entry.category}"`)
                 }
-                onBlur={(event) => handleUpdateProjectedCost(entry.id, event)}
-                type="number"
-                placeholder="0"
-                step={50}
-                autoFocus={true}
-              />
-            ) : (
-              <span
-                className="clr-dark fs-body tr pointer ph1"
-                onClick={() => editProjectedCost(entry.id)}
-                tabIndex="0"
-                onKeyDown={handleKeyDown(() => editProjectedCost(entry.id))}
-              >
-                {entry.projectedCost}
-              </span>
-            )}
-            {isEditingActualCost && isEditingEntryId === entry.id ? (
-              <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 tc pv0 ph1"
-                onFocus={(event) =>
-                  (event.target.value = entries[index].actualCost)
+                onMouseOver={(event) =>
+                  setTooltip('custom', event, `Delete "${entry.category}"`)
                 }
-                onBlur={(event) => handleUpdateActualCost(entry.id, event)}
-                type="number"
-                placeholder="0"
-                step={50}
-                autoFocus={true}
-              />
-            ) : (
-              <span
-                className="clr-dark fs-body tr pointer ph1"
-                onClick={() => editActualCost(entry.id)}
-                tabIndex="0"
-                onKeyDown={handleKeyDown(() => editActualCost(entry.id))}
+                onMouseLeave={clearTooltip}
+                onMouseUp={clearTooltip}
               >
-                {entry.actualCost}
+                delete
               </span>
-            )}
-            <span className="clr-dark fs-body tr pointer">
-              {entry.difference}
-            </span>
-          </div>
-        ))}
+
+              {isEditingCategory && isEditingEntryId === entry.id ? (
+                <input
+                  className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                  onFocus={(event) => (event.target.value = entry.category)}
+                  onBlur={(event) => handleUpdateCategory(entry.id, event)}
+                  type="text"
+                  maxLength={input.category.maxLength}
+                  placeholder="Category"
+                  autoFocus={true}
+                />
+              ) : (
+                <span
+                  className="clr-dark fs-body pointer pv2 ph1 tc"
+                  onClick={() => editCategory(entry.id)}
+                  tabIndex="0"
+                  onKeyDown={handleKeyDown(() => editCategory(entry.id))}
+                >
+                  {entry.category}
+                </span>
+              )}
+              {isEditingProjectedCost && isEditingEntryId === entry.id ? (
+                <input
+                  className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                  onFocus={(event) =>
+                    (event.target.value = entries[index].projectedCost
+                      ? entries[index].projectedCost
+                      : '')
+                  }
+                  onBlur={(event) => handleUpdateProjectedCost(entry.id, event)}
+                  type="number"
+                  placeholder="0"
+                  step={50}
+                  autoFocus={true}
+                />
+              ) : (
+                <span
+                  className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
+                  onClick={() => editProjectedCost(entry.id)}
+                  tabIndex="0"
+                  onKeyDown={handleKeyDown(() => editProjectedCost(entry.id))}
+                >
+                  {entry.projectedCost}
+                </span>
+              )}
+              {isEditingActualCost && isEditingEntryId === entry.id ? (
+                <input
+                  className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                  onFocus={(event) =>
+                    (event.target.value = entries[index].actualCost
+                      ? entries[index].actualCost
+                      : '')
+                  }
+                  onBlur={(event) => handleUpdateActualCost(entry.id, event)}
+                  type="number"
+                  placeholder="0"
+                  step={50}
+                  autoFocus={true}
+                />
+              ) : (
+                <span
+                  className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
+                  onClick={() => editActualCost(entry.id)}
+                  tabIndex="0"
+                  onKeyDown={handleKeyDown(() => editActualCost(entry.id))}
+                >
+                  {entry.actualCost}
+                </span>
+              )}
+              <span className="clr-dark fw6 fs-body tr pv2 pr2 pl1">
+                {entry.difference}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex justify-end items-end mt4">

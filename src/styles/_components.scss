@@ -35,7 +35,58 @@
 
 .grid-entry {
   display: grid;
-  grid-template-columns: 0.2fr 3.5fr repeat(3, 1fr);
+  grid-template-columns: max-content minmax(40rem, 1fr) repeat(2, 20.8rem) 21.6rem;
+}
+
+@media (max-width: 1600px) {
+  div:not(.entries) > .grid-entry {
+    display: none;
+  }
+
+  .entries {
+    .grid-entry {
+      grid-template-columns: 1fr;
+
+      span {
+        text-align: end;
+        position: relative;
+        padding: 0.5rem;
+
+        &:before {
+          position: absolute;
+          left: 0.5rem;
+        }
+
+        &:nth-child(1) {
+          text-align: center;
+          width: max-content;
+          margin: 0 auto;
+        }
+        &:nth-child(2):before {
+          content: 'Category';
+        }
+        &:nth-child(3):before {
+          content: 'Projected Cost';
+        }
+        &:nth-child(4):before {
+          content: 'Actual Cost';
+        }
+        &:nth-child(5):before {
+          content: 'Difference';
+        }
+      }
+    }
+  }
+}
+
+.entries {
+  .grid-entry span:not(.material-icons):not(:last-child):hover {
+    background-color: $clr-light-accent;
+  }
+
+  .grid-entry:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
 }
 
 @media (max-width: 900px) {
