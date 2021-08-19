@@ -1,5 +1,21 @@
 @import './variables';
 
+@media (max-width: 850px) {
+  .landing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    .landing-text {
+      padding-top: 0;
+
+      h1,
+      h2 {
+        display: none;
+      }
+    }
+  }
+}
+
 // Nav.
 @media (max-width: 900px) {
   .App {

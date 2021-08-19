@@ -21,12 +21,11 @@ const Landing = ({
 
   return (
     <div
-      className={`flex flex-column justify-center ph4 pb4 ${
+      className={`landing flex flex-column justify-center ph4 pv6 ${
         useDarkLanding ? 'clr-dark' : 'clr-light'
       }`}
-      style={{ paddingTop: '10rem' }}
     >
-      <section>
+      <section className="landing-text pt4">
         <h1 className="fs-heading fw6 tc mb2">
           Budgeting doesn't have to be hard.
         </h1>
