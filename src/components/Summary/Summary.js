@@ -1,8 +1,6 @@
 import React from 'react';
 
-const getClassListIfNegative = (value) => {
-  return value < 0 ? 'clr-red fw3' : '';
-};
+const getClassListIfNegative = (value) => (value < 0 ? 'clr-red fw3' : '');
 
 const Summary = ({
   budget,
@@ -18,7 +16,7 @@ const Summary = ({
   clearTooltip,
 }) => {
   return (
-    <>
+    <div className="pv5 ph4">
       <div className="flex flex-column items-center">
         <h3 className="clr-light-accent fs-subheading fw3 mb0 flex items-center">
           Projected Monthly Income
@@ -159,7 +157,7 @@ const Summary = ({
           </h2>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

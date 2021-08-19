@@ -51,7 +51,7 @@ const Entries = ({
   clearTooltip,
 }) => {
   return (
-    <>
+    <div className="pv5 ph4">
       <div className="relative mb5">
         {isEditingBudgetName ? (
           <input
@@ -151,7 +151,7 @@ const Entries = ({
         Entries ({budget.entries.length})
       </h2>
 
-      <div className="bg--light text-break">
+      <div className="bg--light text-break br3">
         <div className="grid-entry bb border-clr-light-accent">
           <span
             className="ph2"
@@ -296,7 +296,7 @@ const Entries = ({
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
