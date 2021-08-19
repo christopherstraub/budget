@@ -1,10 +1,10 @@
 import React from 'react';
 import WindowBox from '../WindowBox/WindowBox';
 
-const About = () => {
+const About = ({ toggledExpandNav }) => {
   return (
     <div className="flex justify-center pa4">
-      <WindowBox>
+      <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
           <p className="clr-light fs-body mb0">
             CSBudget is maintained by Christopher Straub and distributed under

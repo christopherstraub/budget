@@ -41,9 +41,10 @@ const Budget = ({
   input,
   setTooltip,
   clearTooltip,
+  toggledExpandNav,
 }) => (
   <div className="Budget flex justify-center items-start pa4">
-    <WindowBox classlist="flex-grow-1 mh3">
+    <WindowBox classlist="flex-grow-1 mh3" toggledExpandNav={toggledExpandNav}>
       <Entries
         budget={budget}
         entries={entries}
@@ -77,7 +78,7 @@ const Budget = ({
       />
     </WindowBox>
 
-    <WindowBox classlist="mh3">
+    <WindowBox classlist="mh3" toggledExpandNav={toggledExpandNav}>
       <Summary
         budget={budget}
         formattedBudget={formattedBudget}

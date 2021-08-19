@@ -9,10 +9,11 @@ const SavedBudgets = ({
   handleSaveBudgets,
   currentBudgetIndex,
   handleKeyDown,
+  toggledExpandNav,
 }) => {
   return (
     <div className="flex justify-center pa4 tc">
-      <WindowBox classlist="mw7 w-100">
+      <WindowBox classlist="mw7 w-100" toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
           <h1 className="clr-light fs-subheading fw3 mb3 text-break">
             {user.budgets.length === 0 ? (

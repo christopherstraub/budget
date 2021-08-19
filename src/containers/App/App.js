@@ -1098,6 +1098,7 @@ class App extends Component {
                   input={input}
                   setTooltip={this.setTooltip}
                   clearTooltip={this.clearTooltip}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -1107,6 +1108,7 @@ class App extends Component {
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
                   handleKeyDown={this.handleKeyDown}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'profile' ? (
                 <Profile
@@ -1124,9 +1126,10 @@ class App extends Component {
                   savedBudgets={user.budgets.filter(
                     (budget) => budget.lastSaved
                   )}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'about' ? (
-                <About />
+                <About toggledExpandNav={user.toggledExpandNav} />
               ) : null}
               {route === 'signup' || route === 'signin' ? null : (
                 <CSSTransition

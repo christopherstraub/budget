@@ -23,19 +23,23 @@ const useWindowDimensions = () => {
   return windowDimensions;
 };
 
-const WindowBox = (props) => {
+const WindowBox = ({ classlist, toggledExpandNav, children }) => {
   const { width, height } = useWindowDimensions();
-  console.log(width, height);
 
   return (
-    <div className={`bg--window-box br3 ${props.classlist}`}>
+    <div className={`bg--window-box br3 ${classlist}`}>
       <CustomScrollbars
         classlist="bg--accent-light hover-opacity br-pill o-90"
         autoHide
       >
         <ErrorBoundary>
-          <div style={{ maxHeight: height - 100 }}>
-            {props.children}
+          <div
+            style={{
+              maxHeight:
+                height - (toggledExpandNav && width <= 900 ? 355 : 100),
+            }}
+          >
+            {children}
           </div>
         </ErrorBoundary>
       </CustomScrollbars>

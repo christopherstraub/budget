@@ -13,10 +13,11 @@ const Profile = ({
   currentBackground,
   maxBudgets,
   savedBudgets,
+  toggledExpandNav,
 }) => {
   return (
     <div className="flex justify-center pa4 tc">
-      <WindowBox classlist="mw7 w-100">
+      <WindowBox classlist="mw7 w-100" toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
           <h1 className="fs-subheading fw3 text-break">{user.displayName}</h1>
 
