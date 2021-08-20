@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Entries.scss';
+
 const getLastSavedTimeString = (lastSaved) => {
   return !lastSaved
     ? 'unsaved'

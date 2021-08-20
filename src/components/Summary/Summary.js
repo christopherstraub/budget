@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Summary.scss';
+
 const getClassListIfNegative = (value) => (value < 0 ? 'clr-red fw3' : '');
 
 const Summary = ({

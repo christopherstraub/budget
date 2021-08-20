@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+@media (max-width: 570px) {
+  .Summary {
+    width: 35.2rem;
+    overflow-x: auto;
+
+    > .flex:nth-child(2) {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+
+      > div:first-child,
+      > div:nth-child(3) {
+        overflow-x: visible;
+        width: auto !important;
+      }
+
+      > div:first-child h2:last-child {
+        margin-bottom: 2rem;
+      }
+
+      > div:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}

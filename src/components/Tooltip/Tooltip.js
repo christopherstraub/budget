@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Tooltip.scss';
+
 /*  
 Valid tooltip codes:
 'custom' returns tooltip.custom.

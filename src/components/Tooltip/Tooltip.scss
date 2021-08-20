@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.tooltip-enter {
+  opacity: 0;
+}
+.tooltip-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s 0.5s;
+}
+.tooltip-exit {
+  opacity: 0;
+}

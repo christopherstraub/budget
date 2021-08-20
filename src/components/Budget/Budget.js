@@ -4,6 +4,8 @@ import WindowBox from '../WindowBox/WindowBox';
 import Summary from '../Summary/Summary';
 import Entries from '../Entries/Entries';
 
+import './Budget.scss';
+
 const Budget = ({
   budget,
   formattedBudget,

@@ -4,6 +4,8 @@ import SignInWrapper from '../SignInWrapper/SignInWrapper';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 
+import './Landing.scss';
+
 const Landing = ({
   handleRouteChange,
   route,
