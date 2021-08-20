@@ -1167,7 +1167,12 @@ class App extends Component {
                     showToLeft: null,
                     custom: null,
                   };
-                  this.setState({ tooltip });
+                  const mousePosition = {
+                    ...this.state.mousePosition,
+                    x: null,
+                    y: null,
+                  };
+                  this.setState({ tooltip, mousePosition });
                 }}
               >
                 <Tooltip tooltip={tooltip} mousePosition={mousePosition} />
