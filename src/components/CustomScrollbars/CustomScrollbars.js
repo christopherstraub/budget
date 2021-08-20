@@ -5,7 +5,8 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 class CustomScrollbars extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
-    this.state = { classlist: props.classlist, heightmax: props.heightmax };
+    const { classlist, autoHide } = props;
+    this.state = { classlist, autoHide };
     this.renderThumb = this.renderThumb.bind(this);
   }
 
@@ -28,7 +29,10 @@ class CustomScrollbars extends Component {
         renderThumbVertical={this.renderThumb}
         autoHeight
         autoHeightMin={0}
-        autoHeightMax={this.state.heightmax}
+        autoHeightMax="100vh"
+        autoHide={this.state.autoHide}
+        autoHideTimeout={2000}
+        autoHideDuration={500}
         {...this.props}
       />
     );

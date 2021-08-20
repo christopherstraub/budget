@@ -4,9 +4,6 @@
 // Functional classes.
 @import '../../styles/functional';
 
-// Component classes.
-@import '../../styles/components';
-
 html {
   font-size: 62.5%;
 }
@@ -26,7 +23,6 @@ body {
   -moz-transition: background-image 3s ease-in-out;
   -o-transition: background-image 3s ease-in-out;
   transition: background-image 3s ease-in-out;
-  background-color: gray;
 }
 
 .App {

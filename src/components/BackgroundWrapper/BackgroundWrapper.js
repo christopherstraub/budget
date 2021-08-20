@@ -1,11 +1,13 @@
 import React from 'react';
 
 const BackgroundWrapper = ({ background, children }) => {
-  const { path } = background;
+  const { path, useDarkLanding } = background;
 
   return (
     <div
-      className="background"
+      className={`background
+      ${useDarkLanding ? 'bg--light' : 'bg--dark'}
+      `}
       style={{
         backgroundImage: `url(${path})`,
       }}

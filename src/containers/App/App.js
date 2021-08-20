@@ -236,6 +236,40 @@ class App extends Component {
     this.state.background = backgrounds[0];
   }
 
+  // Sets background from localStorage if it exists there,
+  // otherwise set a random background.
+  setBackgroundFromLocalStorage() {
+    const localStorageBackgroundName = localStorage.getItem('background');
+    if (localStorageBackgroundName) {
+      const backgroundArray = backgrounds.filter(
+        (background) => background.name === localStorageBackgroundName
+      );
+
+      if (backgroundArray.length === 0)
+        backgroundArray[0] = this.state.background;
+
+      const state = { ...this.state, background: backgroundArray[0] };
+      this.setState(state);
+      return;
+    }
+
+    const initialBackgrounds = backgrounds.filter(
+      (background) => background.initial
+    );
+    const randomInitialBackgroundIndex = Math.floor(
+      Math.random() * initialBackgrounds.length
+    );
+    const randomBackgroundName =
+      initialBackgrounds[randomInitialBackgroundIndex].name;
+
+    const backgroundArray = backgrounds.filter(
+      (background) => background.name === randomBackgroundName
+    );
+
+    const state = { ...this.state, background: backgroundArray[0] };
+    this.setState(state);
+  }
+
   componentDidMount() {
     this.setBackgroundFromLocalStorage();
   }
@@ -278,40 +312,6 @@ class App extends Component {
     const tooltip = { ...this.state.tooltip, show: false };
     this.setState({ tooltip });
   };
-
-  // Sets background from localStorage if it exists there,
-  // otherwise set a random background.
-  setBackgroundFromLocalStorage() {
-    const localStorageBackgroundName = localStorage.getItem('background');
-    if (localStorageBackgroundName) {
-      const backgroundArray = backgrounds.filter(
-        (background) => background.name === localStorageBackgroundName
-      );
-
-      if (backgroundArray.length === 0)
-        backgroundArray[0] = this.state.background;
-
-      const state = { ...this.state, background: backgroundArray[0] };
-      this.setState(state);
-      return;
-    }
-
-    const initialBackgrounds = backgrounds.filter(
-      (background) => background.initial
-    );
-    const randomInitialBackgroundIndex = Math.floor(
-      Math.random() * initialBackgrounds.length
-    );
-    const randomBackgroundName =
-      initialBackgrounds[randomInitialBackgroundIndex].name;
-
-    const backgroundArray = backgrounds.filter(
-      (background) => background.name === randomBackgroundName
-    );
-
-    const state = { ...this.state, background: backgroundArray[0] };
-    this.setState(state);
-  }
 
   // Only filter through backgrounds if selected background is different
   // from current background.
@@ -438,7 +438,7 @@ class App extends Component {
   getNewBudget = () => ({
     id: this.state.user.budgetsCreated,
     name: this.getNewBudgetName(),
-    lastSaved: false,
+    lastSaved: null,
     entriesCreated: defaultEntries.length,
     entriesDeleted: 0,
     projectedMonthlyIncome: 0,
@@ -541,7 +541,7 @@ class App extends Component {
     const budgetCopy = cloneDeep(this.state.user.budgets[index]);
     budgetCopy.id = this.state.user.budgetsCreated;
     budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
-    budgetCopy.lastSaved = false;
+    budgetCopy.lastSaved = null;
 
     const user = cloneDeep(this.state.user);
     user.budgets.splice(index + 1, 0, budgetCopy);
@@ -1025,10 +1025,7 @@ class App extends Component {
 
     return (
       <>
-        <CustomScrollbars
-          classlist="bg--scrollbar-app hover-opacity br-pill o-90"
-          heightmax="100vh"
-        >
+        <CustomScrollbars classlist="bg--light hover-opacity br-pill o-90">
           <BackgroundWrapper background={background}>
             <div className="App clr-light ff-primary fs-body">
               <Nav
@@ -1101,6 +1098,7 @@ class App extends Component {
                   input={input}
                   setTooltip={this.setTooltip}
                   clearTooltip={this.clearTooltip}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -1110,6 +1108,7 @@ class App extends Component {
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
                   handleKeyDown={this.handleKeyDown}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'profile' ? (
                 <Profile
@@ -1124,9 +1123,13 @@ class App extends Component {
                   backgrounds={backgrounds}
                   currentBackground={background}
                   maxBudgets={user.maxBudgets}
+                  savedBudgets={user.budgets.filter(
+                    (budget) => budget.lastSaved
+                  )}
+                  toggledExpandNav={user.toggledExpandNav}
                 />
               ) : route === 'about' ? (
-                <About />
+                <About toggledExpandNav={user.toggledExpandNav} />
               ) : null}
               {route === 'signup' || route === 'signin' ? null : (
                 <CSSTransition

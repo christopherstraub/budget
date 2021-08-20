@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Tooltip.scss';
+
 /*  
 Valid tooltip codes:
 'custom' returns tooltip.custom.
@@ -41,6 +43,7 @@ const Tooltip = ({ tooltip, mousePosition }) => (
         : 'translateY( -50%)',
       marginLeft: tooltip.showToLeft ? '-15px' : '15px',
       width: 'max-content',
+      maxWidth: '75vw',
       zIndex: '999',
     }}
   >
