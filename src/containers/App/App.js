@@ -782,9 +782,9 @@ class App extends Component {
     this.setState({ input });
   };
 
-  // Update display name if display name input is different from current
+  // Change display name if display name input is different from current
   // display name and display name input is not an empty string.
-  handleUpdateDisplayName = () => {
+  handleChangeDisplayName = () => {
     if (
       this.state.input.displayName.value !== this.state.user.displayName &&
       this.state.input.displayName.value !== ''
@@ -1117,7 +1117,7 @@ class App extends Component {
                   handleDisplayNameInputChange={
                     this.handleDisplayNameInputChange
                   }
-                  handleUpdateDisplayName={this.handleUpdateDisplayName}
+                  handleChangeDisplayName={this.handleChangeDisplayName}
                   handleKeyDown={this.handleKeyDown}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}

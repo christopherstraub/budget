@@ -6,7 +6,7 @@ const Profile = ({
   user,
   inputDisplayName,
   handleDisplayNameInputChange,
-  handleUpdateDisplayName,
+  handleChangeDisplayName,
   handleKeyDown,
   handleBackgroundChange,
   backgrounds,
@@ -31,7 +31,7 @@ const Profile = ({
             <div className="relative flex-auto">
               <input
                 onChange={handleDisplayNameInputChange}
-                onKeyDown={handleKeyDown(handleUpdateDisplayName)}
+                onKeyDown={handleKeyDown(handleChangeDisplayName)}
                 className="input br3 ph3 pb1 w-100"
                 style={{ paddingTop: '15px' }}
                 type="text"
