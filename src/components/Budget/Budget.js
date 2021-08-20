@@ -43,7 +43,7 @@ const Budget = ({
   clearTooltip,
   toggledExpandNav,
 }) => (
-  <div className="Budget flex justify-center items-start pa4">
+  <div className="Budget flex items-start pa4">
     <WindowBox classlist="flex-grow-1 mh3" toggledExpandNav={toggledExpandNav}>
       <Entries
         budget={budget}

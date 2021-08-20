@@ -16,7 +16,7 @@ const Summary = ({
   clearTooltip,
 }) => {
   return (
-    <div className="pv5 ph4">
+    <div className="Summary pv5 ph4">
       <div className="flex flex-column items-center">
         <h3 className="clr-light-accent fs-subheading fw3 mb0 flex items-center">
           Projected Monthly Income
@@ -104,6 +104,7 @@ const Summary = ({
           )}
         </div>
       </div>
+
       <div className="flex tr">
         <div className="overflow-x-auto ph1" style={{ width: '22.2rem' }}>
           <h3 className="clr-light-accent fs-subheading fw3 mb0">

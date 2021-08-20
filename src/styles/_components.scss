@@ -78,7 +78,7 @@
 // Entries.
 .grid-entry {
   display: grid;
-  grid-template-columns: max-content minmax(40rem, 1fr) repeat(2, 20.8rem) 21.6rem;
+  grid-template-columns: max-content minmax(21.6rem, 1fr) repeat(2, 20.8rem) 21.6rem;
 }
 
 .entries {
@@ -92,7 +92,7 @@
   }
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 965px) {
   div:not(.entries) > .grid-entry {
     display: none;
   }
@@ -102,18 +102,15 @@
       grid-template-columns: 1fr;
 
       span {
-        text-align: end;
         position: relative;
+        text-align: end;
         padding: 0.5rem;
 
         &:before {
           position: absolute;
           left: 0.5rem;
         }
-
-        &:nth-child(1) {
-          text-align: center;
-          width: max-content;
+        &:first-child {
           margin: 0 auto;
         }
         &:nth-child(2):before {
@@ -142,6 +139,12 @@
   max-width: 75vw;
 }
 
+@media (max-width: 450px) {
+  .message {
+    padding: 1rem;
+  }
+}
+
 .message-enter {
   transform: translate(-50%, 100%);
 }
@@ -167,4 +170,66 @@
 }
 .tooltip-exit {
   opacity: 0;
+}
+
+@media (max-width: 1530px) {
+  .Budget {
+    flex-direction: column;
+    align-items: center;
+
+    .bg--window-box:first-child {
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 570px) {
+  .Summary {
+    width: 35.2rem;
+    overflow-x: auto;
+
+    > .flex:nth-child(2) {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+
+      > div:first-child,
+      > div:nth-child(3) {
+        overflow-x: visible;
+        width: auto !important;
+      }
+
+      > div:first-child h2:last-child {
+        margin-bottom: 2rem;
+      }
+
+      > div:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .Entries {
+    > div:first-child {
+      > input {
+        margin-top: 2rem;
+      }
+
+      > div {
+        padding: 2rem 0 0 !important;
+      }
+
+      span.material-icons {
+        top: 0 !important;
+      }
+    }
+
+    time {
+      grid-column-start: 1 !important;
+      margin-right: 2rem;
+    }
+  }
 }

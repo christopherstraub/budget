@@ -51,11 +51,11 @@ const Entries = ({
   clearTooltip,
 }) => {
   return (
-    <div className="pv5 ph4">
+    <div className="Entries pv5 ph4">
       <div className="relative mb5">
         {isEditingBudgetName ? (
           <input
-            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc pv0 ph1"
+            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc pv0 ph1 mt4"
             onFocus={(event) => (event.target.value = budget.name)}
             onBlur={handleUpdateBudgetName}
             type="text"
@@ -126,7 +126,7 @@ const Entries = ({
       </div>
 
       <div className="flex mb4">
-        <div className="relative flex-auto mr3">
+        <div className="relative flex-grow-1 mr3">
           <input
             onChange={handleAddEntryInputChange}
             onKeyDown={handleKeyDown(handleAddEntry)}
@@ -142,6 +142,7 @@ const Entries = ({
         <button
           onClick={handleAddEntry}
           className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
+          style={{ minWidth: 'max-content' }}
         >
           add entry
         </button>
@@ -271,10 +272,17 @@ const Entries = ({
         </div>
       </div>
 
-      <div className="flex justify-end items-end mt4">
+      <div
+        className="mt4 items-end"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
+          justifyItems: 'start',
+        }}
+      >
         <time
-          className="clr-light-accent absolute fs-body ff-mono fw3 ttc tc"
-          style={{ left: '50%', transform: 'translateX(-50%)' }}
+          className="clr-light-accent fs-body ff-mono fw3 ttc tc"
+          style={{ gridColumnStart: '2' }}
         >
           {getLastSavedTimeString(budget.lastSaved)}
         </time>
@@ -283,14 +291,16 @@ const Entries = ({
           <button
             onClick={handleDeleteBudget}
             onBlur={() => handleUserClickedDeleteBudget(false)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto"
+            style={{ gridColumnStart: '3' }}
           >
             confirm delete
           </button>
         ) : (
           <button
             onClick={() => handleUserClickedDeleteBudget(true)}
-            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3"
+            className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto"
+            style={{ gridColumnStart: '3' }}
           >
             delete budget
           </button>
