@@ -57,7 +57,7 @@ const Entries = ({
       <div className="relative mb5">
         {isEditingBudgetName ? (
           <input
-            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc pv0 ph1 mt4"
+            className="clr-light bg-transparent fs-heading fw3 bn w-100 tc pv0 ph1"
             onFocus={(event) => (event.target.value = budget.name)}
             onBlur={handleUpdateBudgetName}
             type="text"
