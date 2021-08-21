@@ -17,12 +17,12 @@ Profile:
 'display-name-changed'
 */
 
-const getMessage = (code, user, formattedBudget) => {
+const getMessage = (code, user, formattedBudget, isGuest) => {
   switch (code) {
     case 'user-logged-in':
       return `Welcome, ${user.displayName}.`;
     case 'budget-saved':
-      return user.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
+      return isGuest ? 'Sign in to save your budgets.' : 'Saved budget.';
     case 'budget-copy-created':
       return 'Created budget copy.';
     case 'budget-name-changed':
@@ -42,7 +42,7 @@ const getMessage = (code, user, formattedBudget) => {
     case 'budgets-max-allowed':
       return "Maximum number of budgets created. That's a lot of budgets!";
     case 'budgets-saved':
-      return user.isGuest
+      return isGuest
         ? 'Sign in to save your budgets.'
         : user.budgets.length === 0
         ? 'Saved budgets.'
@@ -56,7 +56,7 @@ const getMessage = (code, user, formattedBudget) => {
   }
 };
 
-const Message = ({ code, user, formattedBudget }) => (
+const Message = ({ code, user, formattedBudget, isGuest }) => (
   <span
     className="message fixed pointer-events-none clr-light fs-body bg--accent-dark tc mb0 pa4 br3 br--top"
     style={{
@@ -64,7 +64,7 @@ const Message = ({ code, user, formattedBudget }) => (
       boxShadow: 'rgba(0, 0, 0, 0.56) 0px 22px 70px 4px',
     }}
   >
-    {getMessage(code, user, formattedBudget)}
+    {getMessage(code, user, formattedBudget, isGuest)}
   </span>
 );
 

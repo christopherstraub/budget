@@ -59,18 +59,18 @@ const initialState = {
     actualCost: false,
     entryId: null,
   },
+  isLoggedIn: false,
+  isGuest: false,
+  clickedDeleteBudget: false,
+  toggledExpandNav: false,
+  maxBudgets: 100,
+  maxEntries: 100,
   user: {
     id: null,
-    isLoggedIn: false,
-    isGuest: false,
     displayName: 'Guest',
     username: null,
     joined: null,
-    maxBudgets: 100,
-    maxEntries: 100,
     currentBudgetIndex: 0,
-    clickedDeleteBudget: false,
-    toggledExpandNav: false,
     budgetsCreated: 0,
     budgetsDeleted: 0,
   },
@@ -355,7 +355,7 @@ class App extends Component {
   handleAddEntry = () => {
     if (
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries
-        .length === this.state.user.maxEntries
+        .length === this.state.maxEntries
     ) {
       this.setMessage('entries-max-allowed');
       this.clearMessage(6000);
@@ -384,13 +384,10 @@ class App extends Component {
   // Event handler for initial delete button.
   // Changes delete button to confirm delete button.
   handleUserClickedDeleteBudget = (userClicked) => {
-    const user = { ...this.state.user };
     if (userClicked) {
-      user.clickedDeleteBudget = true;
-      this.setState({ user });
+      this.setState({ clickedDeleteBudget: true });
     } else {
-      user.clickedDeleteBudget = false;
-      this.setState({ user });
+      this.setState({ clickedDeleteBudget: false });
     }
   };
 
@@ -406,12 +403,12 @@ class App extends Component {
         this.state.user.currentBudgetIndex >= 1
           ? this.state.user.currentBudgetIndex - 1
           : 0,
-      clickedDeleteBudget: false,
       budgetsDeleted: this.state.user.budgetsDeleted + 1,
     });
     this.setState({
       user,
       route: 'saved-budgets',
+      clickedDeleteBudget: false,
     });
     this.setMessage('budget-deleted');
     this.clearMessage();
@@ -481,7 +478,7 @@ class App extends Component {
   };
 
   handleCreateBudget = () => {
-    if (this.state.user.budgets.length === this.state.user.maxBudgets) {
+    if (this.state.user.budgets.length === this.state.maxBudgets) {
       this.setMessage('budgets-max-allowed');
       this.clearMessage(6000);
       return;
@@ -533,7 +530,7 @@ class App extends Component {
   };
 
   handleCreateBudgetCopy = (index) => {
-    if (this.state.user.budgets.length === this.state.user.maxBudgets) {
+    if (this.state.user.budgets.length === this.state.maxBudgets) {
       this.setMessage('budgets-max-allowed');
       this.clearMessage(6000);
       return;
@@ -559,7 +556,7 @@ class App extends Component {
   };
 
   handleSaveBudgets = () => {
-    if (!this.state.user.isGuest) {
+    if (!this.state.isGuest) {
       const user = cloneDeep(this.state.user);
       user.budgets = user.budgets.map((budget) => ({
         ...budget,
@@ -572,7 +569,7 @@ class App extends Component {
   };
 
   handleSaveBudget = () => {
-    if (!this.state.user.isGuest) {
+    if (!this.state.isGuest) {
       const user = cloneDeep(this.state.user);
       user.budgets = user.budgets.map((budget, index) =>
         index === user.currentBudgetIndex
@@ -915,9 +912,9 @@ class App extends Component {
     };
 
   handleUserToggledExpandNav = () => {
-    const toggledExpandNav = this.state.user.toggledExpandNav ? false : true;
-    const user = { ...this.state.user, toggledExpandNav };
-    this.setState({ user });
+    this.setState({
+      toggledExpandNav: this.state.toggledExpandNav ? false : true,
+    });
   };
 
   handleRouteChange = (route) => {
@@ -931,17 +928,18 @@ class App extends Component {
       route !== this.state.route &&
       route !== 'signup' &&
       route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      !this.state.user.isGuest
+      !this.state.isLoggedIn &&
+      !this.state.isGuest
     ) {
       localStorage.setItem('background', this.state.background.name);
 
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      const user = { ...this.state.user, joined: new Date() };
       this.setState({
         user,
         route,
         input: initialState.input,
         landingMessageCode: null,
+        isLoggedIn: true,
       });
       setTimeout(() => this.setMessage('user-logged-in'), 0);
       this.clearMessage(6000);
@@ -951,15 +949,16 @@ class App extends Component {
       route !== this.state.route &&
       route !== 'signup' &&
       route !== 'signin' &&
-      !this.state.user.isLoggedIn &&
-      this.state.user.isGuest
+      !this.state.isLoggedIn &&
+      this.state.isGuest
     ) {
-      const user = { ...this.state.user, isLoggedIn: true, joined: new Date() };
+      const user = { ...this.state.user, joined: new Date() };
       this.setState({
         user,
         route,
         input: initialState.input,
         landingMessageCode: null,
+        isLoggedIn: true,
       });
       setTimeout(() => this.setMessage('user-logged-in'), 0);
       this.clearMessage(6000);
@@ -968,7 +967,7 @@ class App extends Component {
     else if (
       route !== this.state.route &&
       (route === 'signup' || route === 'signin') &&
-      this.state.user.isLoggedIn
+      this.state.isLoggedIn
     ) {
       this.clearMessage(0);
       this.setState({
@@ -1000,6 +999,11 @@ class App extends Component {
       landingMessageCode,
       input,
       isEditing,
+      isLoggedIn,
+      isGuest,
+      clickedDeleteBudget,
+      toggledExpandNav,
+      maxBudgets,
       user,
       background,
     } = this.state;
@@ -1030,11 +1034,11 @@ class App extends Component {
             <div className="App clr-light ff-primary fs-body">
               <Nav
                 handleRouteChange={this.handleRouteChange}
-                loggedIn={user.isLoggedIn}
-                isGuest={user.isGuest}
+                loggedIn={isLoggedIn}
+                isGuest={isGuest}
                 route={route}
                 handleUserToggledExpandNav={this.handleUserToggledExpandNav}
-                toggledExpandNav={user.toggledExpandNav}
+                toggledExpandNav={toggledExpandNav}
               />
               {route === 'signin' || route === 'signup' ? (
                 <Landing
@@ -1094,11 +1098,11 @@ class App extends Component {
                     this.handleUserClickedDeleteBudget
                   }
                   handleDeleteBudget={this.handleDeleteBudget}
-                  clickedDeleteBudget={user.clickedDeleteBudget}
+                  clickedDeleteBudget={clickedDeleteBudget}
                   input={input}
                   setTooltip={this.setTooltip}
                   clearTooltip={this.clearTooltip}
-                  toggledExpandNav={user.toggledExpandNav}
+                  toggledExpandNav={toggledExpandNav}
                 />
               ) : route === 'saved-budgets' ? (
                 <SavedBudgets
@@ -1108,7 +1112,7 @@ class App extends Component {
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
                   handleKeyDown={this.handleKeyDown}
-                  toggledExpandNav={user.toggledExpandNav}
+                  toggledExpandNav={toggledExpandNav}
                 />
               ) : route === 'profile' ? (
                 <Profile
@@ -1122,14 +1126,14 @@ class App extends Component {
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
                   currentBackground={background}
-                  maxBudgets={user.maxBudgets}
+                  maxBudgets={maxBudgets}
                   savedBudgets={user.budgets.filter(
                     (budget) => budget.lastSaved
                   )}
-                  toggledExpandNav={user.toggledExpandNav}
+                  toggledExpandNav={toggledExpandNav}
                 />
               ) : route === 'about' ? (
-                <About toggledExpandNav={user.toggledExpandNav} />
+                <About toggledExpandNav={toggledExpandNav} />
               ) : null}
               {route === 'signup' || route === 'signin' ? null : (
                 <CSSTransition
@@ -1151,6 +1155,7 @@ class App extends Component {
                     code={message.code}
                     user={user}
                     formattedBudget={formattedBudget}
+                    isGuest={isGuest}
                   />
                 </CSSTransition>
               )}
