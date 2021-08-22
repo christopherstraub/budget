@@ -108,17 +108,24 @@ const Profile = ({
                 </div>
               </div>
 
-              <h6 className="clr-red fs-body mt4">
-                {windowMessageCode === 'password-empty'
-                  ? 'Please enter current password.'
-                  : windowMessageCode === 'new-password-empty'
-                  ? 'Please enter new password.'
-                  : windowMessageCode === 'new-password-length-invalid'
-                  ? `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`
-                  : windowMessageCode === 'credentials-invalid'
-                  ? 'Current password invalid.'
-                  : null}
-              </h6>
+              {windowMessageCode === 'password-empty' ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">
+                  Please enter current password.
+                </h6>
+              ) : windowMessageCode === 'new-password-empty' ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">
+                  Please enter new password.
+                </h6>
+              ) : windowMessageCode === 'new-password-length-invalid' ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">
+                  Password should be between {input.newPassword.minLength} and{' '}
+                  {input.newPassword.maxLength} characters.
+                </h6>
+              ) : windowMessageCode === 'credentials-invalid' ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">
+                  Current password invalid.
+                </h6>
+              ) : null}
             </div>
           )}
 

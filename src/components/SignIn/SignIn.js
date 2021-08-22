@@ -40,13 +40,15 @@ const SignIn = ({
     </div>
 
     {windowMessageCode === 'fields-empty' ? (
-      <h6 className="clr-red fs-body mv4">Username and password required.</h6>
+      <h6 className="clr-red fs-body fw4 mv4">
+        Username and password required.
+      </h6>
     ) : windowMessageCode === 'username-empty' ? (
-      <h6 className="clr-red fs-body mv4">Username required.</h6>
+      <h6 className="clr-red fs-body fw4 mv4">Username required.</h6>
     ) : windowMessageCode === 'password-empty' ? (
-      <h6 className="clr-red fs-body mv4">Password required.</h6>
+      <h6 className="clr-red fs-body fw4 mv4">Password required.</h6>
     ) : windowMessageCode === 'credentials-invalid' ? (
-      <h6 className="clr-red fs-body mv4">Invalid username or password.</h6>
+      <h6 className="clr-red fs-body fw4 mv4">Invalid username or password.</h6>
     ) : null}
 
     <button
