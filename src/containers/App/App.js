@@ -978,7 +978,7 @@ class App extends Component {
   handleKeyDown =
     (callback, code = 'Enter') =>
     (event) => {
-      if (event.target.value && event.code === code) callback();
+      if (event.target.value !== '' && event.code === code) callback();
     };
 
   handleToggledExpandNav = () => {
