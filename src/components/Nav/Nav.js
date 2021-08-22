@@ -3,14 +3,14 @@ import React from 'react';
 import './Nav.scss';
 
 const Nav = ({
+  route,
   handleRouteChange,
   loggedIn,
   isGuest,
-  route,
-  handleUserToggledExpandNav,
+  handleToggledExpandNav,
   toggledExpandNav,
-}) => {
-  return loggedIn ? (
+}) =>
+  loggedIn ? (
     <nav
       className={`flex justify-between pv2 ph5 bg--window-box
     ${toggledExpandNav ? 'expand' : ''}
@@ -25,7 +25,7 @@ const Nav = ({
         </button>
         <button
           className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity selection-transparent"
-          onClick={handleUserToggledExpandNav}
+          onClick={handleToggledExpandNav}
         >
           <span className="bar w-100 bg--light br4"></span>
           <span className="bar w-100 bg--light br4"></span>
@@ -83,6 +83,5 @@ const Nav = ({
       </div>
     </nav>
   ) : null;
-};
 
 export default Nav;

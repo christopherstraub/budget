@@ -5,65 +5,63 @@ const SignIn = ({
   handleUsernameInputChange,
   handlePasswordInputChange,
   handleKeyDown,
-  handleUserSignIn,
-  landingMessageCode,
+  handleSignIn,
+  windowMessageCode,
   input,
-}) => {
-  return (
-    <>
-      <div className="relative">
-        <input
-          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
+}) => (
+  <>
+    <div className="relative mb3">
+      <input
+        className={`input input-indicator br3 pt4 ph3 pb2 w-100
           ${input.username.empty ? 'empty' : ''}
           `}
-          onChange={handleUsernameInputChange}
-          onKeyDown={handleKeyDown(handleUserSignIn)}
-          type="text"
-          name="username"
-          maxLength={input.username.maxLength}
-          required
-        />
-        <span className="floating-label">Username</span>
-      </div>
-      <div className="relative">
-        <input
-          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
+        onChange={handleUsernameInputChange}
+        onKeyDown={handleKeyDown(handleSignIn)}
+        type="text"
+        name="username"
+        maxLength={input.username.maxLength}
+        required
+      />
+      <span className="floating-label">Username</span>
+    </div>
+    <div className="relative mb4">
+      <input
+        className={`input input-indicator br3 pt4 ph3 pb2 w-100
           ${input.password.empty ? 'empty' : ''}
           `}
-          onChange={handlePasswordInputChange}
-          onKeyDown={handleKeyDown(handleUserSignIn)}
-          type="password"
-          name="password"
-          maxLength={input.password.maxLength}
-          required
-        />
-        <span className="floating-label">Password</span>
-      </div>
+        onChange={handlePasswordInputChange}
+        onKeyDown={handleKeyDown(handleSignIn)}
+        type="password"
+        name="password"
+        maxLength={input.password.maxLength}
+        required
+      />
+      <span className="floating-label">Password</span>
+    </div>
 
-      {landingMessageCode === 'fields-empty' ? (
-        <h6 className="clr-red fs-body mt3">Username and password required.</h6>
-      ) : landingMessageCode === 'username-empty' ? (
-        <h6 className="clr-red fs-body mt3">Username required.</h6>
-      ) : landingMessageCode === 'password-empty' ? (
-        <h6 className="clr-red fs-body mt3">Password required.</h6>
-      ) : landingMessageCode === 'credentials-invalid' ? (
-        <h6 className="clr-red fs-body mt3">Invalid username or password.</h6>
-      ) : null}
+    {windowMessageCode === 'fields-empty' ? (
+      <h6 className="clr-red fs-body mv4">Username and password required.</h6>
+    ) : windowMessageCode === 'username-empty' ? (
+      <h6 className="clr-red fs-body mv4">Username required.</h6>
+    ) : windowMessageCode === 'password-empty' ? (
+      <h6 className="clr-red fs-body mv4">Password required.</h6>
+    ) : windowMessageCode === 'credentials-invalid' ? (
+      <h6 className="clr-red fs-body mv4">Invalid username or password.</h6>
+    ) : null}
 
-      <button
-        onClick={handleUserSignIn}
-        className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mv3 w-100"
-      >
-        Sign In
-      </button>
-      <button
-        onClick={() => handleRouteChange('signup')}
-        className="clr-light fs-body fw3 bg-transparent bn pointer mt2 underline-hover"
-      >
-        Don't have an account? <span className="fw6">Sign up</span>.
-      </button>
-    </>
-  );
-};
+    <button
+      onClick={handleSignIn}
+      className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mb3 w-100"
+    >
+      Sign In
+    </button>
+    <button
+      onClick={() => handleRouteChange('signup')}
+      className="clr-light fs-body fw3 bg-transparent bn pointer underline-hover"
+    >
+      Don't have an account? <span className="fw6">Sign up</span>.
+    </button>
+  </>
+);
 
 export default SignIn;

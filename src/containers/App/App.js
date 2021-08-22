@@ -30,22 +30,19 @@ import './App.scss';
 Valid routes:
 'signin', 'signup', 'budget', 'saved-budgets', 'profile', 'about'
 
-Valid landing message codes:
-'fields-empty', 'password-length-invalid', 'credentials-invalid',
-'username-empty', 'password-empty'
+Valid window message codes:
+'fields-empty', 'new-password-length-invalid', 'credentials-invalid',
+'username-empty', 'password-empty', 'new-password-empty'
 */
 
 // Set initial state to be passed into App state.
 const initialState = {
   route: 'signup',
-  message: { code: null, show: false },
-  tooltip: { code: null, show: false, showToLeft: null, custom: null },
-  mousePosition: { x: null, y: null },
-  landingMessageCode: null,
   input: {
     displayName: { value: '', empty: false, maxLength: 50 },
     username: { value: '', empty: false, maxLength: 50 },
     password: { value: '', empty: false, minLength: 6, maxLength: 60 },
+    newPassword: { value: '', empty: false, minLength: 6, maxLength: 60 },
     budgetName: { maxLength: 50 },
     addEntry: { value: '', maxLength: 50 },
     category: { maxLength: 50 },
@@ -59,6 +56,10 @@ const initialState = {
     actualCost: false,
     entryId: null,
   },
+  message: { code: null, show: false },
+  windowMessageCode: null,
+  tooltip: { code: null, show: false, showToLeft: null, custom: null },
+  mousePosition: { x: null, y: null },
   isLoggedIn: false,
   isGuest: false,
   clickedDeleteBudget: false,
@@ -211,21 +212,12 @@ const formatEntries = (entries, formatter) =>
         difference: formatter.format(entry.getDifference()),
       }));
 
-/**
- *
- * @param {string[]} strings Array of strings.
- * @returns {boolean} true if at least one string is falsy (empty) or false
- * if no string is empty.
- */
-const someStringsEmpty = (strings) => strings.some((string) => !string);
-
-/**
- *
- * @param {string[]} strings Array of strings.
- * @returns {boolean} true if all strings are falsy (empty) or false
- * if at least one string is not empty.
- */
-const allStringsEmpty = (strings) => strings.every((string) => !string);
+const getPasswordInputStyle = (password) => {
+  return password.value.length < password.minLength ||
+    password.value.length > password.maxLength
+    ? ''
+    : 'valid';
+};
 
 class App extends Component {
   constructor() {
@@ -309,8 +301,19 @@ class App extends Component {
   };
 
   clearTooltip = () => {
-    const tooltip = { ...this.state.tooltip, show: false };
-    this.setState({ tooltip });
+    const tooltip = {
+      ...this.state.tooltip,
+      code: null,
+      show: false,
+      showToLeft: null,
+      custom: null,
+    };
+    const mousePosition = {
+      ...this.state.mousePosition,
+      x: null,
+      y: null,
+    };
+    this.setState({ tooltip, mousePosition });
   };
 
   // Only filter through backgrounds if selected background is different
@@ -383,7 +386,7 @@ class App extends Component {
 
   // Event handler for initial delete button.
   // Changes delete button to confirm delete button.
-  handleUserClickedDeleteBudget = (userClicked) => {
+  handleClickedDeleteBudget = (userClicked) => {
     if (userClicked) {
       this.setState({ clickedDeleteBudget: true });
     } else {
@@ -608,15 +611,15 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateBudgetName = (event) => {
+  handleBudgetNameChange = (event) => {
     if (
-      this.state.user.budgets[this.state.user.currentBudgetIndex].name !==
-        event.target.value.trim() &&
-      event.target.value.trim()
+      event.target.value.trim() &&
+      event.target.value !==
+        this.state.user.budgets[this.state.user.currentBudgetIndex].name
     ) {
       const user = cloneDeep(this.state.user);
       user.budgets[this.state.user.currentBudgetIndex].name =
-        event.target.value.trim();
+        event.target.value;
       this.setState({ user });
       this.setMessage('budget-name-changed');
       this.clearMessage();
@@ -629,21 +632,18 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateCategory = (entryId, event) => {
+  handleCategoryChange = (entryId, event) => {
     const entry = this.state.user.budgets[
       this.state.user.currentBudgetIndex
     ].entries.filter((entry) => entry.id === entryId);
 
-    if (
-      entry.category !== event.target.value.trim() &&
-      event.target.value.trim()
-    ) {
+    if (event.target.value.trim() && event.target.value !== entry.category) {
       const user = cloneDeep(this.state.user);
       const updatedEntries = user.budgets[
         this.state.user.currentBudgetIndex
       ].entries.map((entry) => {
         if (entry.id === entryId) {
-          entry.category = event.target.value.trim();
+          entry.category = event.target.value;
           return entry;
         }
         return entry;
@@ -655,7 +655,7 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateProjectedCost = (entryId, event) => {
+  handleProjectedCostChange = (entryId, event) => {
     const cost = event.target.value;
 
     // If input is not equal to current state, update state.
@@ -685,7 +685,7 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateActualCost = (entryId, event) => {
+  handleActualCostChange = (entryId, event) => {
     const cost = event.target.value;
 
     // If input is not equal to current state, update state.
@@ -715,7 +715,7 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateProjectedMonthlyIncome = (event) => {
+  handleProjectedMonthlyIncomeChange = (event) => {
     const income = event.target.value;
 
     // If input is not equal to current state, update state.
@@ -740,7 +740,7 @@ class App extends Component {
     this.setState({ isEditing });
   };
 
-  handleUpdateActualMonthlyIncome = (event) => {
+  handleActualMonthlyIncomeChange = (event) => {
     const income = event.target.value;
 
     // If input is not equal to current state, update state.
@@ -779,12 +779,12 @@ class App extends Component {
     this.setState({ input });
   };
 
-  // Change display name if display name input is different from current
-  // display name and display name input is not an empty string.
-  handleChangeDisplayName = () => {
+  // Change display name if input is not empty or whitespace and
+  // different from current display name.
+  handleDisplayNameChange = () => {
     if (
-      this.state.input.displayName.value !== this.state.user.displayName &&
-      this.state.input.displayName.value !== ''
+      this.state.input.displayName.value.trim() &&
+      this.state.input.displayName.value !== this.state.user.displayName
     ) {
       // Clear input and update user display name.
       const input = cloneDeep(this.state.input);
@@ -819,37 +819,55 @@ class App extends Component {
     this.setState({ input });
   };
 
-  handleUserSignUp = () => {
+  handleNewPasswordInputChange = (event) => {
+    const newPassword = {
+      ...this.state.input.newPassword,
+      value: event.target.value,
+      empty: false,
+    };
+    const input = { ...this.state.input, newPassword };
+    this.setState({ input });
+  };
+
+  handlePasswordChange = () => {
+    // New password entered but current password empty.
     if (
-      someStringsEmpty([
-        this.state.input.displayName.value,
-        this.state.input.username.value,
-        this.state.input.password.value,
-      ])
+      this.state.input.newPassword.value &&
+      !this.state.input.password.value
     ) {
-      let input = { ...this.state.input };
-      if (!this.state.input.displayName.value) {
-        const displayName = { ...this.state.input.displayName, empty: true };
-        input.displayName = displayName;
-      } else {
-        const displayName = { ...this.state.input.displayName, empty: false };
-        input.displayName = displayName;
-      }
-      if (!this.state.input.username.value) {
-        const username = { ...this.state.input.username, empty: true };
-        input.username = username;
-      } else {
-        const username = { ...this.state.input.username, empty: false };
-        input.username = username;
-      }
-      if (!this.state.input.password.value) {
-        const password = { ...this.state.input.password, empty: true };
-        input.password = password;
-      } else {
-        const password = { ...this.state.input.password, empty: false };
-        input.password = password;
-      }
-      this.setState({ landingMessageCode: 'fields-empty', input });
+      const password = {
+        ...this.state.input.password,
+        empty: true,
+      };
+      const input = { ...this.state.input, password };
+      this.setState({ input, windowMessageCode: 'password-empty' });
+    }
+    // Current password entered but new password empty.
+    else if (
+      this.state.input.password.value &&
+      !this.state.input.newPassword.value
+    ) {
+      const newPassword = {
+        ...this.state.input.newPassword,
+        empty: true,
+      };
+      const input = { ...this.state.input, newPassword };
+      this.setState({ input, windowMessageCode: 'new-password-empty' });
+    } else if (
+      this.state.input.newPassword.value.length <
+        this.state.input.newPassword.minLength ||
+      this.state.input.newPassword.value.length >
+        this.state.input.newPassword.maxLength
+    ) {
+      const newPassword = {
+        ...this.state.input.newPassword,
+        empty: true,
+      };
+      const input = { ...this.state.input, newPassword };
+      this.setState({
+        input,
+        windowMessageCode: 'new-password-length-invalid',
+      });
     } else if (
       this.state.input.password.value.length <
         this.state.input.password.minLength ||
@@ -861,28 +879,80 @@ class App extends Component {
         empty: true,
       };
       const input = { ...this.state.input, password };
-      this.setState({ landingMessageCode: 'password-length-invalid', input });
-    } else this.setState({ landingMessageCode: null });
+      this.setState({ input, windowMessageCode: 'credentials-invalid' });
+    } else {
+      const input = cloneDeep(this.state.input);
+      input.password.value = '';
+      input.newPassword.value = '';
+      this.setState({ input, windowMessageCode: null });
+      this.setMessage('password-changed');
+      this.clearMessage();
+    }
   };
 
-  handleUserSignIn = () => {
+  handleSignUp = () => {
     if (
-      allStringsEmpty([
-        this.state.input.username.value,
-        this.state.input.password.value,
-      ])
+      !this.state.input.displayName.value.trim() ||
+      !this.state.input.username.value.trim() ||
+      !this.state.input.newPassword.value
+    ) {
+      let input = { ...this.state.input };
+      if (!this.state.input.displayName.value.trim()) {
+        const displayName = { ...this.state.input.displayName, empty: true };
+        input.displayName = displayName;
+      } else {
+        const displayName = { ...this.state.input.displayName, empty: false };
+        input.displayName = displayName;
+      }
+      if (!this.state.input.username.value.trim()) {
+        const username = { ...this.state.input.username, empty: true };
+        input.username = username;
+      } else {
+        const username = { ...this.state.input.username, empty: false };
+        input.username = username;
+      }
+      if (!this.state.input.newPassword.value) {
+        const newPassword = { ...this.state.input.newPassword, empty: true };
+        input.newPassword = newPassword;
+      } else {
+        const newPassword = { ...this.state.input.newPassword, empty: false };
+        input.newPassword = newPassword;
+      }
+      this.setState({ input, windowMessageCode: 'fields-empty' });
+    } else if (
+      this.state.input.newPassword.value.length <
+        this.state.input.newPassword.minLength ||
+      this.state.input.newPassword.value.length >
+        this.state.input.newPassword.maxLength
+    ) {
+      const newPassword = {
+        ...this.state.input.newPassword,
+        empty: true,
+      };
+      const input = { ...this.state.input, newPassword };
+      this.setState({
+        input,
+        windowMessageCode: 'new-password-length-invalid',
+      });
+    } else this.setState({ windowMessageCode: null });
+  };
+
+  handleSignIn = () => {
+    if (
+      !this.state.input.username.value.trim() &&
+      !this.state.input.password.value
     ) {
       const input = cloneDeep(this.state.input);
       input.username.empty = true;
       input.password.empty = true;
-      this.setState({ landingMessageCode: 'fields-empty', input });
-    } else if (!this.state.input.username.value) {
-      this.setState({ landingMessageCode: 'username-empty' });
+      this.setState({ windowMessageCode: 'fields-empty', input });
+    } else if (!this.state.input.username.value.trim()) {
+      this.setState({ windowMessageCode: 'username-empty' });
       const username = { ...this.state.input.username, empty: true };
       const input = { ...this.state.input, username };
       this.setState({ input });
     } else if (!this.state.input.password.value) {
-      this.setState({ landingMessageCode: 'password-empty' });
+      this.setState({ windowMessageCode: 'password-empty' });
       const password = { ...this.state.input.password, empty: true };
       const input = { ...this.state.input, password };
       this.setState({ input });
@@ -892,9 +962,9 @@ class App extends Component {
       this.state.input.password.value.length >
         this.state.input.password.maxLength
     )
-      this.setState({ landingMessageCode: 'credentials-invalid' });
+      this.setState({ windowMessageCode: 'credentials-invalid' });
     else {
-      this.setState({ landingMessageCode: null });
+      this.setState({ windowMessageCode: null });
     }
   };
 
@@ -908,10 +978,10 @@ class App extends Component {
   handleKeyDown =
     (callback, code = 'Enter') =>
     (event) => {
-      if (event.code === code && event.target.value !== '') callback();
+      if (event.target.value && event.code === code) callback();
     };
 
-  handleUserToggledExpandNav = () => {
+  handleToggledExpandNav = () => {
     this.setState({
       toggledExpandNav: this.state.toggledExpandNav ? false : true,
     });
@@ -938,8 +1008,9 @@ class App extends Component {
         user,
         route,
         input: initialState.input,
-        landingMessageCode: null,
+        windowMessageCode: null,
         isLoggedIn: true,
+        isGuest: false,
       });
       setTimeout(() => this.setMessage('user-logged-in'), 0);
       this.clearMessage(6000);
@@ -957,7 +1028,7 @@ class App extends Component {
         user,
         route,
         input: initialState.input,
-        landingMessageCode: null,
+        windowMessageCode: null,
         isLoggedIn: true,
       });
       setTimeout(() => this.setMessage('user-logged-in'), 0);
@@ -970,11 +1041,11 @@ class App extends Component {
       this.state.isLoggedIn
     ) {
       this.clearMessage(0);
-      this.setState({
-        route,
-        input: initialState.input,
-        user: initialState.user,
-      });
+      const state = {
+        ...cloneDeep(initialState),
+        background: this.state.background,
+      };
+      this.setState(state);
     }
     // Reset input and message code when routing between
     // SignIn and SignUp components.
@@ -984,7 +1055,7 @@ class App extends Component {
     )
       this.setState({
         input: initialState.input,
-        landingMessageCode: null,
+        windowMessageCode: null,
         route,
       });
     else if (route !== this.state.route) this.setState({ route });
@@ -996,7 +1067,7 @@ class App extends Component {
       message,
       tooltip,
       mousePosition,
-      landingMessageCode,
+      windowMessageCode,
       input,
       isEditing,
       isLoggedIn,
@@ -1020,12 +1091,7 @@ class App extends Component {
       formatterUnitedStatesDollar
     );
 
-    const {
-      addEntry,
-      projectedMonthlyIncome,
-      actualMonthlyIncome,
-      ...landingInput
-    } = input;
+    const { budgetName, addEntry, category, ...landingInput } = input;
 
     return (
       <>
@@ -1033,11 +1099,11 @@ class App extends Component {
           <BackgroundWrapper background={background}>
             <div className="App clr-light ff-primary fs-body">
               <Nav
+                route={route}
                 handleRouteChange={this.handleRouteChange}
                 loggedIn={isLoggedIn}
                 isGuest={isGuest}
-                route={route}
-                handleUserToggledExpandNav={this.handleUserToggledExpandNav}
+                handleToggledExpandNav={this.handleToggledExpandNav}
                 toggledExpandNav={toggledExpandNav}
               />
               {route === 'signin' || route === 'signup' ? (
@@ -1050,11 +1116,15 @@ class App extends Component {
                   }
                   handleUsernameInputChange={this.handleUsernameInputChange}
                   handlePasswordInputChange={this.handlePasswordInputChange}
+                  handleNewPasswordInputChange={
+                    this.handleNewPasswordInputChange
+                  }
                   handleKeyDown={this.handleKeyDown}
-                  handleUserSignUp={this.handleUserSignUp}
-                  handleUserSignIn={this.handleUserSignIn}
-                  landingMessageCode={landingMessageCode}
+                  handleSignUp={this.handleSignUp}
+                  handleSignIn={this.handleSignIn}
+                  windowMessageCode={windowMessageCode}
                   input={landingInput}
+                  getPasswordInputStyle={getPasswordInputStyle}
                 />
               ) : route === 'budget' ? (
                 <Budget
@@ -1073,12 +1143,12 @@ class App extends Component {
                     isEditing.projectedMonthlyIncome
                   }
                   isEditingActualMonthlyIncome={isEditing.actualMonthlyIncome}
-                  handleUpdateBudgetName={this.handleUpdateBudgetName}
-                  handleUpdateProjectedMonthlyIncome={
-                    this.handleUpdateProjectedMonthlyIncome
+                  handleBudgetNameChange={this.handleBudgetNameChange}
+                  handleProjectedMonthlyIncomeChange={
+                    this.handleProjectedMonthlyIncomeChange
                   }
-                  handleUpdateActualMonthlyIncome={
-                    this.handleUpdateActualMonthlyIncome
+                  handleActualMonthlyIncomeChange={
+                    this.handleActualMonthlyIncomeChange
                   }
                   handleAddEntryInputChange={this.handleAddEntryInputChange}
                   handleKeyDown={this.handleKeyDown}
@@ -1091,12 +1161,10 @@ class App extends Component {
                   isEditingProjectedCost={isEditing.projectedCost}
                   isEditingActualCost={isEditing.actualCost}
                   isEditingEntryId={isEditing.entryId}
-                  handleUpdateCategory={this.handleUpdateCategory}
-                  handleUpdateProjectedCost={this.handleUpdateProjectedCost}
-                  handleUpdateActualCost={this.handleUpdateActualCost}
-                  handleUserClickedDeleteBudget={
-                    this.handleUserClickedDeleteBudget
-                  }
+                  handleCategoryChange={this.handleCategoryChange}
+                  handleProjectedCostChange={this.handleProjectedCostChange}
+                  handleActualCostChange={this.handleActualCostChange}
+                  handleClickedDeleteBudget={this.handleClickedDeleteBudget}
                   handleDeleteBudget={this.handleDeleteBudget}
                   clickedDeleteBudget={clickedDeleteBudget}
                   input={input}
@@ -1117,11 +1185,19 @@ class App extends Component {
               ) : route === 'profile' ? (
                 <Profile
                   user={user}
-                  inputDisplayName={input.displayName.value}
+                  input={input}
+                  windowMessageCode={windowMessageCode}
+                  isGuest={isGuest}
+                  toggledExpandNav={toggledExpandNav}
                   handleDisplayNameInputChange={
                     this.handleDisplayNameInputChange
                   }
-                  handleChangeDisplayName={this.handleChangeDisplayName}
+                  handleDisplayNameChange={this.handleDisplayNameChange}
+                  handlePasswordInputChange={this.handlePasswordInputChange}
+                  handleNewPasswordInputChange={
+                    this.handleNewPasswordInputChange
+                  }
+                  handlePasswordChange={this.handlePasswordChange}
                   handleKeyDown={this.handleKeyDown}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
@@ -1130,7 +1206,7 @@ class App extends Component {
                   savedBudgets={user.budgets.filter(
                     (budget) => budget.lastSaved
                   )}
-                  toggledExpandNav={toggledExpandNav}
+                  getPasswordInputStyle={getPasswordInputStyle}
                 />
               ) : route === 'about' ? (
                 <About toggledExpandNav={toggledExpandNav} />
@@ -1138,12 +1214,7 @@ class App extends Component {
               {route === 'signup' || route === 'signin' ? null : (
                 <CSSTransition
                   in={message.show}
-                  classNames={{
-                    enter: 'message-enter',
-                    enterActive: 'message-enter-active',
-                    exit: 'message-exit',
-                    exitActive: 'message-exit-active',
-                  }}
+                  classNames="message"
                   timeout={500}
                   unmountOnExit
                   onExited={() => {
@@ -1165,20 +1236,6 @@ class App extends Component {
                 classNames="tooltip"
                 timeout={1000}
                 unmountOnExit
-                onExited={() => {
-                  const tooltip = {
-                    ...this.state.tooltip,
-                    code: null,
-                    showToLeft: null,
-                    custom: null,
-                  };
-                  const mousePosition = {
-                    ...this.state.mousePosition,
-                    x: null,
-                    y: null,
-                  };
-                  this.setState({ tooltip, mousePosition });
-                }}
               >
                 <Tooltip tooltip={tooltip} mousePosition={mousePosition} />
               </CSSTransition>

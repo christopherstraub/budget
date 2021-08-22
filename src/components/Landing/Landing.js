@@ -13,13 +13,15 @@ const Landing = ({
   handleDisplayNameInputChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
+  handleNewPasswordInputChange,
   handleKeyDown,
-  handleUserSignUp,
-  handleUserSignIn,
-  landingMessageCode,
+  handleSignUp,
+  handleSignIn,
+  windowMessageCode,
   input,
+  getPasswordInputStyle,
 }) => {
-  const { displayName, ...signInInput } = input;
+  const { displayName, newPassword, ...signInInput } = input;
 
   return (
     <div
@@ -42,11 +44,12 @@ const Landing = ({
             handleRouteChange={handleRouteChange}
             handleDisplayNameInputChange={handleDisplayNameInputChange}
             handleUsernameInputChange={handleUsernameInputChange}
-            handlePasswordInputChange={handlePasswordInputChange}
+            handleNewPasswordInputChange={handleNewPasswordInputChange}
             handleKeyDown={handleKeyDown}
-            handleUserSignUp={handleUserSignUp}
-            landingMessageCode={landingMessageCode}
+            handleSignUp={handleSignUp}
+            windowMessageCode={windowMessageCode}
             input={input}
+            getPasswordInputStyle={getPasswordInputStyle}
           />
         ) : route === 'signin' ? (
           <SignIn
@@ -54,8 +57,8 @@ const Landing = ({
             handleUsernameInputChange={handleUsernameInputChange}
             handlePasswordInputChange={handlePasswordInputChange}
             handleKeyDown={handleKeyDown}
-            handleUserSignIn={handleUserSignIn}
-            landingMessageCode={landingMessageCode}
+            handleSignIn={handleSignIn}
+            windowMessageCode={windowMessageCode}
             input={signInInput}
           />
         ) : null}

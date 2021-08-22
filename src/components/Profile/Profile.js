@@ -4,9 +4,14 @@ import WindowBox from '../WindowBox/WindowBox';
 
 const Profile = ({
   user,
-  inputDisplayName,
+  input,
+  windowMessageCode,
+  isGuest,
   handleDisplayNameInputChange,
-  handleChangeDisplayName,
+  handleDisplayNameChange,
+  handlePasswordInputChange,
+  handleNewPasswordInputChange,
+  handlePasswordChange,
   handleKeyDown,
   handleBackgroundChange,
   backgrounds,
@@ -14,37 +19,19 @@ const Profile = ({
   maxBudgets,
   savedBudgets,
   toggledExpandNav,
-}) => {
-  return (
-    <div className="flex justify-center pa4 tc">
-      <WindowBox classlist="mw7 w-100" toggledExpandNav={toggledExpandNav}>
+  getPasswordInputStyle,
+}) => (
+  <div className="flex justify-center pa4 tc">
+    <div className="w-100" style={{ maxWidth: '42rem' }}>
+      <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
           <h1 className="fs-subheading fw3 text-break">{user.displayName}</h1>
-
           <h2 className="clr-light-accent fs-body fw3 text-break mb5">
             {user.budgets.length}/{maxBudgets} budgets ‧ {savedBudgets.length}{' '}
             saved
           </h2>
 
-          <h2 className="clr-light fs-body fw3 mb3">Change display name</h2>
-          <div className="flex">
-            <div className="relative flex-auto">
-              <input
-                onChange={handleDisplayNameInputChange}
-                onKeyDown={handleKeyDown(handleChangeDisplayName)}
-                className="input br3 ph3 pb1 w-100"
-                style={{ paddingTop: '15px' }}
-                type="text"
-                id="display-name"
-                name="display-name"
-                value={inputDisplayName}
-                required
-              />
-              <span className="floating-label small">New display name</span>
-            </div>
-          </div>
-
-          <div className="mt4">
+          <div className="mb4">
             <h2 className="clr-light fs-body fw3 mb3">Backgrounds</h2>
             <div className="flex flex-wrap justify-center">
               {backgrounds.map((background, index) => (
@@ -59,15 +46,89 @@ const Profile = ({
                 </button>
               ))}
             </div>
-
-            <h2 className="clr-light-accent fs-body fw3 mt5 mb0">
-              Member since {user.joined.toLocaleDateString()}
-            </h2>
           </div>
+
+          <div className="mb4">
+            <h2 className="clr-light fs-body fw3 mb3">Change display name</h2>
+            <div className="flex">
+              <div className="relative flex-grow-1">
+                <input
+                  className="input input-indicator br3 ph3 pb1 w-100"
+                  onChange={handleDisplayNameInputChange}
+                  onKeyDown={handleKeyDown(handleDisplayNameChange)}
+                  style={{ paddingTop: '15px' }}
+                  type="text"
+                  name="display-name"
+                  value={input.displayName.value}
+                  maxLength={input.displayName.maxLength}
+                  required
+                />
+                <span className="floating-label small">New display name</span>
+              </div>
+            </div>
+          </div>
+
+          {isGuest ? null : (
+            <div>
+              <h2 className="clr-light fs-body fw3 mb3">Change password</h2>
+              <div className="flex flex-column">
+                <div className="relative mb3">
+                  <input
+                    className={`input input-indicator br3 ph3 pb1 w-100
+                    ${input.password.empty ? 'empty' : ''}
+                    `}
+                    onChange={handlePasswordInputChange}
+                    onKeyDown={handleKeyDown(handlePasswordChange)}
+                    style={{ paddingTop: '15px' }}
+                    type="password"
+                    name="password"
+                    value={input.password.value}
+                    maxLength={input.password.maxLength}
+                    required
+                  />
+                  <span className="floating-label small">Current password</span>
+                </div>
+
+                <div className="relative">
+                  <input
+                    onChange={handleNewPasswordInputChange}
+                    onKeyDown={handleKeyDown(handlePasswordChange)}
+                    className={`input input-indicator br3 ph3 pb1 w-100
+                  ${input.newPassword.empty ? 'empty' : ''}
+                  ${getPasswordInputStyle(input.newPassword)}
+                  `}
+                    style={{ paddingTop: '15px' }}
+                    type="password"
+                    name="new-password"
+                    value={input.newPassword.value}
+                    maxLength={input.newPassword.maxLength}
+                    required
+                  />
+                  <span className="floating-label small">New password</span>
+                </div>
+              </div>
+
+              <h6 className="clr-red fs-body mt4">
+                {windowMessageCode === 'password-empty'
+                  ? 'Please enter current password.'
+                  : windowMessageCode === 'new-password-empty'
+                  ? 'Please enter new password.'
+                  : windowMessageCode === 'new-password-length-invalid'
+                  ? `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`
+                  : windowMessageCode === 'credentials-invalid'
+                  ? 'Current password invalid.'
+                  : null}
+              </h6>
+            </div>
+          )}
+
+          <h2 className="clr-light-accent fs-body fw3 mt5 mb0">
+            Member since {user.joined.toLocaleDateString()}
+          </h2>
         </div>
       </WindowBox>
     </div>
-  );
-};
+  </div>
+);
 
 export default Profile;

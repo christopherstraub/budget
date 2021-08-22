@@ -27,7 +27,7 @@ const WindowBox = ({ classlist, toggledExpandNav, children }) => {
   const { width, height } = useWindowDimensions();
 
   return (
-    <div className={`bg--window-box br3 ${classlist}`}>
+    <div className={`bg--window-box br3 ${classlist ? classlist : ''}`}>
       <CustomScrollbars
         classlist="bg--accent-light hover-opacity br-pill o-90"
         autoHide

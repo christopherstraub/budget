@@ -1,91 +1,83 @@
 import React from 'react';
 
-const getPasswordInputStyle = (password) => {
-  return password.value.length < password.minLength ||
-    password.value.length > password.maxLength
-    ? ''
-    : 'valid';
-};
-
 const SignUp = ({
   handleRouteChange,
   handleDisplayNameInputChange,
   handleUsernameInputChange,
-  handlePasswordInputChange,
+  handleNewPasswordInputChange,
   handleKeyDown,
-  handleUserSignUp,
-  landingMessageCode,
+  handleSignUp,
+  windowMessageCode,
   input,
-}) => {
-  return (
-    <>
-      <div className="relative">
-        <input
-          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
+  getPasswordInputStyle,
+}) => (
+  <>
+    <div className="relative mb3">
+      <input
+        className={`input input-indicator br3 pt4 ph3 pb2 w-100
           ${input.displayName.empty ? 'empty' : ''}
           `}
-          onChange={handleDisplayNameInputChange}
-          onKeyDown={handleKeyDown(handleUserSignUp)}
-          type="text"
-          name="new-display-name"
-          maxLength={input.displayName.maxLength}
-          required
-        />
-        <span className="floating-label">Display name</span>
-      </div>
-      <div className="relative">
-        <input
-          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
+        onChange={handleDisplayNameInputChange}
+        onKeyDown={handleKeyDown(handleSignUp)}
+        type="text"
+        name="new-display-name"
+        maxLength={input.displayName.maxLength}
+        required
+      />
+      <span className="floating-label">Display name</span>
+    </div>
+    <div className="relative mb3">
+      <input
+        className={`input input-indicator br3 pt4 ph3 pb2 w-100
           ${input.username.empty ? 'empty' : ''}
           `}
-          onChange={handleUsernameInputChange}
-          onKeyDown={handleKeyDown(handleUserSignUp)}
-          type="text"
-          name="new-username"
-          maxLength={input.username.maxLength}
-          required
-        />
-        <span className="floating-label">Username</span>
-      </div>
-      <div className="relative">
-        <input
-          className={`input input-indicator br3 pt4 ph3 pb2 mv2 w-100
-          ${input.password.empty ? 'empty' : ''}
-          ${getPasswordInputStyle(input.password)}
+        onChange={handleUsernameInputChange}
+        onKeyDown={handleKeyDown(handleSignUp)}
+        type="text"
+        name="new-username"
+        maxLength={input.username.maxLength}
+        required
+      />
+      <span className="floating-label">Username</span>
+    </div>
+    <div className="relative mb4">
+      <input
+        className={`input input-indicator br3 pt4 ph3 pb2 w-100
+          ${input.newPassword.empty ? 'empty' : ''}
+          ${getPasswordInputStyle(input.newPassword)}
           `}
-          onChange={handlePasswordInputChange}
-          onKeyDown={handleKeyDown(handleUserSignUp)}
-          type="password"
-          name="new-password"
-          maxLength={input.password.maxLength}
-          required
-        />
-        <span className="floating-label">Password</span>
-      </div>
+        onChange={handleNewPasswordInputChange}
+        onKeyDown={handleKeyDown(handleSignUp)}
+        type="password"
+        name="new-password"
+        maxLength={input.newPassword.maxLength}
+        required
+      />
+      <span className="floating-label">Password</span>
+    </div>
 
-      {landingMessageCode === 'fields-empty' ? (
-        <h6 className="clr-red fs-body mt3">Please fill out all fields.</h6>
-      ) : landingMessageCode === 'password-length-invalid' ? (
-        <h6 className="clr-red fs-body mt3">
-          Password should be between {input.password.minLength} and{' '}
-          {input.password.maxLength} characters.
-        </h6>
-      ) : null}
+    {windowMessageCode === 'fields-empty' ? (
+      <h6 className="clr-red fs-body mv4">Please fill out all fields.</h6>
+    ) : windowMessageCode === 'new-password-length-invalid' ? (
+      <h6 className="clr-red fs-body mv4">
+        Password should be between ${input.newPassword.minLength} and $
+        {input.newPassword.maxLength} characters.
+      </h6>
+    ) : null}
 
-      <button
-        onClick={handleUserSignUp}
-        className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pv3 ph3 mv3 w-100"
-      >
-        Sign Up
-      </button>
-      <button
-        onClick={() => handleRouteChange('signin')}
-        className="clr-light fs-body fw3 bg-transparent bn pointer mt2 underline-hover"
-      >
-        Have an account? <span className="fw6">Sign in</span>.
-      </button>
-    </>
-  );
-};
+    <button
+      onClick={handleSignUp}
+      className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pv3 ph3 mb3 w-100"
+    >
+      Sign Up
+    </button>
+    <button
+      onClick={() => handleRouteChange('signin')}
+      className="clr-light fs-body fw3 bg-transparent bn pointer underline-hover"
+    >
+      Have an account? <span className="fw6">Sign in</span>.
+    </button>
+  </>
+);
 
 export default SignUp;

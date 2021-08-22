@@ -139,16 +139,19 @@
   &.input-indicator {
     border: none;
 
-    &.empty {
-      border-bottom: 4px solid $clr-red;
-      margin-bottom: calc(0.5rem - 4px);
+    &.empty,
+    &:focus:not(.empty),
+    &:focus-visible:not(.empty) {
+      margin-bottom: -4px;
     }
 
-    &:focus,
-    &:focus-visible {
-      border: none;
+    &.empty {
+      border-bottom: 4px solid $clr-red;
+    }
+
+    &:focus:not(.empty),
+    &:focus-visible:not(.empty) {
       border-bottom: 4px solid $clr-accent-light;
-      margin-bottom: calc(0.5rem - 4px);
 
       &.valid {
         border-bottom: 4px solid $clr-light-green;

@@ -11,8 +11,8 @@ const Summary = ({
   editActualMonthlyIncome,
   isEditingProjectedMonthlyIncome,
   isEditingActualMonthlyIncome,
-  handleUpdateProjectedMonthlyIncome,
-  handleUpdateActualMonthlyIncome,
+  handleProjectedMonthlyIncomeChange,
+  handleActualMonthlyIncomeChange,
   handleKeyDown,
   setTooltip,
   clearTooltip,
@@ -47,7 +47,7 @@ const Summary = ({
                   ? budget.projectedMonthlyIncome
                   : '')
               }
-              onBlur={handleUpdateProjectedMonthlyIncome}
+              onBlur={handleProjectedMonthlyIncomeChange}
               type="number"
               placeholder="0"
               step={500}
@@ -90,7 +90,7 @@ const Summary = ({
                   ? budget.actualMonthlyIncome
                   : '')
               }
-              onBlur={handleUpdateActualMonthlyIncome}
+              onBlur={handleActualMonthlyIncomeChange}
               type="number"
               placeholder="0"
               step={500}

@@ -14,7 +14,7 @@ Summary:
 Budgets:
 'budget-created', 'budgets-created-many', 'budgets-max-allowed', 'budgets-saved'
 Profile:
-'display-name-changed'
+'display-name-changed', 'password-changed'
 */
 
 const getMessage = (code, user, formattedBudget, isGuest) => {
@@ -51,6 +51,8 @@ const getMessage = (code, user, formattedBudget, isGuest) => {
         : `Saved ${user.budgets.length} budgets.`;
     case 'display-name-changed':
       return `Display name changed successfully.`;
+    case 'password-changed':
+      return `Password changed successfully.`;
     default:
       return null;
   }

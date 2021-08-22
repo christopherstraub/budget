@@ -18,9 +18,9 @@ const Budget = ({
   isEditingBudgetName,
   isEditingProjectedMonthlyIncome,
   isEditingActualMonthlyIncome,
-  handleUpdateBudgetName,
-  handleUpdateProjectedMonthlyIncome,
-  handleUpdateActualMonthlyIncome,
+  handleBudgetNameChange,
+  handleProjectedMonthlyIncomeChange,
+  handleActualMonthlyIncomeChange,
   handleAddEntryInputChange,
   handleKeyDown,
   handleAddEntry,
@@ -32,12 +32,12 @@ const Budget = ({
   isEditingProjectedCost,
   isEditingActualCost,
   isEditingEntryId,
-  handleUpdateCategory,
-  handleUpdateProjectedCost,
-  handleUpdateActualCost,
+  handleCategoryChange,
+  handleProjectedCostChange,
+  handleActualCostChange,
   handleSaveBudget,
   handleCreateBudgetCopy,
-  handleUserClickedDeleteBudget,
+  handleClickedDeleteBudget,
   handleDeleteBudget,
   clickedDeleteBudget,
   input,
@@ -54,7 +54,7 @@ const Budget = ({
         currentBudgetIndex={currentBudgetIndex}
         editBudgetName={editBudgetName}
         isEditingBudgetName={isEditingBudgetName}
-        handleUpdateBudgetName={handleUpdateBudgetName}
+        handleBudgetNameChange={handleBudgetNameChange}
         handleAddEntryInputChange={handleAddEntryInputChange}
         handleKeyDown={handleKeyDown}
         handleAddEntry={handleAddEntry}
@@ -66,12 +66,12 @@ const Budget = ({
         isEditingProjectedCost={isEditingProjectedCost}
         isEditingActualCost={isEditingActualCost}
         isEditingEntryId={isEditingEntryId}
-        handleUpdateCategory={handleUpdateCategory}
-        handleUpdateProjectedCost={handleUpdateProjectedCost}
-        handleUpdateActualCost={handleUpdateActualCost}
+        handleCategoryChange={handleCategoryChange}
+        handleProjectedCostChange={handleProjectedCostChange}
+        handleActualCostChange={handleActualCostChange}
         handleSaveBudget={handleSaveBudget}
         handleCreateBudgetCopy={handleCreateBudgetCopy}
-        handleUserClickedDeleteBudget={handleUserClickedDeleteBudget}
+        handleClickedDeleteBudget={handleClickedDeleteBudget}
         handleDeleteBudget={handleDeleteBudget}
         clickedDeleteBudget={clickedDeleteBudget}
         input={input}
@@ -88,8 +88,8 @@ const Budget = ({
         editActualMonthlyIncome={editActualMonthlyIncome}
         isEditingProjectedMonthlyIncome={isEditingProjectedMonthlyIncome}
         isEditingActualMonthlyIncome={isEditingActualMonthlyIncome}
-        handleUpdateProjectedMonthlyIncome={handleUpdateProjectedMonthlyIncome}
-        handleUpdateActualMonthlyIncome={handleUpdateActualMonthlyIncome}
+        handleProjectedMonthlyIncomeChange={handleProjectedMonthlyIncomeChange}
+        handleActualMonthlyIncomeChange={handleActualMonthlyIncomeChange}
         handleKeyDown={handleKeyDown}
         setTooltip={setTooltip}
         clearTooltip={clearTooltip}
