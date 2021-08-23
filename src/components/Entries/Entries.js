@@ -288,7 +288,7 @@ const Entries = ({
 
       {clickedDeleteBudget ? (
         <button
-          onClick={handleDeleteBudget}
+          onClick={() => handleDeleteBudget(budget.id)}
           onBlur={() => handleClickedDeleteBudget(false)}
           className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto"
           style={{ gridColumnStart: '3' }}

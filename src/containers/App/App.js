@@ -395,9 +395,9 @@ class App extends Component {
   };
 
   // Event handler for confirm delete button.
-  handleDeleteBudget = () => {
+  handleDeleteBudget = (id) => {
     const filteredBudgets = this.state.user.budgets.filter(
-      (budget, i) => i !== this.state.user.currentBudgetIndex
+      (budget) => budget.id !== id
     );
 
     const user = Object.assign(cloneDeep(this.state.user), {
