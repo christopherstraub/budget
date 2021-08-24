@@ -70,7 +70,7 @@ const initialState = {
     id: null,
     displayName: 'Guest',
     username: null,
-    joined: null,
+    joinDate: null,
     currentBudgetIndex: 0,
     budgetsCreated: 0,
     budgetsDeleted: 0,
@@ -1003,7 +1003,7 @@ class App extends Component {
     ) {
       localStorage.setItem('background', this.state.background.name);
 
-      const user = { ...this.state.user, joined: new Date() };
+      const user = { ...this.state.user, joinDate: new Date() };
       this.setState({
         user,
         route,
@@ -1023,7 +1023,7 @@ class App extends Component {
       !this.state.isLoggedIn &&
       this.state.isGuest
     ) {
-      const user = { ...this.state.user, joined: new Date() };
+      const user = { ...this.state.user, joinDate: new Date() };
       this.setState({
         user,
         route,

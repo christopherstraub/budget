@@ -130,7 +130,7 @@ const Profile = ({
           )}
 
           <h2 className="clr-light-accent fs-body fw3 mt5 mb0">
-            Member since {user.joined.toLocaleDateString()}
+            Member since {user.joinDate.toLocaleDateString()}
           </h2>
         </div>
       </WindowBox>
