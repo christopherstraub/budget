@@ -63,6 +63,10 @@ const SignUp = ({
         Password should be between {input.newPassword.minLength} and{' '}
         {input.newPassword.maxLength} characters.
       </h6>
+    ) : windowMessageCode === 'username-taken' ? (
+      <h6 className="clr-red fs-body fw4 mv4">
+        That username has been taken. Please try another one.
+      </h6>
     ) : null}
 
     <button

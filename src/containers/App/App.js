@@ -32,7 +32,7 @@ Valid routes:
 
 Valid window message codes:
 'fields-empty', 'new-password-length-invalid', 'credentials-invalid',
-'username-empty', 'password-empty', 'new-password-empty'
+'username-taken', 'username-empty', 'password-empty', 'new-password-empty'
 */
 
 // Set initial state to be passed into App state.
