@@ -880,10 +880,23 @@ class App extends Component {
       };
       const input = { ...this.state.input, password };
       this.setState({ input, windowMessageCode: 'credentials-invalid' });
+    } else if (
+      this.state.input.password.value === this.state.input.newPassword.value
+    ) {
+      const password = {
+        ...this.state.input.password,
+        empty: true,
+      };
+      const newPassword = {
+        ...this.state.input.newPassword,
+        empty: true,
+      };
+      const input = { ...this.state.input, password, newPassword };
+      this.setState({ input, windowMessageCode: 'passwords-not-different' });
     } else {
       const input = cloneDeep(this.state.input);
-      input.password.value = '';
-      input.newPassword.value = '';
+      input.password = { ...initialState.input.password };
+      input.newPassword = { ...initialState.input.newPassword };
       this.setState({ input, windowMessageCode: null });
       this.setMessage('password-changed');
       this.clearMessage();

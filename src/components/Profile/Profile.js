@@ -125,6 +125,10 @@ const Profile = ({
                 <h6 className="clr-red fs-body fw4 mt4 mb5">
                   Current password invalid.
                 </h6>
+              ) : windowMessageCode === 'passwords-not-different' ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">
+                  New password must be different from current password.
+                </h6>
               ) : null}
             </div>
           )}
