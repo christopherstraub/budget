@@ -5,12 +5,12 @@ import './Nav.scss';
 const Nav = ({
   route,
   handleRouteChange,
-  loggedIn,
+  isLoggedIn,
   isGuest,
   handleToggledExpandNav,
   toggledExpandNav,
 }) =>
-  loggedIn ? (
+  isLoggedIn ? (
     <nav
       className={`flex justify-between pv2 ph5 bg--window-box
     ${toggledExpandNav ? 'expand' : ''}
