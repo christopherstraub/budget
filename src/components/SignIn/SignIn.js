@@ -49,6 +49,10 @@ const SignIn = ({
       <h6 className="clr-red fs-body fw4 mv4">Password required.</h6>
     ) : windowMessageCode === 'credentials-invalid' ? (
       <h6 className="clr-red fs-body fw4 mv4">Invalid username or password.</h6>
+    ) : windowMessageCode === 'error' ? (
+      <h6 className="clr-red fs-body fw4 mv4">
+        There was a problem signing in. Please try again later.
+      </h6>
     ) : null}
 
     <button
@@ -58,7 +62,7 @@ const SignIn = ({
       Sign In
     </button>
     <button
-      onClick={() => handleRouteChange('signup')}
+      onClick={() => handleRouteChange('sign-up')}
       className="clr-light fs-body fw3 bg-transparent bn pointer underline-hover"
     >
       Don't have an account? <span className="fw6">Sign up</span>.

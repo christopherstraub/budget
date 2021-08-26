@@ -65,7 +65,11 @@ const SignUp = ({
       </h6>
     ) : windowMessageCode === 'username-taken' ? (
       <h6 className="clr-red fs-body fw4 mv4">
-        That username has been taken. Please try another one.
+        That username has already been taken. Please try another one.
+      </h6>
+    ) : windowMessageCode === 'error' ? (
+      <h6 className="clr-red fs-body fw4 mv4">
+        There was a problem signing up. Please try again later.
       </h6>
     ) : null}
 
@@ -76,7 +80,7 @@ const SignUp = ({
       Sign Up
     </button>
     <button
-      onClick={() => handleRouteChange('signin')}
+      onClick={() => handleRouteChange('sign-in')}
       className="clr-light fs-body fw3 bg-transparent bn pointer underline-hover"
     >
       Have an account? <span className="fw6">Sign in</span>.
