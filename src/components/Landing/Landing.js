@@ -39,7 +39,7 @@ const Landing = ({
       </section>
 
       <SignInWrapper handleRouteChange={handleRouteChange}>
-        {route === 'signup' ? (
+        {route === 'sign-up' ? (
           <SignUp
             handleRouteChange={handleRouteChange}
             handleDisplayNameInputChange={handleDisplayNameInputChange}
@@ -51,7 +51,7 @@ const Landing = ({
             input={input}
             getPasswordInputStyle={getPasswordInputStyle}
           />
-        ) : route === 'signin' ? (
+        ) : route === 'sign-in' ? (
           <SignIn
             handleRouteChange={handleRouteChange}
             handleUsernameInputChange={handleUsernameInputChange}

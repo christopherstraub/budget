@@ -67,14 +67,14 @@ const Nav = ({
         </button>
         {isGuest ? (
           <button
-            onClick={() => handleRouteChange('signup')}
+            onClick={() => handleRouteChange('sign-up')}
             className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity selection-transparent"
           >
             sign up
           </button>
         ) : (
           <button
-            onClick={() => handleRouteChange('signin')}
+            onClick={() => handleRouteChange('sign-in')}
             className="clr-light fs-subheading fw3 bg-transparent bn ttc pointer ml4 hover-opacity selection-transparent"
           >
             sign out
