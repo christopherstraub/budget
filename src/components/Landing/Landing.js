@@ -17,7 +17,7 @@ const Landing = ({
   handleKeyDown,
   handleSignUp,
   handleSignIn,
-  windowMessageCode,
+  windowMessage,
   input,
   getPasswordInputStyle,
 }) => {
@@ -47,7 +47,7 @@ const Landing = ({
             handleNewPasswordInputChange={handleNewPasswordInputChange}
             handleKeyDown={handleKeyDown}
             handleSignUp={handleSignUp}
-            windowMessageCode={windowMessageCode}
+            windowMessage={windowMessage}
             input={input}
             getPasswordInputStyle={getPasswordInputStyle}
           />
@@ -58,7 +58,7 @@ const Landing = ({
             handlePasswordInputChange={handlePasswordInputChange}
             handleKeyDown={handleKeyDown}
             handleSignIn={handleSignIn}
-            windowMessageCode={windowMessageCode}
+            windowMessage={windowMessage}
             input={signInInput}
           />
         ) : null}

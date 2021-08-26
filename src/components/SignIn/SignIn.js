@@ -6,7 +6,7 @@ const SignIn = ({
   handlePasswordInputChange,
   handleKeyDown,
   handleSignIn,
-  windowMessageCode,
+  windowMessage,
   input,
 }) => (
   <>
@@ -39,20 +39,8 @@ const SignIn = ({
       <span className="floating-label">Password</span>
     </div>
 
-    {windowMessageCode === 'fields-empty' ? (
-      <h6 className="clr-red fs-body fw4 mv4">
-        Username and password required.
-      </h6>
-    ) : windowMessageCode === 'username-empty' ? (
-      <h6 className="clr-red fs-body fw4 mv4">Username required.</h6>
-    ) : windowMessageCode === 'password-empty' ? (
-      <h6 className="clr-red fs-body fw4 mv4">Password required.</h6>
-    ) : windowMessageCode === 'credentials-invalid' ? (
-      <h6 className="clr-red fs-body fw4 mv4">Invalid username or password.</h6>
-    ) : windowMessageCode === 'error' ? (
-      <h6 className="clr-red fs-body fw4 mv4">
-        There was a problem signing in. Please try again later.
-      </h6>
+    {windowMessage ? (
+      <h6 className="clr-red fs-body fw4 mv4">{windowMessage}</h6>
     ) : null}
 
     <button

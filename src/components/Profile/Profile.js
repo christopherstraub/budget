@@ -5,7 +5,7 @@ import WindowBox from '../WindowBox/WindowBox';
 const Profile = ({
   user,
   input,
-  windowMessageCode,
+  windowMessage,
   isGuest,
   handleDisplayNameInputChange,
   handleDisplayNameChange,
@@ -108,27 +108,8 @@ const Profile = ({
                 </div>
               </div>
 
-              {windowMessageCode === 'password-empty' ? (
-                <h6 className="clr-red fs-body fw4 mt4 mb5">
-                  Please enter current password.
-                </h6>
-              ) : windowMessageCode === 'new-password-empty' ? (
-                <h6 className="clr-red fs-body fw4 mt4 mb5">
-                  Please enter new password.
-                </h6>
-              ) : windowMessageCode === 'new-password-length-invalid' ? (
-                <h6 className="clr-red fs-body fw4 mt4 mb5">
-                  Password should be between {input.newPassword.minLength} and{' '}
-                  {input.newPassword.maxLength} characters.
-                </h6>
-              ) : windowMessageCode === 'credentials-invalid' ? (
-                <h6 className="clr-red fs-body fw4 mt4 mb5">
-                  Current password invalid.
-                </h6>
-              ) : windowMessageCode === 'passwords-not-different' ? (
-                <h6 className="clr-red fs-body fw4 mt4 mb5">
-                  New password must be different from current password.
-                </h6>
+              {windowMessage ? (
+                <h6 className="clr-red fs-body fw4 mt4 mb5">{windowMessage}</h6>
               ) : null}
             </div>
           )}

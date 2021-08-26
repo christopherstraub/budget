@@ -56,9 +56,9 @@ const initialState = {
     actualCost: false,
     entryId: null,
   },
-  message: { code: null, show: false },
-  windowMessageCode: null,
-  tooltip: { code: null, show: false, showToLeft: null, custom: null },
+  message: { value: null, show: false },
+  windowMessage: null,
+  tooltip: { value: null, show: false, showToLeft: null },
   mousePosition: { x: null, y: null },
   isLoggedIn: false,
   isGuest: true,
@@ -138,7 +138,7 @@ const backgrounds = [
 // Intl.NumberFormat object is a constructor that enables language sensitive
 // number formatting.
 // Takes parameters ([locales[, options]]).
-const formatterUnitedStatesDollar = new Intl.NumberFormat('en-US', {
+const formatterUSD = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
@@ -285,8 +285,8 @@ class App extends Component {
     this.setBackgroundFromLocalStorage();
   }
 
-  setMessage = (code) => {
-    const message = { ...this.state.message, code, show: true };
+  setMessage = (value) => {
+    const message = { ...this.state.message, value, show: true };
     this.setState({ message });
   };
 
@@ -303,13 +303,12 @@ class App extends Component {
     }, milliseconds);
   };
 
-  setTooltip = (code, event, custom) => {
+  setTooltip = (value, event, custom) => {
     const tooltip = {
       ...this.state.tooltip,
-      code,
+      value,
       show: true,
       showToLeft: event.clientX / window.innerWidth > 0.5,
-      custom: custom ?? null,
     };
     const mousePosition = {
       ...this.state.mousePosition,
@@ -322,10 +321,9 @@ class App extends Component {
   clearTooltip = () => {
     const tooltip = {
       ...this.state.tooltip,
-      code: null,
+      value: null,
       show: false,
       showToLeft: null,
-      custom: null,
     };
     const mousePosition = {
       ...this.state.mousePosition,
@@ -379,7 +377,7 @@ class App extends Component {
       this.state.user.budgets[this.state.user.currentBudgetIndex].entries
         .length === this.state.maxEntries
     ) {
-      this.setMessage('entries-max-allowed');
+      this.setMessage('Maximum number of entries created.');
       this.clearMessage(6000);
       return;
     }
@@ -430,7 +428,7 @@ class App extends Component {
       route: 'saved-budgets',
       clickedDeleteBudget: false,
     });
-    this.setMessage('budget-deleted');
+    this.setMessage('Deleted budget.');
     this.clearMessage();
   };
 
@@ -484,8 +482,11 @@ class App extends Component {
   handleCreateBudget = () => {
     // Check max budget constraint.
     if (this.state.user.budgets.length === this.state.maxBudgets) {
-      this.setMessage('budgets-max-allowed');
+      this.setMessage(
+        "Maximum number of budgets created. That's a lot of budgets!"
+      );
       this.clearMessage(6000);
+      return;
     }
 
     // If guest, don't make an API call.
@@ -496,10 +497,12 @@ class App extends Component {
       this.setState({ user });
 
       if (this.state.user.budgets.length === 4) {
-        this.setMessage('budgets-created-many');
+        this.setMessage(
+          `${user.budgets.length} budgets! You're a savvy financial planner.`
+        );
         this.clearMessage(5000);
       } else {
-        this.setMessage('budget-created');
+        this.setMessage('Created new budget.');
         this.clearMessage();
       }
 
@@ -523,16 +526,20 @@ class App extends Component {
         this.loadBudget(data);
 
         if (this.state.user.budgets.length === 5) {
-          this.setMessage('budgets-created-many');
+          this.setMessage(
+            `${this.state.user.budgets.length} budgets! You're a savvy financial planner.`
+          );
           this.clearMessage(5000);
         } else {
-          this.setMessage('budget-created');
+          this.setMessage('Created new budget.');
           this.clearMessage();
         }
       })
       .catch((error) => {
         if (this.state.user.budgets.length) {
-          this.setMessage('error-creating-budget');
+          this.setMessage(
+            'There was a problem creating your budget. Please try again later.'
+          );
           this.clearMessage();
         } else return Promise.reject(Error());
       });
@@ -577,7 +584,9 @@ class App extends Component {
 
   handleCreateBudgetCopy = (index) => {
     if (this.state.user.budgets.length === this.state.maxBudgets) {
-      this.setMessage('budgets-max-allowed');
+      this.setMessage(
+        "Maximum number of budgets created. That's a lot of budgets!"
+      );
       this.clearMessage(6000);
       return;
     }
@@ -593,11 +602,13 @@ class App extends Component {
     this.setState({ user });
 
     if (this.state.user.budgets.length === 4) {
-      this.setMessage('budgets-created-many');
+      this.setMessage(
+        `${user.budgets.length} budgets! You're a savvy financial planner.`
+      );
       this.clearMessage(5000);
       return;
     }
-    this.setMessage('budget-copy-created');
+    this.setMessage('Created budget copy.');
     this.clearMessage();
   };
 
@@ -610,7 +621,15 @@ class App extends Component {
       }));
       this.setState({ user });
     }
-    this.setMessage('budgets-saved');
+    this.setMessage(
+      this.state.isGuest
+        ? 'Sign in to save your budgets.'
+        : this.state.user.budgets.length === 0
+        ? 'No budgets to save.'
+        : this.state.user.budgets.length === 1
+        ? 'Saved 1 budget.'
+        : `Saved ${this.state.user.budgets.length} budgets.`
+    );
     this.clearMessage();
   };
 
@@ -624,12 +643,14 @@ class App extends Component {
       );
       this.setState({ user });
     }
-    this.setMessage('budget-saved');
+    this.setMessage(
+      this.state.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.'
+    );
     this.clearMessage();
   };
 
   editBudgetName = () => {
-    if (this.state.tooltip.code === 'edit-budget-name') this.clearTooltip();
+    if (this.state.tooltip.value === 'Edit budget name') this.clearTooltip();
     const isEditing = { ...this.state.isEditing, budgetName: true };
     this.setState({ isEditing });
   };
@@ -664,7 +685,7 @@ class App extends Component {
       user.budgets[this.state.user.currentBudgetIndex].name =
         event.target.value;
       this.setState({ user });
-      this.setMessage('budget-name-changed');
+      this.setMessage('Changed budget name.');
       this.clearMessage();
     }
     const isEditing = {
@@ -773,7 +794,10 @@ class App extends Component {
         Math.round(income * 100) / 100;
 
       this.setState({ user });
-      this.setMessage('projected-monthly-income-updated');
+
+      this.setMessage(
+        `Projected monthly income updated to ${formatterUSD.format(income)}.`
+      );
       this.clearMessage(5000);
     }
     const isEditing = {
@@ -798,7 +822,9 @@ class App extends Component {
         Math.round(income * 100) / 100;
 
       this.setState({ user });
-      this.setMessage('actual-monthly-income-updated');
+      this.setMessage(
+        `Actual monthly income updated to ${formatterUSD.format(income)}.`
+      );
       this.clearMessage(5000);
     }
     const isEditing = { ...this.state.isEditing, actualMonthlyIncome: false };
@@ -837,7 +863,7 @@ class App extends Component {
         displayName: this.state.input.displayName.value,
       };
       this.setState({ input, user });
-      this.setMessage('display-name-changed');
+      this.setMessage('Display name changed successfully.');
       this.clearMessage();
     }
   };
@@ -883,7 +909,7 @@ class App extends Component {
         empty: true,
       };
       const input = { ...this.state.input, password };
-      this.setState({ input, windowMessageCode: 'password-empty' });
+      this.setState({ input, windowMessage: 'Please enter current password.' });
     }
     // Current password entered but new password empty.
     else if (
@@ -895,7 +921,7 @@ class App extends Component {
         empty: true,
       };
       const input = { ...this.state.input, newPassword };
-      this.setState({ input, windowMessageCode: 'new-password-empty' });
+      this.setState({ input, windowMessage: 'Please enter new password.' });
     } else if (
       this.state.input.newPassword.value.length <
         this.state.input.newPassword.minLength ||
@@ -909,7 +935,7 @@ class App extends Component {
       const input = { ...this.state.input, newPassword };
       this.setState({
         input,
-        windowMessageCode: 'new-password-length-invalid',
+        windowMessage: `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`,
       });
     } else if (
       this.state.input.password.value.length <
@@ -922,7 +948,7 @@ class App extends Component {
         empty: true,
       };
       const input = { ...this.state.input, password };
-      this.setState({ input, windowMessageCode: 'credentials-invalid' });
+      this.setState({ input, windowMessage: 'Current password invalid.' });
     } else if (
       this.state.input.password.value === this.state.input.newPassword.value
     ) {
@@ -935,13 +961,16 @@ class App extends Component {
         empty: true,
       };
       const input = { ...this.state.input, password, newPassword };
-      this.setState({ input, windowMessageCode: 'passwords-not-different' });
+      this.setState({
+        input,
+        windowMessage: 'New password must be different from current password.',
+      });
     } else {
       const input = cloneDeep(this.state.input);
       input.password = { ...initialState.input.password };
       input.newPassword = { ...initialState.input.newPassword };
-      this.setState({ input, windowMessageCode: null });
-      this.setMessage('password-changed');
+      this.setState({ input, windowMessage: null });
+      this.setMessage('Password changed successfully.');
       this.clearMessage();
     }
   };
@@ -974,7 +1003,7 @@ class App extends Component {
         const newPassword = { ...this.state.input.newPassword, empty: false };
         input.newPassword = newPassword;
       }
-      this.setState({ input, windowMessageCode: 'fields-empty' });
+      this.setState({ input, windowMessage: 'Please fill out all fields.' });
     } else if (
       this.state.input.newPassword.value.length <
         this.state.input.newPassword.minLength ||
@@ -988,7 +1017,7 @@ class App extends Component {
       const input = { ...this.state.input, newPassword };
       this.setState({
         input,
-        windowMessageCode: 'new-password-length-invalid',
+        windowMessage: `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`,
       });
     } else this.signUp();
   };
@@ -1001,14 +1030,17 @@ class App extends Component {
       const input = cloneDeep(this.state.input);
       input.username.empty = true;
       input.password.empty = true;
-      this.setState({ windowMessageCode: 'fields-empty', input });
+      this.setState({
+        windowMessage: 'Username and password required.',
+        input,
+      });
     } else if (!this.state.input.username.value.trim()) {
-      this.setState({ windowMessageCode: 'username-empty' });
+      this.setState({ windowMessage: 'Username required.' });
       const username = { ...this.state.input.username, empty: true };
       const input = { ...this.state.input, username };
       this.setState({ input });
     } else if (!this.state.input.password.value) {
-      this.setState({ windowMessageCode: 'password-empty' });
+      this.setState({ windowMessage: 'Password required.' });
       const password = { ...this.state.input.password, empty: true };
       const input = { ...this.state.input, password };
       this.setState({ input });
@@ -1018,9 +1050,9 @@ class App extends Component {
       this.state.input.password.value.length >
         this.state.input.password.maxLength
     )
-      this.setState({ windowMessageCode: 'credentials-invalid' });
+      this.setState({ windowMessage: 'Invalid username or password.' });
     else {
-      this.setState({ windowMessageCode: null });
+      this.setState({ windowMessage: null });
     }
   };
 
@@ -1044,16 +1076,26 @@ class App extends Component {
       .then((data) => {
         localStorage.setItem('background', this.state.background.name);
         this.loadUser(data);
-        setTimeout(() => this.setMessage('user-logged-in'), 0);
+        setTimeout(
+          () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
+          0
+        );
         this.clearMessage(6000);
       })
       .catch((error) => {
         if (error.message === 'Conflict') {
           const username = { ...this.state.input.username, empty: true };
           const input = { ...this.state.input, username };
-          this.setState({ input, windowMessageCode: 'username-taken' });
+          this.setState({
+            input,
+            windowMessage:
+              'That username has already been taken. Please try another one.',
+          });
         } else {
-          this.setState({ windowMessageCode: 'error' });
+          this.setState({
+            windowMessage:
+              'There was a problem signing up. Please try again later.',
+          });
         }
       });
   };
@@ -1070,7 +1112,7 @@ class App extends Component {
       },
       route: 'budget',
       input: initialState.input,
-      windowMessageCode: null,
+      windowMessage: null,
       isLoggedIn: true,
       isGuest: false,
     });
@@ -1108,7 +1150,9 @@ class App extends Component {
           this.setState({ route: 'budget' });
         })
         .catch(() => {
-          this.setMessage('error-creating-budget');
+          this.setMessage(
+            'There was a problem creating your budget. Please try again later.'
+          );
           this.clearMessage();
         });
     }
@@ -1125,10 +1169,13 @@ class App extends Component {
         user,
         route,
         input: initialState.input,
-        windowMessageCode: null,
+        windowMessage: null,
         isLoggedIn: true,
       });
-      setTimeout(() => this.setMessage('user-logged-in'), 0);
+      setTimeout(
+        () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
+        0
+      );
       this.clearMessage(6000);
     }
     // Handle guest sign out.
@@ -1147,7 +1194,7 @@ class App extends Component {
     )
       this.setState({
         input: initialState.input,
-        windowMessageCode: null,
+        windowMessage: null,
         route,
       });
     else if (route !== this.state.route) this.setState({ route });
@@ -1159,7 +1206,7 @@ class App extends Component {
       message,
       tooltip,
       mousePosition,
-      windowMessageCode,
+      windowMessage,
       input,
       isEditing,
       isLoggedIn,
@@ -1173,14 +1220,11 @@ class App extends Component {
 
     const formattedBudget =
       user.budgets.length === 0
-        ? formatBudget(this.getNewBudget(), formatterUnitedStatesDollar)
-        : formatBudget(
-            user.budgets[user.currentBudgetIndex],
-            formatterUnitedStatesDollar
-          );
+        ? formatBudget(this.getNewBudget(), formatterUSD)
+        : formatBudget(user.budgets[user.currentBudgetIndex], formatterUSD);
     const formattedEntries = formatEntries(
       user.budgets[user.currentBudgetIndex]?.entries,
-      formatterUnitedStatesDollar
+      formatterUSD
     );
 
     const { budgetName, addEntry, category, ...landingInput } = input;
@@ -1214,7 +1258,7 @@ class App extends Component {
                   handleKeyDown={this.handleKeyDown}
                   handleSignUp={this.handleSignUp}
                   handleSignIn={this.handleSignIn}
-                  windowMessageCode={windowMessageCode}
+                  windowMessage={windowMessage}
                   input={landingInput}
                   getPasswordInputStyle={getPasswordInputStyle}
                 />
@@ -1278,7 +1322,7 @@ class App extends Component {
                 <Profile
                   user={user}
                   input={input}
-                  windowMessageCode={windowMessageCode}
+                  windowMessage={windowMessage}
                   isGuest={isGuest}
                   toggledExpandNav={toggledExpandNav}
                   handleDisplayNameInputChange={
@@ -1310,16 +1354,11 @@ class App extends Component {
                   timeout={500}
                   unmountOnExit
                   onExited={() => {
-                    const message = { ...this.state.message, code: null };
+                    const message = { ...this.state.message, value: null };
                     this.setState({ message });
                   }}
                 >
-                  <Message
-                    code={message.code}
-                    user={user}
-                    formattedBudget={formattedBudget}
-                    isGuest={isGuest}
-                  />
+                  <Message value={message.value} />
                 </CSSTransition>
               )}
 

@@ -7,7 +7,7 @@ const SignUp = ({
   handleNewPasswordInputChange,
   handleKeyDown,
   handleSignUp,
-  windowMessageCode,
+  windowMessage,
   input,
   getPasswordInputStyle,
 }) => (
@@ -56,21 +56,8 @@ const SignUp = ({
       <span className="floating-label">Password</span>
     </div>
 
-    {windowMessageCode === 'fields-empty' ? (
-      <h6 className="clr-red fs-body fw4 mv4">Please fill out all fields.</h6>
-    ) : windowMessageCode === 'new-password-length-invalid' ? (
-      <h6 className="clr-red fs-body fw4 mv4">
-        Password should be between {input.newPassword.minLength} and{' '}
-        {input.newPassword.maxLength} characters.
-      </h6>
-    ) : windowMessageCode === 'username-taken' ? (
-      <h6 className="clr-red fs-body fw4 mv4">
-        That username has already been taken. Please try another one.
-      </h6>
-    ) : windowMessageCode === 'error' ? (
-      <h6 className="clr-red fs-body fw4 mv4">
-        There was a problem signing up. Please try again later.
-      </h6>
+    {windowMessage ? (
+      <h6 className="clr-red fs-body fw4 mv4">{windowMessage}</h6>
     ) : null}
 
     <button

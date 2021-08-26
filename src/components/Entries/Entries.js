@@ -71,7 +71,7 @@ const Entries = ({
             onClick={handleSaveBudget}
             tabIndex="0"
             onKeyDown={handleKeyDown(handleSaveBudget)}
-            onMouseMove={(event) => setTooltip('save-budget', event)}
+            onMouseMove={(event) => setTooltip('Save budget', event)}
             onMouseLeave={clearTooltip}
             style={{
               top: '50%',
@@ -89,7 +89,9 @@ const Entries = ({
             onKeyDown={handleKeyDown(() =>
               handleCreateBudgetCopy(currentBudgetIndex)
             )}
-            onMouseMove={(event) => setTooltip('copy-budget', event)}
+            onMouseMove={(event) =>
+              setTooltip('Create a copy of this budget', event)
+            }
             onMouseLeave={clearTooltip}
             style={{
               top: '50%',
@@ -111,7 +113,7 @@ const Entries = ({
             onClick={editBudgetName}
             tabIndex="0"
             onKeyDown={handleKeyDown(editBudgetName)}
-            onMouseMove={(event) => setTooltip('edit-budget-name', event)}
+            onMouseMove={(event) => setTooltip('Edit budget name', event)}
             onMouseLeave={clearTooltip}
             style={{
               top: '50%',
@@ -184,10 +186,10 @@ const Entries = ({
               tabIndex="0"
               onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
               onMouseMove={(event) =>
-                setTooltip('custom', event, `Delete "${entry.category}"`)
+                setTooltip(`Delete "${entry.category}"`, event)
               }
               onMouseOver={(event) =>
-                setTooltip('custom', event, `Delete "${entry.category}"`)
+                setTooltip(`Delete "${entry.category}"`, event)
               }
               onMouseLeave={clearTooltip}
               onMouseUp={clearTooltip}

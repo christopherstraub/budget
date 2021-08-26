@@ -2,36 +2,8 @@ import React from 'react';
 
 import './Tooltip.scss';
 
-/*  
-Valid tooltip codes:
-'custom' returns tooltip.custom.
-Entries:
-'save-budget', 'copy-budget', 'edit-budget-name'
-Summary:
-'edit-projected-monthly-income', 'edit-actual-monthly-income'
-*/
-
-const getTooltip = (code, custom) => {
-  switch (code) {
-    case 'custom':
-      return custom;
-    case 'save-budget':
-      return 'Save budget';
-    case 'copy-budget':
-      return 'Create a copy of this budget';
-    case 'edit-budget-name':
-      return 'Edit budget name';
-    case 'edit-projected-monthly-income':
-      return 'Edit projected monthly income';
-    case 'edit-actual-monthly-income':
-      return 'Edit actual monthly income';
-    default:
-      return null;
-  }
-};
-
 const Tooltip = ({ tooltip, mousePosition }) =>
-  tooltip.code ? (
+  tooltip.value ? (
     <span
       className={`fixed pointer-events-none clr-light fs-body bg--accent-dark tc mb0 pa3 br3
     ${tooltip.showToLeft ? 'arrow-right' : 'arrow-left'}
@@ -48,7 +20,7 @@ const Tooltip = ({ tooltip, mousePosition }) =>
         zIndex: '999',
       }}
     >
-      {getTooltip(tooltip.code, tooltip.custom)}
+      {tooltip.value}
     </span>
   ) : null;
 
