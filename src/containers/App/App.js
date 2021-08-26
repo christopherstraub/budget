@@ -29,10 +29,6 @@ import './App.scss';
 /*
 Valid routes:
 'sign-in', 'sign-up', 'budget', 'saved-budgets', 'profile', 'about'
-
-Valid window message codes:
-'fields-empty', 'new-password-length-invalid', 'credentials-invalid',
-'username-taken', 'username-empty', 'password-empty', 'new-password-empty'
 */
 
 // Set initial state to be passed into App state.
