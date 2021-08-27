@@ -1051,9 +1051,7 @@ class App extends Component {
         this.state.input.password.maxLength
     )
       this.setState({ windowMessage: 'Invalid username or password.' });
-    else {
-      this.setState({ windowMessage: null });
-    }
+    else this.signIn();
   };
 
   signUp = () => {
@@ -1091,16 +1089,15 @@ class App extends Component {
             windowMessage:
               'That username has already been taken. Please try another one.',
           });
-        } else {
+        } else
           this.setState({
             windowMessage:
               'There was a problem signing up. Please try again later.',
           });
-        }
       });
   };
 
-  loadUser = (data) => {
+  loadUser = (data) =>
     this.setState({
       user: {
         id: data.id,
@@ -1116,6 +1113,41 @@ class App extends Component {
       isLoggedIn: true,
       isGuest: false,
     });
+
+  signIn = () => {
+    fetch('http://localhost:3001/sign-in', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: this.state.input.username.value,
+        password: this.state.input.password.value,
+      }),
+    })
+      .then((response) =>
+        response.status === 400
+          ? Promise.reject(Error('Bad Request'))
+          : response.json()
+      )
+      .then((data) => {
+        localStorage.setItem('background', this.state.background.name);
+        this.loadUser(data);
+        setTimeout(
+          () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
+          0
+        );
+        this.clearMessage(6000);
+      })
+      .catch((error) => {
+        if (error.message === 'Bad Request')
+          this.setState({
+            windowMessage: 'Invalid username or password.',
+          });
+        else
+          this.setState({
+            windowMessage:
+              'There was a problem signing in. Please try again later.',
+          });
+      });
   };
 
   /**
