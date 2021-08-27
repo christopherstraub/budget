@@ -52,9 +52,12 @@ const initialState = {
     actualCost: false,
     entryId: null,
   },
-  message: { value: null, show: false },
+  message: null,
+  showMessage: false,
+  tooltip: null,
+  showTooltipRight: false,
+  showTooltipLeft: false,
   windowMessage: null,
-  tooltip: { value: null, show: false, showToLeft: null },
   mousePosition: { x: null, y: null },
   isLoggedIn: false,
   isGuest: true,
@@ -281,10 +284,7 @@ class App extends Component {
     this.setBackgroundFromLocalStorage();
   }
 
-  setMessage = (value) => {
-    const message = { ...this.state.message, value, show: true };
-    this.setState({ message });
-  };
+  setMessage = (message) => this.setState({ message, showMessage: true });
 
   /**
    *
@@ -293,40 +293,44 @@ class App extends Component {
   clearMessage = (milliseconds = 4000) => {
     if (this.messageTimeout) clearTimeout(this.messageTimeout);
 
-    this.messageTimeout = setTimeout(() => {
-      const message = { ...this.state.message, show: false };
-      this.setState({ message });
-    }, milliseconds);
+    this.messageTimeout = setTimeout(
+      () => this.setState({ showMessage: false }),
+      milliseconds
+    );
   };
 
-  setTooltip = (value, event, custom) => {
-    const tooltip = {
-      ...this.state.tooltip,
-      value,
-      show: true,
-      showToLeft: event.clientX / window.innerWidth > 0.5,
-    };
+  setTooltip = (tooltip, event) => {
+    /* If event.clientX / window.innerWidth < 0.5, cursor is on
+    left half of screen and tooltip will show to the right of cursor.
+    Otherwise, tooltip will show to the left of cursor. */
+    const showTooltipRight = event.clientX / window.innerWidth < 0.5;
+
     const mousePosition = {
       ...this.state.mousePosition,
       x: event.clientX,
       y: event.clientY,
     };
-    this.setState({ tooltip, mousePosition });
+
+    this.setState({
+      tooltip,
+      showTooltipRight,
+      showTooltipLeft: !showTooltipRight,
+      mousePosition,
+    });
   };
 
   clearTooltip = () => {
-    const tooltip = {
-      ...this.state.tooltip,
-      value: null,
-      show: false,
-      showToLeft: null,
-    };
     const mousePosition = {
       ...this.state.mousePosition,
       x: null,
       y: null,
     };
-    this.setState({ tooltip, mousePosition });
+
+    this.setState({
+      showTooltipRight: false,
+      showTooltipLeft: false,
+      mousePosition,
+    });
   };
 
   // Only filter through backgrounds if selected background is different
@@ -1199,12 +1203,15 @@ class App extends Component {
   render() {
     const {
       route,
-      message,
-      tooltip,
-      mousePosition,
-      windowMessage,
       input,
       isEditing,
+      message,
+      showMessage,
+      tooltip,
+      showTooltipRight,
+      showTooltipLeft,
+      windowMessage,
+      mousePosition,
       isLoggedIn,
       isGuest,
       clickedDeleteBudget,
@@ -1345,26 +1352,27 @@ class App extends Component {
               ) : null}
               {route === 'sign-up' || route === 'sign-in' ? null : (
                 <CSSTransition
-                  in={message.show}
+                  in={showMessage}
                   classNames="message"
                   timeout={500}
                   unmountOnExit
-                  onExited={() => {
-                    const message = { ...this.state.message, value: null };
-                    this.setState({ message });
-                  }}
+                  onExited={() => this.setState({ message: null })}
                 >
-                  <Message value={message.value} />
+                  <Message message={message} />
                 </CSSTransition>
               )}
 
               <CSSTransition
-                in={tooltip.show}
+                in={showTooltipRight || showTooltipLeft}
                 classNames="tooltip"
                 timeout={1000}
                 unmountOnExit
               >
-                <Tooltip tooltip={tooltip} mousePosition={mousePosition} />
+                <Tooltip
+                  tooltip={tooltip}
+                  showTooltipLeft={showTooltipLeft}
+                  mousePosition={mousePosition}
+                />
               </CSSTransition>
             </div>
           </BackgroundWrapper>

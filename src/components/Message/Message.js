@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Message.scss';
 
-const Message = ({ value }) => (
+const Message = ({ message }) => (
   <span
     className="message fixed pointer-events-none clr-light fs-body bg--accent-dark tc mb0 pa4 br3 br--top"
     style={{
@@ -10,7 +10,7 @@ const Message = ({ value }) => (
       boxShadow: 'rgba(0, 0, 0, 0.56) 0px 22px 70px 4px',
     }}
   >
-    {value}
+    {message}
   </span>
 );
 
