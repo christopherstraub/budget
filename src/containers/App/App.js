@@ -412,25 +412,66 @@ class App extends Component {
 
   // Event handler for confirm delete button.
   handleDeleteBudget = (id) => {
-    const filteredBudgets = this.state.user.budgets.filter(
-      (budget) => budget.id !== id
-    );
+    if (this.state.isGuest) {
+      const filteredBudgets = this.state.user.budgets.filter(
+        (budget) => budget.id !== id
+      );
 
-    const user = Object.assign(cloneDeep(this.state.user), {
-      budgets: filteredBudgets,
-      currentBudgetIndex:
-        this.state.user.currentBudgetIndex >= 1
-          ? this.state.user.currentBudgetIndex - 1
-          : 0,
-    });
-    this.setState({
-      user,
-      route: 'saved-budgets',
-      clickedDeleteBudget: false,
-    });
-    this.setMessage('Deleted budget.');
-    this.clearMessage();
+      const user = Object.assign(cloneDeep(this.state.user), {
+        budgets: filteredBudgets,
+        currentBudgetIndex:
+          this.state.user.currentBudgetIndex >= 1
+            ? this.state.user.currentBudgetIndex - 1
+            : 0,
+      });
+      this.setState({
+        user,
+        route: 'saved-budgets',
+        clickedDeleteBudget: false,
+      });
+      this.setMessage('Deleted budget.');
+      this.clearMessage();
+    } else this.deleteBudget(id);
   };
+
+  deleteBudget = (id) =>
+    fetch('http://localhost:3001/budget', {
+      method: 'delete',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_user_id: this.state.user.id,
+        id,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        const filteredBudgets = this.state.user.budgets.filter(
+          (budget) => budget.id !== data.id
+        );
+
+        const user = Object.assign(cloneDeep(this.state.user), {
+          budgets: filteredBudgets,
+          currentBudgetIndex:
+            this.state.user.currentBudgetIndex >= 1
+              ? this.state.user.currentBudgetIndex - 1
+              : 0,
+        });
+        this.setState({
+          user,
+          route: 'saved-budgets',
+          clickedDeleteBudget: false,
+        });
+        this.setMessage('Deleted budget.');
+        this.clearMessage();
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem deleting your budget. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
 
   // Name depends on current date and current number of budgets.
   getNewBudgetName = () => {
@@ -1092,7 +1133,7 @@ class App extends Component {
         } else
           this.setState({
             windowMessage:
-              'There was a problem signing up. Please try again later.',
+              'There was a problem signing you up. Please try again later.',
           });
       });
   };
@@ -1145,7 +1186,7 @@ class App extends Component {
         else
           this.setState({
             windowMessage:
-              'There was a problem signing in. Please try again later.',
+              'There was a problem signing you in. Please try again later.',
           });
       });
   };
