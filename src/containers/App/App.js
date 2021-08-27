@@ -650,7 +650,7 @@ class App extends Component {
   };
 
   editBudgetName = () => {
-    if (this.state.tooltip.value === 'Edit budget name') this.clearTooltip();
+    this.clearTooltip();
     const isEditing = { ...this.state.isEditing, budgetName: true };
     this.setState({ isEditing });
   };
@@ -1367,6 +1367,7 @@ class App extends Component {
                 classNames="tooltip"
                 timeout={1000}
                 unmountOnExit
+                onExited={() => this.setState({ tooltip: null })}
               >
                 <Tooltip
                   tooltip={tooltip}
