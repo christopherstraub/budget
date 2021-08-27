@@ -1150,6 +1150,24 @@ class App extends Component {
       });
   };
 
+  signOut = () => {
+    // Save user's current budget index.
+    fetch('http://localhost:3001/sign-out', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        current_budget_index: this.state.user.currentBudgetIndex,
+      }),
+    });
+
+    this.setState({
+      ...initialState,
+      background: this.state.background,
+      route: 'sign-in',
+    });
+  };
+
   /**
    *
    * @param {requestCallback} callback The function to be called upon
@@ -1213,14 +1231,21 @@ class App extends Component {
     // Handle guest sign out.
     else if (
       route !== this.state.route &&
-      (route === 'sign-up' || route === 'sign-in') &&
+      route === 'sign-up' &&
       this.state.isLoggedIn &&
       this.state.isGuest
     )
       this.setState({ ...initialState, background: this.state.background });
-    // Reset input and message code when routing between
-    // SignIn and SignUp components.
+    // Handle user sign out.
     else if (
+      route !== this.state.route &&
+      route === 'sign-in' &&
+      this.state.isLoggedIn &&
+      !this.state.isGuest
+    )
+      this.signOut();
+    /* Reset input and message code when routing between
+    SignIn and SignUp components. */ else if (
       (route === 'sign-in' || route === 'sign-up') &&
       (this.state.route === 'sign-in' || this.state.route === 'sign-up')
     )
