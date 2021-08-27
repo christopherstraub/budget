@@ -577,12 +577,10 @@ class App extends Component {
         }
       })
       .catch((error) => {
-        if (this.state.user.budgets.length) {
-          this.setMessage(
-            'There was a problem creating your budget. Please try again later.'
-          );
-          this.clearMessage();
-        } else return Promise.reject(Error());
+        this.setMessage(
+          'There was a problem creating your budget. Please try again later.'
+        );
+        this.clearMessage(6000);
       });
 
   loadBudget = (data) => {
@@ -892,22 +890,58 @@ class App extends Component {
   // Change display name if input is not empty or whitespace and
   // different from current display name.
   handleDisplayNameChange = () => {
-    if (
-      this.state.input.displayName.value.trim() &&
-      this.state.input.displayName.value !== this.state.user.displayName
-    ) {
-      // Clear input and update user display name.
-      const input = cloneDeep(this.state.input);
-      input.displayName.value = '';
-      const user = {
-        ...this.state.user,
-        displayName: this.state.input.displayName.value,
-      };
-      this.setState({ input, user });
-      this.setMessage('Display name changed successfully.');
-      this.clearMessage();
-    }
+    if (this.state.isGuest) {
+      if (
+        this.state.input.displayName.value.trim() &&
+        this.state.input.displayName.value !== this.state.user.displayName
+      ) {
+        // Clear input and update user display name.
+        const input = cloneDeep(this.state.input);
+        input.displayName.value = '';
+        const user = {
+          ...this.state.user,
+          displayName: this.state.input.displayName.value,
+        };
+        this.setState({ input, user });
+        this.setMessage('Display name changed successfully.');
+        this.clearMessage();
+      }
+    } else this.changeDisplayName();
   };
+
+  changeDisplayName = () =>
+    fetch('http://localhost:3001/display-name', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        display_name: this.state.input.displayName.value,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        const { display_name: displayName } = data;
+        if (displayName.trim() && displayName !== this.state.user.displayName) {
+          // Clear input and update user display name.
+          const input = cloneDeep(this.state.input);
+          input.displayName.value = '';
+          const user = {
+            ...this.state.user,
+            displayName: this.state.input.displayName.value,
+          };
+          this.setState({ input, user });
+          this.setMessage('Display name changed successfully.');
+          this.clearMessage();
+        }
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem changing your display name. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
 
   handleUsernameInputChange = (event) => {
     const username = {
@@ -1095,7 +1129,7 @@ class App extends Component {
     else this.signIn();
   };
 
-  signUp = () => {
+  signUp = () =>
     fetch('http://localhost:3001/sign-up', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -1136,7 +1170,6 @@ class App extends Component {
               'There was a problem signing you up. Please try again later.',
           });
       });
-  };
 
   loadUser = (data) =>
     this.setState({
@@ -1155,7 +1188,7 @@ class App extends Component {
       isGuest: false,
     });
 
-  signIn = () => {
+  signIn = () =>
     fetch('http://localhost:3001/sign-in', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -1189,7 +1222,6 @@ class App extends Component {
               'There was a problem signing you in. Please try again later.',
           });
       });
-  };
 
   signOut = () => {
     // Save user's current budget index.
@@ -1230,23 +1262,15 @@ class App extends Component {
 
   handleRouteChange = (route) => {
     /*
-    Automatically create a budget if user routes to 'budget' with no budgets.
-    Change route after budget has loaded (handleCreateBudget returns a fetch
-    request if user is not a guest or a resolved promise otherwise to make the
-    function thenable.
+    Automatically create a budget if user routes to 'budget' with 0 budgets.
+    Only route to 'budget' if budget successfully loads or is created
+    (handleCreateBudget returns a fetch request if user is not a guest or a
+    resolved promise otherwise to make the function thenable).
     */
-    if (route === 'budget' && this.state.user.budgets.length === 0) {
-      this.handleCreateBudget()
-        .then(() => {
-          this.setState({ route: 'budget' });
-        })
-        .catch(() => {
-          this.setMessage(
-            'There was a problem creating your budget. Please try again later.'
-          );
-          this.clearMessage();
-        });
-    }
+    if (route === 'budget' && !this.state.user.budgets.length)
+      this.handleCreateBudget().then(() =>
+        this.state.user.budgets.length ? this.setState({ route }) : null
+      );
     // Handle guest sign in.
     else if (
       route !== this.state.route &&
