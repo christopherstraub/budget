@@ -509,7 +509,7 @@ class App extends Component {
     actualMonthlyIncome: Number(budget.actual_monthly_income),
     ...budgetMethods,
     entriesCreated: Number(budget.entries_created),
-    entries: defaultEntries.map((entry) => ({ ...entry, ...entryMethods })),
+    entries: budget.entries.map((entry) => ({ ...entry, ...entryMethods })),
   });
 
   // Event handler for view budget link.
@@ -720,6 +720,7 @@ class App extends Component {
         name: budget.name,
         projected_monthly_income: budget.projectedMonthlyIncome,
         actual_monthly_income: budget.actualMonthlyIncome,
+        entries_created: budget.entriesCreated,
         entries: budget.entries,
       }),
     })
