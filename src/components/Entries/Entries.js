@@ -66,7 +66,7 @@ const Entries = ({
       ) : (
         <div style={{ padding: '0 12rem' }}>
           <span
-            className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr4"
+            className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
             onClick={() => handleSaveBudget(budget)}
             tabIndex="0"
             onKeyDown={handleKeyDown(() => handleSaveBudget(budget))}
@@ -82,7 +82,7 @@ const Entries = ({
             save
           </span>
           <span
-            className="material-icons absolute BudgetCopyuser-select-none pointer clr-accent-light hover-opacity mr3"
+            className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
             onClick={() => handleCreateBudgetCopy(budget)}
             tabIndex="0"
             onKeyDown={handleKeyDown(() => handleCreateBudgetCopy(budget))}
