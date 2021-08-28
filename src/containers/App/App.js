@@ -551,6 +551,22 @@ class App extends Component {
     } else return this.createBudget();
   };
 
+  loadBudget = (data) =>
+    this.setState({
+      user: {
+        ...this.state.user,
+        budgets: [...this.state.user.budgets, this.getBudgetFromData(data)],
+      },
+    });
+
+  loadBudgets = (data) =>
+    this.setState({
+      user: {
+        ...this.state.user,
+        budgets: data.map((budget) => this.getBudgetFromData(budget)),
+      },
+    });
+
   createBudget = () =>
     fetch('http://localhost:3001/budget', {
       method: 'post',
@@ -582,12 +598,6 @@ class App extends Component {
         );
         this.clearMessage(6000);
       });
-
-  loadBudget = (data) => {
-    const user = cloneDeep(this.state.user);
-    user.budgets.push(this.getBudgetFromData(data));
-    this.setState({ user });
-  };
 
   /**
    *
@@ -652,25 +662,43 @@ class App extends Component {
   };
 
   handleSaveBudgets = () => {
-    if (!this.state.isGuest) {
-      const user = cloneDeep(this.state.user);
-      user.budgets = user.budgets.map((budget) => ({
-        ...budget,
-        lastSaved: new Date(),
-      }));
-      this.setState({ user });
-    }
-    this.setMessage(
-      this.state.isGuest
-        ? 'Sign in to save your budgets.'
-        : this.state.user.budgets.length === 0
-        ? 'No budgets to save.'
-        : this.state.user.budgets.length === 1
-        ? 'Saved 1 budget.'
-        : `Saved ${this.state.user.budgets.length} budgets.`
-    );
-    this.clearMessage();
+    if (this.state.isGuest) {
+      this.setMessage('Sign in to save your budgets.');
+      this.clearMessage();
+    } else if (!this.state.user.budgets.length) {
+      this.setMessage('No budgets to save.');
+      this.clearMessage();
+    } else this.saveBudgets();
   };
+
+  saveBudgets = () =>
+    fetch('http://localhost:3001/budgets', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_user_id: this.state.user.id,
+        budgets: this.state.user.budgets,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        this.loadBudgets(data);
+
+        this.setMessage(
+          data.length === 1
+            ? 'Saved 1 budget.'
+            : `Saved ${data.length} budgets.`
+        );
+        this.clearMessage();
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem saving your budgets. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
 
   handleSaveBudget = (id) => {
     if (this.state.isGuest) {
@@ -1191,6 +1219,23 @@ class App extends Component {
     else this.signIn();
   };
 
+  loadUser = (data) =>
+    this.setState({
+      user: {
+        id: data.id,
+        username: data.username,
+        displayName: data.display_name,
+        joinDate: new Date(data.join_date),
+        currentBudgetIndex: data.current_budget_index,
+        budgets: data.budgets.map((budget) => this.getBudgetFromData(budget)),
+      },
+      route: data.budgets.length ? 'budget' : 'saved-budgets',
+      input: initialState.input,
+      windowMessage: null,
+      isLoggedIn: true,
+      isGuest: false,
+    });
+
   signUp = () =>
     fetch('http://localhost:3001/sign-up', {
       method: 'post',
@@ -1232,23 +1277,6 @@ class App extends Component {
               'There was a problem signing you up. Please try again later.',
           });
       });
-
-  loadUser = (data) =>
-    this.setState({
-      user: {
-        id: data.id,
-        username: data.username,
-        displayName: data.display_name,
-        joinDate: new Date(data.join_date),
-        currentBudgetIndex: data.current_budget_index,
-        budgets: data.budgets.map((budget) => this.getBudgetFromData(budget)),
-      },
-      route: data.budgets.length ? 'budget' : 'saved-budgets',
-      input: initialState.input,
-      windowMessage: null,
-      isLoggedIn: true,
-      isGuest: false,
-    });
 
   signIn = () =>
     fetch('http://localhost:3001/sign-in', {
