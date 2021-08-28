@@ -1040,15 +1040,49 @@ class App extends Component {
         input,
         windowMessage: 'New password must be different from current password.',
       });
-    } else {
-      const input = cloneDeep(this.state.input);
-      input.password = { ...initialState.input.password };
-      input.newPassword = { ...initialState.input.newPassword };
-      this.setState({ input, windowMessage: null });
-      this.setMessage('Password changed successfully.');
-      this.clearMessage();
-    }
+    } else this.changePassword();
   };
+
+  changePassword = () =>
+    fetch('http://localhost:3001/password', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        password: this.state.input.password.value,
+        new_password: this.state.input.newPassword.value,
+      }),
+    })
+      .then((response) =>
+        response.status === 401
+          ? Promise.reject(Error('Unauthorized'))
+          : response.status === 400
+          ? Promise.reject(Error())
+          : response
+      )
+      .then(() => {
+        const input = cloneDeep(this.state.input);
+        input.password = { ...initialState.input.password };
+        input.newPassword = { ...initialState.input.newPassword };
+        this.setState({ input, windowMessage: null });
+        this.setMessage('Password changed successfully.');
+        this.clearMessage(6000);
+      })
+      .catch((error) => {
+        if (error.message === 'Unauthorized') {
+          const password = {
+            ...this.state.input.password,
+            empty: true,
+          };
+          const input = { ...this.state.input, password };
+          this.setState({ input, windowMessage: 'Current password invalid.' });
+        } else {
+          this.setMessage(
+            'There was a problem changing your password. Please try again later.'
+          );
+          this.clearMessage(6000);
+        }
+      });
 
   handleSignUp = () => {
     if (
