@@ -13,7 +13,10 @@ const SavedBudgets = ({
 }) => {
   return (
     <div className="flex justify-center pa4 tc">
-      <div className="w-100" style={{ maxWidth: '42rem' }}>
+      <div
+        className="w-100"
+        style={{ minWidth: '42rem', maxWidth: 'max-content' }}
+      >
         <WindowBox toggledExpandNav={toggledExpandNav}>
           <div className="pv5 ph4">
             <h1 className="clr-light fs-subheading fw3 mb3 text-break">
