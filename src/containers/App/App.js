@@ -504,7 +504,7 @@ class App extends Component {
   getBudgetFromData = (budget) => ({
     id: budget.id,
     name: budget.name,
-    lastSaved: budget.last_saved,
+    lastSaved: budget.last_saved ? new Date(budget.last_saved) : null,
     projectedMonthlyIncome: Number(budget.projected_monthly_income),
     actualMonthlyIncome: Number(budget.actual_monthly_income),
     ...budgetMethods,
@@ -672,21 +672,49 @@ class App extends Component {
     this.clearMessage();
   };
 
-  handleSaveBudget = () => {
-    if (!this.state.isGuest) {
-      const user = cloneDeep(this.state.user);
-      user.budgets = user.budgets.map((budget, index) =>
-        index === user.currentBudgetIndex
-          ? { ...budget, lastSaved: new Date() }
-          : budget
+  handleSaveBudget = (id) => {
+    if (this.state.isGuest) {
+      this.setMessage('Sign in to save your budgets.');
+      this.clearMessage();
+    } else
+      this.saveBudget(
+        this.state.user.budgets.filter((budget) => budget.id === id)[0]
       );
-      this.setState({ user });
-    }
-    this.setMessage(
-      this.state.isGuest ? 'Sign in to save your budgets.' : 'Saved budget.'
-    );
-    this.clearMessage();
   };
+
+  saveBudget = (budget) =>
+    fetch('http://localhost:3001/budget', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_user_id: this.state.user.id,
+        id: budget.id,
+        name: budget.name,
+        projected_monthly_income: budget.projectedMonthlyIncome,
+        actual_monthly_income: budget.actualMonthlyIncome,
+        entries: budget.entries,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        const user = cloneDeep(this.state.user);
+        user.budgets = user.budgets.map((budget) =>
+          budget.id === data.id
+            ? { ...budget, lastSaved: new Date(data.last_saved) }
+            : budget
+        );
+        this.setState({ user });
+        this.setMessage('Saved budget.');
+        this.clearMessage();
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem saving your budget. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
 
   editBudgetName = () => {
     this.clearTooltip();

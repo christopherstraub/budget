@@ -5,8 +5,8 @@ import './Entries.scss';
 const getLastSavedTimeString = (lastSaved) => {
   return !lastSaved
     ? 'unsaved'
-    : // If last saved one or more days ago, display date and time,
-    // otherwise display time.
+    : /* If last saved one or more days ago, display date and time,
+    otherwise display time. */
     new Date() - lastSaved >= 8.64e7
     ? `last saved ${lastSaved.toLocaleString([], {
         year: 'numeric',
@@ -68,9 +68,9 @@ const Entries = ({
         <div style={{ padding: '0 12rem' }}>
           <span
             className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr4"
-            onClick={handleSaveBudget}
+            onClick={() => handleSaveBudget(budget.id)}
             tabIndex="0"
-            onKeyDown={handleKeyDown(handleSaveBudget)}
+            onKeyDown={handleKeyDown(() => handleSaveBudget(budget.id))}
             onMouseMove={(event) => setTooltip('Save budget', event)}
             onMouseLeave={clearTooltip}
             style={{
