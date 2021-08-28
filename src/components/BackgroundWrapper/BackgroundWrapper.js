@@ -9,17 +9,10 @@ const BackgroundWrapper = ({ background, children }) => {
       ${useDarkLanding ? 'bg--light' : 'bg--dark'}
       `}
       style={{
-        backgroundImage: `url(${path})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75)), url(${path})`,
       }}
     >
-      <div
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.75))',
-        }}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 };
