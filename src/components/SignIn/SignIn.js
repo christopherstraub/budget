@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Spinner from '../Spinner/Spinner';
+
 const SignIn = ({
   handleRouteChange,
   handleUsernameInputChange,
@@ -8,6 +10,7 @@ const SignIn = ({
   handleSignIn,
   windowMessage,
   input,
+  loading,
 }) => (
   <>
     <div className="relative mb3">
@@ -47,7 +50,7 @@ const SignIn = ({
       onClick={handleSignIn}
       className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mb3 w-100"
     >
-      Sign In
+      {loading ? <Spinner /> : 'Sign In'}
     </button>
     <button
       onClick={() => handleRouteChange('sign-up')}
