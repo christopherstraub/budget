@@ -429,7 +429,7 @@ class App extends Component {
         route: 'saved-budgets',
         clickedDeleteBudget: false,
       });
-      this.setMessage('Deleted budget.');
+      this.setMessage('Budget deleted.');
       this.clearMessage();
     } else this.deleteBudget(id);
   };
@@ -463,7 +463,7 @@ class App extends Component {
           route: 'saved-budgets',
           clickedDeleteBudget: false,
         });
-        this.setMessage('Deleted budget.');
+        this.setMessage('Budget deleted.');
         this.clearMessage();
       })
       .catch((error) => {
@@ -543,7 +543,7 @@ class App extends Component {
         );
         this.clearMessage(5000);
       } else {
-        this.setMessage('Created new budget.');
+        this.setMessage('Budget created.');
         this.clearMessage();
       }
 
@@ -572,7 +572,7 @@ class App extends Component {
           );
           this.clearMessage(5000);
         } else {
-          this.setMessage('Created new budget.');
+          this.setMessage('Budget created.');
           this.clearMessage();
         }
       })
@@ -647,7 +647,7 @@ class App extends Component {
       this.clearMessage(5000);
       return;
     }
-    this.setMessage('Created budget copy.');
+    this.setMessage('Budget copy created.');
     this.clearMessage();
   };
 
@@ -706,7 +706,7 @@ class App extends Component {
             : budget
         );
         this.setState({ user });
-        this.setMessage('Saved budget.');
+        this.setMessage('Budget saved.');
         this.clearMessage();
       })
       .catch((error) => {
@@ -752,7 +752,7 @@ class App extends Component {
       user.budgets[this.state.user.currentBudgetIndex].name =
         event.target.value;
       this.setState({ user });
-      this.setMessage('Changed budget name.');
+      this.setMessage('Budget name changed.');
       this.clearMessage();
     }
     const isEditing = {
