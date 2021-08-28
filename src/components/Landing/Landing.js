@@ -20,6 +20,7 @@ const Landing = ({
   windowMessage,
   input,
   getPasswordInputStyle,
+  loading,
 }) => {
   const { displayName, newPassword, ...signInInput } = input;
 
@@ -50,6 +51,7 @@ const Landing = ({
             windowMessage={windowMessage}
             input={input}
             getPasswordInputStyle={getPasswordInputStyle}
+            loading={loading}
           />
         ) : route === 'sign-in' ? (
           <SignIn
@@ -60,6 +62,7 @@ const Landing = ({
             handleSignIn={handleSignIn}
             windowMessage={windowMessage}
             input={signInInput}
+            loading={loading}
           />
         ) : null}
       </SignInWrapper>
