@@ -25,7 +25,6 @@ const Entries = ({
   budget,
   entries,
   formattedEntries,
-  currentBudgetIndex,
   editBudgetName,
   isEditingBudgetName,
   handleBudgetNameChange,
@@ -68,9 +67,9 @@ const Entries = ({
         <div style={{ padding: '0 12rem' }}>
           <span
             className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr4"
-            onClick={() => handleSaveBudget(budget.id)}
+            onClick={() => handleSaveBudget(budget)}
             tabIndex="0"
-            onKeyDown={handleKeyDown(() => handleSaveBudget(budget.id))}
+            onKeyDown={handleKeyDown(() => handleSaveBudget(budget))}
             onMouseMove={(event) => setTooltip('Save budget', event)}
             onMouseLeave={clearTooltip}
             style={{
@@ -83,12 +82,10 @@ const Entries = ({
             save
           </span>
           <span
-            className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity mr3"
-            onClick={() => handleCreateBudgetCopy(currentBudgetIndex)}
+            className="material-icons absolute BudgetCopyuser-select-none pointer clr-accent-light hover-opacity mr3"
+            onClick={() => handleCreateBudgetCopy(budget)}
             tabIndex="0"
-            onKeyDown={handleKeyDown(() =>
-              handleCreateBudgetCopy(currentBudgetIndex)
-            )}
+            onKeyDown={handleKeyDown(() => handleCreateBudgetCopy(budget))}
             onMouseMove={(event) =>
               setTooltip('Create a copy of this budget', event)
             }

@@ -530,7 +530,6 @@ class App extends Component {
       return;
     }
 
-    // If guest, don't make an API call.
     if (this.state.isGuest) {
       const user = cloneDeep(this.state.user);
       user.budgets.push(this.getNewBudget());
@@ -547,6 +546,7 @@ class App extends Component {
         this.clearMessage();
       }
 
+      // Return resolved promise to make function thenable.
       return Promise.resolve();
     } else return this.createBudget();
   };
@@ -555,6 +555,15 @@ class App extends Component {
     this.setState({
       user: {
         ...this.state.user,
+        budgets: [...this.state.user.budgets, this.getBudgetFromData(data)],
+      },
+    });
+
+  loadBudgetCopy = (data) =>
+    this.setState({
+      user: {
+        ...this.state.user,
+        currentBudgetIndex: this.state.user.budgets.length,
         budgets: [...this.state.user.budgets, this.getBudgetFromData(data)],
       },
     });
@@ -631,7 +640,7 @@ class App extends Component {
     return name + ` (${copyNumberArray[0] + 1 || 2})`;
   };
 
-  handleCreateBudgetCopy = (index) => {
+  handleCreateBudgetCopy = (budget) => {
     if (this.state.user.budgets.length === this.state.maxBudgets) {
       this.setMessage(
         "Maximum number of budgets created. That's a lot of budgets!"
@@ -639,27 +648,72 @@ class App extends Component {
       this.clearMessage(6000);
       return;
     }
-    const budgetCopy = cloneDeep(this.state.user.budgets[index]);
-    budgetCopy.id = this.state.user.budgetsCreated;
-    budgetCopy.name = this.getBudgetCopyName(budgetCopy.name);
-    budgetCopy.lastSaved = null;
 
-    const user = cloneDeep(this.state.user);
-    user.budgets.splice(index + 1, 0, budgetCopy);
-    user.budgetsCreated++;
-    user.currentBudgetIndex = index + 1;
-    this.setState({ user });
+    if (this.state.isGuest) {
+      const budgetCopy = {
+        ...cloneDeep(budget),
+        id: this.state.user.budgetsCreated,
+        name: this.getBudgetCopyName(budget.name),
+        lastSaved: null,
+      };
 
-    if (this.state.user.budgets.length === 4) {
-      this.setMessage(
-        `${user.budgets.length} budgets! You're a savvy financial planner.`
+      const user = cloneDeep(this.state.user);
+      user.budgets.splice(
+        this.state.user.currentBudgetIndex + 1,
+        0,
+        budgetCopy
       );
-      this.clearMessage(5000);
-      return;
-    }
-    this.setMessage('Budget copy created.');
-    this.clearMessage();
+      user.currentBudgetIndex++;
+      user.budgetsCreated++;
+      this.setState({ user });
+
+      if (this.state.user.budgets.length === 4) {
+        this.setMessage(
+          `${user.budgets.length} budgets! You're a savvy financial planner.`
+        );
+        this.clearMessage(5000);
+        return;
+      }
+      this.setMessage('Budget copy created.');
+      this.clearMessage();
+    } else this.createBudgetCopy(budget);
   };
+
+  createBudgetCopy = (budget) =>
+    fetch('http://localhost:3001/budget-copy', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app_user_id: this.state.user.id,
+        name: this.getBudgetCopyName(budget.name),
+        projected_monthly_income: budget.projectedMonthlyIncome,
+        actual_monthly_income: budget.actualMonthlyIncome,
+        entries_created: budget.entriesCreated,
+        entries: budget.entries,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        this.loadBudgetCopy(data);
+
+        if (this.state.user.budgets.length === 5) {
+          this.setMessage(
+            `${this.state.user.budgets.length} budgets! You're a savvy financial planner.`
+          );
+          this.clearMessage(5000);
+        } else {
+          this.setMessage('Budget copy created.');
+          this.clearMessage();
+        }
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem creating your budget copy. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
 
   handleSaveBudgets = () => {
     if (this.state.isGuest) {
@@ -700,14 +754,11 @@ class App extends Component {
         this.clearMessage(6000);
       });
 
-  handleSaveBudget = (id) => {
+  handleSaveBudget = (budget) => {
     if (this.state.isGuest) {
       this.setMessage('Sign in to save your budgets.');
       this.clearMessage();
-    } else
-      this.saveBudget(
-        this.state.user.budgets.filter((budget) => budget.id === id)[0]
-      );
+    } else this.saveBudget(budget);
   };
 
   saveBudget = (budget) =>
@@ -1275,7 +1326,7 @@ class App extends Component {
         } else
           this.setState({
             windowMessage:
-              'There was a problem signing you up. Please try again later.',
+              'There was a problem signing up. Please try again later.',
           });
       });
 
@@ -1310,7 +1361,7 @@ class App extends Component {
         else
           this.setState({
             windowMessage:
-              'There was a problem signing you in. Please try again later.',
+              'There was a problem signing in. Please try again later.',
           });
       });
 

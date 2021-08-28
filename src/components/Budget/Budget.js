@@ -11,7 +11,6 @@ const Budget = ({
   formattedBudget,
   entries,
   formattedEntries,
-  currentBudgetIndex,
   editBudgetName,
   editProjectedMonthlyIncome,
   editActualMonthlyIncome,
@@ -51,7 +50,6 @@ const Budget = ({
         budget={budget}
         entries={entries}
         formattedEntries={formattedEntries}
-        currentBudgetIndex={currentBudgetIndex}
         editBudgetName={editBudgetName}
         isEditingBudgetName={isEditingBudgetName}
         handleBudgetNameChange={handleBudgetNameChange}
