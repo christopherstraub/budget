@@ -65,6 +65,7 @@ const initialState = {
   toggledExpandNav: false,
   maxBudgets: 100,
   maxEntries: 100,
+  loading: false,
   user: {
     id: null,
     username: null,
@@ -1236,7 +1237,10 @@ class App extends Component {
         input,
         windowMessage: `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`,
       });
-    } else this.signUp();
+    } else {
+      this.setState({ windowMessage: null, loading: true });
+      this.signUp();
+    }
   };
 
   handleSignIn = () => {
@@ -1268,7 +1272,10 @@ class App extends Component {
         this.state.input.password.maxLength
     )
       this.setState({ windowMessage: 'Invalid username or password.' });
-    else this.signIn();
+    else {
+      this.setState({ windowMessage: null, loading: true });
+      this.signIn();
+    }
   };
 
   loadUser = (data) =>
@@ -1328,7 +1335,8 @@ class App extends Component {
             windowMessage:
               'There was a problem signing up. Please try again later.',
           });
-      });
+      })
+      .then(() => this.setState({ loading: false }));
 
   signIn = () =>
     fetch('http://localhost:3001/sign-in', {
@@ -1363,7 +1371,8 @@ class App extends Component {
             windowMessage:
               'There was a problem signing in. Please try again later.',
           });
-      });
+      })
+      .then(() => this.setState({ loading: false }));
 
   signOut = () => {
     // Save user's current budget index.
@@ -1481,6 +1490,7 @@ class App extends Component {
       clickedDeleteBudget,
       toggledExpandNav,
       maxBudgets,
+      loading,
       user,
       background,
     } = this.state;
@@ -1528,6 +1538,7 @@ class App extends Component {
                   windowMessage={windowMessage}
                   input={landingInput}
                   getPasswordInputStyle={getPasswordInputStyle}
+                  loading={loading}
                 />
               ) : route === 'budget' ? (
                 <Budget
