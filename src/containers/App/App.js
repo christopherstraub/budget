@@ -850,7 +850,7 @@ class App extends Component {
       user.budgets[this.state.user.currentBudgetIndex].name =
         event.target.value;
       this.setState({ user });
-      this.setMessage('Budget name changed.');
+      this.setMessage('Budget name updated.');
       this.clearMessage();
     }
     const isEditing = {
