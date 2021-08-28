@@ -618,11 +618,13 @@ class App extends Component {
    */
   getBudgetCopyName = (name) => {
     const regex = /\(\d+\)$/;
-    // \( matches the character '('.
-    // \d matches a digit (equivalent to [0-9])
-    // + matches the previous token (a digit) between one and unlimited times.
-    // \) matches the character ')'.
-    // $ asserts position at the end of the string.
+    /*
+    \( matches the character '('.
+    \d matches a digit (equivalent to [0-9])
+    + matches the previous token (a digit) between one and unlimited times.
+    \) matches the character ')'.
+    $ asserts position at the end of the string.
+    */
     if (regex.test(name)) name = name.slice(0, name.search(regex) - 1);
 
     const copyNumberArray = this.state.user.budgets
@@ -638,7 +640,22 @@ class App extends Component {
       )
       .sort((a, b) => b - a);
 
-    return name + ` (${copyNumberArray[0] + 1 || 2})`;
+    const copyNameSuffix = ` (${
+      copyNumberArray[0] ? copyNumberArray[0] + 1 : 2
+    })`;
+    const copyName = name + copyNameSuffix;
+
+    // Return shortened copy name if it is too long.
+    return copyName.length <= this.state.input.budgetName.maxLength
+      ? copyName
+      : name
+          .substr(
+            0,
+            this.state.input.budgetName.maxLength -
+              copyNameSuffix.length -
+              '...'.length
+          )
+          .concat('...') + copyNameSuffix;
   };
 
   handleCreateBudgetCopy = (budget) => {
