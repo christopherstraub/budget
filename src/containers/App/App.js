@@ -1181,7 +1181,7 @@ class App extends Component {
         currentBudgetIndex: data.current_budget_index,
         budgets: data.budgets.map((budget) => this.getBudgetFromData(budget)),
       },
-      route: 'budget',
+      route: data.budgets.length ? 'budget' : 'saved-budgets',
       input: initialState.input,
       windowMessage: null,
       isLoggedIn: true,
