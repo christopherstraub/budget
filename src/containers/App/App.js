@@ -1332,10 +1332,7 @@ class App extends Component {
       .then((data) => {
         localStorage.setItem('background', this.state.background.name);
         this.loadUser(data);
-        setTimeout(
-          () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
-          0
-        );
+        this.setMessage(`Welcome, ${data.display_name}.`);
         this.clearMessage(6000);
       })
       .catch((error) => {
@@ -1372,10 +1369,7 @@ class App extends Component {
       .then((data) => {
         localStorage.setItem('background', this.state.background.name);
         this.loadUser(data);
-        setTimeout(
-          () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
-          0
-        );
+        this.setMessage(`Welcome back, ${data.display_name}.`);
         this.clearMessage(6000);
       })
       .catch((error) => {
