@@ -2,6 +2,8 @@ import React from 'react';
 
 import WindowBox from '../WindowBox/WindowBox';
 
+import './SavedBudgets.scss';
+
 const SavedBudgets = ({
   user,
   handleCreateBudget,
@@ -12,7 +14,7 @@ const SavedBudgets = ({
   toggledExpandNav,
 }) => {
   return (
-    <div className="flex justify-center pa4 tc">
+    <div className="SavedBudgets flex justify-center pa4 tc">
       <div
         className="w-100"
         style={{ minWidth: '42rem', maxWidth: 'max-content' }}

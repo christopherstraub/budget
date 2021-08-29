@@ -2,6 +2,8 @@ import React from 'react';
 
 import WindowBox from '../WindowBox/WindowBox';
 
+import './Profile.scss';
+
 const Profile = ({
   user,
   input,
@@ -21,7 +23,7 @@ const Profile = ({
   toggledExpandNav,
   getPasswordInputStyle,
 }) => (
-  <div className="flex justify-center pa4 tc">
+  <div className="Profile flex justify-center pa4 tc">
     <div className="w-100" style={{ maxWidth: '42rem' }}>
       <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">

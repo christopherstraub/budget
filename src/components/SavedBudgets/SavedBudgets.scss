@@ -1,0 +1,8 @@
+@import '../../styles/variables';
+
+@media (max-width: 768px) {
+  .SavedBudgets > div {
+    width: 100%;
+    max-width: unset !important;
+  }
+}

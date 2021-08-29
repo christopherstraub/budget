@@ -34,6 +34,7 @@ const WindowBox = ({ classlist, toggledExpandNav, children }) => {
       >
         <ErrorBoundary>
           <div
+            className="dynamic-height"
             style={{
               maxHeight:
                 height - (toggledExpandNav && width <= 900 ? 355 : 100),

@@ -18,7 +18,7 @@
   }
 }
 
-@media (max-width: 965px) {
+@media (max-width: 1024px) {
   .Entries {
     div:not(.entries) > .grid-entry {
       display: none;
@@ -58,7 +58,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .Entries {
     > div:first-child {
       > input {

@@ -30,3 +30,15 @@ body {
   overflow: hidden;
   min-height: 100vh;
 }
+
+@media (max-width: 768px) {
+  .App {
+    > div {
+      padding: 2rem 0;
+
+      .bg--window-box {
+        border-radius: 0;
+      }
+    }
+  }
+}
