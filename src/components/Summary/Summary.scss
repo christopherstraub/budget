@@ -1,9 +1,14 @@
 @import '../../styles/variables';
 
-@media (max-width: 570px) {
+@media (max-width: 640px) {
   .Summary {
-    width: 35.2rem;
+    width: 100vw;
     overflow-x: auto;
+
+    h2,
+    input {
+      font-size: $fs-subheading;
+    }
 
     > .flex:nth-child(2) {
       flex-direction: column;
@@ -13,7 +18,7 @@
       > div:first-child,
       > div:nth-child(3) {
         overflow-x: visible;
-        width: auto !important;
+        width: max-content !important;
       }
 
       > div:first-child h2:last-child {

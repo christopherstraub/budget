@@ -12,7 +12,7 @@ const Nav = ({
 }) =>
   isLoggedIn ? (
     <nav
-      className={`flex justify-between pv2 ph5 bg--window-box
+      className={`flex justify-between pv2 ph4 bg--window-box
     ${toggledExpandNav ? 'expand' : ''}
     `}
     >
