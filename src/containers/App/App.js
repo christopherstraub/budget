@@ -26,56 +26,6 @@ import pathBg8 from '../../images/bg8.webp';
 
 import './App.scss';
 
-/*
-Valid routes:
-'sign-in', 'sign-up', 'budget', 'saved-budgets', 'profile', 'about'
-*/
-
-// Set initial state to be passed into App state.
-const initialState = {
-  route: 'sign-up',
-  input: {
-    displayName: { value: '', empty: false, maxLength: 50 },
-    username: { value: '', empty: false, maxLength: 50 },
-    password: { value: '', empty: false, minLength: 8, maxLength: 128 },
-    newPassword: { value: '', empty: false, minLength: 8, maxLength: 128 },
-    budgetName: { maxLength: 50 },
-    addEntry: { value: '', maxLength: 50 },
-    category: { maxLength: 50 },
-  },
-  isEditing: {
-    budgetName: false,
-    projectedMonthlyIncome: false,
-    actualMonthlyIncome: false,
-    category: false,
-    projectedCost: false,
-    actualCost: false,
-    entryId: null,
-  },
-  message: null,
-  showMessage: false,
-  tooltip: null,
-  showTooltipRight: false,
-  showTooltipLeft: false,
-  windowMessage: null,
-  mousePosition: { x: null, y: null },
-  isLoggedIn: false,
-  isGuest: true,
-  clickedDeleteBudget: false,
-  toggledExpandNav: false,
-  maxBudgets: 100,
-  maxEntries: 100,
-  loading: false,
-  user: {
-    id: null,
-    username: null,
-    displayName: 'Guest',
-    joinDate: null,
-    currentBudgetIndex: 0,
-    budgetsCreated: 0,
-  },
-};
-
 const defaultEntries = [
   {
     id: 0,
@@ -135,13 +85,26 @@ const backgrounds = [
   { name: 'silhouette', path: pathBg8, useDarkLanding: false, initial: false },
 ];
 
-// Intl.NumberFormat object is a constructor that enables language sensitive
-// number formatting.
-// Takes parameters ([locales[, options]]).
-const formatterUSD = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+const allFormatArgs = [
+  { locale: 'es-AR', currency: 'ARS' },
+  { locale: 'en-AU', currency: 'AUD' },
+  { locale: [], currency: 'BOB' },
+  { locale: 'pt-BR', currency: 'BRL' },
+  { locale: 'en-CA', currency: 'CAD' },
+  { locale: [], currency: 'CHF' },
+  { locale: 'es-CL', currency: 'CLP' },
+  { locale: 'zh-CN', currency: 'CNY' },
+  { locale: 'es-CO', currency: 'COP' },
+  { locale: [], currency: 'EUR' },
+  { locale: 'en-GB', currency: 'GBP' },
+  { locale: 'zh-HK', currency: 'HKD' },
+  { locale: 'jp-JP', currency: 'JPY' },
+  { locale: 'es-MX', currency: 'MXN' },
+  { locale: 'en-NZ', currency: 'NZD' },
+  { locale: [], currency: 'PEN' },
+  { locale: 'en-US', currency: 'USD' },
+  { locale: [], currency: 'VES' },
+];
 
 /**
  *
@@ -238,17 +201,68 @@ const entryMethods = {
   },
 };
 
+/*
+Valid routes:
+'sign-in', 'sign-up', 'budget', 'saved-budgets', 'profile', 'about'
+*/
+
+// Set initial state to be passed into App state.
+const initialState = {
+  route: 'sign-up',
+  input: {
+    displayName: { value: '', empty: false, maxLength: 50 },
+    username: { value: '', empty: false, maxLength: 50 },
+    password: { value: '', empty: false, minLength: 8, maxLength: 128 },
+    newPassword: { value: '', empty: false, minLength: 8, maxLength: 128 },
+    budgetName: { maxLength: 50 },
+    addEntry: { value: '', maxLength: 50 },
+    category: { maxLength: 50 },
+  },
+  isEditing: {
+    budgetName: false,
+    projectedMonthlyIncome: false,
+    actualMonthlyIncome: false,
+    category: false,
+    projectedCost: false,
+    actualCost: false,
+    entryId: null,
+  },
+  background: backgrounds[0],
+  message: null,
+  showMessage: false,
+  tooltip: null,
+  showTooltipRight: false,
+  showTooltipLeft: false,
+  windowMessage: null,
+  mousePosition: { x: null, y: null },
+  isLoggedIn: false,
+  isGuest: true,
+  clickedDeleteBudget: false,
+  toggledExpandNav: false,
+  maxBudgets: 100,
+  maxEntries: 100,
+  loading: false,
+  user: {
+    id: null,
+    username: null,
+    displayName: 'Guest',
+    joinDate: null,
+    currentBudgetIndex: 0,
+    formatArgs: allFormatArgs[16], // ['en-US', 'USD']
+    budgetsCreated: 0,
+  },
+};
+
 class App extends Component {
   constructor() {
     super();
     this.state = initialState;
     this.state.user.budgets = [this.getNewBudget()];
     this.state.user.budgetsCreated++;
-    this.state.background = backgrounds[0];
   }
 
-  // Sets background from localStorage if it exists there,
-  // otherwise set a random background.
+  /* Set background from localStorage if it exists there,
+  otherwise set background randomly. */
   setBackgroundFromLocalStorage() {
     const localStorageBackgroundName = localStorage.getItem('background');
     if (localStorageBackgroundName) {
@@ -961,7 +975,13 @@ class App extends Component {
       this.setState({ user });
 
       this.setMessage(
-        `Projected monthly income updated to ${formatterUSD.format(income)}.`
+        `Projected monthly income updated to ${new Intl.NumberFormat(
+          user.formatArgs.locale,
+          {
+            style: 'currency',
+            currency: user.formatArgs.currency,
+          }
+        ).format(income)}.`
       );
       this.clearMessage(5000);
     }
@@ -988,7 +1008,13 @@ class App extends Component {
 
       this.setState({ user });
       this.setMessage(
-        `Actual monthly income updated to ${formatterUSD.format(income)}.`
+        `Actual monthly income updated to ${new Intl.NumberFormat(
+          user.formatArgs.locale,
+          {
+            style: 'currency',
+            currency: user.formatArgs.currency,
+          }
+        ).format(income)}.`
       );
       this.clearMessage(5000);
     }
@@ -1002,6 +1028,53 @@ class App extends Component {
     max = Number.MAX_SAFE_INTEGER
   ) => number <= max && number >= min;
 
+  handleCurrencyChange = (event) => {
+    const formatArgs = allFormatArgs.filter(
+      (args) => args.currency === event.target.value
+    )[0];
+    if (formatArgs.currency !== this.state.user.formatArgs.currency) {
+      if (this.state.isGuest) {
+        this.setState({
+          user: {
+            ...this.state.user,
+            formatArgs,
+          },
+        });
+        this.setMessage('Currency changed successfully.');
+        this.clearMessage();
+      } else this.changeCurrency(formatArgs);
+    }
+  };
+
+  changeCurrency = (formatArgs) =>
+    fetch('https://csbudget-api.herokuapp.com/currency', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        format_args: formatArgs,
+      }),
+    })
+      .then((response) =>
+        response.status === 400 ? Promise.reject(Error()) : response.json()
+      )
+      .then((data) => {
+        this.setState({
+          user: {
+            ...this.state.user,
+            formatArgs: data.format_args,
+          },
+        });
+        this.setMessage('Currency changed successfully.');
+        this.clearMessage();
+      })
+      .catch((error) => {
+        this.setMessage(
+          'There was a problem changing your currency. Please try again later.'
+        );
+        this.clearMessage(6000);
+      });
+
   // Update state displayName input with user input.
   handleDisplayNameInputChange = (event) => {
     const displayName = {
@@ -1013,8 +1086,8 @@ class App extends Component {
     this.setState({ input });
   };
 
-  // Change display name if input is not empty or whitespace and
-  // different from current display name.
+  /* Change display name if input is not empty or whitespace and
+  different from current display name. */
   handleDisplayNameChange = () => {
     if (this.state.isGuest) {
       if (
@@ -1303,6 +1376,7 @@ class App extends Component {
         displayName: data.display_name,
         joinDate: new Date(data.join_date),
         currentBudgetIndex: data.current_budget_index,
+        formatArgs: data.format_args,
         budgets: data.budgets.map((budget) => this.getBudgetFromData(budget)),
       },
       route: data.budgets.length ? 'budget' : 'saved-budgets',
@@ -1489,6 +1563,7 @@ class App extends Component {
       route,
       input,
       isEditing,
+      background,
       message,
       showMessage,
       tooltip,
@@ -1503,16 +1578,25 @@ class App extends Component {
       maxBudgets,
       loading,
       user,
-      background,
     } = this.state;
+
+    /* Intl.NumberFormat object is a constructor that enables language sensitive
+    number formatting. Takes parameters ([locales[, options]]). */
+    const currencyFormatter = new Intl.NumberFormat(user.formatArgs.locale, {
+      style: 'currency',
+      currency: user.formatArgs.currency,
+    });
 
     const formattedBudget =
       user.budgets.length === 0
-        ? formatBudget(this.getNewBudget(), formatterUSD)
-        : formatBudget(user.budgets[user.currentBudgetIndex], formatterUSD);
+        ? formatBudget(this.getNewBudget(), currencyFormatter)
+        : formatBudget(
+            user.budgets[user.currentBudgetIndex],
+            currencyFormatter
+          );
     const formattedEntries = formatEntries(
       user.budgets[user.currentBudgetIndex]?.entries,
-      formatterUSD
+      currencyFormatter
     );
 
     const { budgetName, addEntry, category, ...landingInput } = input;
@@ -1614,6 +1698,8 @@ class App extends Component {
                   windowMessage={windowMessage}
                   isGuest={isGuest}
                   toggledExpandNav={toggledExpandNav}
+                  allFormatArgs={allFormatArgs}
+                  handleCurrencyChange={this.handleCurrencyChange}
                   handleDisplayNameInputChange={
                     this.handleDisplayNameInputChange
                   }
