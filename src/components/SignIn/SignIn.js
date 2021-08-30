@@ -6,7 +6,7 @@ const SignIn = ({
   handleRouteChange,
   handleUsernameInputChange,
   handlePasswordInputChange,
-  handleKeyDown,
+  handleEnterKey,
   handleSignIn,
   windowMessage,
   input,
@@ -19,7 +19,7 @@ const SignIn = ({
           ${input.username.empty ? 'empty' : ''}
           `}
         onChange={handleUsernameInputChange}
-        onKeyDown={handleKeyDown(handleSignIn)}
+        onKeyDown={handleEnterKey(handleSignIn)}
         type="text"
         maxLength={input.username.maxLength}
         required
@@ -32,7 +32,7 @@ const SignIn = ({
           ${input.password.empty ? 'empty' : ''}
           `}
         onChange={handlePasswordInputChange}
-        onKeyDown={handleKeyDown(handleSignIn)}
+        onKeyDown={handleEnterKey(handleSignIn)}
         type="password"
         maxLength={input.password.maxLength}
         required

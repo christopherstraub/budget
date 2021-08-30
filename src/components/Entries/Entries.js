@@ -29,7 +29,7 @@ const Entries = ({
   isEditingBudgetName,
   handleBudgetNameChange,
   handleAddEntryInputChange,
-  handleKeyDown,
+  handleEnterKey,
   handleAddEntry,
   handleDeleteEntry,
   editCategory,
@@ -69,7 +69,7 @@ const Entries = ({
             className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
             onClick={() => handleSaveBudget(budget)}
             tabIndex="0"
-            onKeyDown={handleKeyDown(() => handleSaveBudget(budget))}
+            onKeyDown={handleEnterKey(() => handleSaveBudget(budget))}
             onMouseMove={(event) => setTooltip('Save budget', event)}
             onMouseLeave={clearTooltip}
             style={{
@@ -85,7 +85,7 @@ const Entries = ({
             className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
             onClick={() => handleCreateBudgetCopy(budget)}
             tabIndex="0"
-            onKeyDown={handleKeyDown(() => handleCreateBudgetCopy(budget))}
+            onKeyDown={handleEnterKey(() => handleCreateBudgetCopy(budget))}
             onMouseMove={(event) =>
               setTooltip('Create a copy of this budget', event)
             }
@@ -109,7 +109,7 @@ const Entries = ({
             className="material-icons absolute user-select-none pointer clr-accent-light hover-opacity"
             onClick={editBudgetName}
             tabIndex="0"
-            onKeyDown={handleKeyDown(editBudgetName)}
+            onKeyDown={handleEnterKey(editBudgetName)}
             onMouseMove={(event) => setTooltip('Edit budget name', event)}
             onMouseLeave={clearTooltip}
             style={{
@@ -129,7 +129,7 @@ const Entries = ({
       <div className="relative flex-grow-1 mr3">
         <input
           onChange={handleAddEntryInputChange}
-          onKeyDown={handleKeyDown(handleAddEntry)}
+          onKeyDown={handleEnterKey(handleAddEntry)}
           className="input input-indicator br3 pt4 ph3 pb2 w-100"
           type="text"
           maxLength={input.addEntry.maxLength}
@@ -181,7 +181,7 @@ const Entries = ({
               className="material-icons clr-dark-accent user-select-none pointer hover-opacity pv2 ph2 tc"
               onClick={() => handleDeleteEntry(entry.id)}
               tabIndex="0"
-              onKeyDown={handleKeyDown(() => handleDeleteEntry(entry.id))}
+              onKeyDown={handleEnterKey(() => handleDeleteEntry(entry.id))}
               onMouseMove={(event) =>
                 setTooltip(`Delete "${entry.category}"`, event)
               }
@@ -209,7 +209,7 @@ const Entries = ({
                 className="clr-dark fs-body pointer pv2 ph1 tc"
                 onClick={() => editCategory(entry.id)}
                 tabIndex="0"
-                onKeyDown={handleKeyDown(() => editCategory(entry.id))}
+                onKeyDown={handleEnterKey(() => editCategory(entry.id))}
               >
                 {entry.category}
               </span>
@@ -233,7 +233,7 @@ const Entries = ({
                 className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
                 onClick={() => editProjectedCost(entry.id)}
                 tabIndex="0"
-                onKeyDown={handleKeyDown(() => editProjectedCost(entry.id))}
+                onKeyDown={handleEnterKey(() => editProjectedCost(entry.id))}
               >
                 {entry.projectedCost}
               </span>
@@ -257,7 +257,7 @@ const Entries = ({
                 className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
                 onClick={() => editActualCost(entry.id)}
                 tabIndex="0"
-                onKeyDown={handleKeyDown(() => editActualCost(entry.id))}
+                onKeyDown={handleEnterKey(() => editActualCost(entry.id))}
               >
                 {entry.actualCost}
               </span>

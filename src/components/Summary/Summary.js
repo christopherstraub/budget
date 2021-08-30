@@ -13,7 +13,7 @@ const Summary = ({
   isEditingActualMonthlyIncome,
   handleProjectedMonthlyIncomeChange,
   handleActualMonthlyIncomeChange,
-  handleKeyDown,
+  handleEnterKey,
   setTooltip,
   clearTooltip,
 }) => {
@@ -28,7 +28,7 @@ const Summary = ({
               `}
             onClick={editProjectedMonthlyIncome}
             tabIndex="0"
-            onKeyDown={handleKeyDown(editProjectedMonthlyIncome)}
+            onKeyDown={handleEnterKey(editProjectedMonthlyIncome)}
             onMouseMove={(event) =>
               setTooltip('Edit projected monthly income', event)
             }
@@ -71,7 +71,7 @@ const Summary = ({
               `}
             onClick={editActualMonthlyIncome}
             tabIndex="0"
-            onKeyDown={handleKeyDown(editActualMonthlyIncome)}
+            onKeyDown={handleEnterKey(editActualMonthlyIncome)}
             onMouseMove={(event) =>
               setTooltip('Edit actual monthly income', event)
             }

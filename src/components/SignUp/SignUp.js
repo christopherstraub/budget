@@ -7,7 +7,7 @@ const SignUp = ({
   handleDisplayNameInputChange,
   handleUsernameInputChange,
   handleNewPasswordInputChange,
-  handleKeyDown,
+  handleEnterKey,
   handleSignUp,
   windowMessage,
   input,
@@ -21,7 +21,7 @@ const SignUp = ({
           ${input.displayName.empty ? 'empty' : ''}
           `}
         onChange={handleDisplayNameInputChange}
-        onKeyDown={handleKeyDown(handleSignUp)}
+        onKeyDown={handleEnterKey(handleSignUp)}
         type="text"
         maxLength={input.displayName.maxLength}
         required
@@ -34,7 +34,7 @@ const SignUp = ({
           ${input.username.empty ? 'empty' : ''}
           `}
         onChange={handleUsernameInputChange}
-        onKeyDown={handleKeyDown(handleSignUp)}
+        onKeyDown={handleEnterKey(handleSignUp)}
         type="text"
         maxLength={input.username.maxLength}
         required
@@ -48,7 +48,7 @@ const SignUp = ({
           ${getPasswordInputStyle(input.newPassword)}
           `}
         onChange={handleNewPasswordInputChange}
-        onKeyDown={handleKeyDown(handleSignUp)}
+        onKeyDown={handleEnterKey(handleSignUp)}
         type="password"
         maxLength={input.newPassword.maxLength}
         required

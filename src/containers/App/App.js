@@ -1484,11 +1484,9 @@ class App extends Component {
    * @param {number} code JavaScript event code.
    * Defaults to 'Enter'.
    */
-  handleKeyDown =
-    (callback, code = 'Enter') =>
-    (event) => {
-      if (event.target.value !== '' && event.code === code) callback();
-    };
+  handleEnterKey = (callback) => (event) => {
+    if (event.target.value !== '' && event.code === 'Enter') callback();
+  };
 
   handleToggledExpandNav = () => {
     this.setState({
@@ -1627,7 +1625,7 @@ class App extends Component {
                   handleNewPasswordInputChange={
                     this.handleNewPasswordInputChange
                   }
-                  handleKeyDown={this.handleKeyDown}
+                  handleEnterKey={this.handleEnterKey}
                   handleSignUp={this.handleSignUp}
                   handleSignIn={this.handleSignIn}
                   windowMessage={windowMessage}
@@ -1660,7 +1658,7 @@ class App extends Component {
                     this.handleActualMonthlyIncomeChange
                   }
                   handleAddEntryInputChange={this.handleAddEntryInputChange}
-                  handleKeyDown={this.handleKeyDown}
+                  handleEnterKey={this.handleEnterKey}
                   handleAddEntry={this.handleAddEntry}
                   handleDeleteEntry={this.handleDeleteEntry}
                   editCategory={this.editCategory}
@@ -1688,7 +1686,7 @@ class App extends Component {
                   handleCreateBudget={this.handleCreateBudget}
                   handleSaveBudgets={this.handleSaveBudgets}
                   currentBudgetIndex={user.currentBudgetIndex}
-                  handleKeyDown={this.handleKeyDown}
+                  handleEnterKey={this.handleEnterKey}
                   toggledExpandNav={toggledExpandNav}
                 />
               ) : route === 'profile' ? (
@@ -1709,7 +1707,7 @@ class App extends Component {
                     this.handleNewPasswordInputChange
                   }
                   handlePasswordChange={this.handlePasswordChange}
-                  handleKeyDown={this.handleKeyDown}
+                  handleEnterKey={this.handleEnterKey}
                   handleBackgroundChange={this.handleBackgroundChange}
                   backgrounds={backgrounds}
                   currentBackground={background}

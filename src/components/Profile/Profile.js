@@ -16,7 +16,7 @@ const Profile = ({
   handlePasswordInputChange,
   handleNewPasswordInputChange,
   handlePasswordChange,
-  handleKeyDown,
+  handleEnterKey,
   handleBackgroundChange,
   backgrounds,
   currentBackground,
@@ -65,7 +65,7 @@ const Profile = ({
                   className="input input-indicator br3 ph3 pb1 w-100"
                   id="display-name"
                   onChange={handleDisplayNameInputChange}
-                  onKeyDown={handleKeyDown(handleDisplayNameChange)}
+                  onKeyDown={handleEnterKey(handleDisplayNameChange)}
                   style={{ paddingTop: '15px' }}
                   type="text"
                   name="display-name"
@@ -94,7 +94,7 @@ const Profile = ({
                     `}
                     id="password"
                     onChange={handlePasswordInputChange}
-                    onKeyDown={handleKeyDown(handlePasswordChange)}
+                    onKeyDown={handleEnterKey(handlePasswordChange)}
                     style={{ paddingTop: '15px' }}
                     type="password"
                     name="password"
@@ -113,7 +113,7 @@ const Profile = ({
                   `}
                     id="new-password"
                     onChange={handleNewPasswordInputChange}
-                    onKeyDown={handleKeyDown(handlePasswordChange)}
+                    onKeyDown={handleEnterKey(handlePasswordChange)}
                     style={{ paddingTop: '15px' }}
                     type="password"
                     name="new-password"

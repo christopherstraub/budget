@@ -21,7 +21,7 @@ const Budget = ({
   handleProjectedMonthlyIncomeChange,
   handleActualMonthlyIncomeChange,
   handleAddEntryInputChange,
-  handleKeyDown,
+  handleEnterKey,
   handleAddEntry,
   handleDeleteEntry,
   editCategory,
@@ -54,7 +54,7 @@ const Budget = ({
         isEditingBudgetName={isEditingBudgetName}
         handleBudgetNameChange={handleBudgetNameChange}
         handleAddEntryInputChange={handleAddEntryInputChange}
-        handleKeyDown={handleKeyDown}
+        handleEnterKey={handleEnterKey}
         handleAddEntry={handleAddEntry}
         handleDeleteEntry={handleDeleteEntry}
         editCategory={editCategory}
@@ -88,7 +88,7 @@ const Budget = ({
         isEditingActualMonthlyIncome={isEditingActualMonthlyIncome}
         handleProjectedMonthlyIncomeChange={handleProjectedMonthlyIncomeChange}
         handleActualMonthlyIncomeChange={handleActualMonthlyIncomeChange}
-        handleKeyDown={handleKeyDown}
+        handleEnterKey={handleEnterKey}
         setTooltip={setTooltip}
         clearTooltip={clearTooltip}
       />

@@ -14,7 +14,7 @@ const Landing = ({
   handleUsernameInputChange,
   handlePasswordInputChange,
   handleNewPasswordInputChange,
-  handleKeyDown,
+  handleEnterKey,
   handleSignUp,
   handleSignIn,
   windowMessage,
@@ -46,7 +46,7 @@ const Landing = ({
             handleDisplayNameInputChange={handleDisplayNameInputChange}
             handleUsernameInputChange={handleUsernameInputChange}
             handleNewPasswordInputChange={handleNewPasswordInputChange}
-            handleKeyDown={handleKeyDown}
+            handleEnterKey={handleEnterKey}
             handleSignUp={handleSignUp}
             windowMessage={windowMessage}
             input={input}
@@ -58,7 +58,7 @@ const Landing = ({
             handleRouteChange={handleRouteChange}
             handleUsernameInputChange={handleUsernameInputChange}
             handlePasswordInputChange={handlePasswordInputChange}
-            handleKeyDown={handleKeyDown}
+            handleEnterKey={handleEnterKey}
             handleSignIn={handleSignIn}
             windowMessage={windowMessage}
             input={signInInput}
