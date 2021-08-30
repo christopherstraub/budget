@@ -7,11 +7,6 @@
   width: max-content;
   max-width: 75vw;
 }
-@media (max-width: 640px) {
-  .message {
-    padding: 1rem;
-  }
-}
 
 .message-enter {
   transform: translate(-50%, 100%);
