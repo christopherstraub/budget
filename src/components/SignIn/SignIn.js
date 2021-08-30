@@ -21,7 +21,6 @@ const SignIn = ({
         onChange={handleUsernameInputChange}
         onKeyDown={handleKeyDown(handleSignIn)}
         type="text"
-        name="username"
         maxLength={input.username.maxLength}
         required
       />
@@ -35,7 +34,6 @@ const SignIn = ({
         onChange={handlePasswordInputChange}
         onKeyDown={handleKeyDown(handleSignIn)}
         type="password"
-        name="password"
         maxLength={input.password.maxLength}
         required
       />

@@ -23,7 +23,6 @@ const SignUp = ({
         onChange={handleDisplayNameInputChange}
         onKeyDown={handleKeyDown(handleSignUp)}
         type="text"
-        name="new-display-name"
         maxLength={input.displayName.maxLength}
         required
       />
@@ -37,7 +36,6 @@ const SignUp = ({
         onChange={handleUsernameInputChange}
         onKeyDown={handleKeyDown(handleSignUp)}
         type="text"
-        name="new-username"
         maxLength={input.username.maxLength}
         required
       />
@@ -52,7 +50,6 @@ const SignUp = ({
         onChange={handleNewPasswordInputChange}
         onKeyDown={handleKeyDown(handleSignUp)}
         type="password"
-        name="new-password"
         maxLength={input.newPassword.maxLength}
         required
       />
