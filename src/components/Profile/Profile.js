@@ -9,6 +9,8 @@ const Profile = ({
   input,
   windowMessage,
   isGuest,
+  allFormatArgs,
+  handleCurrencyChange,
   handleDisplayNameInputChange,
   handleDisplayNameChange,
   handlePasswordInputChange,
@@ -35,12 +37,15 @@ const Profile = ({
 
           <div className="mb4">
             <h2 className="clr-light fs-body fw3 mb3">Backgrounds</h2>
-            <div className="flex flex-wrap justify-center">
+            <div
+              className="flex flex-wrap justify-center"
+              style={{ gap: '1rem' }}
+            >
               {backgrounds.map((background, index) => (
                 <button
                   key={index}
                   onClick={handleBackgroundChange}
-                  className={`clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark mr3 mb3 pa2
+                  className={`clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa2
                   ${background.name === currentBackground.name ? 'fw6' : ''}
                   `}
                 >
@@ -51,11 +56,14 @@ const Profile = ({
           </div>
 
           <div className="mb4">
-            <h2 className="clr-light fs-body fw3 mb3">Change display name</h2>
+            <label className="clr-light fs-body fw3 mb3" htmlFor="display-name">
+              Change display name
+            </label>
             <div className="flex">
               <div className="relative flex-grow-1">
                 <input
                   className="input input-indicator br3 ph3 pb1 w-100"
+                  id="display-name"
                   onChange={handleDisplayNameInputChange}
                   onKeyDown={handleKeyDown(handleDisplayNameChange)}
                   style={{ paddingTop: '15px' }}
@@ -71,14 +79,20 @@ const Profile = ({
           </div>
 
           {isGuest ? null : (
-            <div>
-              <h2 className="clr-light fs-body fw3 mb3">Change password</h2>
+            <div className="mb4">
+              <label
+                className="clr-light fs-body fw3 mb3"
+                htmlFor={input.password.value ? 'new-password' : 'password'}
+              >
+                Change password
+              </label>
               <div className="flex flex-column">
                 <div className="relative mb3">
                   <input
                     className={`input input-indicator br3 ph3 pb1 w-100
                     ${input.password.empty ? 'empty' : ''}
                     `}
+                    id="password"
                     onChange={handlePasswordInputChange}
                     onKeyDown={handleKeyDown(handlePasswordChange)}
                     style={{ paddingTop: '15px' }}
@@ -93,12 +107,13 @@ const Profile = ({
 
                 <div className="relative">
                   <input
-                    onChange={handleNewPasswordInputChange}
-                    onKeyDown={handleKeyDown(handlePasswordChange)}
                     className={`input input-indicator br3 ph3 pb1 w-100
                   ${input.newPassword.empty ? 'empty' : ''}
                   ${getPasswordInputStyle(input.newPassword)}
                   `}
+                    id="new-password"
+                    onChange={handleNewPasswordInputChange}
+                    onKeyDown={handleKeyDown(handlePasswordChange)}
                     style={{ paddingTop: '15px' }}
                     type="password"
                     name="new-password"
@@ -116,7 +131,41 @@ const Profile = ({
             </div>
           )}
 
-          <h2 className="clr-light-accent fs-body fw3 mt5 mb0">
+          <div className="mb5">
+            <label
+              className="clr-light fs-body fw3 mb3 db"
+              htmlFor="currencies"
+            >
+              Change currency
+            </label>
+            <select
+              className="clr-dark bg--light br3 bn pv3 ph2"
+              id="currencies"
+              onClick={handleCurrencyChange}
+              onChange={handleCurrencyChange}
+            >
+              <option
+                className="clr-dark fs-body"
+                key={user.formatArgs.currency}
+                value={user.formatArgs.currency}
+              >
+                Select currency
+              </option>
+              {allFormatArgs.map((args) => (
+                <option
+                  className={`clr-dark fs-body
+                    ${args.currency === user.formatArgs.currency ? 'fw7' : ''}
+                    `}
+                  key={args.currency}
+                  value={args.currency}
+                >
+                  {args.currency}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <h2 className="clr-light-accent fs-body fw3 mb0">
             Member since {user.joinDate.toLocaleDateString()}
           </h2>
         </div>
