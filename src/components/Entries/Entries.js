@@ -141,7 +141,7 @@ const Entries = ({
 
       <button
         onClick={handleAddEntry}
-        className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3"
+        className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3 pointer"
         style={{ minWidth: 'max-content' }}
       >
         add entry
@@ -289,7 +289,7 @@ const Entries = ({
         <button
           onClick={() => handleDeleteBudget(budget.id)}
           onBlur={() => handleClickedDeleteBudget(false)}
-          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto"
+          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto pointer"
           style={{ gridColumnStart: '3' }}
         >
           confirm delete
@@ -297,7 +297,7 @@ const Entries = ({
       ) : (
         <button
           onClick={() => handleClickedDeleteBudget(true)}
-          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto"
+          className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--dark-red pa3 ml-auto pointer"
           style={{ gridColumnStart: '3' }}
         >
           delete budget

@@ -47,7 +47,7 @@ const Profile = ({
                 <button
                   key={index}
                   onClick={handleBackgroundChange}
-                  className={`clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa2
+                  className={`clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa2 pointer
                   ${background.name === currentBackground.name ? 'fw6' : ''}
                   `}
                 >

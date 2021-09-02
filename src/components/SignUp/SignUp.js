@@ -61,8 +61,9 @@ const SignUp = ({
     ) : null}
 
     <button
-      onClick={handleSignUp}
-      className="bg--semi-transparent hover-opacity-75 selection-transparent clr-light fs-body fw7 bg--dark bn br3 pv3 ph3 mb3 w-100"
+      onClick={loading ? null : handleSignUp}
+      className={`bg--semi-transparent selection-transparent clr-light fs-body fw7 bg--dark bn br3 pa3 mb3 w-100
+      ${loading ? '' : 'pointer hover-opacity-75'}`}
     >
       {loading ? <Spinner /> : 'Sign Up'}
     </button>
