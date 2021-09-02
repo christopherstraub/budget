@@ -348,8 +348,8 @@ class App extends Component {
     });
   };
 
-  // Only filter through backgrounds if selected background is different
-  // from current background.
+  /* Only filter through backgrounds if selected background is different
+  from current background. */
   handleBackgroundChange = (event) => {
     if (this.state.background.name !== event.target.textContent) {
       localStorage.setItem('background', event.target.textContent);
@@ -372,8 +372,8 @@ class App extends Component {
     this.setState({ input });
   };
 
-  // Create entry object.
-  // If input entry category is empty, set to 'No category set'.
+  /* Create entry object.
+  If input entry category is empty, set to 'No category set'. */
   getNewEntry = () => ({
     id: this.state.user.budgets[this.state.user.currentBudgetIndex]
       .entriesCreated,
@@ -385,7 +385,6 @@ class App extends Component {
     },
   });
 
-  // Event handler for add entry button.
   // Add entry and reset entry category input.
   handleAddEntry = () => {
     if (
@@ -415,17 +414,11 @@ class App extends Component {
     this.setState({ user });
   };
 
-  // Event handler for initial delete button.
-  // Changes delete button to confirm delete button.
+  // Change delete button to confirm delete button.
   handleClickedDeleteBudget = (userClicked) => {
-    if (userClicked) {
-      this.setState({ clickedDeleteBudget: true });
-    } else {
-      this.setState({ clickedDeleteBudget: false });
-    }
+    this.setState({ clickedDeleteBudget: userClicked ? true : false });
   };
 
-  // Event handler for confirm delete button.
   handleDeleteBudget = (id) => {
     if (this.state.isGuest) {
       const filteredBudgets = this.state.user.budgets.filter(
@@ -434,10 +427,9 @@ class App extends Component {
 
       const user = Object.assign(cloneDeep(this.state.user), {
         budgets: filteredBudgets,
-        currentBudgetIndex:
-          this.state.user.currentBudgetIndex >= 1
-            ? this.state.user.currentBudgetIndex - 1
-            : 0,
+        currentBudgetIndex: this.state.user.currentBudgetIndex
+          ? this.state.user.currentBudgetIndex - 1
+          : 0,
       });
       this.setState({
         user,
@@ -468,10 +460,9 @@ class App extends Component {
 
         const user = Object.assign(cloneDeep(this.state.user), {
           budgets: filteredBudgets,
-          currentBudgetIndex:
-            this.state.user.currentBudgetIndex >= 1
-              ? this.state.user.currentBudgetIndex - 1
-              : 0,
+          currentBudgetIndex: this.state.user.currentBudgetIndex
+            ? this.state.user.currentBudgetIndex - 1
+            : 0,
         });
         this.setState({
           user,
@@ -527,12 +518,13 @@ class App extends Component {
     entries: budget.entries.map((entry) => ({ ...entry, ...entryMethods })),
   });
 
-  // Event handler for view budget link.
-  // Sets user.currentBudgetIndex to the selected budget's index
-  // and route to 'budget'.
+  /* Sets currentBudgetIndex to the selected budget's index
+  and route to 'budget'. */
   handleViewBudget = (index) => {
-    const user = { ...this.state.user, currentBudgetIndex: index };
-    this.setState({ user, route: 'budget' });
+    this.setState({
+      user: { ...this.state.user, currentBudgetIndex: index },
+      route: 'budget',
+    });
   };
 
   handleCreateBudget = () => {
