@@ -24,7 +24,7 @@ const Nav = ({
           CSBudget
         </button>
         <button
-          className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity selection-transparent"
+          className="toggle-expand dn absolute pa0 bg-transparent bn hover-opacity selection-transparent pointer"
           onClick={handleToggledExpandNav}
         >
           <span className="bar w-100 bg--light br4"></span>
