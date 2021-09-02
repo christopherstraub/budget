@@ -61,14 +61,12 @@ const SavedBudgets = ({
               <button
                 onClick={handleCreateBudget}
                 className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--accent-dark pa3 mr2 w-100"
-                style={{ width: 'max-content' }}
               >
                 new budget
               </button>
               <button
                 onClick={handleSaveBudgets}
                 className="clr-light fs-body ff-mono fw3 ttc selection-transparent hover-opacity br3 bn bg--green pa3 ml2 w-100"
-                style={{ width: 'max-content' }}
               >
                 save budgets
               </button>

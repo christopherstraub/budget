@@ -1,0 +1,35 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25;
+  margin: 0;
+}
+
+p,
+ul {
+  margin: 0;
+}
+
+html,
+button,
+input,
+optgroup,
+select,
+textarea {
+  line-height: 1.5;
+}
+
+button:focus-visible,
+[type='button']:focus-visible,
+[type='reset']:focus-visible,
+[type='submit']:focus-visible,
+*:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+  outline-color: -webkit-focus-ring-color;
+  outline-style: auto;
+  outline-width: 1px;
+  z-index: 99;
+}

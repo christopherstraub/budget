@@ -29,7 +29,9 @@ const Profile = ({
     <div className="w-100" style={{ maxWidth: '42rem' }}>
       <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
-          <h1 className="fs-subheading fw3 text-break">{user.displayName}</h1>
+          <h1 className="fs-subheading fw3 text-break mb2">
+            {user.displayName}
+          </h1>
           <h2 className="clr-light-accent fs-body fw3 text-break mb5">
             {user.budgets.length}/{maxBudgets} budgets ‧ {savedBudgets.length}{' '}
             saved
@@ -56,7 +58,10 @@ const Profile = ({
           </div>
 
           <div className="mb4">
-            <label className="clr-light fs-body fw3 mb3" htmlFor="display-name">
+            <label
+              className="clr-light fs-body fw3 mb3 db"
+              htmlFor="display-name"
+            >
               Change display name
             </label>
             <div className="flex">
@@ -81,7 +86,7 @@ const Profile = ({
           {isGuest ? null : (
             <div className="mb4">
               <label
-                className="clr-light fs-body fw3 mb3"
+                className="clr-light fs-body fw3 mb3 db"
                 htmlFor={input.password.value ? 'new-password' : 'password'}
               >
                 Change password
