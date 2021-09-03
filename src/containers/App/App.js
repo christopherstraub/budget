@@ -1083,24 +1083,26 @@ class App extends Component {
       });
 
   // Update state displayName input with user input.
-  handleDisplayNameInputChange = (event) => {
-    const displayName = {
-      ...this.state.input.displayName,
-      value: event.target.value,
-      empty: false,
-    };
-    const input = { ...this.state.input, displayName };
-    this.setState({ input });
-  };
+  handleDisplayNameInputChange = (event) =>
+    this.setState({
+      input: {
+        ...this.state.input,
+        displayName: {
+          ...this.state.input.displayName,
+          value: event.target.value,
+          empty: false,
+        },
+      },
+    });
 
   /* Change display name if input is not empty or whitespace and
   different from current display name. */
   handleDisplayNameChange = () => {
-    if (this.state.isGuest) {
-      if (
-        this.state.input.displayName.value.trim() &&
-        this.state.input.displayName.value !== this.state.user.displayName
-      ) {
+    if (
+      this.state.input.displayName.value.trim() &&
+      this.state.input.displayName.value !== this.state.user.displayName
+    ) {
+      if (this.state.isGuest) {
         // Clear input and update user display name.
         const input = cloneDeep(this.state.input);
         input.displayName.value = '';
@@ -1111,8 +1113,8 @@ class App extends Component {
         this.setState({ input, user });
         this.setMessage('Display name changed successfully.');
         this.clearMessage();
-      }
-    } else this.changeDisplayName();
+      } else this.changeDisplayName();
+    }
   };
 
   changeDisplayName = () =>
@@ -1180,73 +1182,93 @@ class App extends Component {
   };
 
   handlePasswordChange = () => {
+    // Current password and new password empty.
+    if (!this.state.input.newPassword.value && !this.state.input.password.value)
+      this.setState({
+        input: {
+          ...this.state.input,
+          password: {
+            ...this.state.input.password,
+            empty: false,
+          },
+          newPassword: {
+            ...this.state.input.newPassword,
+            empty: false,
+          },
+        },
+        windowMessage: null,
+      });
     // New password entered but current password empty.
-    if (
+    else if (
       this.state.input.newPassword.value &&
       !this.state.input.password.value
-    ) {
-      const password = {
-        ...this.state.input.password,
-        empty: true,
-      };
-      const input = { ...this.state.input, password };
-      this.setState({ input, windowMessage: 'Please enter current password.' });
-    }
+    )
+      this.setState({
+        input: {
+          ...this.state.input,
+          password: { ...this.state.input.password, empty: true },
+        },
+        windowMessage: 'Please enter current password.',
+      });
     // Current password entered but new password empty.
     else if (
       this.state.input.password.value &&
       !this.state.input.newPassword.value
-    ) {
-      const newPassword = {
-        ...this.state.input.newPassword,
-        empty: true,
-      };
-      const input = { ...this.state.input, newPassword };
-      this.setState({ input, windowMessage: 'Please enter new password.' });
-    } else if (
+    )
+      this.setState({
+        input: {
+          ...this.state.input,
+          newPassword: { ...this.state.input.newPassword, empty: true },
+        },
+        windowMessage: 'Please enter new password.',
+      });
+    else if (
       this.state.input.newPassword.value.length <
         this.state.input.newPassword.minLength ||
       this.state.input.newPassword.value.length >
         this.state.input.newPassword.maxLength
-    ) {
-      const newPassword = {
-        ...this.state.input.newPassword,
-        empty: true,
-      };
-      const input = { ...this.state.input, newPassword };
+    )
       this.setState({
-        input,
-        windowMessage: `Password should be between ${input.newPassword.minLength} and ${input.newPassword.maxLength} characters.`,
+        input: {
+          ...this.state.input,
+          newPassword: { ...this.state.input.newPassword, empty: true },
+        },
+        windowMessage: `Password should be between ${this.state.input.newPassword.minLength} and ${this.state.input.newPassword.maxLength} characters.`,
       });
-    } else if (
+    else if (
       this.state.input.password.value.length <
         this.state.input.password.minLength ||
       this.state.input.password.value.length >
         this.state.input.password.maxLength
-    ) {
-      const password = {
-        ...this.state.input.password,
-        empty: true,
-      };
-      const input = { ...this.state.input, password };
-      this.setState({ input, windowMessage: 'Current password invalid.' });
-    } else if (
-      this.state.input.password.value === this.state.input.newPassword.value
-    ) {
-      const password = {
-        ...this.state.input.password,
-        empty: true,
-      };
-      const newPassword = {
-        ...this.state.input.newPassword,
-        empty: true,
-      };
-      const input = { ...this.state.input, password, newPassword };
+    )
       this.setState({
-        input,
+        input: {
+          ...this.state.input,
+          password: {
+            ...this.state.input.password,
+            empty: true,
+          },
+        },
+        windowMessage: 'Current password invalid.',
+      });
+    else if (
+      this.state.input.password.value === this.state.input.newPassword.value
+    )
+      this.setState({
+        input: {
+          ...this.state.input,
+          password: {
+            ...this.state.input.password,
+            empty: true,
+          },
+          newPassword: {
+            ...this.state.input.newPassword,
+            empty: true,
+          },
+        },
         windowMessage: 'New password must be different from current password.',
       });
-    } else this.changePassword();
+    else this.changePassword();
   };
 
   changePassword = () =>
