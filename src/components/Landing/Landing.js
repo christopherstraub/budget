@@ -26,7 +26,7 @@ const Landing = ({
 
   return (
     <div
-      className={`landing flex flex-column justify-center ph4 pv6 ${
+      className={`Landing flex flex-column justify-center ph4 pv6 ${
         useDarkLanding ? 'clr-dark' : 'clr-light'
       }`}
     >

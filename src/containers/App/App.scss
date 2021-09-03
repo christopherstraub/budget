@@ -34,7 +34,7 @@ body {
 
 @media (max-width: 768px) {
   .App {
-    > div {
+    > div:not(.Landing) {
       padding: 2rem 0;
 
       .bg--window-box {
