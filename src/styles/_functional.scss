@@ -242,3 +242,8 @@
 .visibility-hidden {
   visibility: hidden;
 }
+
+.text-break {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

@@ -32,7 +32,7 @@ const Profile = ({
           <h1 className="fs-subheading fw3 text-break mb2">
             {user.displayName}
           </h1>
-          <h2 className="clr-light-accent fs-body fw3 text-break mb5">
+          <h2 className="clr-light-accent fs-body fw3 mb5">
             {user.budgets.length}/{maxBudgets} budgets ‧ {savedBudgets.length}{' '}
             saved
           </h2>

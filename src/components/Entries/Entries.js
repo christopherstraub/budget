@@ -230,7 +230,7 @@ const Entries = ({
               />
             ) : (
               <span
-                className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
+                className="clr-dark fs-body pointer pv2 ph1 flex justify-end items-center"
                 onClick={() => editProjectedCost(entry.id)}
                 tabIndex="0"
                 onKeyDown={handleEnterKey(() => editProjectedCost(entry.id))}
@@ -254,7 +254,7 @@ const Entries = ({
               />
             ) : (
               <span
-                className="clr-dark fs-body pointer pv2 ph1 h-100 flex justify-end items-center"
+                className="clr-dark fs-body pointer pv2 ph1 flex justify-end items-center"
                 onClick={() => editActualCost(entry.id)}
                 tabIndex="0"
                 onKeyDown={handleEnterKey(() => editActualCost(entry.id))}

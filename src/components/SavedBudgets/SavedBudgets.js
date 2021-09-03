@@ -48,9 +48,12 @@ const SavedBudgets = ({
                       tabIndex={0}
                       onKeyDown={handleEnterKey(() => handleViewBudget(index))}
                       className={`clr-light fs-subtitle fw3 hover-opacity pointer text-break mv3 ph1
-                  ${
-                    index === currentBudgetIndex ? 'clr-accent-light fw6' : ''
-                  }`}
+                      ${
+                        index === currentBudgetIndex
+                          ? 'clr-accent-light fw6'
+                          : ''
+                      }
+                      `}
                     >
                       {budget.name}
                     </li>
