@@ -448,6 +448,9 @@ class App extends Component {
       body: JSON.stringify({
         app_user_id: this.state.user.id,
         id,
+        current_budget_index: this.state.user.currentBudgetIndex
+          ? this.state.user.currentBudgetIndex - 1
+          : 0,
       }),
     })
       .then((response) =>
@@ -458,14 +461,14 @@ class App extends Component {
           (budget) => budget.id !== data.id
         );
 
-        const user = Object.assign(cloneDeep(this.state.user), {
-          budgets: filteredBudgets,
-          currentBudgetIndex: this.state.user.currentBudgetIndex
-            ? this.state.user.currentBudgetIndex - 1
-            : 0,
-        });
         this.setState({
-          user,
+          user: {
+            ...this.state.user,
+            budgets: filteredBudgets,
+            currentBudgetIndex: this.state.user.currentBudgetIndex
+              ? this.state.user.currentBudgetIndex - 1
+              : 0,
+          },
           route: 'saved-budgets',
           clickedDeleteBudget: false,
         });
@@ -525,7 +528,19 @@ class App extends Component {
       user: { ...this.state.user, currentBudgetIndex: index },
       route: 'budget',
     });
+    if (!this.state.isGuest) this.updateCurrentBudgetIndex(index);
   };
+
+  // Update user's current budget index.
+  updateCurrentBudgetIndex = (index) =>
+    fetch('https://csbudget-api.herokuapp.com/current-budget-index', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        current_budget_index: index,
+      }),
+    });
 
   handleCreateBudget = () => {
     // Check max budget constraint.
@@ -1451,24 +1466,6 @@ class App extends Component {
       })
       .then(() => this.setState({ loading: false }));
 
-  signOut = () => {
-    // Save user's current budget index.
-    fetch('https://csbudget-api.herokuapp.com/sign-out', {
-      method: 'put',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: this.state.user.id,
-        current_budget_index: this.state.user.currentBudgetIndex,
-      }),
-    });
-
-    this.setState({
-      ...initialState,
-      background: this.state.background,
-      route: 'sign-in',
-    });
-  };
-
   /**
    *
    * @param {requestCallback} callback The function to be called upon
@@ -1505,13 +1502,15 @@ class App extends Component {
       !this.state.isLoggedIn &&
       this.state.isGuest
     ) {
-      const user = { ...this.state.user, joinDate: new Date() };
       this.setState({
-        user,
         route,
         input: initialState.input,
         windowMessage: null,
         isLoggedIn: true,
+        user: {
+          ...this.state.user,
+          joinDate: new Date(),
+        },
       });
       setTimeout(
         () => this.setMessage(`Welcome, ${this.state.user.displayName}.`),
@@ -1526,7 +1525,10 @@ class App extends Component {
       this.state.isLoggedIn &&
       this.state.isGuest
     )
-      this.setState({ ...initialState, background: this.state.background });
+      this.setState({
+        ...initialState,
+        background: this.state.background,
+      });
     // Handle user sign out.
     else if (
       route !== this.state.route &&
@@ -1534,7 +1536,11 @@ class App extends Component {
       this.state.isLoggedIn &&
       !this.state.isGuest
     )
-      this.signOut();
+      this.setState({
+        ...initialState,
+        route: 'sign-in',
+        background: this.state.background,
+      });
     /* Reset input and message code when routing between
     SignIn and SignUp components. */ else if (
       (route === 'sign-in' || route === 'sign-up') &&
