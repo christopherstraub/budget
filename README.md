@@ -1,11 +1,11 @@
 # CSBudget
-CSBudget is a budgeting applicaiton composed of a sleek and responsive front-end built with React and an [API](https://github.com/christopherstraub/csbudget-api) built with Node.js and Express that interacts with a PostgreSQL database. With it, you can easily create, edit, and save your budgets from any device.
+CSBudget is a budgeting applicaiton composed of a sleek and responsive front-end built with React and an [API](https://github.com/christopherstraub/csbudget-api) built with Node.js and Express that queries a PostgreSQL database. With it, you can easily create, edit, and save your budgets from any device.
 
 ## View
 CSBudget is served live at [christopherstraub.me/csbudget/](https://christopherstraub.me/csbudget/).
 
 ### Run locally
-1. Having Node.js and npm installed is necessary to run the project locally. The npm Docs offer excellent download and installation instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+1. Having Node.js and npm installed is a prerequisite for running the project locally. The npm Docs offer download and installation instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 2. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) or download the project and open the project directory in your shell of choice.
 3. Install dependencies with command `npm install`.
 4. Run the app in development mode with script `npm start`. The app will be served locally at [http://localhost:3000](http://localhost:3000).
