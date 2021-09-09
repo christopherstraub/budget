@@ -1453,7 +1453,7 @@ class App extends Component {
               'There was a problem signing up. Please try again later.',
           });
       })
-      .then(() => this.setState({ loading: false }));
+      .finally(() => this.setState({ loading: false }));
 
   signIn = () =>
     fetch('https://csbudget-api.herokuapp.com/sign-in', {
@@ -1486,7 +1486,7 @@ class App extends Component {
               'There was a problem signing in. Please try again later.',
           });
       })
-      .then(() => this.setState({ loading: false }));
+      .finally(() => this.setState({ loading: false }));
 
   /**
    *
