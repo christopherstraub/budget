@@ -1,8 +1,8 @@
 {
-  "name": "budget",
+  "name": "csbudget",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://christopherstraub.github.io/csbudget/",
+  "homepage": "https://christopherstraub.me/csbudget/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
