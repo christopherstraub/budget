@@ -30,7 +30,7 @@ const Landing = ({
         useDarkLanding ? 'clr-dark' : 'clr-light'
       }`}
     >
-      <section className="landing-text pt4">
+      <section className="pt4">
         <h1 className="fs-heading fw6 tc mb2">
           Budgeting doesn't have to be hard.
         </h1>
