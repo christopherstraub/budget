@@ -44,6 +44,7 @@ CSBudget is served live at [christopherstraub.me/csbudget/](https://christophers
 
 - View short- and long-term trends and trajectories that help monitor and predict income and spending.
 - Improve your workflow by creating a budget with recommended values.
+- Export your data to Excel or CSV.
 
 ## What the app looks like
 
