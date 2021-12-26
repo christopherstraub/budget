@@ -19,7 +19,7 @@ const Summary = ({
 }) => {
   return (
     <div className="Summary pv5 ph4">
-      <div className="flex flex-column items-center">
+      <div className="flex flex-column items-end">
         <h3 className="clr-light-accent fs-subheading fw3 mb0 flex items-center">
           Projected Monthly Income
           <span
@@ -41,7 +41,7 @@ const Summary = ({
         <div className="mb4 w-100">
           {isEditingProjectedMonthlyIncome ? (
             <input
-              className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 pv0 ph1 tc"
+              className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 pv0 ph1 tr"
               onFocus={(event) =>
                 (event.target.value = budget.projectedMonthlyIncome
                   ? budget.projectedMonthlyIncome
@@ -55,7 +55,7 @@ const Summary = ({
             />
           ) : (
             <h2
-              className="clr-light fs-subtitle fw3 bn w-100 pointer lh-copy mb0 tc"
+              className="clr-light fs-subtitle fw3 bn w-100 pointer lh-copy mb0 tr"
               onClick={editProjectedMonthlyIncome}
             >
               {formattedBudget.projectedMonthlyIncome}
@@ -84,7 +84,7 @@ const Summary = ({
         <div className="mb4 w-100">
           {isEditingActualMonthlyIncome ? (
             <input
-              className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 pv0 ph1 tc"
+              className="clr-light placeholder-light-accent bg-transparent fs-subtitle fw3 bn w-100 pv0 ph1 tr"
               onFocus={(event) =>
                 (event.target.value = budget.actualMonthlyIncome
                   ? budget.actualMonthlyIncome
@@ -98,7 +98,7 @@ const Summary = ({
             />
           ) : (
             <h2
-              className="clr-light fs-subtitle fw3 bn w-100 pointer lh-copy mb0 tc"
+              className="clr-light fs-subtitle fw3 bn w-100 pointer lh-copy mb0 tr"
               onClick={editActualMonthlyIncome}
             >
               {formattedBudget.actualMonthlyIncome}

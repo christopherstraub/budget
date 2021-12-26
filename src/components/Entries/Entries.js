@@ -162,7 +162,7 @@ const Entries = ({
             visibility: 'hidden',
           }}
         ></span>
-        <span className="clr-dark fs-subheading fw4 tc pv3 ph1">Category</span>
+        <span className="clr-dark fs-subheading fw4 pv3 ph1">Category</span>
         <span className="clr-dark fs-subheading fw4 tr pv3 ph1">
           Projected Cost
         </span>
@@ -196,7 +196,7 @@ const Entries = ({
 
             {isEditingCategory && isEditingEntryId === entry.id ? (
               <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 pv2 ph1"
                 onFocus={(event) => (event.target.value = entry.category)}
                 onBlur={(event) => handleCategoryChange(entry.id, event)}
                 type="text"
@@ -206,7 +206,7 @@ const Entries = ({
               />
             ) : (
               <span
-                className="clr-dark fs-body pointer pv2 ph1 tc"
+                className="clr-dark fs-body pointer pv2 ph1"
                 onClick={() => editCategory(entry.id)}
                 tabIndex="0"
                 onKeyDown={handleEnterKey(() => editCategory(entry.id))}
@@ -216,7 +216,7 @@ const Entries = ({
             )}
             {isEditingProjectedCost && isEditingEntryId === entry.id ? (
               <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tr pv2 ph1"
                 onFocus={(event) =>
                   (event.target.value = entries[index].projectedCost
                     ? entries[index].projectedCost
@@ -240,7 +240,7 @@ const Entries = ({
             )}
             {isEditingActualCost && isEditingEntryId === entry.id ? (
               <input
-                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tc pv2 ph1"
+                className="clr-dark placeholder-dark-accent bg-transparent fs-body bn w-100 h-100 tr pv2 ph1"
                 onFocus={(event) =>
                   (event.target.value = entries[index].actualCost
                     ? entries[index].actualCost

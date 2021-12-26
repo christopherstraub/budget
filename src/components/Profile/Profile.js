@@ -25,24 +25,23 @@ const Profile = ({
   toggledExpandNav,
   getPasswordInputStyle,
 }) => (
-  <div className="Profile flex justify-center pa4 tc">
+  <div className="Profile flex justify-center pa4">
     <div className="w-100" style={{ maxWidth: '42rem' }}>
       <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">
-          <h1 className="fs-subheading fw3 text-break mb2">
-            {user.displayName}
-          </h1>
-          <h2 className="clr-light-accent fs-body fw3 mb5">
-            {user.budgets.length}/{maxBudgets} budgets ‧ {savedBudgets.length}{' '}
-            saved
-          </h2>
+          <div class="tc">
+            <h1 className="fs-subheading fw3 text-break mb2">
+              {user.displayName}
+            </h1>
+            <h2 className="clr-light-accent fs-body fw3 mb5">
+              {user.budgets.length}/{maxBudgets} budgets ‧ {savedBudgets.length}{' '}
+              saved
+            </h2>
+          </div>
 
           <div className="mb4">
             <h2 className="clr-light fs-body fw3 mb3">Backgrounds</h2>
-            <div
-              className="flex flex-wrap justify-center"
-              style={{ gap: '1rem' }}
-            >
+            <div className="flex flex-wrap" style={{ gap: '1rem' }}>
               {backgrounds.map((background, index) => (
                 <button
                   key={index}
@@ -172,7 +171,7 @@ const Profile = ({
             </select>
           </div>
 
-          <h2 className="clr-light-accent fs-body fw3 mb0">
+          <h2 className="clr-light-accent fs-body fw3 mb0 tc">
             Member since {user.joinDate.toLocaleDateString()}
           </h2>
         </div>
