@@ -1,31 +1,21 @@
 {
   "files": {
-    "main.css": "/csbudget/static/css/main.d8734938.chunk.css",
-    "main.js": "/csbudget/static/js/main.e0d0d89f.chunk.js",
-    "main.js.map": "/csbudget/static/js/main.e0d0d89f.chunk.js.map",
-    "runtime-main.js": "/csbudget/static/js/runtime-main.c9a4ff92.js",
-    "runtime-main.js.map": "/csbudget/static/js/runtime-main.c9a4ff92.js.map",
-    "static/css/2.6d7c7915.chunk.css": "/csbudget/static/css/2.6d7c7915.chunk.css",
-    "static/js/2.701b8510.chunk.js": "/csbudget/static/js/2.701b8510.chunk.js",
-    "static/js/2.701b8510.chunk.js.map": "/csbudget/static/js/2.701b8510.chunk.js.map",
+    "main.css": "/csbudget/static/css/main.450d4da3.css",
+    "main.js": "/csbudget/static/js/main.b681c65b.js",
+    "static/media/bg7.webp": "/csbudget/static/media/bg7.34b4eef334765bb507da.webp",
+    "static/media/bg2.webp": "/csbudget/static/media/bg2.055851064a267682f51f.webp",
+    "static/media/bg5.webp": "/csbudget/static/media/bg5.115cac3b181de2a3d85a.webp",
+    "static/media/bg4.webp": "/csbudget/static/media/bg4.bb9dbac02dfc168969fa.webp",
+    "static/media/bg1.webp": "/csbudget/static/media/bg1.c17b88220e36c2bc9d17.webp",
+    "static/media/bg3.webp": "/csbudget/static/media/bg3.c3d0fcbfac5aaa09ff31.webp",
+    "static/media/bg6.webp": "/csbudget/static/media/bg6.1d8ee2f09507ea34533c.webp",
+    "static/media/bg8.webp": "/csbudget/static/media/bg8.544411e1027c31dbbc6c.webp",
     "index.html": "/csbudget/index.html",
-    "static/css/2.6d7c7915.chunk.css.map": "/csbudget/static/css/2.6d7c7915.chunk.css.map",
-    "static/css/main.d8734938.chunk.css.map": "/csbudget/static/css/main.d8734938.chunk.css.map",
-    "static/js/2.701b8510.chunk.js.LICENSE.txt": "/csbudget/static/js/2.701b8510.chunk.js.LICENSE.txt",
-    "static/media/bg1.c17b8822.webp": "/csbudget/static/media/bg1.c17b8822.webp",
-    "static/media/bg2.05585106.webp": "/csbudget/static/media/bg2.05585106.webp",
-    "static/media/bg3.c3d0fcbf.webp": "/csbudget/static/media/bg3.c3d0fcbf.webp",
-    "static/media/bg4.bb9dbac0.webp": "/csbudget/static/media/bg4.bb9dbac0.webp",
-    "static/media/bg5.115cac3b.webp": "/csbudget/static/media/bg5.115cac3b.webp",
-    "static/media/bg6.1d8ee2f0.webp": "/csbudget/static/media/bg6.1d8ee2f0.webp",
-    "static/media/bg7.34b4eef3.webp": "/csbudget/static/media/bg7.34b4eef3.webp",
-    "static/media/bg8.544411e1.webp": "/csbudget/static/media/bg8.544411e1.webp"
+    "main.450d4da3.css.map": "/csbudget/static/css/main.450d4da3.css.map",
+    "main.b681c65b.js.map": "/csbudget/static/js/main.b681c65b.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.c9a4ff92.js",
-    "static/css/2.6d7c7915.chunk.css",
-    "static/js/2.701b8510.chunk.js",
-    "static/css/main.d8734938.chunk.css",
-    "static/js/main.e0d0d89f.chunk.js"
+    "static/css/main.450d4da3.css",
+    "static/js/main.b681c65b.js"
   ]
 }
