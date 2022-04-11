@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import Spinner from '../Spinner/Spinner';
 
@@ -13,6 +14,9 @@ const SignIn = ({
   loading,
 }) => (
   <>
+    <Helmet>
+      <title>Sign In | CSBudget</title>
+    </Helmet>
     <div className="relative mb3">
       <input
         className={`input input-indicator br3 pt4 ph3 pb2 w-100

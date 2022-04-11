@@ -1,8 +1,13 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
+
 import WindowBox from '../WindowBox/WindowBox';
 
 const About = ({ toggledExpandNav }) => (
   <div className="flex justify-center pa4">
+    <Helmet>
+      <title>About | CSBudget</title>
+    </Helmet>
     <WindowBox toggledExpandNav={toggledExpandNav}>
       <div className="pv5 ph4">
         <p className="clr-light fs-body">

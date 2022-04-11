@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import WindowBox from '../WindowBox/WindowBox';
 
@@ -26,6 +27,9 @@ const Profile = ({
   getPasswordInputStyle,
 }) => (
   <div className="Profile flex justify-center pa4">
+    <Helmet>
+      <title>Profile | CSBudget</title>
+    </Helmet>
     <div className="w-100" style={{ maxWidth: '42rem' }}>
       <WindowBox toggledExpandNav={toggledExpandNav}>
         <div className="pv5 ph4">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import WindowBox from '../WindowBox/WindowBox';
 
@@ -15,6 +16,9 @@ const SavedBudgets = ({
 }) => {
   return (
     <div className="SavedBudgets flex justify-center pa4 tc">
+      <Helmet>
+        <title>Saved Budgets | CSBudget</title>
+      </Helmet>
       <div
         className="w-100"
         style={{ minWidth: '42rem', maxWidth: 'max-content' }}

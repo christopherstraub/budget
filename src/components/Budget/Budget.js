@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import WindowBox from '../WindowBox/WindowBox';
 import Summary from '../Summary/Summary';
@@ -45,6 +46,9 @@ const Budget = ({
   toggledExpandNav,
 }) => (
   <div className="Budget flex items-start pa4">
+    <Helmet>
+      <title>View Budget | CSBudget</title>
+    </Helmet>
     <WindowBox classlist="flex-grow-1 mh3" toggledExpandNav={toggledExpandNav}>
       <Entries
         budget={budget}
