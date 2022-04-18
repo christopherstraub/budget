@@ -19,7 +19,6 @@
     }
   ],
   "start_url": ".",
-  "scope": ".",
   "theme_color": "white",
   "background_color": "white",
   "display": "standalone"
