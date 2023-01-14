@@ -4,7 +4,7 @@ CSBudget is a budgeting application composed of a sleek and responsive front-end
 
 ## View
 
-CSBudget is served live at [christopherstraub.me/csbudget/](https://christopherstraub.me/csbudget/).
+CSBudget is served live at [chrisstraub.com/csbudget/](https://chrisstraub.com/csbudget/).
 
 ### Run locally
 

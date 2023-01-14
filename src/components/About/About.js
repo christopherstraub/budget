@@ -14,7 +14,7 @@ const About = ({ toggledExpandNav }) => (
           CSBudget is maintained by Christopher Straub and distributed under the
           MIT License. You can get in touch with Christopher{' '}
           <a
-            href="https://christopherstraub.me/"
+            href="https://chrisstraub.com/"
             className="clr-accent-light anchor hover-opacity"
             style={{ textDecoration: 'none' }}
             target="_blank"
